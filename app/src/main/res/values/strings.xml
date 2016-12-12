@@ -27,4 +27,15 @@
     <string name="viewAndBookrestaurants"><![CDATA[View and book Restaurants & Bars]]></string>
     <string name="going_somewhere">Going Somewhere? Book a secure taxi or limousine</string>
     <string name="book_a_taxi">Book a taxi</string>
+    <string name="restaraunt_name">RESTAUARANT NAME</string>
+    <string name="colon">:</string>
+    <string name="text_about_restauarnt">Text about restauarnt</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris aliquam dignissim libero condimentum euismod. Aenean aliquam sagittis euismod. Pellentesque sed felis non massa porta efficitur in at turpis. Aliquam ac laoreet neque. Phasellus tincidunt a risus sed pharetra. Vivamus sed viverra lacus.</string>
+    <string name="view_menu">View Menu</string>
+    <string name="view_in_map">View in Map</string>
+    <string name="category">Category</string>
+    <string name="price_range">Price range</string>
+    <string name="location">Location</string>
+    <string name="distance">Distance</string>
+    <string name="book_now">BOOK NOW</string>
 </resources>

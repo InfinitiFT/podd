@@ -4,11 +4,325 @@
     android:id="@+id/activity_restaurant_detail_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     tools:context="com.podd.activity.RestaurantDetailScreenActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/llInner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
+            <TextView
+                android:id="@+id/tvRestauarntName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/restaraunt_name"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_20"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/dp_0.5"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvRestaurants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fadingEdge="none"
+                android:orientation="horizontal"
+                android:scrollbars="none" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llRestaurantName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/restaraunt_name"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/colon"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvNameRestaraunt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="Oak 1"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/category"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/colon"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="Glutten free, Italian"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llPriceRange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/price_range"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/colon"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvPriceRange"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="$5 - $10"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/location"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/colon"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="City of London"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/distance"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/colon"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="500m"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAboutRestaurant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_2"
+                        android:text="@string/text_about_restauarnt"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_10" />
+
+                    <TextView
+                        android:id="@+id/tvDescriptionRestaraunt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_2"
+                        android:text="@string/lorem"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llButtons"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvViewMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_background"
+                        android:padding="@dimen/dp_6"
+                        android:textStyle="bold"
+                        android:text="@string/view_menu"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_size_10" />
+
+                    <TextView
+                        android:id="@+id/tvViewInMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:background="@drawable/button_background"
+                        android:padding="@dimen/dp_6"
+                        android:textStyle="bold"
+                        android:text="@string/view_in_map"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/text_size_10" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBookNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:background="@drawable/button_background_pink"
+                android:gravity="center"
+                android:padding="@dimen/dp_8"
+                android:text="@string/book_now"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_10" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

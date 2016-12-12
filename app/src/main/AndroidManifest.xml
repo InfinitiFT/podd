@@ -27,14 +27,17 @@
         <activity
             android:name=".activity.MainHomeScreenThreeActivity"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".activity.RestaurantDetailScreenActivity"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".activity.RestaurantDetailScreenActivity"></activity>
     </application>
 
 </manifest>
