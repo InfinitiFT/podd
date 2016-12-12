@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">podd</string>
+    <string name="loading">Loading…</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="podd">podd</string>
+    <string name="discover_london">Discover expertly curated experiences in London</string>
+    <string name="serviced_apartment">From the most desirable fine dining restraunts in London to unique experiences, family outings and taxi bookings, you can now plan and book a range of experiences directly from comfort of your hotel or serviced apartment.</string>
+    <string name="stay_london">Enjoy using <b> podd </b> for a memorable stay in London.</string>
+    <string name="restraunt">Restraunt</string>
+    <string name="taxi">Taxi</string>
+    <string name="health"><![CDATA[Health, Fitness & Wellbeing]]></string>
+    <string name="happening">Happening in London</string>
+    <string name="food"><![CDATA[Food & Drinks]]></string>
+    <string name="discover_restraunts">Discover our curated selection of London\'s best restaurants and bars</string>
+    <string name="michelin_star_restaurants">MECHELIN STAR RESTAURANTS</string>
+    <string name="casualEats">CASUAL EATS</string>
+    <string name="lateNightVenues">LATE NIGHT VENUES</string>
+    <string name="mealsDeliveredToYou">MEALS DELIVERED TO YOU</string>
+    <string name="viewAndBookrestaurants"><![CDATA[View and book Restaurants & Bars]]></string>
+    <string name="going_somewhere">Going Somewhere? Book a secure taxi or limousine</string>
+    <string name="book_a_taxi">Book a taxi</string>
+</resources>

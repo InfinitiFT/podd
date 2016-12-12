@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_home_screen_three"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.podd.activity.MainHomeScreenThreeActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:id="@+id/llInner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvGoingSomewhere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/going_somewhere"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:gravity="center"
+                android:padding="@dimen/dp_6"/>
+
+            <ImageView
+                android:id="@+id/ivTaxi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon2"
+                android:layout_gravity="center"
+                android:padding="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_30"/>
+
+
+
+            <TextView
+                android:id="@+id/tvBookTaxi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book_a_taxi"
+                android:padding="@dimen/dp_6"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_8"
+                android:gravity="right"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

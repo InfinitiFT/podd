@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.podd.activity.HomeScreenActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="start">
+
+    <TextView
+        android:id="@+id/tvDiscoverLondon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/discover_london"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:padding="@dimen/dp_6"
+        android:textSize="@dimen/text_size_12"/>
+
+    <TextView
+        android:id="@+id/tvServicedApartment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/serviced_apartment"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_10"
+        android:padding="@dimen/dp_6"
+       />
+
+    <TextView
+        android:id="@+id/tvStayLondon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stay_london"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/dp_6"
+        android:textSize="@dimen/dp_10"/>
+
+    <LinearLayout
+        android:id="@+id/llInner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_6">
+
+        <LinearLayout
+            android:id="@+id/llfood"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivfood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon1"
+            android:padding="@dimen/dp_4"/>
+
+            <TextView
+                android:id="@+id/tvFood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/food"
+                android:padding="@dimen/dp_4"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_10"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTaxi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivTaxi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon2"
+            android:padding="@dimen/dp_4"/>
+
+            <TextView
+                android:id="@+id/tvTaxi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/taxi"
+                android:padding="@dimen/dp_4"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_10"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llHealth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivHealth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon3"
+            android:padding="@dimen/dp_4"/>
+
+            <TextView
+                android:id="@+id/tvHealth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/health"
+                android:padding="@dimen/dp_4"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_10"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llHappening"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivHappeningInLondon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon4"
+            android:padding="@dimen/dp_4"/>
+
+            <TextView
+                android:id="@+id/tvHappeningInLondon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/happening"
+                android:padding="@dimen/dp_4"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_10"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
