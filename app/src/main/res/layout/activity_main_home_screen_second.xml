@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context="com.podd.activity.MainHomeScreenSecondActivity">
+    tools:context="com.podd.activityrestauarant.MainHomeScreenSecondActivity">
 
 
     <include layout="@layout/toolbar"/>

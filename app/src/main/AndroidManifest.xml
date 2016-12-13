@@ -17,18 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.HomeScreenActivity"
+            android:name=".activitytaxi.HomeScreenActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activity.MainHomeScreenSecondActivity"
+            android:name=".activityrestauarant.MainHomeScreenSecondActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activity.MainHomeScreenThreeActivity"
+            android:name=".activitytaxi.MainHomeScreenThreeActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".activity.RestaurantDetailScreenActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activityrestauarant.RestaurantDetailScreenActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
@@ -36,8 +37,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".activitytaxi.BookTaxiActivity" />
+        <activity android:name=".activitytaxi.TaxiBookingSummaryActivity" />
+        <activity android:name=".activityrestauarant.BestRestrauantNearCity"></activity>
     </application>
 
 </manifest>

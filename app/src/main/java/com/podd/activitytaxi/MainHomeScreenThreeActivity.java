@@ -1,6 +1,7 @@
-package com.podd.activity;
+package com.podd.activitytaxi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,7 +43,9 @@ public class MainHomeScreenThreeActivity extends AppCompatActivity implements Vi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvBookTaxi:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context,BookTaxiActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
     }

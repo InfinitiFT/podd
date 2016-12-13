@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_book_taxi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    tools:context="com.podd.activitytaxi.BookTaxiActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/llInner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBookTaxi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="@string/book_a_taxi_or_limousine"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_20"
+                android:textStyle="bold" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_4">
+
+
+                <TextView
+                    android:id="@+id/tvLeavingFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="left"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/leaving_from"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <EditText
+                    android:id="@+id/etLeavingAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:hint="@string/enter_address_or_postcode"
+                    android:padding="@dimen/dp_5"
+                    android:text=""
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/or"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="invisible" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/button_background"
+                    android:hint="@string/enter_address_or_postcode"
+                    android:padding="@dimen/dp_5"
+                    android:text=""
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_4">
+
+                <TextView
+                    android:id="@+id/tvGoingTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="left"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/going_to"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <EditText
+                    android:id="@+id/etGoingAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:hint="@string/enter_address_or_postcode"
+                    android:padding="@dimen/dp_5"
+                    android:text=""
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/or"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <FrameLayout
+                    android:id="@+id/flSelectAirport"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/button_background"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <Spinner
+                        android:id="@+id/spSelectAirport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/colorPrimaryDark" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@android:color/white" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_5">
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/date"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tvToday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/today"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tvTomorrow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/tomorrow"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tvSelectfromCalender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/select_from_calender"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_2">
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/time"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <FrameLayout
+                    android:id="@+id/flSelectTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <Spinner
+                        android:id="@+id/spSelectTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/colorPrimaryDark" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_2">
+
+                <TextView
+                    android:id="@+id/tvSelectPeople"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/number_of_people"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <FrameLayout
+                    android:id="@+id/flSelectnumberofPeople"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <Spinner
+                        android:id="@+id/spSelectPeople"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/colorPrimaryDark" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_2">
+
+                <TextView
+                    android:id="@+id/tvadditionalRequirements"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/additional_requirements"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12" />
+
+                <FrameLayout
+                    android:id="@+id/flSelectAdditionalRequirement"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <Spinner
+                        android:id="@+id/spSelectAdditionalRequirement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/colorPrimaryDark" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBookNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:background="@drawable/button_background_pink"
+                android:gravity="center"
+                android:padding="@dimen/dp_8"
+                android:text="@string/book_now"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
