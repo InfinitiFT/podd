@@ -39,7 +39,8 @@ public class MainHomeScreenSecondActivity extends AppCompatActivity implements V
         llMealsDelivered= (LinearLayout) findViewById(R.id.llMealsDelivered);
         llLateNightVenues= (LinearLayout) findViewById(R.id.llLateNightVenues);
         llInner= (LinearLayout) findViewById(R.id.llInner);
-        ImageView ivHeader= (ImageView) findViewById(R.id.ivHeader);
+
+
 
     }
 

@@ -2,13 +2,13 @@ package com.podd.activitytaxi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.podd.R;
 
@@ -53,7 +53,6 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
         etPhoneNumber= (EditText) findViewById(R.id.etPhoneNumber);
         etEmail= (EditText) findViewById(R.id.etEmail);
         llInner= (LinearLayout) findViewById(R.id.llInner);
-        tvBack= (TextView) findViewById(R.id.tvBack);
         tvBack.setVisibility(View.VISIBLE);
 
 
@@ -68,9 +67,6 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tvBack:
-                finish();
-                break;
             case R.id.tvCompleteBooking:
                 if(isValid()) {
                     Intent intent = new Intent(context, TaxiReturnToHomeScreen.class);
@@ -84,27 +80,27 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
 
     private boolean isValid(){
         if(etName.getText().toString().trim().isEmpty()){
-            Snackbar.make(llInner,R.string.please_enter_name,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_name,Toast.LENGTH_SHORT).show();
             etName.requestFocus();
             return false;
         }
         else if(etCountryCode.getText().toString().trim().isEmpty()){
-           Snackbar.make(llInner,R.string.please_enter_country_code,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_country_code,Toast.LENGTH_SHORT).show();
             etCountryCode.requestFocus();
             return false;
         }
         else if (etPhoneNumber.getText().toString().trim().isEmpty()){
-            Snackbar.make(llInner,R.string.please_enter_phone_number,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_phone_number,Toast.LENGTH_SHORT).show();
             etPhoneNumber.requestFocus();
             return false;
         }
         else if (etEmail.getText().toString().trim().isEmpty()){
-            Snackbar.make(llInner,R.string.please_enter_email,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_email,Toast.LENGTH_SHORT).show();
             etEmail.requestFocus();
             return false;
         }
         else if (!etEmail.getText().toString().trim().matches(EMAIL_PATTERN)){
-            Snackbar.make(llInner,R.string.please_enter_valid_email,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_valid_email,Toast.LENGTH_SHORT).show();
             etEmail.requestFocus();
             return false;
         }

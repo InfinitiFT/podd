@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
+import com.podd.activityrestauarant.BestRestrauantNearCity;
 import com.podd.activityrestauarant.MainHomeScreenSecondActivity;
 
 
@@ -33,6 +34,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     private ImageView ivTaxi;
     private ImageView ivHealth;
     private ImageView ivHappeningInLondon;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +77,12 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         switch (view.getId()){
             case R.id.llfood:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
+                intent=new Intent(context, BestRestrauantNearCity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.llTaxi:
-                Intent intent =new Intent(context,MainHomeScreenThreeActivity.class);
+                intent =new Intent(context,MainHomeScreenThreeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;

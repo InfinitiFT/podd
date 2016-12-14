@@ -72,4 +72,20 @@
     <string name="our_curated_selection_of_best_restraunts">Our curated selection of best restaurants near you </string>
     <string name="mayfair"> Mayfair</string>
     <string name="dietary">DIETARY, CUISINE,</string>
+    <string name="search_by">Search by</string>
+    <string name="city">(Chelsea, City)</string>
+    <string name="Dietary">Dietary</string>
+    <string name="gluten">(Gluten free,Halal)</string>
+    <string name="cuisine">Cuisine</string>
+    <string name="italian">(Italian, French)</string>
+    <string name="meal">Meal</string>
+    <string name="lunch">(Lunch, Dinner)</string>
+    <string name="ambience">Ambience</string>
+    <string name="bussiness">(Business,Family friendly)</string>
+    <string name="delivered">Delivered to you</string>
+    <string name="work_in_progress">Work in progress.</string>
+    <string name="Booking_summary">Booking Summary</string>
+    <string name="date_booked">DATE BOOKED</string>
+    <string name="time_booked">TIME BOOKED</string>
+    <string name="number_of_persons">No. OF PEOPLE</string>
 </resources>
