@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_taxi_booking_summary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.podd.activitytaxi.TaxiBookingSummaryActivity">
+
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/llInner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBookTaxi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="@string/booking_summary"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_20"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:background="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvLeavingFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/leaving_from"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvGoingTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/going_to"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/date"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/time"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvNumberofPeople"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/number_of_people"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvadditionalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/additional_information"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_4"
+                android:background="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvConfirmation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="@string/confirmation_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/dp_60"
+                android:layout_marginRight="@dimen/dp_60"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:imeOptions="actionNext"
+                    android:text=""
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_size_12"
+                    android:hint="@string/name"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/rectangle_white_background"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_6" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rectangle_white_background"
+                    android:layout_marginTop="@dimen/dp_4">
+
+                    <EditText
+                        android:id="@+id/etCountryCode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:layout_weight=".1"
+                        android:imeOptions="actionNext"
+                        android:text=""
+                        android:textSize="@dimen/text_size_12"
+                        android:hint="@string/code"
+                        android:maxLines="1"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_6" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimaryDark"/>
+
+                    <EditText
+                        android:id="@+id/etPhoneNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:layout_weight="1"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textSize="@dimen/text_size_12"
+                        android:hint="@string/Mobile"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/dp_40"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:paddingBottom="@dimen/dp_6"
+                        android:paddingTop="@dimen/dp_6"/>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textSize="@dimen/text_size_12"
+                    android:hint="@string/email"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/rectangle_white_background"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:padding="@dimen/dp_6" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCompleteBooking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:background="@drawable/button_background_pink"
+                android:gravity="center"
+                android:padding="@dimen/dp_8"
+                android:text="@string/complete_booking"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+    </ScrollView>
+
+
+        </LinearLayout>

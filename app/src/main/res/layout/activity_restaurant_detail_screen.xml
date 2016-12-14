@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    tools:context="com.podd.activity.RestaurantDetailScreenActivity">
+    tools:context="com.podd.activityrestauarant.RestaurantDetailScreenActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -317,9 +317,10 @@
                 android:background="@drawable/button_background_pink"
                 android:gravity="center"
                 android:padding="@dimen/dp_8"
+                android:textStyle="bold"
                 android:text="@string/book_now"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_10" />
+                android:textSize="@dimen/text_size_12" />
 
         </LinearLayout>
 

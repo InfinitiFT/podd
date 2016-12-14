@@ -1,8 +1,11 @@
-package com.podd.activity;
+package com.podd.activitytaxi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
+import com.podd.activityrestauarant.MainHomeScreenSecondActivity;
 
 
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
@@ -74,7 +78,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                 Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.llTaxi:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(context,MainHomeScreenThreeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
 
