@@ -19,7 +19,13 @@
         <activity
             android:name=".activitytaxi.HomeScreenActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activityrestauarant.MainHomeScreenSecondActivity"
             android:screenOrientation="landscape"
@@ -31,16 +37,26 @@
         <activity
             android:name=".activityrestauarant.RestaurantDetailScreenActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activitytaxi.BookTaxiActivity" />
-        <activity android:name=".activitytaxi.TaxiBookingSummaryActivity" />
-        <activity android:name=".activityrestauarant.BestRestrauantNearCity"></activity>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+            android:name=".activitytaxi.BookTaxiActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activitytaxi.TaxiBookingSummaryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activitytaxi.TaxiReturnToHomeScreen"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activityrestauarant.BestRestrauantNearCity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".activityrestauarant.RestrauntBookingDetailsActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
     </application>
 
 </manifest>

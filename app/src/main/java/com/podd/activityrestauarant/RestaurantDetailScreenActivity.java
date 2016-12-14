@@ -1,10 +1,12 @@
 package com.podd.activityrestauarant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private LinearLayout llRestaurantName;
     private RecyclerView rvRestaurants;
     private Context context;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,19 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         llCategory= (LinearLayout) findViewById(R.id.llCategory);
         llRestaurantName= (LinearLayout) findViewById(R.id.llRestaurantName);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("");
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 
@@ -88,7 +104,9 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvBookNow:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
+                intent=new Intent(context,RestrauntBookingDetailsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.tvViewMenu:
                 Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();

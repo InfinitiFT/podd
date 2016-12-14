@@ -56,7 +56,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
 
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
-        tvBack.setOnClickListener(this);
 
 
     }
@@ -80,8 +79,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
         llInner= (LinearLayout) findViewById(R.id.llInner);
-        tvBack= (TextView) findViewById(R.id.tvBack);
-        tvBack.setVisibility(View.VISIBLE);
     }
 
 
@@ -117,12 +114,12 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(intent);
                 }
                 break;
-            case R.id.tvBack:
+            /*case R.id.tvBack:
                 Intent intent=new Intent(context,HomeScreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
-
+*/
 
 
         }
@@ -130,12 +127,12 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
 
     private boolean isValid(){
         if(etLeavingAddress.getText().toString().isEmpty()){
-            Snackbar.make(llInner,R.string.please_enter_leaving_address,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_leaving_address,Toast.LENGTH_SHORT).show();
             etLeavingAddress.requestFocus();
             return false;
         }
         else if (etGoingAddress.getText().toString().isEmpty()){
-            Snackbar.make(llInner,R.string.please_enter_going_address,Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.please_enter_going_address,Toast.LENGTH_SHORT).show();
             etGoingAddress.requestFocus();
             return false;
         }
