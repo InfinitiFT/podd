@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentellela Alela! | </title>
+    <title>IOSAndroidAppDevelopment! | </title>
 
     <!-- Bootstrap -->
     <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>PODD</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -62,20 +62,18 @@
             <!-- sidebar menu -->
           
                 <ul class="nav side-menu ">
-                  <li><a href = "user_list.php"><i class="fa fa-home"></i>User Management </a></li>
+                  <li><a href = "user_list.php"><i class="fa fa-user"></i>User Management </a></li>
                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Resturant Management</a></li>
-
-                  <li><a href = ""><i class="fa fa-home"></i>Taxi Management</a></li>
-                  <li><a href = ""><i class="fa fa-home"></i>Transactions and Payments Management</a></li>
-                  <li><a href = ""><i class="fa fa-home"></i>Report Section</a></li>
-                   <li><a href = "service_management_list.php"><i class="fa fa-home"></i>Service Management</a></li>
+                  <!-- <li><a href = ""><i class="fa fa-car"></i>Taxi Management</a></li>
+                  <li><a href = ""><i class="fa fa-home"></i>Report Section</a></li> -->
+                  <li><a href = "service_management_list.php"><i class="fa fa-home"></i>Service Management</a></li>
                 </ul>
               
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
-                  <li><a href = ""><i class="fa fa-home"></i>Booking Management</a></li>
-                   <li><a href = ""><i class="fa fa-home"></i>Menu Management</a></li>
-                   <li><a href = ""><i class="fa fa-home"></i>Table Management</a></li>
+                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
+                   <li><a href = "restaurant_menu_management.php"><i class="fa fa-home"></i>Menu Management</a></li>
+                   <!-- <li><a href = ""><i class="fa fa-home"></i>Table Management</a></li> -->
                   
                 </ul>
              <?php }else{ ?>
@@ -89,20 +87,7 @@
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
+          
             <!-- /menu footer buttons -->
           </div>
         </div>
@@ -118,84 +103,11 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                   <?php echo $_SESSION['email'];?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
-                    <li>
-                      <a href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                    </li>
-                    <li><a href="javascript:;">Help</a></li>
-                    <li><a href="logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                  </ul>
-                </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
+                    <li><a href="logout.php">Log Out</a></li>
                   </ul>
                 </li>
               </ul>

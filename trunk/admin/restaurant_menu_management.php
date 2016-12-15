@@ -1,8 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = get_all_data('service_management');
- 
+  $data = get_all_data('restaurant_menu_details');
   //Basic Validation  
   
  ?> 
@@ -15,9 +14,9 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Service Category List</h2>
+                    <h2>Menu Management List</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a href="add_service_category.php"><button type="button" class="btn btn-round btn-success">Add Category</button></a>
+                      <li><a href="add_menu_restaurant.php"><button type="button" class="btn btn-round btn-success">Add Menu</button></a>
                       </li>
                       
                     </ul>
@@ -29,23 +28,24 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>Name</th>
-                          <th>Profile Image</th>
+                          <th>Meal Name</th>
+                          <th>Menu File</th>
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <input type="hidden" id = "delete_type" value = "service_management">
+                      <input type="hidden" id = "delete_type" value = "menu_management">
                       <tbody>
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
-                          <td><?php echo $record['service_name'];?></td>
-                          <td><?php if($record['service_image']){ ?><img src="<?php echo url().'/uploads/service_image/'.$record['service_image']; ?>" alt="Smiley face" height="42" width="42"><?php }?></td>
+                          <td><?php echo $record['meal'];?> </td>
+                          <td><?php  if($record['menu_url']){ ?><a href="<?php echo url().'uploads/menu_file/'.$record['menu_url']; ?>" target="_blank"><?php }?></a></td>
+                          
                           <td><?php if($record['status']=="1"){?>
-                             <button type="button" id="activatedeactivate-<?php echo $record['service_id'];?>" class="btn btn-round btn-warning">Deactivate</button>
+                             <button type="button" id="activatedeactivate-<?php echo $record['id'];?>" class="btn btn-round btn-warning">Deactivate</button>
                               <?php }else{?>
-                              <button type="button" id="activatedeactivate-<?php echo $record['service_id'];?>" class="btn btn-round btn-success">Activate</button>
+                              <button type="button" id="activatedeactivate-<?php echo $record['id'];?>" class="btn btn-round btn-success">Activate</button>
                               <?php }?>
-                             <button type="button" id="deletepopup-<?php echo $record['service_id'];?>" class="btn btn-round btn-danger">Delete</button>
+                             <button type="button" id="deletepopup-<?php echo $record['id'];?>" class="btn btn-round btn-danger">Delete</button>
                           </td>
                          </tr>
                         <?php }?> 

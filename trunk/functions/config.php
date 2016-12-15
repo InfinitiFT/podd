@@ -1,10 +1,13 @@
 <?php
-$link = mysql_connect('localhost', 'Dev_IOSNativeApp', 'mobi123DB');
-if (!$link) {
-    die('Could not connect: ' . mysql_error());
+$servername = "localhost";
+$username 	= "Dev_IOSNativeApp";
+$password 	= "mobi123DB";
+$database 	= "Dev_IOSNativeAppDevelopment_07Dec16_Ravi";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password,$database);
+$GLOBALS['conn'] =$conn;
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
-
-$db_selected = mysql_select_db('Dev_IOSNativeAppDevelopment_07Dec16_Ravi', $link);
-if (!$db_selected) {
-    die ('Could not connect to Database : ' . mysql_error());
-}
+ 
+?>

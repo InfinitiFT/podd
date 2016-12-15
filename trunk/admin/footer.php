@@ -2,7 +2,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            IOSAndroidAppDevelopment!
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -72,6 +72,10 @@
     <script src="../assets/lobibox-master/demo/demo.js"></script>
     <script src="../assets/vendors/raphael/raphael.min.js"></script>
     <script src="../assets/vendors/morris.js/morris.min.js"></script>
+    <script src="../assets/js/admin-common-validation.js"></script>
+    <script src="../assets/js/jquery.validate.min.js"></script>
+    <script src="validation.js"></script>
+     <script src="admin.js"></script>
     <!-- bootstrap-progressbar -->
    <script>
      
@@ -80,6 +84,14 @@
 
         
     </script>
+    <script type="text/javascript">
+     Lobibox.alert(
+      'error|success|warning|info', // Any of the following
+      {
+  
+       });
+
+            </script>
     <!-- <script src="script.js"></script> -->
     <!-- Flot -->
     

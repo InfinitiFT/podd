@@ -6,22 +6,23 @@ $sucess="";
 try {
       if(isset($_POST["submit"]))
       { 
-        if((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg")|| ($_FILES["image"]["type"] == "image/pjpeg")|| ($_FILES["image"]["type"] == "image/png")|| ($_FILES["image"]["type"] == "image/jpg"))){ 
-          $profile_image = $_FILES["image"]['name'];
-          $profile_image1=time().$_FILES['image']['name'];
-          $target_path = $_SERVER['DOCUMENT_ROOT']."/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/service_image/";
-          $target_path = $target_path . $profile_image1; 
-          //echo $target_path;exit;
-          if(move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) 
-          {
-            if(mysqli_query($GLOBALS['conn'],"INSERT INTO `service_management`(`service_name`, `service_image`) VALUES ('".trim($_POST['name'])."','".$profile_image1."')")){
-              $_SESSION["successmsg"] = "Service added successfully.";
-              header('Location:service_management_list.php');
+        $file_type=mime_content_type($_FILES['menu']['tmp_name']);
+        if(($file_type == "application/pdf")){ 
+          $menu_file = $_FILES["menu"]['name'];
+          $menu_file1=time().$_FILES['menu']['name'];
+          $target_path = $_SERVER['DOCUMENT_ROOT']."/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/menu_file/";
+          $target_path = $target_path . $menu_file1; 
+         
+            if(move_uploaded_file($_FILES['menu']['tmp_name'], $target_path)) 
+            {
+              $restaurant_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details WHERE `user_id` = '".$_SESSION['user_id']."'"));
+              if(mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_menu_details` (`restaurant_id`,`meal`, `menu_url`) VALUES ('".$restaurant_id['restaurant_id']."','".trim($_POST['name'])."','".$menu_file1."')")){
+                 header('Location:restaurant_menu_management.php');
              }
             else
-            {
+             {
                $_SESSION["errormsg"] = "insertion error.";
-            }
+             }
           }
           else
           {
@@ -31,10 +32,10 @@ try {
         }
         else
         {
-          $_SESSION["errormsg"] = "Only Image are allowed.";
+          $_SESSION["errormsg"] = "Only Pdf are allowed.";
         }
       }
-    }
+     }
 
 //catch exception
 catch(Exception $e) {
@@ -53,7 +54,7 @@ catch(Exception $e) {
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add Service Category</h2>
+                   
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -85,23 +86,22 @@ catch(Exception $e) {
                      </button><?php echo $error1; ?>
                    </div>
                   <?php }else{}?>
-                     
+                      <span class="section">Add Menu</span>
                       
                       <div class="item form-group">
                        
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Meal Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="Name"  type="text">
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Image<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Menu File<span class="required">*</span>
                         </label>
                         <div class="col-md-3 col-sm-3 col-xs-6">
-
                           
-                          <input id="image" class="form-control col-md-3 col-xs-5" data-validate-length-range="6" data-validate-words="2" name="image"   type="file">
+                          <input id="image" class="form-control col-md-3 col-xs-5" data-validate-length-range="6" data-validate-words="2" name="menu"   type="file">
                         </div>
                       </div>
                       <div class="ln_solid"></div>

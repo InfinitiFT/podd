@@ -25,9 +25,42 @@ else if($type == "users")
   {
     echo "error";
   }
+}
+else if($type == "booked_restaurant")
+{
+  if(mysqli_query($GLOBALS['conn'],"DELETE FROM `booked_records_restaurant` WHERE `booking_id` = '".$id."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
 
 }
- 
+else if($type == "restaurant")
+{
+  if(mysqli_query($GLOBALS['conn'],"DELETE FROM `restaurant_details` WHERE `restaurant_id` = '".$id."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+}
+else if($type == "menu_management")
+{
+  if(mysqli_query($GLOBALS['conn'],"DELETE FROM `restaurant_menu_details` WHERE `id` = '".$id."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+
+} 
 
 ?>
 

@@ -24,7 +24,28 @@ else if($type == "users")
   {
   	echo "error";
   }
-
+}
+else if($type == "restaurant")
+{
+  if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_details` SET `status`= '".$status."' WHERE `restaurant_id` = '".$id."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+}
+else if($type == "menu_management")
+{
+  if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_menu_details` SET `status`= '".$status."' WHERE `id` = '".$id."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
 }
  
  

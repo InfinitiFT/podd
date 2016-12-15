@@ -2,6 +2,7 @@
   header('Content-type: application/json');
   include('../functions/functions.php');
   //Receiveing Input in Json and decoding
+  basic_authentication($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
   $data = json_decode(file_get_contents('php://input'));
   $type = $data->{"type"};
   $result = array();
@@ -11,11 +12,12 @@
 	else if($type == 'dietary')
 		$data = get_all_data('restaurant_dietary');
 	else if($type == 'ambience')
-		$data = get_all_data('restaurant_ambience');	
+		$data = get_all_data('restaurant_ambience');
+	else if($type == 'meal')
+		$data = get_all_data('restaurant_meal');	
 	else
-		$data = get_all_data('restaurant_meal');
-	
-	while($record = mysql_fetch_assoc($data)){
+		$data = get_all_data('restaurant_price_range');
+	while($record = mysqli_fetch_assoc($data)){
 		$allData['id'] = $record['id'];
 		if($type == 'cuisine')
 			$allData['name'] = $record['cuisine_name'];
@@ -23,8 +25,10 @@
 			$allData['name'] = $record['dietary_name'];
 		else if($type == 'ambience')
 			$allData['name'] = $record['ambience_name'];
-		else
+		else if($type == 'meal')
 			$allData['name'] = $record['meal_type'];
+		else
+			$allData['name'] = $record['price_range'];
 		$result[] = $allData;
 	}
 		$response['allList'] = $result;
