@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
@@ -14,9 +16,9 @@ import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
 /**
  * Created by Shalini Bishnoi on 13-12-2016.
  */
-public class BestRestrauantAdapter extends RecyclerView.Adapter<BestRestrauantAdapter.MyViewHolder> {
+public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
     private Context context;
-    public BestRestrauantAdapter(Context context) {
+    public BestRestaurantAdapter(Context context) {
         this.context=context;
 
     }
@@ -24,7 +26,7 @@ public class BestRestrauantAdapter extends RecyclerView.Adapter<BestRestrauantAd
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_grid_layout, parent, false);
-        return new BestRestrauantAdapter.MyViewHolder(view);
+        return new BestRestaurantAdapter.MyViewHolder(view);
     }
 
     @Override
@@ -48,9 +50,22 @@ public class BestRestrauantAdapter extends RecyclerView.Adapter<BestRestrauantAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout llMain;
+        private ImageView ivRestaurant;
+        private TextView tvRestaurantName;
+        private TextView tvtypeofRestaurant;
+        private TextView tvLocation;
+        private TextView tvDistance;
+        private TextView tvPriceRange;
         public MyViewHolder(View itemView) {
             super(itemView);
             llMain= (LinearLayout) itemView.findViewById(R.id.llMain);
+            ivRestaurant= (ImageView) itemView.findViewById(R.id.ivRestaurant);
+            tvRestaurantName= (TextView) itemView.findViewById(R.id.tvRestaurantName);
+            tvtypeofRestaurant= (TextView) itemView.findViewById(R.id.tvtypeofRestaurant);
+            tvLocation= (TextView) itemView.findViewById(R.id.tvLocation);
+            tvDistance= (TextView) itemView.findViewById(R.id.tvDistance);
+            tvPriceRange= (TextView) itemView.findViewById(R.id.tvPriceRange);
+
         }
     }
 }

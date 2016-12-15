@@ -37,7 +37,7 @@
         <activity
             android:name=".activityrestauarant.RestaurantDetailScreenActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".activitytaxi.BookTaxiActivity"
             android:screenOrientation="landscape"
@@ -51,10 +51,18 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.BestRestrauantNearCity"
+            android:name=".activityrestauarant.BestRestaurantNearCity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".activityrestauarant.RestrauntBookingDetailsActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activityrestauarant.RestaurantBookingDetailsActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activityrestauarant.BookingSummaryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".activityrestauarant.RestaurantReturnToHomeActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
     </application>

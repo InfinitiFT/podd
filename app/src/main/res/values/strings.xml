@@ -12,14 +12,14 @@
     <string name="action_settings">Settings</string>
     <string name="podd">podd</string>
     <string name="discover_london">Discover expertly curated experiences in London</string>
-    <string name="serviced_apartment">From the most desirable fine dining restraunts in London to unique experiences, family outings and taxi bookings, you can now plan and book a range of experiences directly from comfort of your hotel or serviced apartment.</string>
+    <string name="serviced_apartment">From the most desirable fine dining Restaurants in London to unique experiences, family outings and taxi bookings, you can now plan and book a range of experiences directly from comfort of your hotel or serviced apartment.</string>
     <string name="stay_london">Enjoy using <b> podd </b> for a memorable stay in London.</string>
     <string name="restraunt">Restraunt</string>
     <string name="taxi">Taxi</string>
     <string name="health"><![CDATA[Health, Fitness & Wellbeing]]></string>
     <string name="happening">Happening in London</string>
     <string name="food"><![CDATA[Food & Drinks]]></string>
-    <string name="discover_restraunts">Discover our curated selection of London\'s best restaurants and bars</string>
+    <string name="discover_Restaurants">Discover our curated selection of London\'s best restaurants and bars</string>
     <string name="michelin_star_restaurants">MECHELIN STAR RESTAURANTS</string>
     <string name="casualEats">CASUAL EATS</string>
     <string name="lateNightVenues">LATE NIGHT VENUES</string>
@@ -27,7 +27,7 @@
     <string name="viewAndBookrestaurants"><![CDATA[View and book Restaurants & Bars]]></string>
     <string name="going_somewhere">Going Somewhere? Book a secure taxi or limousine</string>
     <string name="book_a_taxi">Book a taxi</string>
-    <string name="restaraunt_name">RESTAUARANT NAME</string>
+    <string name="restaraunt_name">RESTAURANT NAME</string>
     <string name="colon">:</string>
     <string name="text_about_restauarnt">Text about restauarnt</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris aliquam dignissim libero condimentum euismod. Aenean aliquam sagittis euismod. Pellentesque sed felis non massa porta efficitur in at turpis. Aliquam ac laoreet neque. Phasellus tincidunt a risus sed pharetra. Vivamus sed viverra lacus.</string>
@@ -69,7 +69,7 @@
     <string name="confirmation_message">We will shortly sent a confirmation of this booking by text to your mobile and email address</string>
     <string name="thanks_for_using_podd">Thank you for using podd.</string>
     <string name="return_to_home">RETURN TO HOME</string>
-    <string name="our_curated_selection_of_best_restraunts">Our curated selection of best restaurants near you </string>
+    <string name="our_curated_selection_of_best_Restaurants">Our curated selection of best restaurants near you </string>
     <string name="mayfair"> Mayfair</string>
     <string name="dietary">DIETARY, CUISINE,</string>
     <string name="search_by">Search by</string>
@@ -88,4 +88,6 @@
     <string name="date_booked">DATE BOOKED</string>
     <string name="time_booked">TIME BOOKED</string>
     <string name="number_of_persons">No. OF PEOPLE</string>
+    <string name="date_Booked">Date Booked</string>
+    <string name="time_Booked">Time Booked</string>
 </resources>

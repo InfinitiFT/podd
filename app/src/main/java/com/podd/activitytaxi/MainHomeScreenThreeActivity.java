@@ -12,6 +12,9 @@ import android.widget.Toast;
 import com.podd.R;
 
 
+/**
+ * The type Main home screen three activity.
+ */
 public class MainHomeScreenThreeActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvBookTaxi;
     private TextView tvGoingSomewhere;

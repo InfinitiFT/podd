@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.podd.R;
 
+/**
+ * The type Main home screen second activity.
+ */
 public class MainHomeScreenSecondActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvDiscoverRestaurantsBars;
     private TextView tvViewAndBook;

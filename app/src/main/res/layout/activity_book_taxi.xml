@@ -30,7 +30,7 @@
                 android:padding="@dimen/dp_5"
                 android:text="@string/book_a_taxi_or_limousine"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="@dimen/text_size_16"
                 android:textStyle="bold" />
 
 
@@ -64,6 +64,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:imeOptions="actionNext"
                     android:background="@drawable/button_background"
                     android:hint="@string/enter_address_or_postcode"
                     android:padding="@dimen/dp_5"
@@ -88,6 +92,9 @@
                     android:background="@drawable/button_background"
                     android:hint="@string/enter_address_or_postcode"
                     android:padding="@dimen/dp_5"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
                     android:text=""
                     android:textSize="@dimen/text_size_12"
                     android:visibility="invisible" />
@@ -119,6 +126,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"
+                    android:textColor="@color/colorPrimaryDark"
                     android:hint="@string/enter_address_or_postcode"
                     android:padding="@dimen/dp_5"
                     android:text=""
@@ -149,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:padding="10dp"
+                        android:padding="@dimen/dp_4"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/colorPrimaryDark" />
                 </FrameLayout>
@@ -190,7 +201,7 @@
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
                     android:text="@string/today"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_12" />
 
                 <TextView
@@ -203,7 +214,7 @@
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
                     android:text="@string/tomorrow"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_12" />
 
                 <TextView
@@ -215,7 +226,7 @@
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
                     android:text="@string/select_from_calender"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_12" />
             </LinearLayout>
 
@@ -253,7 +264,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:padding="10dp"
+                        android:padding="@dimen/dp_4"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/colorPrimaryDark" />
                 </FrameLayout>
@@ -293,7 +304,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:padding="10dp"
+                        android:padding="@dimen/dp_4"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/colorPrimaryDark" />
                 </FrameLayout>
@@ -332,7 +343,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:padding="10dp"
+                        android:padding="@dimen/dp_4"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/colorPrimaryDark" />
                 </FrameLayout>

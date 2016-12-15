@@ -2,9 +2,9 @@ package com.podd.activitytaxi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.podd.R;
 
+/**
+ * The type Book taxi activity.
+ */
 public class BookTaxiActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private Spinner spSelectAirport;
@@ -56,6 +59,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
 
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
+        tvSelectfromCalender.setOnClickListener(this);
 
 
     }
@@ -79,6 +83,21 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
         llInner= (LinearLayout) findViewById(R.id.llInner);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("");
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 
@@ -114,12 +133,10 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(intent);
                 }
                 break;
-            /*case R.id.tvBack:
-                Intent intent=new Intent(context,HomeScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+            case R.id.tvSelectfromCalender:
+                Toast.makeText(context,R.string.work_in_progress,Toast.LENGTH_SHORT).show();
                 break;
-*/
+
 
 
         }

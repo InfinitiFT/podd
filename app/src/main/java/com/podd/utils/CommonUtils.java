@@ -69,25 +69,60 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/**
+ * The type Common utils.
+ */
 public class CommonUtils {
     private static final float ALPHA_LIGHT = 0.45f;
     private static final float ALPHA_DARK = 1.0f;
+    /**
+     * The constant accept.
+     */
     public static boolean accept;
+    /**
+     * The constant imageNameLocal.
+     */
     public static String imageNameLocal;
     private static ProgressDialog dialogProgress;
     /*private static CustomProgressDialog customProgressDialog;*/
     private static final String TAG = CommonUtils.class.getSimpleName();
+    /**
+     * The constant chatWindowId.
+     */
     public static String chatWindowId;
+    /**
+     * The constant isFriendRecievedForeGround.
+     */
     public static boolean isFriendRecievedForeGround=false;
+    /**
+     * The constant isChatForeground.
+     */
     public static boolean isChatForeground=false;
+    /**
+     * The constant isNotiForeground.
+     */
     public static boolean isNotiForeground=false;
 
+    /**
+     * Is network connected boolean.
+     *
+     * @param mContext the m context
+     * @return the boolean
+     */
     public static boolean isNetworkConnected(Context mContext) {
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         return ni != null;
     }
-  /*  public static String getTimeFromTSDate(String timeStamp) {
+
+    /**
+     * Gets alert with positive button.
+     *
+     * @param message the message
+     * @param context the context
+     * @param field   the field
+     */
+/*  public static String getTimeFromTSDate(String timeStamp) {
         if (timeStamp.length() > 0) {
             return new SimpleDateFormat("hh:mm a")
                     .format(new Date((Long.valueOf(timeStamp) * 1000)));
@@ -108,6 +143,14 @@ public class CommonUtils {
         AlertDialog alert1 = builder.create();
         alert1.show();
     }
+
+    /**
+     * Gets preferences int.
+     *
+     * @param context the context
+     * @param key     the key
+     * @return the preferences int
+     */
     public static int getPreferencesInt(Context context, String key) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -115,6 +158,14 @@ public class CommonUtils {
         return sharedPreferences.getInt(key, 0);
 
     }
+
+    /**
+     * Save preference int.
+     *
+     * @param context the context
+     * @param key     the key
+     * @param value   the value
+     */
     public static void savePreferenceInt(Context context, String key,
                                          int value) {
 
@@ -126,6 +177,13 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Show alert with positive button.
+     *
+     * @param message the message
+     * @param context the context
+     * @param field   the field
+     */
     public static void showAlertWithPositiveButton(String message, Context context, String field) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message + " " + field);
@@ -140,6 +198,12 @@ public class CommonUtils {
         alert1.show();
     }
 
+    /**
+     * Show alert with positive button.
+     *
+     * @param message the message
+     * @param context the context
+     */
     public static void showAlertWithPositiveButton(int message, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
@@ -154,6 +218,12 @@ public class CommonUtils {
         alert1.show();
     }
 
+    /**
+     * Convert path to base 64 string.
+     *
+     * @param picturePath the picture path
+     * @return the string
+     */
     public static String convertPathToBase64(String picturePath) {
 
         if (picturePath != null && picturePath.length() != 0) {
@@ -168,6 +238,13 @@ public class CommonUtils {
         return "";
     }
 
+    /**
+     * Show alert with positive button.
+     *
+     * @param message  the message
+     * @param context  the context
+     * @param editText the edit text
+     */
     public static void showAlertWithPositiveButton(String message, Context context, final EditText editText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
@@ -184,16 +261,33 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Validate first name boolean.
+     *
+     * @param firstName the first name
+     * @return the boolean
+     */
     public static boolean validateFirstName(String firstName) {
         return firstName.matches("[A-Z][a-zA-Z]*");
     } // end method validateFirstName
 
-    // validate last name
+    /**
+     * Validate last name boolean.
+     *
+     * @param lastName the last name
+     * @return the boolean
+     */
+// validate last name
     public static boolean validateLastName(String lastName) {
         return lastName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
     }
 
 
+    /**
+     * Hide keyboard.
+     *
+     * @param activity the activity
+     */
     public static void hideKeyboard(Activity activity) {
         try {
             InputMethodManager in = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -207,7 +301,12 @@ public class CommonUtils {
     }
 
 
-
+    /**
+     * Is valid email boolean.
+     *
+     * @param target the target
+     * @return the boolean
+     */
     public final static boolean isValidEmail(CharSequence target) {
         return target != null && Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
@@ -246,6 +345,12 @@ public class CommonUtils {
     }
 */
 
+    /**
+     * Show toast.
+     *
+     * @param context the context
+     * @param string  the string
+     */
     public static void showToast(Context context, String string) {
         Toast.makeText(context, string, Toast.LENGTH_SHORT).show();
     }
@@ -264,6 +369,11 @@ public class CommonUtils {
     }
 */
 
+    /**
+     * Hide keyboard.
+     *
+     * @param activity the activity
+     */
     public static void hide_keyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -275,6 +385,12 @@ public class CommonUtils {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * Gets timestamp of date.
+     *
+     * @param str_date the str date
+     * @return the timestamp of date
+     */
     public static String getTimestampOfDate(String str_date) {
         java.text.DateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
         Date date = null;
@@ -290,6 +406,12 @@ public class CommonUtils {
         return timestampValue;
     }
 
+    /**
+     * Gets timestamp of date yyymmdd.
+     *
+     * @param str_date the str date
+     * @return the timestamp of date yyymmdd
+     */
     public static String getTimestampOfDateYYYMMDD(String str_date) {
         java.text.DateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
         Date date = null;
@@ -306,6 +428,12 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Gets timestamp of mmddyy.
+     *
+     * @param str_date the str date
+     * @return the timestamp of mmddyy
+     */
     public static String getTimestampOfMMDDYY(String str_date) {
         java.text.DateFormat formatter = new SimpleDateFormat("MM/dd/yyy");
         Date date = null;
@@ -321,6 +449,13 @@ public class CommonUtils {
         return timestampValue;
     }
 
+    /**
+     * Add day to date string.
+     *
+     * @param date    the date
+     * @param noOfDay the no of day
+     * @return the string
+     */
     public static String addDayToDate(String date, int noOfDay) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
         Date dtStartDate = null;
@@ -336,6 +471,13 @@ public class CommonUtils {
         return resultDate;
     }
 
+    /**
+     * Add day to date other format string.
+     *
+     * @param date    the date
+     * @param noOfDay the no of day
+     * @return the string
+     */
     public static String addDayToDateOtherFormat(String date, int noOfDay) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
         Date dtStartDate = null;
@@ -351,6 +493,13 @@ public class CommonUtils {
         return resultDate;
     }
 
+    /**
+     * Save int preferences.
+     *
+     * @param context the context
+     * @param key     the key
+     * @param value   the value
+     */
     public static void saveIntPreferences(Context context, String key, int value) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -361,6 +510,13 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Gets int preferences.
+     *
+     * @param context the context
+     * @param key     the key
+     * @return the int preferences
+     */
     public static int getIntPreferences(Context context, String key) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -369,6 +525,12 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Create dir file.
+     *
+     * @return the file
+     * @throws FileNotFoundException the file not found exception
+     */
     public static File createDir() throws FileNotFoundException {
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File(sdCard.getAbsolutePath() + "/SccOfflineApp/");
@@ -381,6 +543,17 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Show alert exit.
+     *
+     * @param context           the context
+     * @param titleId           the title id
+     * @param messageId         the message id
+     * @param positiveButtontxt the positive buttontxt
+     * @param positiveListener  the positive listener
+     * @param negativeButtontxt the negative buttontxt
+     * @param negativeListener  the negative listener
+     */
     public static void showAlertExit(Context context, int titleId, int messageId,
                                      CharSequence positiveButtontxt,
                                      DialogInterface.OnClickListener positiveListener,
@@ -396,6 +569,13 @@ public class CommonUtils {
         dlg.show();
     }
 
+    /**
+     * Show alert.
+     *
+     * @param message the message
+     * @param v       the v
+     * @param context the context
+     */
     public static void showAlert(String message, final View v, Context context) {
 
         if (v != null) {
@@ -424,6 +604,13 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Show alert new.
+     *
+     * @param title   the title
+     * @param message the message
+     * @param context the context
+     */
     public static void showAlertNew(String title, String message,
                                     final Context context) {
 
@@ -443,6 +630,12 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Show alert ok.
+     *
+     * @param message the message
+     * @param context the context
+     */
     public static void showAlertOk(String message, Activity context) {
 
 
@@ -466,6 +659,13 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Show alert ok cancel.
+     *
+     * @param message the message
+     * @param v       the v
+     * @param context the context
+     */
     public static void showAlertOkCancel(String message, final View v, Activity context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message)
@@ -491,6 +691,13 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Progress dialog.
+     *
+     * @param tittle  the tittle
+     * @param message the message
+     * @param context the context
+     */
     public static void ProgressDialog(String tittle, String message, Activity context) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         // set title
@@ -516,13 +723,22 @@ public class CommonUtils {
 	}*/
 
 
+    /**
+     * Is valid phone boolean.
+     *
+     * @param target the target
+     * @return the boolean
+     */
     public final static boolean isValidPhone(CharSequence target) {
         return target != null && Patterns.PHONE.matcher(target).matches() && (target.length() >= 10 && target.length() <= 20);
     }
 
 
-
-
+    /**
+     * Sets list view height based on children.
+     *
+     * @param listView the list view
+     */
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
@@ -542,6 +758,11 @@ public class CommonUtils {
         listView.setLayoutParams(params);
     }
 
+    /**
+     * Hide soft keyboard.
+     *
+     * @param activity the activity
+     */
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -550,6 +771,12 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Send email.
+     *
+     * @param context the context
+     * @param To      the to
+     */
     public static void SendEmail(Activity context, String To) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
@@ -565,6 +792,14 @@ public class CommonUtils {
                     "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * Gets time stamp date.
+     *
+     * @param date_time the date time
+     * @param format    the format
+     * @return the time stamp date
+     */
     public static String getTimeStampDate(String date_time, String format) {
 
         SimpleDateFormat formatter = new SimpleDateFormat(format,Locale.getDefault());
@@ -584,6 +819,12 @@ public class CommonUtils {
         }
 
     }
+
+    /**
+     * Gets time stamp.
+     *
+     * @return the time stamp
+     */
     public static String getTimeStamp() {
 
         long timestamp = (System.currentTimeMillis() / 1000L);
@@ -605,6 +846,12 @@ public class CommonUtils {
         }
     }*/
 
+    /**
+     * Is online boolean.
+     *
+     * @param context the context
+     * @return the boolean
+     */
     public static boolean isOnline(Context context) {
         ConnectivityManager conMgr = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -613,7 +860,14 @@ public class CommonUtils {
         return !(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable());
     }
 
-    /* public static void savePreferencesString(Context context, String key, String value)
+    /**
+     * Save preferences string.
+     *
+     * @param context the context
+     * @param key     the key
+     * @param value   the value
+     */
+/* public static void savePreferencesString(Context context, String key, String value)
      {
 
          SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -633,6 +887,13 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Save preferences serializable.
+     *
+     * @param context the context
+     * @param key     the key
+     * @param value   the value
+     */
     public static void savePreferencesSerializable(Context context, String key,
                                                    Serializable value) {
 
@@ -643,6 +904,14 @@ public class CommonUtils {
         editor.apply();
 
     }
+
+    /**
+     * Save preferences boolean.
+     *
+     * @param context the context
+     * @param key     the key
+     * @param value   the value
+     */
     public static void savePreferencesBoolean(Context context, String key, boolean value) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -651,6 +920,13 @@ public class CommonUtils {
         editor.apply();
     }
 
+    /**
+     * Gets preferences string.
+     *
+     * @param context the context
+     * @param key     the key
+     * @return the preferences string
+     */
     public static String getPreferencesString(Context context, String key) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -659,6 +935,13 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Gets preferences.
+     *
+     * @param context the context
+     * @param key     the key
+     * @return the preferences
+     */
     public static String getPreferences(Context context, String key) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -676,6 +959,13 @@ public class CommonUtils {
 
     }*/
 
+    /**
+     * Gets preferences boolean.
+     *
+     * @param context the context
+     * @param key     the key
+     * @return the preferences boolean
+     */
     public static boolean getPreferencesBoolean(Activity context, String key) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -702,6 +992,12 @@ public class CommonUtils {
     }
 */
 
+    /**
+     * Gets time.
+     *
+     * @param timestamp_in_string the timestamp in string
+     * @return the time
+     */
     public static String getTime(String timestamp_in_string) {
         long dv = Long.valueOf(timestamp_in_string) * 1000;// its need to be in milisecond
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
@@ -711,6 +1007,12 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Is date today boolean.
+     *
+     * @param milliSeconds the milli seconds
+     * @return the boolean
+     */
     public static boolean isDateToday(long milliSeconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
@@ -726,6 +1028,13 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Show alert title.
+     *
+     * @param title   the title
+     * @param message the message
+     * @param context the context
+     */
     public static void showAlertTitle(String title, String message,
                                       final Context context) {
 
@@ -746,13 +1055,24 @@ public class CommonUtils {
     }
 
 
-
+    /**
+     * Is valid mobile boolean.
+     *
+     * @param phone the phone
+     * @return the boolean
+     */
     public static boolean isValidMobile(String phone)
     {
         return Patterns.PHONE.matcher(phone).matches();
     }
 
 
+    /**
+     * Gets date and time from ts date.
+     *
+     * @param timeStamp the time stamp
+     * @return the date and time from ts date
+     */
     public static String getDateAndTimeFromTSDate(String timeStamp) {
         if (timeStamp.length() > 0) {
             return new SimpleDateFormat("MM-dd-yyyy, hh:mm a",Locale.getDefault())
@@ -762,6 +1082,12 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Gets year from ts date.
+     *
+     * @param timeStamp the time stamp
+     * @return the year from ts date
+     */
     public static String getYearFromTSDate(String timeStamp) {
         if (timeStamp.length() > 0) {
             return new SimpleDateFormat("yyyy",Locale.getDefault())
@@ -771,10 +1097,23 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Gets hours from millis.
+     *
+     * @param milliseconds the milliseconds
+     * @return the hours from millis
+     */
     public static String getHoursFromMillis(long milliseconds) {
         return "" + (int) ((milliseconds / (1000 * 60 * 60)) % 24);
     }
 
+    /**
+     * Gets bit map from image u rl.
+     *
+     * @param imagepath the imagepath
+     * @param activity  the activity
+     * @return the bit map from image u rl
+     */
     public static Bitmap getBitMapFromImageURl(String imagepath, Activity activity) {
 
         Bitmap bitmapFromMapActivity = null;
@@ -877,6 +1216,12 @@ public class CommonUtils {
         return m;
     }
 
+    /**
+     * Print key hash string.
+     *
+     * @param context the context
+     * @return the string
+     */
     public static String printKeyHash(Activity context) {
         PackageInfo packageInfo;
         String key = null;
@@ -909,11 +1254,26 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Check email id boolean.
+     *
+     * @param emailId the email id
+     * @return the boolean
+     */
     public static boolean checkEmailId(String emailId) {
         return Patterns.EMAIL_ADDRESS.matcher(emailId).matches();
     }
 
 
+    /**
+     * Sets fragment.
+     *
+     * @param fragment    the fragment
+     * @param removeStack the remove stack
+     * @param activity    the activity
+     * @param mContainer  the m container
+     * @param tag         the tag
+     */
     public static void setFragment(Fragment fragment, boolean removeStack, FragmentActivity activity, FrameLayout mContainer, String tag) {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         FragmentTransaction ftTransaction = fragmentManager.beginTransaction();
@@ -938,6 +1298,8 @@ public class CommonUtils {
 
     /**
      * This method is used for Enable View
+     *
+     * @param view the view
      */
     public static void setEnableState(View view) {
         view.setAlpha(ALPHA_DARK);
@@ -947,18 +1309,30 @@ public class CommonUtils {
 
     /**
      * This method is used for Disable View
+     *
+     * @param view the view
      */
-
     public static void setDisableState(View view) {
         view.setAlpha(ALPHA_LIGHT);
         view.setEnabled(false);
         view.setClickable(false);
     }
 
+    /**
+     * Print log.
+     *
+     * @param tag the tag
+     * @param msg the msg
+     */
     public static void printLog(String tag, String msg) {
         Log.e(tag, msg);
     }
 
+    /**
+     * Show progress dialog.
+     *
+     * @param context the context
+     */
     public static void showProgressDialog(Context context) {
         if (context != null) {
 
@@ -978,6 +1352,11 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Dis miss progress dialog.
+     *
+     * @param mContext the m context
+     */
     public static void disMissProgressDialog(Context mContext) {
         if (dialogProgress != null) {
             dialogProgress.dismiss();
@@ -1005,6 +1384,12 @@ public class CommonUtils {
         }
     }*/
 
+    /**
+     * Clear preference.
+     *
+     * @param context the context
+     * @param keyName the key name
+     */
     public static void clearPreference(Context context, String keyName) {
         SharedPreferences preferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -1018,6 +1403,13 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Save string to preference.
+     *
+     * @param context  the context
+     * @param keyName  the key name
+     * @param keyValue the key value
+     */
     public static void saveStringToPreference(Context context, String keyName,
                                               String keyValue) {
         SharedPreferences preferences = PreferenceManager
@@ -1027,11 +1419,22 @@ public class CommonUtils {
         editor.apply();
     }
 
+    /**
+     * Check permission camera boolean.
+     *
+     * @param context the context
+     * @return the boolean
+     */
     public static boolean checkPermissionCamera(Activity context) {
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Request permission camera.
+     *
+     * @param activity the activity
+     */
     public static void requestPermissionCamera(Activity activity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, AppConstant.PERMISSION_REQUEST_CAMERA_CODE);
@@ -1041,6 +1444,12 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Check permission storage boolean.
+     *
+     * @param context the context
+     * @return the boolean
+     */
     public static boolean checkPermissionStorage(Activity context) {
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result1 = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -1055,6 +1464,11 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Request permission storage.
+     *
+     * @param activity the activity
+     */
     public static void requestPermissionStorage(Activity activity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, AppConstant.PERMISSION_REQUEST_STORAGE_CODE);
@@ -1070,6 +1484,11 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Request permission gps.
+     *
+     * @param context the context
+     */
     public static void requestPermissionGPS(Activity context) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstant.PERMISSION_REQUEST_GPS_CODE);
@@ -1078,13 +1497,24 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Check permission gps boolean.
+     *
+     * @param context the context
+     * @return the boolean
+     */
     public static boolean checkPermissionGPS(Activity context) {
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
 
-
+    /**
+     * Gets time am pm.
+     *
+     * @param timestamp_in_string the timestamp in string
+     * @return the time am pm
+     */
     public static String getTimeAmPm(String timestamp_in_string) {
         long dv = Long.valueOf(timestamp_in_string) * 1000;// its need to be in milisecond
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
@@ -1130,6 +1560,12 @@ public class CommonUtils {
     }
 */
 
+    /**
+     * Remove decimal string.
+     *
+     * @param value the value
+     * @return the string
+     */
     public static String removeDecimal(Double  value) {
         DecimalFormat decimalFormat=new DecimalFormat("#.#");
         System.out.println(decimalFormat.format(value)); //prints 2
@@ -1138,6 +1574,12 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Check all permissions boolean.
+     *
+     * @param mContext the m context
+     * @return the boolean
+     */
     public static boolean checkAllPermissions(Context mContext) {
         int result = ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result1 = ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -1150,6 +1592,12 @@ public class CommonUtils {
 
     }
 
+    /**
+     * Request all permissions.
+     *
+     * @param activity                              the activity
+     * @param REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS the request code ask multiple permissions
+     */
     public static void requestAllPermissions(Activity activity, int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 || ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -1167,6 +1615,12 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * Encode tobase 64 string.
+     *
+     * @param image the image
+     * @return the string
+     */
     public static String encodeTobase64(Bitmap image) {
         Bitmap immagex=image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -1178,6 +1632,13 @@ public class CommonUtils {
         return imageEncoded;
     }
 
+    /**
+     * Gets path.
+     *
+     * @param context the context
+     * @param uri     the uri
+     * @return the path
+     */
     public static String getPath(Activity context,final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -1297,7 +1758,12 @@ public class CommonUtils {
     }
 
 
-
+    /**
+     * Show alert ok.
+     *
+     * @param message the message
+     * @param context the context
+     */
     public static void showAlertOk(String message, Context context) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage(message)
@@ -1318,9 +1784,22 @@ public class CommonUtils {
     }
 
 
+    /**
+     * Sets bold.
+     *
+     * @param context the context
+     * @return the bold
+     */
     public static Typeface setBold(Context context) {
         return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
     }
+
+    /**
+     * Sets regular.
+     *
+     * @param context the context
+     * @return the regular
+     */
     public static Typeface setRegular(Context context) {
         return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
     }

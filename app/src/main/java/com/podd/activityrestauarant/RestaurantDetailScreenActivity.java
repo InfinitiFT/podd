@@ -13,9 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
-import com.podd.adapter.RestrauntsAdapter;
+import com.podd.adapter.RestaurantsAdapter;
 
 
+/**
+ * The type Restaurant detail screen activity.
+ */
 public class RestaurantDetailScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvRestauarntName;
@@ -51,10 +54,10 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     }
 
     private void setAdapter() {
-        RestrauntsAdapter restrauntsAdapter = new RestrauntsAdapter(context);
+        RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         rvRestaurants.setLayoutManager(mLayoutManager);
-        rvRestaurants.setAdapter(restrauntsAdapter);
+        rvRestaurants.setAdapter(RestaurantsAdapter);
     }
 
     private void getIds() {
@@ -77,6 +80,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         llCategory= (LinearLayout) findViewById(R.id.llCategory);
         llRestaurantName= (LinearLayout) findViewById(R.id.llRestaurantName);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -104,7 +109,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvBookNow:
-                intent=new Intent(context,RestrauntBookingDetailsActivity.class);
+                intent=new Intent(context,RestaurantBookingDetailsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
