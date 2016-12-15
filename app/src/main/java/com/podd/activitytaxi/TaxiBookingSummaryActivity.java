@@ -57,6 +57,8 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
         etPhoneNumber= (EditText) findViewById(R.id.etPhoneNumber);
         etEmail= (EditText) findViewById(R.id.etEmail);
         llInner= (LinearLayout) findViewById(R.id.llInner);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

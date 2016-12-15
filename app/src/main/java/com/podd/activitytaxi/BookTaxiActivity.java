@@ -83,6 +83,8 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
         llInner= (LinearLayout) findViewById(R.id.llInner);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

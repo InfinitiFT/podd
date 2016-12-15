@@ -80,6 +80,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         llCategory= (LinearLayout) findViewById(R.id.llCategory);
         llRestaurantName= (LinearLayout) findViewById(R.id.llRestaurantName);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

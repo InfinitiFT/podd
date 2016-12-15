@@ -27,6 +27,16 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private Spinner spSelectTime;
     private Spinner spSelectPeople;
     private TextView tvSelectfromCalender;
+    private TextView tvRestauarntName;
+    private TextView tvDate;
+    private TextView tvToday;
+    private TextView tvTomorrow;
+    private TextView tvTime;
+    private TextView tvBookingSummary;
+    private TextView tvDateBooked;
+    private TextView tvTimeBooked;
+    private TextView tvNoOfPersons;
+
     private final String[]timeArray={"Select Time","10 AM","10:30 AM"};
     private final String[]numberOfPeopleArray={"Select Number of People","1","2","3"};
 
@@ -48,6 +58,17 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         tvSelectfromCalender= (TextView) findViewById(R.id.tvSelectfromCalender);
         spSelectTime= (Spinner) findViewById(R.id.spSelectTime);
         spSelectPeople= (Spinner) findViewById(R.id.spSelectPeople);
+        tvRestauarntName= (TextView) findViewById(R.id.tvRestauarntName);
+        tvDate= (TextView) findViewById(R.id.tvDate);
+        tvToday= (TextView) findViewById(R.id.tvToday);
+        tvTomorrow= (TextView) findViewById(R.id.tvTomorrow);
+        tvTime= (TextView) findViewById(R.id.tvTime);
+        tvBookingSummary= (TextView) findViewById(R.id.tvBookingSummary);
+        tvDateBooked= (TextView) findViewById(R.id.tvDateBooked);
+        tvTimeBooked= (TextView) findViewById(R.id.tvTimeBooked);
+        tvNoOfPersons= (TextView) findViewById(R.id.tvNoOfPersons);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

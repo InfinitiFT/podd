@@ -87,6 +87,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         tvAmbience= (TextView) findViewById(R.id.tvAmbience);
         tvBusiness= (TextView) findViewById(R.id.tvBusiness);
         tvDeliveredtoYou= (TextView) findViewById(R.id.tvDeliveredtoYou);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

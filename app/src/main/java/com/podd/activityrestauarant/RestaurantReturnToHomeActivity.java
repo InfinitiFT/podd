@@ -18,6 +18,14 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvReturnToHome;
     private Context context;
     private Intent intent;
+    private TextView tvRestauarntName;
+    private TextView tvLocation;
+    private TextView tvDateBooked;
+    private TextView tvTimeBooked;
+    private TextView tvNumberofPeople;
+    private TextView tvConfirmation;
+    private TextView tvThanks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,15 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
 
     private void getIds() {
         tvReturnToHome= (TextView) findViewById(R.id.tvReturnToHome);
+        tvRestauarntName= (TextView) findViewById(R.id.tvRestauarntName);
+        tvLocation= (TextView) findViewById(R.id.tvLocation);
+        tvDateBooked= (TextView) findViewById(R.id.tvDateBooked);
+        tvTimeBooked= (TextView) findViewById(R.id.tvTimeBooked);
+        tvNumberofPeople= (TextView) findViewById(R.id.tvNumberofPeople);
+        tvConfirmation= (TextView) findViewById(R.id.tvConfirmation);
+        tvThanks= (TextView) findViewById(R.id.tvThanks);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
@@ -48,9 +50,22 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout llMain;
+        private ImageView ivRestaurant;
+        private TextView tvRestaurantName;
+        private TextView tvtypeofRestaurant;
+        private TextView tvLocation;
+        private TextView tvDistance;
+        private TextView tvPriceRange;
         public MyViewHolder(View itemView) {
             super(itemView);
             llMain= (LinearLayout) itemView.findViewById(R.id.llMain);
+            ivRestaurant= (ImageView) itemView.findViewById(R.id.ivRestaurant);
+            tvRestaurantName= (TextView) itemView.findViewById(R.id.tvRestaurantName);
+            tvtypeofRestaurant= (TextView) itemView.findViewById(R.id.tvtypeofRestaurant);
+            tvLocation= (TextView) itemView.findViewById(R.id.tvLocation);
+            tvDistance= (TextView) itemView.findViewById(R.id.tvDistance);
+            tvPriceRange= (TextView) itemView.findViewById(R.id.tvPriceRange);
+
         }
     }
 }

@@ -24,6 +24,13 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText etEmail;
     private TextView tvCompleteBooking;
+    private TextView tvBookingSummary;
+    private TextView tvRestaurantName;
+    private TextView tvLocation;
+    private TextView tvDateBooked;
+    private TextView tvTimeBooked;
+    private TextView tvNumberofPeople;
+    private TextView tvConfirmation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,15 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         tvCountryCode= (TextView) findViewById(R.id.tvCountryCode);
         etPhoneNumber= (EditText) findViewById(R.id.etPhoneNumber);
         etEmail= (EditText) findViewById(R.id.etEmail);
+        tvBookingSummary= (TextView) findViewById(R.id.tvBookingSummary);
+        tvRestaurantName= (TextView) findViewById(R.id.tvRestaurantName);
+        tvLocation= (TextView) findViewById(R.id.tvLocation);
+        tvDateBooked= (TextView) findViewById(R.id.tvDateBooked);
+        tvTimeBooked= (TextView) findViewById(R.id.tvTimeBooked);
+        tvNumberofPeople= (TextView) findViewById(R.id.tvNumberofPeople);
+        tvConfirmation= (TextView) findViewById(R.id.tvConfirmation);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

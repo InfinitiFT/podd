@@ -39,11 +39,11 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivRestraunt;
+        ImageView ivRestaurantImage;
         LinearLayout llStarRestaurants;
         public MyViewHolder(View itemView) {
             super(itemView);
-            ivRestraunt= (ImageView) itemView.findViewById(R.id.ivRestraunt);
+            ivRestaurantImage= (ImageView) itemView.findViewById(R.id.ivRestaurantImage);
             llStarRestaurants= (LinearLayout) itemView.findViewById(R.id.llStarRestaurants);
         }
     }

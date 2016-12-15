@@ -31,7 +31,7 @@
                 android:padding="@dimen/dp_5"
                 android:text="@string/booking_summary"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="@dimen/text_size_16"
                 android:textStyle="bold" />
             <View
                 android:layout_width="match_parent"
@@ -40,14 +40,14 @@
                 android:background="@android:color/white" />
 
             <TextView
-                android:id="@+id/tvLeavingFrom"
+                android:id="@+id/tvRestaurantName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/dp_2"
                 android:text="@string/restaraunt_name"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="@dimen/text_size_14"
                 android:textStyle="bold"/>
 
             <TextView
