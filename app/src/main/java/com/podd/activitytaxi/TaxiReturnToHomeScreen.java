@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.podd.R;
 
+/**
+ * The type Taxi return to home screen.
+ */
 public class TaxiReturnToHomeScreen extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private TextView tvThanks;

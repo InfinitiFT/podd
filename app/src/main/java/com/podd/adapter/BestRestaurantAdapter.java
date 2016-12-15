@@ -14,9 +14,9 @@ import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
 /**
  * Created by Shalini Bishnoi on 13-12-2016.
  */
-public class BestRestrauantAdapter extends RecyclerView.Adapter<BestRestrauantAdapter.MyViewHolder> {
+public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
     private Context context;
-    public BestRestrauantAdapter(Context context) {
+    public BestRestaurantAdapter(Context context) {
         this.context=context;
 
     }
@@ -24,7 +24,7 @@ public class BestRestrauantAdapter extends RecyclerView.Adapter<BestRestrauantAd
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_grid_layout, parent, false);
-        return new BestRestrauantAdapter.MyViewHolder(view);
+        return new BestRestaurantAdapter.MyViewHolder(view);
     }
 
     @Override

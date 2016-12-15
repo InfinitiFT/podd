@@ -13,13 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
-import com.podd.adapter.BestRestrauantAdapter;
+import com.podd.adapter.BestRestaurantAdapter;
 
-public class BestRestrauantNearCity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * The type Best restaurant near city.
+ */
+public class BestRestaurantNearCity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView rvRestaurants;
     private Context context;
-    private BestRestrauantAdapter bestRestrauantAdapter;
+    private BestRestaurantAdapter bestRestaurantAdapter;
     private TextView tvDeliveredtoYou;
     private TextView tvBusiness;
     private TextView tvAmbience;
@@ -45,8 +48,8 @@ public class BestRestrauantNearCity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_best_restrauant_near_city);
-        context=BestRestrauantNearCity.this;
+        setContentView(R.layout.activity_best_restaurant_near_city);
+        context=BestRestaurantNearCity.this;
         getIds();
         setListeners();
         setRecycler();
@@ -103,8 +106,8 @@ public class BestRestrauantNearCity extends AppCompatActivity implements View.On
     private void setRecycler() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2,LinearLayoutManager.HORIZONTAL,false);
         rvRestaurants.setLayoutManager(gridLayoutManager);
-        bestRestrauantAdapter = new BestRestrauantAdapter(context);
-        rvRestaurants.setAdapter(bestRestrauantAdapter);
+        bestRestaurantAdapter = new BestRestaurantAdapter(context);
+        rvRestaurants.setAdapter(bestRestaurantAdapter);
         rvRestaurants.setNestedScrollingEnabled(false);
     }
 

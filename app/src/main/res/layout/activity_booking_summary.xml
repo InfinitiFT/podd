@@ -45,27 +45,30 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/dp_2"
-                android:text="@string/leaving_from"
+                android:text="@string/restaraunt_name"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_16"
                 android:textStyle="bold"/>
+
             <TextView
-                android:id="@+id/tvGoingTo"
+                android:id="@+id/tvadditionalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/dp_2"
-                android:text="@string/going_to"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="@string/location"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold"/>
+
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/dp_2"
-                android:text="@string/date"
+                android:text="@string/date_Booked"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold"/>
@@ -75,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/dp_2"
-                android:text="@string/time"
+                android:text="@string/time_Booked"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold"/>
@@ -89,16 +92,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tvadditionalInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp_2"
-                android:text="@string/additional_information"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold"/>
+
 
 
             <View
@@ -135,14 +129,14 @@
                     android:inputType="textPersonName"
                     android:imeOptions="actionNext"
                     android:text=""
+                    android:layout_marginTop="@dimen/dp_2"
                     android:maxLines="1"
                     android:textSize="@dimen/text_size_12"
-                    android:hint="@string/name"
-                    android:textColor="@android:color/black"
                     android:background="@drawable/rectangle_white_background"
+                    android:hint="@string/name"
+                    android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:padding="@dimen/dp_6" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,43 +150,45 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/tvCountryCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+91"
-                            android:maxLength="4"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_size_12"
-                            android:maxLines="1"
-                            android:background="@null"
-                            android:textColor="@android:color/black"
-                            android:padding="@dimen/dp_6" />
+                    <TextView
+                        android:id="@+id/tvCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+91"
+                        android:maxLength="4"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_size_12"
+                        android:maxLines="1"
+                        android:background="@null"
+                        android:textColor="@android:color/black"
+                        android:padding="@dimen/dp_6" />
 
-                        <View
-                            android:layout_width="@dimen/dp_0.5"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/dp_50"
-                            android:background="@color/colorPrimaryDark"/>
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_50"
+                        android:background="@color/colorPrimaryDark"/>
 
-                        <EditText
-                            android:id="@+id/etPhoneNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="phone"
-                            android:imeOptions="actionNext"
-                            android:maxLines="1"
-                            android:text=""
-                            android:background="@null"
-                            android:textSize="@dimen/text_size_12"
-                            android:hint="@string/Mobile"
-                            android:textColor="@android:color/black"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/dp_6"
-                            android:paddingTop="@dimen/dp_6"/>
+                    <EditText
+                        android:id="@+id/etPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"
+                        android:text=""
+                        android:background="@null"
+                        android:textSize="@dimen/text_size_12"
+                        android:hint="@string/Mobile"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/dp_6"
+                        android:paddingTop="@dimen/dp_6"/>
 
                     </FrameLayout>
                 </LinearLayout>
+
+
                 <EditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
@@ -231,4 +227,4 @@
     </ScrollView>
 
 
-        </LinearLayout>
+</LinearLayout>

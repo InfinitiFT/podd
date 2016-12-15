@@ -28,7 +28,7 @@
             android:id="@+id/tvDiscoverRestaurantsBars"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/discover_restraunts"
+            android:text="@string/discover_Restaurants"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_12"
             android:padding="@dimen/dp_8"

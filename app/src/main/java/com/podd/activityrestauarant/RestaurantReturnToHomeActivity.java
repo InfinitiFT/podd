@@ -1,32 +1,35 @@
 package com.podd.activityrestauarant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.podd.R;
-import com.podd.adapter.RestrauntsAdapter;
+import com.podd.activitytaxi.HomeScreenActivity;
 
-public class RestrauntBookingDetailsActivity extends AppCompatActivity {
+/**
+ * The type Restaurant return to home activity.
+ */
+public class RestaurantReturnToHomeActivity extends AppCompatActivity implements View.OnClickListener {
+    private TextView tvReturnToHome;
     private Context context;
-    private RecyclerView rvRestaurants;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restraunt_booking_details);
-        context=RestrauntBookingDetailsActivity.this;
+        setContentView(R.layout.activity_restaurant_return_to_home);
+        context=RestaurantReturnToHomeActivity.this;
         getIds();
         setListeners();
-        setAdapter();
     }
 
     private void getIds() {
-        rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
+        tvReturnToHome= (TextView) findViewById(R.id.tvReturnToHome);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -44,13 +47,17 @@ public class RestrauntBookingDetailsActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-
+        tvReturnToHome.setOnClickListener(this);
     }
 
-    private void setAdapter() {
-        RestrauntsAdapter restrauntsAdapter = new RestrauntsAdapter(context);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
-        rvRestaurants.setLayoutManager(mLayoutManager);
-        rvRestaurants.setAdapter(restrauntsAdapter);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tvReturnToHome:
+                intent=new Intent(context, HomeScreenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+        }
     }
 }

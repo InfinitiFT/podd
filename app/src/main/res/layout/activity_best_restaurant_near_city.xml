@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_best_restrauant_near_city"
+    android:id="@+id/activity_best_Restaurant_near_city"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    tools:context="com.podd.activityrestauarant.BestRestrauantNearCity">
+    tools:context="com.podd.activityrestauarant.BestRestaurantNearCity">
 
     <include layout="@layout/toolbar" />
 
@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:text="@string/our_curated_selection_of_best_restraunts"
+                    android:text="@string/our_curated_selection_of_best_Restaurants"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_14" />
 
@@ -224,7 +224,7 @@
                     <LinearLayout
                         android:id="@+id/llAmbience"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_2"
                         android:layout_weight="1"
                         android:background="@drawable/rectangle_white_background"
@@ -257,6 +257,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_2"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:background="@drawable/rectangle_white_background"
                         android:orientation="vertical"
                         android:padding="@dimen/dp_4">
@@ -265,7 +266,6 @@
                             android:id="@+id/tvDeliveredtoYou"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:gravity="center"
                             android:text="@string/delivered"
                             android:textColor="@color/colorPrimaryDark"

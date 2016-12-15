@@ -1,4 +1,4 @@
-package com.podd.activitytaxi;
+package com.podd.activityrestauarant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,56 +7,39 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
 
 /**
- * The type Taxi booking summary activity.
+ * The type Booking summary activity.
  */
-public class TaxiBookingSummaryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener {
+    private Intent intent;
     private Context context;
-    private TextView tvCompleteBooking;
-    private TextView tvBack;
-    private TextView tvadditionalInfo;
-    private TextView tvNumberofPeople;
-    private TextView tvTime;
-    private TextView tvDate;
-    private TextView tvGoingTo;
-    private TextView tvLeavingFrom;
-    private TextView tvBookTaxi;
     private EditText etName;
     private TextView tvCountryCode;
     private EditText etPhoneNumber;
     private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText etEmail;
-    private LinearLayout llInner;
+    private TextView tvCompleteBooking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_taxi_booking_summary);
-        context=TaxiBookingSummaryActivity.this;
+        setContentView(R.layout.activity_booking_summary);
+        context=BookingSummaryActivity.this;
         getIds();
         setListeners();
     }
 
     private void getIds() {
         tvCompleteBooking= (TextView) findViewById(R.id.tvCompleteBooking);
-        tvadditionalInfo= (TextView) findViewById(R.id.tvadditionalInfo);
-        tvNumberofPeople= (TextView) findViewById(R.id.tvNumberofPeople);
-        tvTime= (TextView) findViewById(R.id.tvTime);
-        tvDate= (TextView) findViewById(R.id.tvDate);
-        tvGoingTo= (TextView) findViewById(R.id.tvGoingTo);
-        tvLeavingFrom= (TextView) findViewById(R.id.tvLeavingFrom);
-        tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
         etName= (EditText) findViewById(R.id.etName);
         tvCountryCode= (TextView) findViewById(R.id.tvCountryCode);
         etPhoneNumber= (EditText) findViewById(R.id.etPhoneNumber);
         etEmail= (EditText) findViewById(R.id.etEmail);
-        llInner= (LinearLayout) findViewById(R.id.llInner);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -71,12 +54,10 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
             }
         });
 
-
     }
 
     private void setListeners() {
         tvCompleteBooking.setOnClickListener(this);
-
     }
 
     @Override
@@ -84,13 +65,13 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
         switch (view.getId()){
             case R.id.tvCompleteBooking:
                 if(isValid()) {
-                    Intent intent = new Intent(context, TaxiReturnToHomeScreen.class);
+                    intent = new Intent(context, RestaurantReturnToHomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
                 break;
-        }
 
+        }
     }
 
     private boolean isValid(){

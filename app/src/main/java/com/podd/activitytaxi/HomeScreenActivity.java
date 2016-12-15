@@ -4,19 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.podd.R;
-import com.podd.activityrestauarant.BestRestrauantNearCity;
-import com.podd.activityrestauarant.MainHomeScreenSecondActivity;
+import com.podd.activityrestauarant.BestRestaurantNearCity;
 
 
+/**
+ * The type Home screen activity.
+ */
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private TextView tvDiscoverLondon;
@@ -77,7 +76,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         switch (view.getId()){
             case R.id.llfood:
-                intent=new Intent(context, BestRestrauantNearCity.class);
+                intent=new Intent(context, BestRestaurantNearCity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;

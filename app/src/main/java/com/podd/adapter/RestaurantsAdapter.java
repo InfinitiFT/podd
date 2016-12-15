@@ -7,23 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.podd.R;
 
 /**
  * Created by Shalini Bishnoi on 12-12-2016.
  */
-public class RestrauntsAdapter extends RecyclerView.Adapter<RestrauntsAdapter.MyViewHolder> {
+public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder> {
     private Context context;
-    public RestrauntsAdapter(Context context) {
+    public RestaurantsAdapter(Context context) {
         context=this.context;
 
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_restraunts, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_restaurants, parent, false);
         return new MyViewHolder(view);
     }
 
