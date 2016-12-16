@@ -1,5 +1,6 @@
 package com.podd.activitytaxi;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -14,6 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
+import com.podd.utils.AppConstant;
+import com.podd.utils.CommonUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * The type Book taxi activity.
@@ -43,6 +50,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private final String[]numberOfPeopleArray={"Select Nember of People","1","2","3"};
     private final String[]requirementsArray={"Select Additional Requirements","AC","Others"};
     private TextView tvBack;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +142,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.tvSelectfromCalender:
-                Toast.makeText(context,R.string.work_in_progress,Toast.LENGTH_SHORT).show();
+                pickDate();
                 break;
 
 
@@ -155,5 +163,44 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         }
 
         return true;
+    }
+
+
+
+
+    private void pickDate() {
+        final Calendar calendar = Calendar.getInstance();
+        int cYear = calendar.get(Calendar.YEAR);
+        final int cMonth = calendar.get(Calendar.MONTH);
+        final int cDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dpd = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(year, monthOfYear, dayOfMonth);
+                SimpleDateFormat smdf = new SimpleDateFormat("dd/MM/yyyy");
+                date = smdf.format(calendar.getTime());
+                //selected = Long.parseLong(String.valueOf((CommonUtils.getTimeStampDate(date, "dd/MM/yyyy"))));
+
+                tvSelectfromCalender.setText(date);
+
+               /* tvSelectTimeValue.setText(R.string.select_time);*/
+
+                CommonUtils.savePreferenceInt(context, AppConstant.YEAR, year);
+                CommonUtils.savePreferenceInt(context, AppConstant.MONTH, monthOfYear);
+                CommonUtils.savePreferenceInt(context, AppConstant.DATE, dayOfMonth);
+            }
+        }, cYear, cMonth, cDay);
+        DatePicker dp = dpd.getDatePicker();
+        if (date != null) {
+            dpd.getDatePicker().updateDate(CommonUtils.getPreferencesInt(context, AppConstant.YEAR), CommonUtils.getPreferencesInt(context, AppConstant.MONTH), CommonUtils.getPreferencesInt(context, AppConstant.DATE));
+        } else {
+            dp.setMaxDate(Calendar.getInstance().getTimeInMillis());
+        }
+        dpd.show();
+        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+        dpd.getDatePicker().setMaxDate(System.nanoTime());
+        dpd.setCancelable(true);
     }
 }

@@ -22,6 +22,7 @@ public class AppConstant {
      * The constant CHECK.
      */
     public static final String CHECK ="check" ;
+    public static String YEAR = "year";
     /**
      * The constant KEY_USERNAME.
      */
@@ -32,8 +33,6 @@ public class AppConstant {
     public static final String DEVICE_ID="deviceID";
 
 
-
-
-
-
+    public static String MONTH="month";
+    public static String DATE="date";
 }

@@ -114,8 +114,11 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 startActivity(intent);
                 break;
             case R.id.tvViewMenu:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
+                intent=new Intent(context,ViewMenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
+
             case R.id.tvViewInMap:
                 Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
                 break;
