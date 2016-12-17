@@ -19,8 +19,10 @@ import com.podd.adapter.RestaurantsAdapter;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * The type Restraunt booking details activity.
@@ -42,6 +44,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private TextView tvDateBooked;
     private TextView tvTimeBooked;
     private TextView tvNoOfPersons;
+    private String currentDateString;
 
     private final String[]timeArray={"Select Time","10 AM","10:30 AM"};
     private final String[]numberOfPeopleArray={"Number of People","1","2","3"};
@@ -111,6 +114,8 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         tvSelectfromCalender.setOnClickListener(this);
         spSelectPeople.setOnItemSelectedListener(this);
         spSelectTime.setOnItemSelectedListener(this);
+        tvToday.setOnClickListener(this);
+        tvTomorrow.setOnClickListener(this);
 
     }
 
@@ -130,11 +135,37 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 startActivity(intent);
                 break;
             case R.id.tvSelectfromCalender:
+                tvToday.setClickable(false);
+                tvTomorrow.setClickable(false);
                 pickDate();
+                break;
+            case R.id.tvTomorrow:
+                tvToday.setClickable(false);
+                tvSelectfromCalender.setClickable(false);
+
+                 /*  getting tomorrow date  */
+
+                currentDateString = DateFormat.getDateInstance().format(new Date());
+                date = DateFormat.getDateInstance().format(System.currentTimeMillis()+(24*3600000));
+                tvTomorrow.setText(date);
+                tvDateBooked.setText(date);
+                break;
+
+            case R.id.tvToday:
+                tvSelectfromCalender.setClickable(false);
+                tvTomorrow.setClickable(false);
+
+                /*  getting current date  */
+
+                currentDateString = DateFormat.getDateInstance().format(new Date());
+                tvToday.setText(currentDateString);
+                tvDateBooked.setText(currentDateString);
                 break;
 
         }
     }
+
+
 
 
     private void pickDate() {

@@ -14,6 +14,12 @@ import com.podd.R;
  */
 public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyViewHolder>{
     private Context context;
+
+    /**
+     * Instantiates a new Lunch menu adapter.
+     *
+     * @param context the context
+     */
     public LunchMenuAdapter(Context context) {
         this.context=context;
 
@@ -37,8 +43,20 @@ public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyV
         return 20 ;
     }
 
+    /**
+     * The type My view holder.
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Tv item.
+         */
         TextView tvItem;
+
+        /**
+         * Instantiates a new My view holder.
+         *
+         * @param itemView the item view
+         */
         public MyViewHolder(View itemView) {
             super(itemView);
             tvItem= (TextView) itemView.findViewById(R.id.tvItem);

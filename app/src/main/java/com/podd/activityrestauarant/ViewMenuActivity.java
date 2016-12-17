@@ -15,6 +15,9 @@ import com.podd.R;
 import com.podd.adapter.LunchMenuAdapter;
 import com.podd.adapter.RestaurantsAdapter;
 
+/**
+ * The type View menu activity.
+ */
 public class ViewMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private RecyclerView rvDinner;

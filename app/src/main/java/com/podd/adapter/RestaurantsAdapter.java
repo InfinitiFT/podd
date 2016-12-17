@@ -15,6 +15,12 @@ import com.podd.R;
  */
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder> {
     private Context context;
+
+    /**
+     * Instantiates a new Restaurants adapter.
+     *
+     * @param context the context
+     */
     public RestaurantsAdapter(Context context) {
         context=this.context;
 
@@ -38,9 +44,24 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         return 10;
     }
 
+    /**
+     * The type My view holder.
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Iv restaurant image.
+         */
         ImageView ivRestaurantImage;
+        /**
+         * The Ll star restaurants.
+         */
         LinearLayout llStarRestaurants;
+
+        /**
+         * Instantiates a new My view holder.
+         *
+         * @param itemView the item view
+         */
         public MyViewHolder(View itemView) {
             super(itemView);
             ivRestaurantImage= (ImageView) itemView.findViewById(R.id.ivRestaurantImage);
