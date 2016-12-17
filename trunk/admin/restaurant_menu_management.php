@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = get_all_data('restaurant_menu_details');
+  $data = mysqli_query($GLOBALS['conn'],"SELECT *,rmd.id as res_id FROM restaurant_menu_details rmd JOIN restaurant_menu rm ON rmd.meal = rm.id Where rmd.restaurant_id = '".$_SESSION['restaurant_id']."'");
   //Basic Validation  
   
  ?> 
@@ -35,20 +35,20 @@
                       </thead>
                       <input type="hidden" id = "delete_type" value = "menu_management">
                       <tbody>
-                       <?php while($record = mysqli_fetch_assoc($data)){ ?>
+                       <?php if($data){while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
-                          <td><?php echo $record['meal'];?> </td>
-                          <td><?php  if($record['menu_url']){ ?><a href="<?php echo url().'uploads/menu_file/'.$record['menu_url']; ?>" target="_blank"><?php }?></a></td>
+                          <td><?php echo $record['menu_name'];?> </td>
+                          <td><?php  if($record['menu_url']){ ?><a href="<?php echo url().'uploads/menu_file/'.$record['menu_url']; ?>" target="_blank"><?php echo $record['menu_url'];  }?></a></td>
                           
                           <td><?php if($record['status']=="1"){?>
-                             <button type="button" id="activatedeactivate-<?php echo $record['id'];?>" class="btn btn-round btn-warning">Deactivate</button>
+                             <button type="button" id="activatedeactivate-<?php echo $record['res_id'];?>" class="btn btn-round btn-warning">Deactivate</button>
                               <?php }else{?>
-                              <button type="button" id="activatedeactivate-<?php echo $record['id'];?>" class="btn btn-round btn-success">Activate</button>
+                              <button type="button" id="activatedeactivate-<?php echo $record['res_id'];?>" class="btn btn-round btn-success">Activate</button>
                               <?php }?>
-                             <button type="button" id="deletepopup-<?php echo $record['id'];?>" class="btn btn-round btn-danger">Delete</button>
+                             <button type="button" id="deletepopup-<?php echo $record['res_id'];?>" class="btn btn-round btn-danger">Delete</button>
                           </td>
                          </tr>
-                        <?php }?> 
+                        <?php }}?> 
                       </tbody>
                     </table>
                   </div>

@@ -14,7 +14,7 @@
 	else if($type == 'ambience')
 		$data = get_all_data('restaurant_ambience');
 	else if($type == 'meal')
-		$data = get_all_data('restaurant_meal');	
+		$data = get_all_data('restaurant_menu');	
 	else
 		$data = get_all_data('restaurant_price_range');
 	while($record = mysqli_fetch_assoc($data)){
@@ -26,7 +26,7 @@
 		else if($type == 'ambience')
 			$allData['name'] = $record['ambience_name'];
 		else if($type == 'meal')
-			$allData['name'] = $record['meal_type'];
+			$allData['name'] = $record['menu_name'];
 		else
 			$allData['name'] = $record['price_range'];
 		$result[] = $allData;

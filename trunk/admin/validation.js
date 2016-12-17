@@ -2,12 +2,20 @@ $(document).ready(function() {
   //Login form validation
   $("#login_form").validate({
     rules: {
-      email: "required",
+     email: {
+        required: true,
+        email: true
+            },
       password: "required"
     },
     messages: {
-      email: "Please enter your username.",
-      password: "Please enter your password."
+      email: {
+            required:"Please enter email",
+            email: "Please enter valid email"
+          },
+      password: {
+            required:"Please enter your password" 
+          }
     }
   });
  //login form ajax submit
@@ -18,6 +26,7 @@ $(document).ready(function() {
             
     }
   });
+
   // forgot form validation
   $("#forgot-form").validate({
     rules: {
@@ -27,6 +36,7 @@ $(document).ready(function() {
             },
           },
           messages: {
+            required:"Please enter email",
             email: "Please enter a valid email address."
           },      
         });
@@ -41,7 +51,7 @@ $(document).ready(function() {
       });
 //Add Category form Validate
 
- //Login form validation
+ //Add Category Validation
   $("#add_category").validate({
     rules: {
       name: "required",
@@ -50,6 +60,17 @@ $(document).ready(function() {
     messages: {
       name: "Please enter your name.",
       image: "Please select your image."
+    }
+  });
+  //Add Menu Validation
+  $("#add_menu").validate({
+    rules: {
+      name: "required",
+      menu: "required"
+    },
+    messages: {
+      name: "Please select meal name .",
+      menu: "Please select your menu."
     }
   });
 
@@ -90,8 +111,12 @@ $.validator.methods.alreadyEmail = function(value, element) {
 				minlength: 10,
 				maxlength: 15
 				
-		}	
-    },
+		},
+		"resturant_images[]":{
+			 required: true
+		
+    }
+},
 
     messages: {
 		name: "Please enter name.",
@@ -106,11 +131,41 @@ $.validator.methods.alreadyEmail = function(value, element) {
 				minlength: "Phone number atleast 10 digits",
 				maxlength: "Phone number maximum 15 digits"
 				
-		}	
+		},
+		"resturant_images[]" :{
+			required: "Resturant images required"
+		}
       
     }
   });
-  
+  //Add resturant validation
+  $("#change_password").validate({
+    rules: {
+    old_password: "required",
+    new_password: {
+        required: true,
+        minlength: 8  
+    },
+    confirm_password: {
+        required: true,
+        minlength: 8  
+    }
+    
+  },
+
+    messages: {
+    old_password: "Please enter your password.",
+    new_password: {
+                   required:"Please enter new password",
+                   minlength: "Password atleast 8 digits"
+                },
+    confirm_password: {
+                  required: "Please enter confirm password",
+                  minlength: "Confirm Password atleast 8 digits"    
+    }
+     
+    }
+  });
   
   
   

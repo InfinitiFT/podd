@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = get_all_data('users');
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM users where role != 1 ");
   //Basic Validation  
   
  ?> 

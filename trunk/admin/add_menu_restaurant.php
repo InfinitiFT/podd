@@ -59,7 +59,7 @@ catch(Exception $e) {
                   </div>
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" id="add_category" method="post" enctype="multipart/form-data" novalidate>
+                    <form class="form-horizontal form-label-left" id="add_menu" method="post" enctype="multipart/form-data" novalidate>
                       <?php
                         if(isset($_SESSION["successmsg"])) {
                           $success = $_SESSION["successmsg"];
@@ -87,21 +87,24 @@ catch(Exception $e) {
                    </div>
                   <?php }else{}?>
                       <span class="section">Add Menu</span>
-                      
-                      <div class="item form-group">
-                       
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Meal Name <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="Name"  type="text">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Meal Name</label>
+                        <div class="col-md-4 col-sm-4 col-xs-8">
+                          <select class="form-control" id="name" name="name" >
+                           <option value="">Choose Meal</option>
+                            <?php $meals_name = get_all_data('restaurant_menu'); while($meal_name = mysqli_fetch_assoc($meals_name)){?>
+                              <option value="<?php echo $meal_name['id']; ?>" ><?php echo $meal_name['menu_name']; ?></option>
+                            <?php }?>
+                          </select>
                         </div>
                       </div>
+                     
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Menu File<span class="required">*</span>
                         </label>
-                        <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-4 col-sm-4 col-xs-8">
                           
-                          <input id="image" class="form-control col-md-3 col-xs-5" data-validate-length-range="6" data-validate-words="2" name="menu"   type="file">
+                          <input id="menu" class="form-control col-md-3 col-xs-5" data-validate-length-range="6" data-validate-words="2" name="menu" type="file">
                         </div>
                       </div>
                       <div class="ln_solid"></div>

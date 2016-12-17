@@ -37,7 +37,6 @@ function validate_email_admin($email) {
 }
 //Function for Get All data
 function get_all_data($table) {
-	
 	$all_data = mysqli_query($GLOBALS['conn'],"SELECT * FROM ".$table."");
 	return $all_data;
 }
@@ -73,11 +72,13 @@ function url(){
 	* Return => Latitude and longitude of the given address.
 	**/
 	function getLatLong($address){
+		
 		if(!empty($address)){
+			
 			//Formatted address
 			$formattedAddr = str_replace(' ','+',$address);
 			//Send request and receive json data by address
-			$geocodeFromAddr = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddr.'&sensor=false'); 
+			$geocodeFromAddr = file_get_contents("http://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddr.'&sensor=false"); 
 			$output = json_decode($geocodeFromAddr);
 			//Get latitude and longitute from json data
 			$data['latitude']  = $output->results[0]->geometry->location->lat; 
@@ -105,7 +106,16 @@ function url(){
 			
 	}
 
-
+	function randomPassword() {
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$pass = array(); //remember to declare $pass as an array
+		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+		return implode($pass); //turn the array into a string
+}
 
 
 

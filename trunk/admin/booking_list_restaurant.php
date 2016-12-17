@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant JOIN restaurant_details ON booked_records_restaurant.restaurant_id = restaurant_details.restaurant_id");
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."'");
   //Basic Validation  
   
  ?> 
@@ -35,7 +35,7 @@
                       </thead>
                       <input type="hidden" id = "delete_type" value ="booked_restaurant">
                       <tbody>
-                       <?php while($record = mysqli_fetch_assoc($data)){ ?>
+                       <?php if($data){ while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['email'];?></td>
@@ -54,7 +54,7 @@
                              <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button>
                           </td>
                          </tr>
-                        <?php }?> 
+                        <?php }}?> 
                       </tbody>
                     </table>
                   </div>

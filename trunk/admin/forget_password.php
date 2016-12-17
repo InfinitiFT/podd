@@ -145,7 +145,7 @@ if(isset($_POST["submit"]))
           <section class="login_content">
          
             <form action="" method="post" id="forgot-form">
-              <h1>Forget Password</h1>
+              <h1>Forgot Password</h1>
               <?php
                 if(isset($_SESSION["successmsg"])) {
                   $success = $_SESSION["successmsg"];
@@ -174,11 +174,11 @@ if(isset($_POST["submit"]))
                      <font color="red"><?php echo $error;?></font>
                 <?php  } ?>
               <div>
-                <input type="text" class="form-control" type="email" placeholder="Email" id="email" name="email" value=""/>
+                <input type="text" class="form-control" type="email" placeholder="Email" id="email" name="email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>"/>
               </div>
               <div>
-                <button class="btn btn-default submit" type="submit" value="submit" name="submit">Submit</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-               <a href="index.php" class="to_register">Login ?</a>   
+                <button class="btn btn-default submit" type="submit" value="submit" name="submit">Submit</button>
+               <a href="index.php" class="to_register"><h2>Login</h2></a>   
               </div>
 
               <div class="clearfix"></div>
@@ -206,4 +206,7 @@ if(isset($_POST["submit"]))
   <!-- <script src="../assets/vendors/pnotify/dist/pnotify.js"></script>
     <script src="../assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="../assets/vendors/pnotify/dist/pnotify.nonblock.js"></script> -->
+    <script src="../assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/js/jquery.validate.min.js"></script>
+    <script src="validation.js"></script>
 </html>

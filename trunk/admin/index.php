@@ -2,55 +2,92 @@
 include('../functions/functions.php');
 ob_start();
 session_start();
+if(!empty($_SESSION['password']) && !empty($_SESSION['email']))
+{
+  if($_SESSION['role'] == "2")
+  {
+    header("Location:booking_list_restaurant.php");
+  }
+  else
+  {
+    header("Location:user_list.php");
+  }
+
+}
 $error="";
 $error="";
 if(isset($_POST["submit"]))
 { 
-  if(empty($_POST["email"])){
-    $error="Please enter your email ";
-  }
-  else if(empty($_POST["password"])){ 
-    $error="Please enter your password";
-  }
-  else if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) === false){
-    $error="Please enter valid  email address";
-  }
-  else
-  {
     $email = mysqli_real_escape_string($conn,trim($_POST["email"]));
     $password = mysqli_real_escape_string($conn,trim($_POST["password"]));
     $admin = user_authenticate($email, $password);
     if($admin['user_id'] != 0){
-      $_SESSION['user_id'] = $admin['user_id'];
-      $_SESSION['email']= $email;
-      $_SESSION['password']= $password;
-      $_SESSION['role'] = $admin['role'];
+      if($admin['status'] != 0)
+      { 
+          if($admin['role'] == "2")
+          {
 
-      if(isset($_POST['remember'])){
-        //if user check the remember me checkbox
-        $twoDays = 60 * 60 * 24 * 2 + time();
-        setcookie('email', $_POST['email'], $twoDays);
-        setcookie('password', $_POST['password'], $twoDays);
-      } else { 
-        //if user not check the remember me checkbox
-        $twoDaysBack = time() - 60 * 60 * 24 * 2;
-        setcookie('email', '', $twoDaysBack);
-        setcookie('password', '', $twoDaysBack);
-      } 
-      if($_SESSION['role']=="2")
-      {
-        header("Location:booking_list_restaurant.php");
+            if($admin['first_time_login'] != 0){
+               $_SESSION['user_id'] = $admin['user_id'];
+               $_SESSION['email']= $email;
+               $_SESSION['password']= $password;
+               $_SESSION['role'] = $admin['role'];
+               $_SESSION['last_login_timestamp'] = time();
+               if(isset($_POST['remember'])){
+                //if user check the remember me checkbox
+                 $twoDays = 60 * 60 * 24 * 2 + time();
+                  setcookie('email', $_POST['email'], $twoDays);
+                  setcookie('password', $_POST['password'], $twoDays);
+               } else { 
+               //if user not check the remember me checkbox
+                $twoDaysBack = time() - 60 * 60 * 24 * 2;
+                setcookie('email', '', $twoDaysBack);
+                setcookie('password', '', $twoDaysBack);
+               } 
+              $restaurant_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT restaurant_id FROM `restaurant_details` WHERE user_id = '".$admin['user_id']."'"));
+              $_SESSION['restaurant_id'] = $restaurant_id['restaurant_id'];
+
+              header("Location:booking_list_restaurant.php");
+            }
+            else{
+                 $_SESSION['email']= $email;
+                header("Location:change_password.php");
+            }
+
+            
+          }
+          else
+           {
+              $_SESSION['user_id'] = $admin['user_id'];
+              $_SESSION['email']= $email;
+              $_SESSION['password']= $password;
+              $_SESSION['role'] = $admin['role'];
+              $_SESSION['last_login_timestamp'] = time();
+               if(isset($_POST['remember'])){
+                //if user check the remember me checkbox
+                 $twoDays = 60 * 60 * 24 * 2 + time();
+                  setcookie('email', $_POST['email'], $twoDays);
+                  setcookie('password', $_POST['password'], $twoDays);
+               } else { 
+               //if user not check the remember me checkbox
+                $twoDaysBack = time() - 60 * 60 * 24 * 2;
+                setcookie('email', '', $twoDaysBack);
+                setcookie('password', '', $twoDaysBack);
+               } 
+             header("Location:user_list.php");
+           }
+
       }
-      else
-      {
-         header("Location:user_list.php");
+      else{
+           $_SESSION["errormsg"]="Your account has been blocked by admin.";
       }
+     
      
     }
     else{
      $_SESSION["errormsg"]="Invalid Credentials.";
      }
-   }
+   
   }
 ?>
 <!DOCTYPE html>
@@ -119,7 +156,7 @@ if(isset($_POST["submit"]))
             <font color="red"><?php echo $error;?></font>
             <?php  } ?>
               <div>
-                <input type="text" class="form-control" placeholder="Email"  id="email" name="email"  value="<?php if(isset($_COOKIE['email'])) echo $_COOKIE['email']; else echo '';?>"/>
+                <input type="text" class="form-control" placeholder="Email"  id="email" name="email"  value="<?php if(isset($_COOKIE['email'])) echo $_COOKIE['email']; else '';?>"/>
               </div>
               <div>
                 <input type="password" class="form-control" placeholder="Password" id="password" name="password"  value="<?php if(isset($_COOKIE['password'])) echo $_COOKIE['password']; else echo '';?>"/>
@@ -132,9 +169,8 @@ if(isset($_POST["submit"]))
               <div class="clearfix"></div>
 
               <div class="separator">
-                <a href="forget_password.php" class="to_register">Forgot Password ?</a>
-                <p><input name="remember" type="checkbox" value="Remember Me" <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?> class="flat"> Remember Me </p>
-
+                <p><a href="forget_password.php" class="to_register">Forgot Password ?</a></p>
+                <p><input name="remember" type="checkbox" value="Remember Me" <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?> class="flat"> Remember Me </p> 
                 <div class="clearfix"></div>
                 <br />
 
@@ -153,4 +189,7 @@ if(isset($_POST["submit"]))
   <!-- <script src="../assets/vendors/pnotify/dist/pnotify.js"></script>
     <script src="../assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="../assets/vendors/pnotify/dist/pnotify.nonblock.js"></script> -->
+    <script src="../assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/js/jquery.validate.min.js"></script>
+    <script src="validation.js"></script>
 </html>

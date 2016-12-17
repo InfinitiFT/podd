@@ -51,7 +51,6 @@ $("[id ^='activatedeactivate-']").click(function () {
           type: 'post',
           data: {pagetype:pagetype,id:serviceArr[1],status:status},
           success: function(data, status) { 
-             return false;
              location.reload();  
              Lobibox.notify('success', {
               msg: 'Entity Successfully '+ buttonText +'d.'

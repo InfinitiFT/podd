@@ -1,6 +1,8 @@
-<?php include('../functions/config.php');
+<?php 
+  include('../functions/config.php');
    include('../functions/session.php');
-  include('../functions/functions.php'); ?>
+  include('../functions/functions.php'); 
+  ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

@@ -2,10 +2,11 @@
 include('../functions/functions.php');
 switch($_REQUEST['type']) {
 	case 'allMeal':
-	$data = get_all_data('restaurant_meal');
+	$allMeals = implode(',',$_POST['meal']);
+	$data = mysqli_query($conn,"SELECT * FROM `restaurant_menu` WHERE `id` NOT IN(".$allMeals.")");
 	while($meal = mysqli_fetch_assoc($data)){
 		$allRecord['id'] = $meal['id'];
-		$allRecord['name'] = $meal['meal_type'];
+		$allRecord['name'] = $meal['menu_name'];
 		$allMeal[] = $allRecord;
 	}
 	print_r(json_encode($allMeal));
