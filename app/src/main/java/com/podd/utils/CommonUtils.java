@@ -49,7 +49,6 @@ import android.widget.Toast;
 
 
 import com.podd.R;
-import com.podd.model.DummyModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -62,10 +61,8 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -1803,6 +1800,8 @@ public class CommonUtils {
     public static Typeface setRegular(Context context) {
         return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
     }
+
+
 
 
 

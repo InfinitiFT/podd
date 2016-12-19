@@ -18,6 +18,12 @@ import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
  */
 public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
     private Context context;
+
+    /**
+     * Instantiates a new Best restaurant adapter.
+     *
+     * @param context the context
+     */
     public BestRestaurantAdapter(Context context) {
         this.context=context;
 
@@ -48,6 +54,9 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         return 10;
     }
 
+    /**
+     * The type My view holder.
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout llMain;
         private ImageView ivRestaurant;
@@ -56,6 +65,12 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         private TextView tvLocation;
         private TextView tvDistance;
         private TextView tvPriceRange;
+
+        /**
+         * Instantiates a new My view holder.
+         *
+         * @param itemView the item view
+         */
         public MyViewHolder(View itemView) {
             super(itemView);
             llMain= (LinearLayout) itemView.findViewById(R.id.llMain);

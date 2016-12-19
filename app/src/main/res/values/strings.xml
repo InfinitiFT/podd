@@ -90,4 +90,7 @@
     <string name="number_of_persons">No. OF PEOPLE</string>
     <string name="date_Booked">Date Booked</string>
     <string name="time_Booked">Time Booked</string>
+    <string name="breakfast">Breakfast Menu</string>
+    <string name="lunch_menu">Lunch Menu</string>
+    <string name="dinner">Dinner Menu</string>
 </resources>
