@@ -1,6 +1,7 @@
 <?php
 include('config.php');
 //Header Authntication
+error_reporting(0);
 function basic_authentication($authname, $authpw) {
  if (!isset($_SERVER['PHP_AUTH_USER'])) {
   header('WWW-Authenticate: Basic realm="My Realm"');
@@ -31,8 +32,13 @@ function user_authenticate($email, $password) {
 }
 
 //Function for validate Email
-function validate_email_admin($email) {
-	$adminEmail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT email FROM `users` WHERE email = '".$email."'"));
+function validate_email_admin($email,$userID) {
+	if($userID){
+		
+		$adminEmail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT email FROM `users` WHERE email = '".$email."' and user_id!='".$userID."'"));
+	}else{
+		$adminEmail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT email FROM `users` WHERE email = '".$email."'"));
+	}
 	return $adminEmail;
 }
 //Function for Get All data
@@ -116,7 +122,28 @@ function url(){
 		}
 		return implode($pass); //turn the array into a string
 }
+  // Function to send message
+  function send_sms($to,$message){	
+	require('twilio-php/Services/Twilio.php'); 
 
+	$account_sid = ''; 
+	$auth_token = ''; 
+	$client = new Services_Twilio($account_sid, $auth_token); 
+	try {
+    $client->account->messages->create(array( 
+	'To' => "".$to, 	
+	'From' => "", 
+	'Body' => "".$message, 	
+	)); 
+
+	return true;
+
+	}
+    catch (Services_Twilio_RestException $e)
+    {
+        return $e->getMessage();
+    }
+}
 
 
 

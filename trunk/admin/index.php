@@ -15,7 +15,7 @@ if(!empty($_SESSION['password']) && !empty($_SESSION['email']))
 
 }
 $error="";
-$error="";
+
 if(isset($_POST["submit"]))
 { 
     $email = mysqli_real_escape_string($conn,trim($_POST["email"]));

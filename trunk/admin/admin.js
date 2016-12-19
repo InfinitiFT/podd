@@ -75,7 +75,7 @@ $("[id ^='confirm-']").click(function () {
   var serviceID  = $(this).attr('id');
   var serviceArr = serviceID.split('-');
   Lobibox.confirm({
-      msg: "Are you sure you want to confirm?",
+      msg: "Are you sure you want to Accept?",
       callback: function ($this, type) {
       if (type === 'yes') {
            $.ajax({
@@ -85,7 +85,7 @@ $("[id ^='confirm-']").click(function () {
             success: function(data, status) {
              location.reload();  
              Lobibox.notify('success', {
-              msg: 'Entity Confirm Successfully.'
+              msg: 'Entity Accept Successfully.'
              });
             },
             error: function(xhr, desc, err) {

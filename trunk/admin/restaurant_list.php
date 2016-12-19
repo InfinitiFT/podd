@@ -1,12 +1,16 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT *, restaurant_details.status as st FROM restaurant_details  JOIN users ON restaurant_details.user_id = users.user_id");
+  $data = mysqli_query($GLOBALS['conn'],"SELECT *, restaurant_details.status as st FROM restaurant_details  JOIN users ON restaurant_details.user_id = users.user_id ");
   //Basic Validation  
   $msg ='';
   if(isset($_SESSION['msg']) == 'success'){
 	if($_SESSION['msg'] == 'success'){
 		$msg = '<div class="alert alert-warning">Resturant added successfully</div>';
+	    $_SESSION['msg'] ='';
+	}
+	if($_SESSION['msg'] == 'successEdit'){
+		$msg = '<div class="alert alert-warning">Resturant edited successfully</div>';
 	    $_SESSION['msg'] ='';
 	}
  }
@@ -17,12 +21,15 @@
             <div class="clearfix"></div>
 
             <div class="row">
+				
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Restaurant List</h2>
-                    <?php echo $msg; ?>
+                     <a  href="add_resturant.php" class="btn btn-round btn-primary pull-right">Add Restaurant</a>
+					<?php echo $msg; ?>
                     <div class="clearfix"></div>
+                     
                   </div>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
@@ -43,7 +50,7 @@
                          <tr>
                           <td><?php echo $record['restaurant_name'];?></td>
                           <td><?php echo $record['email'];?></td>
-                          <td><?php echo $record['location'];?></td>
+                          <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_location` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
                           <td><?php echo $record['country_code'].$record['mobile_no'];?></td>
                           <td><?php if($record['st'] == 1){?>
                              <button type="button" id="activatedeactivate-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-warning">Deactivate</button>

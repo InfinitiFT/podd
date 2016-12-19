@@ -76,11 +76,11 @@ $(document).ready(function() {
 
   /*Custom validation for space is not allowed*/
 $.validator.methods.alreadyEmail = function(value, element) {
-
+	var userID = $("#userID").val();
 	 $.ajax({
                 method: "post",
                 url: "admin_ajax.php",
-                data: { type: "email_validation",email:value},
+                data: { type: "email_validation",email:value,userID:userID},
                 async: false,
                 success: function(data) {
                     if(data == 1) {
@@ -96,6 +96,12 @@ $.validator.methods.alreadyEmail = function(value, element) {
             });
             return ab;
 };
+
+
+
+
+
+
   //Add resturant validation
   $("#addResturant").validate({
     rules: {
@@ -138,6 +144,73 @@ $.validator.methods.alreadyEmail = function(value, element) {
       
     }
   });
+  
+  
+  
+  //Edit resturant validation
+  $("#editResturant").validate({
+	  ignore: "",
+    rules: {
+		name: "required",
+		email: {
+				required: true,
+				email: true,
+				alreadyEmail:true
+			},
+		phone: {
+				required: true,
+				number: true,
+				minlength: 10,
+				maxlength: 15
+				
+		},
+		countImg: {
+				min: 1
+				
+		}
+		
+		
+},
+
+    messages: {
+		name: "Please enter name.",
+		email: {
+                  required:"Please enter email",
+                   email: "Please enter valid email",
+                   alreadyEmail: "Email already exits"
+                },
+        phone: {
+				required: "Please enter phone number",
+				number: "Phone number should be number",
+				minlength: "Phone number atleast 10 digits",
+				maxlength: "Phone number maximum 15 digits"
+				
+		},
+		countImg: {
+				min: "Resturant images required"
+				
+		}
+		
+      
+    }
+  });
+
+  
+ 
+  //$("input[name='file']").on("change", function(){  
+	//  //var name = $(this).attr("name");
+	// alert(name);
+ // var numFiles = $(name).get(0).files.length
+  // alert(numFiles);
+//});
+function myFunction22(data){
+var fileCount = data.files.length;
+var imgCount = $("#countImg").val();
+$("#countImg").val(parseInt(imgCount) + fileCount);
+//alert(fileCount);
+}
+  
+  
   //Add resturant validation
   $("#change_password").validate({
     rules: {

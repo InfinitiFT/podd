@@ -40,9 +40,20 @@ else if($type == "booked_restaurant")
 }
 else if($type == "restaurant")
 {
+  $user_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `restaurant_id` = '".$id."'"));
+
   if(mysqli_query($GLOBALS['conn'],"DELETE FROM `restaurant_details` WHERE `restaurant_id` = '".$id."'"))
   {
-    echo "success";
+    if(mysqli_query($GLOBALS['conn'],"DELETE FROM `users` WHERE `restaurant_id` = '".$user_id['user_id']."'"))
+    {
+       echo "success";
+      
+    }
+    else
+    {
+        echo "error";
+    }
+    
   }
   else
   {
@@ -59,9 +70,23 @@ else if($type == "menu_management")
   {
     echo "error";
   }
+}
+  else if($type == "table_management")
+{
+  if(mysqli_query($GLOBALS['conn'],"DELETE FROM `restaurant_menu_details` WHERE `id` = '".$id."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+  
 
 } 
+else{
 
+}
 ?>
 
   

@@ -9,7 +9,39 @@
         <div class="right_col" role="main">
           <div class="">
             <div class="clearfix"></div>
-
+             <div class="row top_tiles">
+              <a href = "restaurant_list.php"> <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-home"></i></div>
+                  <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `users` Where `role`= 2 "));?></div>
+                  <h3>Total Restaurants</h3>
+                  
+                </div>
+              </div>
+              </a>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-car"></i></div>
+                  <div class="count">0</div>
+                  <h3>Total Taxi</h3>
+                  
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                  <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant`"));?></div>
+                  <h3>Total Restaurant Bookings</h3>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                  <div class="count">0</div>
+                  <h3>Total Taxi Bookings</h3>
+                </div>
+              </div>
+            </div
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">

@@ -2,8 +2,7 @@
 ob_start();
 include_once('header.php'); 
 error_reporting(0);
-//print_r($_SESSION);
-//echo phpinfo();exit;
+
 $mes ='';
 if($_SESSION['msg'] == 'maxLimit'){
 	$mes = '<div class="alert alert-warning">Resturant images maximum 6 uploaded</div>';
@@ -11,6 +10,10 @@ if($_SESSION['msg'] == 'maxLimit'){
 }
 if ($_SESSION['msg'] == 'image'){
 	$mes = '<div class="alert alert-warning">Resturant images not uploaded. Please try again</div>';
+	$_SESSION['msg'] ='';
+}
+if ($_SESSION['msg'] == 'location'){
+	$mes = '<div class="alert alert-warning">Please enter valid location</div>';
 	$_SESSION['msg'] ='';
 }
 if(isset($_REQUEST['submit'])){
@@ -33,6 +36,7 @@ if(isset($_REQUEST['submit'])){
 			}	
 		}
 	}
+	
 	if(empty($_SESSION['msg']))
 	{
 		
@@ -42,38 +46,48 @@ if(isset($_REQUEST['submit'])){
 		$ambience = implode(',',$_POST['ambience']);
 		$email = mysqli_real_escape_string($conn,trim($_POST["email"]));
 		$passwordRandom = randomPassword();
+		
 		$addUser = mysqli_query($conn,"INSERT INTO `users`(`email`, `password`, `mobile_no`, `role`) VALUES('".$email."','".md5($passwordRandom)."','".$_POST['phone']."','2')");
 		if($addUser == 1){
 			
 			$id = mysqli_insert_id($conn);
-				if($_POST['location']){
-					$loction = $_POST['location'];
+				if($_POST['locationTest']){
+					 $locationData = getLatLong($_POST['locationTest']);
+					 if(empty($locationData['latitude'])){
+						 $_SESSION['msg']= 'location';
+						 header('Location: add_resturant.php');
+					 }
+					
+					 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$_POST['locationTest']."','".$locationData['latitude']."','".$locationData['longitude']."')");
+					 $loction = mysqli_insert_id($conn);
 				}else{
-					  $locationData = getLatLong($_POST['locationTest']);
-					  $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$_POST['locationTest']."','".				$locationData['latitude']."','".$locationData['longitude']."')");
-					  $loction = mysqli_insert_id($conn);
+					 $loction = $_POST['location'];
 				}
-			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`, `deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$_POST['name']."','".$allImages."','".$_POST['location']."','".$_POST['deliver']."','".$_POST['opentime']."','".$_POST['closetime']."','".$_POST['about']."','".$_POST['people']."','".$cuisine."','".$ambience."','".$dietary."','".$_POST['price']."','".$id."')");
+				
+			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`, `deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$_POST['name']."','".$allImages."','".$loction."','".$_POST['deliver']."','".$_POST['opentime']."','".$_POST['closetime']."','".$_POST['about']."','".$_POST['people']."','".$cuisine."','".$ambience."','".$dietary."','".$_POST['price']."','".$id."')");
 			if($resturant){
 				
 				$resturnatID = mysqli_insert_id($conn);
 				foreach($_POST['meal'] as $meal){
-					$target_dir = "../uploads/resturant/";
+					$target_dir = "../uploads/menu_file/";
 					$pdfUrl ='';
 					if($_FILES["document"]["name"][$j]){
 						$imageUpload = imageUpload($target_dir,$_FILES["document"]['name'][$j],$_FILES["document"]['tmp_name'][$j]);
 						if($imageUpload){
 							if($_FILES["document"]["name"][$j])
-								$pdfUrl = $target_dir.$_FILES["document"]["name"][$j];
+								$pdfUrl = 'uploads/resturant/'.$_FILES["document"]["name"][$j];
+								
 							mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`, `menu_url`) VALUES('".$resturnatID."','".$meal."','".$pdfUrl."')");
 						}
+				   }else{
+					   mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`) VALUES('".$resturnatID."','".$meal."')");
 				   }
 					$j =$j +1;
 				}
 			}
 			
 		}
-		
+
 		 $to = $email;
 		   $subject = "Password";
 		   $message = '
@@ -138,6 +152,7 @@ if(isset($_REQUEST['submit'])){
 		header('Location: restaurant_list.php');
 	}
 	else{
+		
 		header('Location: add_resturant.php');
 	}
 }
@@ -214,11 +229,12 @@ if(isset($_REQUEST['submit'])){
                           </select>
                         </div>
                       </div>
+                      <input type="hidden" name="selected_meals" id="selected_meals" value="" />
                       <div class="item form-group" id="allMeal-1">
 						   <div class="item form-group col-sm-6">
                         <label class="control-label col-md-6 col-sm-3 col-xs-12">Select Meal</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="select2_multiple form-control" name="meal[]"  onchange ="mealChange(this)" id="allMealling-1">
+                          <select class="select2_multiple form-control" name="meal[]" id="allMealling-1">
 							   <option value="">Select Meal</option>
 						   <?php 
 							  $meal = get_all_data('restaurant_menu');
@@ -233,7 +249,7 @@ if(isset($_REQUEST['submit'])){
                         </div>
                         <input type="hidden" value="<?php echo $i-1;?>" id="totalMeal">
                          <div class="item form-group col-sm-6">
-							<label class="control-label col-md-2 col-sm-6 col-xs-6">Document</label>
+							<label class="control-label col-md-2 col-sm-6 col-xs-6">Menu</label>
                            <div class="col-md-6 col-sm-6 col-xs-12">
                             <input id="name" class="form-control col-md-7 col-xs-12"  name="document[]" type="file" >
                           </div>
@@ -274,7 +290,7 @@ if(isset($_REQUEST['submit'])){
                       <div class="item form-group" id="locationSelect">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website"> Location
                         </label>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="select2_multiple form-control" name="location" id="">
 							   <option value="">Select Location</option>
 						   <?php 
@@ -285,15 +301,13 @@ if(isset($_REQUEST['submit'])){
 							?>
                           </select>
                            </div>
-                          <div class="col-md-2 col-sm-2 col-xs-12">
-							<span onclick="otherLocation()" id="other">Other Location </span>  
-						  </div>	  
+                            
                         </div>
                         
                        <div class="item form-group" id="location">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Location</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="website" name="locationTest" value="<?php if($_POST['location']){ echo $_POST['location'];}else{ echo '';} ?>" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="website" name="locationTest" placeholder ="Other Location" value="<?php if($_POST['location']){ echo $_POST['location'];}else{ echo '';} ?>" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       
@@ -328,7 +342,7 @@ if(isset($_REQUEST['submit'])){
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                          <button type="submit" class="btn btn-primary">Cancel</button>
+                       
                           <button id="send" type="submit" name="submit" class="btn btn-success">Submit</button>
                         </div>
                       </div>

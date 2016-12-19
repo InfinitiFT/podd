@@ -18,7 +18,8 @@ switch($_REQUEST['type']) {
 	
 	case 'email_validation':
 	$email = $_POST['email'];
-	$data = validate_email_admin($email);
+	$userID = $_POST['userID'];
+	$data = validate_email_admin($email,$userID);
 	if($data)
 		print 1;
 	else

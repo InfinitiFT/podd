@@ -75,7 +75,8 @@
                  <ul class="nav side-menu">
                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
                    <li><a href = "restaurant_menu_management.php"><i class="fa fa-home"></i>Menu Management</a></li>
-                   <!-- <li><a href = ""><i class="fa fa-home"></i>Table Management</a></li> -->
+                   <li><a href = "booking_history.php"><i class="fa fa-home"></i>Bookings History</a></li>
+                  <!--  <li><a href = "table_management.php"><i class="fa fa-table"></i>Table Management</a></li> -->
                   
                 </ul>
              <?php }else{ ?>
