@@ -135,13 +135,13 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 startActivity(intent);
                 break;
             case R.id.tvSelectfromCalender:
-                tvToday.setClickable(false);
-                tvTomorrow.setClickable(false);
+                tvToday.setText(R.string.today);
+                tvTomorrow.setText(R.string.tomorrow);
                 pickDate();
                 break;
             case R.id.tvTomorrow:
-                tvToday.setClickable(false);
-                tvSelectfromCalender.setClickable(false);
+                tvToday.setText(R.string.today);
+                tvSelectfromCalender.setText(R.string.select_from_calender);
 
                  /*  getting tomorrow date  */
 
@@ -152,8 +152,8 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 break;
 
             case R.id.tvToday:
-                tvSelectfromCalender.setClickable(false);
-                tvTomorrow.setClickable(false);
+                tvSelectfromCalender.setText(R.string.select_from_calender);
+                tvTomorrow.setText(R.string.tomorrow);
 
                 /*  getting current date  */
 

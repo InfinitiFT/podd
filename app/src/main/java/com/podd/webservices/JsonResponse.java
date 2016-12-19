@@ -7,7 +7,7 @@ import java.util.List;
 
 public class JsonResponse {
 
-    /*   Restaurant List  */
+    /*   Restaurant List api response */
 
     public List<Restaurant>restaurant_list;
     public Pagination pagination;

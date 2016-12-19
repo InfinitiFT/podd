@@ -1,6 +1,8 @@
 package com.podd.activityrestauarant;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,10 @@ import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.BestRestaurantAdapter;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * The type Best restaurant near city.
@@ -43,6 +49,9 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private LinearLayout llMeal;
     private LinearLayout llAmbience;
     private LinearLayout llDeliveredToYou;
+    private double latitude;
+    private double longitude;
+    private Geocoder geocoder;
 
 
     @Override
@@ -53,6 +62,24 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         getIds();
         setListeners();
         setRecycler();
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+
+
+        }
+
+        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        String city = addresses.get(0).getLocality();
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+        String postalCode = addresses.get(0).getPostalCode();
+        String knownName = addresses.get(0).getFeatureName();
+
+        tvCityName.setText(city);
     }
 
     private void setListeners() {
@@ -105,6 +132,9 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
     }
 
+
+
+
     private void setRecycler() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2,LinearLayoutManager.HORIZONTAL,false);
         rvRestaurants.setLayoutManager(gridLayoutManager);
@@ -112,6 +142,9 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         rvRestaurants.setAdapter(bestRestaurantAdapter);
         rvRestaurants.setNestedScrollingEnabled(false);
     }
+
+
+
 
     @Override
     public void onClick(View view) {

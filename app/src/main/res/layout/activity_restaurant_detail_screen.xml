@@ -4,7 +4,7 @@
     android:id="@+id/activity_restaurant_detail_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/black"
     android:orientation="vertical"
     tools:context="com.podd.activityrestauarant.RestaurantDetailScreenActivity">
 
@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_20"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <LinearLayout

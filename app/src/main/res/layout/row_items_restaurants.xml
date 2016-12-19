@@ -15,12 +15,14 @@
             android:id="@+id/ivRestaurantImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@null"
+
             android:src="@mipmap/podd"
             android:padding="@dimen/dp_25"/>
         <View
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp_2"
+            android:layout_marginEnd="@dimen/dp_2"
             android:background="@android:color/white"/>
 
 

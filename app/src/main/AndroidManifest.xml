@@ -70,7 +70,9 @@
             android:name=".activityrestauarant.ViewMenuActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".activityrestauarant.ViewInMapActivity"></activity>
+        <activity android:name=".activityrestauarant.ViewInMapActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
     </application>
 
 </manifest>

@@ -194,7 +194,9 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         }, cYear, cMonth, cDay);
         DatePicker dp = dpd.getDatePicker();
         if (date != null) {
-            dpd.getDatePicker().updateDate(CommonUtils.getPreferencesInt(context, AppConstant.YEAR), CommonUtils.getPreferencesInt(context, AppConstant.MONTH), CommonUtils.getPreferencesInt(context, AppConstant.DATE));
+            dpd.getDatePicker().updateDate(CommonUtils.getPreferencesInt(context, AppConstant.YEAR),
+                    CommonUtils.getPreferencesInt(context, AppConstant.MONTH),
+                    CommonUtils.getPreferencesInt(context, AppConstant.DATE));
         } else {
             dp.setMaxDate(Calendar.getInstance().getTimeInMillis());
         }
