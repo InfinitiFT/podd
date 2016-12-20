@@ -1,6 +1,7 @@
 <?php
 include('../functions/functions.php');
 switch($_REQUEST['type']) {
+	
 	case 'allMeal':
 	$allMeals = implode(',',$_POST['meal']);
 	$data = mysqli_query($conn,"SELECT * FROM `restaurant_menu` WHERE `id` NOT IN(".$allMeals.")");
@@ -26,7 +27,15 @@ switch($_REQUEST['type']) {
 		print 0;
 	break;
 
-
+	case 'decline':
+	$bookingID = $_GET['bookingID'];
+	$declined = $_GET['declined'];
+	$update = mysqli_query($conn,"UPDATE `booked_records_restaurant` SET `booking_status`='0',`decline_region`='".$declined."' WHERE `booking_id`='".$bookingID."'");
+	if($update)
+		print 1;
+	else
+		print 0;
+	break;
 
 	
 	

@@ -39,7 +39,7 @@
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
                           <td><?php echo $record['service_name'];?></td>
-                          <td><?php if($record['service_image']){ ?><img src="<?php echo url().'/uploads/service_image/'.$record['service_image']; ?>" alt="Smiley face" height="42" width="42"><?php }?></td>
+                          <td><?php if($record['service_image']){ ?><img src="<?php echo url().$record['service_image']; ?>" alt="Smiley face" height="42" width="42"><?php }?></td>
                           <td><?php if($record['status']=="1"){?>
                              <button type="button" id="activatedeactivate-<?php echo $record['service_id'];?>" class="btn btn-round btn-warning">Deactivate</button>
                               <?php }else{?>

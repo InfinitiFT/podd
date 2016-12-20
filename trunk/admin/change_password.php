@@ -16,11 +16,11 @@ if(isset($_POST["submit"]))
     $number    = preg_match('@[0-9]@', $password);*/
    if($_POST["old_password"] == $_POST["new_password"])
     {
-      $_SESSION["errormsg"]="old password or new password cann't be same.";
+      $_SESSION["errormsg"]="Old password or new password cann't be same.";
     }
     else if(!($_POST["new_password"] == $_POST["confirm_password"]))
      {
-       $_SESSION["errormsg"] ="Password and cofirm password does not matched";
+       $_SESSION["errormsg"] ="Password and confirm password does not matched";
      }
     else
     {
@@ -28,7 +28,10 @@ if(isset($_POST["submit"]))
      $new_password = mysqli_real_escape_string($conn,$_POST["new_password"]);
      $old_password = mysqli_real_escape_string($conn,$_POST["old_password"]);
      $checkQry = mysqli_query($conn,"SELECT * FROM users WHERE email = '".$email."' AND password = '".md5($old_password)."'");
-      if($checkQry){
+    
+     
+      if($checkQry->num_rows!= 0){
+
          $update_password = mysqli_query($conn,"UPDATE users SET `password` = '".md5($new_password)."',`first_time_login` = 1 WHERE email= '".$email."'");
          if($update_password)
          {
@@ -51,7 +54,7 @@ if(isset($_POST["submit"]))
           
         }
       else {
-          $_SESSION["errormsg"] = 'Old Password Not Matched.';
+          $_SESSION["errormsg"] = 'Old password not matched.';
       }
   }
  

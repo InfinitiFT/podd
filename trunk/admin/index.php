@@ -51,7 +51,7 @@ if(isset($_POST["submit"]))
             }
             else{
                  $_SESSION['email']= $email;
-                header("Location:change_password.php");
+                 header("Location:change_password.php");
             }
 
             
@@ -169,10 +169,16 @@ if(isset($_POST["submit"]))
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p><a href="forget_password.php" class="to_register">Forgot Password ?</a></p>
-                <p><input name="remember" type="checkbox" value="Remember Me" <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?> class="flat"> Remember Me </p> 
+				 <div class="row">
+					<div class="col-xs-6" style="text-align: left;">
+						<a href="forget_password.php" class="to_register">Forgot Password ?</a>
+					  </div>
+					<div class="col-xs-6" style="text-align: right;">
+						<input type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?>class="flat"> Remember Me
+					</div>
+			 	</div>
                 <div class="clearfix"></div>
-                <br />
+               
 
                 <div>
                    <h1><i class="fa fa-paw"></i>PODD</h1>

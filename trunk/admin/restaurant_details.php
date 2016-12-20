@@ -50,7 +50,7 @@
                            if($restaurant_images[0])
                             {
                               foreach($restaurant_images as $value){  ?>
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">  <img src="<?php echo url().'/uploads/resturant/'.$value['restaurant_images']; ?>"  height="42" width="42"></label>
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">  <img src="<?php echo url().$value; ?>"  height="42" width="42"></label>
                              <?php }} ?>
                         
                         </div>

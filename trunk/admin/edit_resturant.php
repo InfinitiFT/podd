@@ -31,12 +31,17 @@
 	}
 	
 	if(isset($_REQUEST['submit'])){
-		
+		$delMeal = explode(',',$_POST['deleteMeal']);
 		$meal =$_POST['meal'];
-		$remainImg =array_diff($images,$_POST['remImg']);
+		if($_POST['remImg'])
+			$remainImg =array_diff($images,$_POST['remImg']);
+		else 	
+			$remainImg = $images;
 		
-			
-		$countFile = count($_FILES['resturant_images']['name']);
+		if($_FILES['resturant_images']['name'][0])
+			$countFile = count($_FILES['resturant_images']['name']);
+		else 
+			$countFile = 0;
 		$countImg = (int)$countFile + (int)$_POST['countImg'];
 		if($countImg > 6){
 			$_SESSION['msg']= 'maxLimit';
@@ -62,7 +67,7 @@
 				$target_dir = "../uploads/resturant/";
 				$imageUpload = imageUpload($target_dir,$_FILES["resturant_images"]['name'][$i],$_FILES["resturant_images"]['tmp_name'][$i]);
 				if($imageUpload){
-					$img[] = $imageUpload;
+					$img[] = "uploads/resturant/".$_FILES["resturant_images"]['name'][$i];
 				}else{
 					$_SESSION['msg']= 'image';
 					
@@ -75,8 +80,7 @@
 			$allResturantImg = implode(',',$img);
 		if(!empty($remainImg) && (empty($img)))
 			$allResturantImg = implode(',',$remainImg);
-		
-		//print_r($allResturantImg);exit;
+
 		$dietary = implode(',',$_POST['dietary']);
 		$cuisine = implode(',',$_POST['cuisine']);
 		$ambience = implode(',',$_POST['ambience']);
@@ -100,21 +104,27 @@
 						if($_POST['removeMeal'][$j]){
 							$imageUpload = imageUpload($target_dir,$_FILES["document"]['name'][$j],$_FILES["document"]['tmp_name'][$j]);
 							if($_FILES["document"]["name"][$j])
-								$pdfUrl = $target_dir.$_FILES["document"]["name"][$j];
+								$pdfUrl = "uploads/menu_file/".$_FILES["document"]["name"][$j];
 							else
 								$pdfUrl ='';
-							mysqli_query($conn,"UPDATE restaurant_menu_details SET meal ='".$allMeal."', menu_url='".$pdfUrl."' where id ='".$_POST['removeMeal'][$j]."' ");
+								mysqli_query($conn,"UPDATE restaurant_menu_details SET meal ='".$allMeal."', menu_url='".$pdfUrl."' where id ='".$_POST['removeMeal'][$j]."' ");
 							
 						}else{
 							
 							   $imageUpload = imageUpload($target_dir,$_FILES["document"]['name'][$j],$_FILES["document"]['tmp_name'][$j]);
-							   $pdfUrl = $target_dir.$_FILES["document"]["name"][$j];
-							   mysqli_query($conn,"INSERT INTO restaurant_menu_details(restaurant_id, meal, menu_url, status) VALUES ('".$_POST['resturantID']."','".$allMeal."','".$pdfUrl."')");
+							   if($_FILES["document"]["name"][$j])
+									$pdfUrl = "uploads/menu_file/".$_FILES["document"]["name"][$j];
+							   else
+									$pdfUrl = '';
+								 mysqli_query($conn,"INSERT INTO restaurant_menu_details(restaurant_id, meal, menu_url) VALUES ('".$_POST['resturantID']."','".$allMeal."','".$pdfUrl."')");
 						}
 						$j =$j+1;
 						
 					}
 				}
+				
+				 mysqli_query($conn,"DELETE FROM `restaurant_menu_details` WHERE `id` IN ('".$delMeal."')");
+				
 				
 			}
 			$_SESSION['msg']= 'successEdit';
@@ -152,7 +162,7 @@
 						<?php $i = 1;
 							if($allImages[0]){
 								foreach($allImages as $allImg){
-									echo '<p class="glyphicon glyphicon-remove" onclick ="removeImg(this)" id="removeImg-'.$i.'"><img src="'.url().'admin/'.$allImg.'"  height="60" width="60"><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></p>';
+									echo '<p class="glyphicon glyphicon-remove" onclick ="removeImg(this)" id="removeImg-'.$i.'"><img src="'.url().$allImg.'"  height="60" width="60"><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></p>';
 									$i =$i +1;
 								}
 							}
@@ -165,7 +175,8 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" onchange="myFunction22(this)" multiple>
-                         <?php  echo '<input type="hidden" name="countImg" id ="countImg" value="'.$p.'">';?>
+                         <?php  echo '<input type="hidden" name="countImg" id ="countImg" value="'.$p.'">';
+                         echo '<input type="hidden"  id ="countImgs" name="countImgs" value="'.$p.'">';?>
                         </div>
                       </div>
                       <input type="hidden" value="<?php echo $detail['user_id'];?>" id="userID">
@@ -351,13 +362,58 @@
                       <div class="item form-group">
                         <label for="password" class="control-label col-md-3">Opening Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="opentime" type="text" name="opentime" class="form-control col-md-7 col-xs-12" value="<?php if($_POST['opentime']){ echo $_POST['opentime'];}else{ echo $detail['opening_time']; }?>">
+							<select class="form-control col-md-7 col-xs-12" name="opentime" id="opentime" onchange="timeValidateClose(this)">
+							<?php $i =0;
+							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
+								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
+									{
+									   if($i == 0){
+										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+									    }    
+									    else{ 		
+											$selected ='';
+											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['opening_time'] )
+												$selected ='selected';
+											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										}
+										$i =$i+1;
+									}
+								}
+							
+							?>
+							</select>
+                          <!--<input id="opentime" type="text" name="opentime" class="form-control col-md-7 col-xs-12" value="<?php //if($_POST['opentime']){ echo $_POST['opentime'];}else{ echo $detail['opening_time']; }?>">-->
                         </div>
                       </div>
                       <div class="item form-group">
                         <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Closing Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="closetime" type="text"  name="closetime" data-validate-linked="password" class="form-control col-md-7 col-xs-12" value="<?php if($_POST['closetime']){ echo $_POST['closetime'];}else{ echo $detail['closing_time']; }?>" >
+							<select class="form-control col-md-7 col-xs-12" name="closetime" id="closetime" onchange="timeValidate(this)">
+							<?php 
+							for($hours=0; $hours<24; $hours++){ // the interval for hours is '1'
+								for($mins=0; $mins<60; $mins+=30){
+									 // the interval for mins is '30'
+									 if($i == 0){
+										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										}
+										else{  
+											$selected ='';
+											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['closing_time'] )
+												$selected ='selected';
+												echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										}
+										$i =$i+1;
+							
+							    }
+						    }
+							?>
+							</select>
+							<input type="hidden"  id ="countTime" name="countTime" value="2">
+                          <!--<input id="closetime" type="text"  name="closetime" data-validate-linked="password" class="form-control col-md-7 col-xs-12" value="<?php //if($_POST['closetime']){ echo $_POST['closetime'];}else{ echo $detail['closing_time']; }?>" >-->
                         </div>
                       </div>
                       <div class="item form-group">

@@ -18,7 +18,16 @@ else if($type == "users")
 {
 	if(mysqli_query($GLOBALS['conn'],"UPDATE `users` SET `status`= '".$status."' WHERE `user_id` = '".$id."'"))
   {
-  	echo "success";
+    $restaurant_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `user_id` = '".$id."'"));
+    if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_details` SET `status`= '".$status."' WHERE `restaurant_id` = '".$restaurant_id['restaurant_id']."'"))
+     {
+       echo "success";
+     }
+     else
+     {
+       echo "error";
+     }
+  
   }
   else
   {
@@ -29,7 +38,15 @@ else if($type == "restaurant")
 {
   if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_details` SET `status`= '".$status."' WHERE `restaurant_id` = '".$id."'"))
   {
-    echo "success";
+    $user_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `restaurant_id` = '".$id."'"));
+    if(mysqli_query($GLOBALS['conn'],"UPDATE `users` SET `status`= '".$status."' WHERE `user_id` = '".$user_id['user_id']."'"))
+     {
+       echo "success";
+     }
+     else
+     {
+       echo "error";
+     }
   }
   else
   {

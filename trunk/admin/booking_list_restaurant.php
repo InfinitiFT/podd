@@ -101,9 +101,12 @@
                             ?></td>
                           <td><?php if($record['booking_status']=="1"){?>
                              <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
-                             <button type="button" id="decline-<?php echo $record['booking_id'];?>" class="btn btn-round btn-warning">Decline</button>
+                             <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                             <!--<button type="button" id="decline-<?php echo $record['booking_id'];?>" class="btn btn-round btn-warning">Decline</button>-->
                               <?php }else if($record['booking_status']=="2"){?>
-                              <button type="button" id="decline-<?php echo $record['booking_id'];?>" class="btn btn-round btn-warning">Decline</button>
+								  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+								   <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                              <!--<button type="button" id="decline-<?php echo $record['booking_id'];?>" class="btn btn-round btn-warning">Decline</button>-->
                               <?php }else{?>
                                <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
                               <?php } ?>
@@ -120,6 +123,30 @@
           </div>
         </div>
         <!-- /page content -->
-
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Decline</h4>
+        </div>
+        <div class="modal-body">
+          <select id="declined" name="declined" value="">
+			 <option value="">Select Region</option>
+			<option value="Venue closed">Venue closed</option>
+			<option value="No availability for selected date">No availability for selected date</option>
+			<option value="No availability for selected time">No availability for selected time</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" id="yes">OK</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
         <?php include_once('footer.php'); ?>
          <!-- Modal -->

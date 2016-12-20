@@ -27,7 +27,7 @@ if(isset($_POST["submit"]))
                           <table cellpadding="0" cellspacing="0"  width="100%"  >
                             <TR>
                               <TD height="40" align="center" bgcolor="#272727" style="border:solid 2px #303030;">
-                                <strong style="color:#fff;">Wait Chek User Registration</strong>
+                                <strong style="color:#fff;">PODD Password Recovery</strong>
                               </TD>
                             </TR>
                             <TR>
@@ -37,26 +37,8 @@ if(isset($_POST["submit"]))
                                     <td width="2" align="center"  valign="bottom" style="padding-top:5px;"> </td>
                                     <td colspan="2" width="394" >
                                   <strong>Hello User ,</strong><br/>
-                                  We recently added you as a new user to our app, WaitChek. Please open the app and use the following email address and password to access your account.
+                                   Your new <strong style="color:#1d7210;">Password : </strong> "'.$password.'"
                                     </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="3" height="6px"> </td>
-                                    <td width="1" height="6px"> </td>
-                                  </tr>
-                                  <tr>
-                                    <td width="2" align="center" valign="bottom" style="padding-top:5px;"> </td>
-                                    <td width="91" class="warea" >
-                                    <strong style="color:#1d7210;">Email : </strong>
-                                    </td> 
-                                    <td width="510">"'.$email.'"</td>
-                                  </tr>
-                                  <tr>
-                                    <td width="2" align="center" valign="bottom" style="padding-top:5px;"> </td>
-                                    <td width="91" class="warea" >
-                                    <strong style="color:#1d7210;">Password : </strong>
-                                    </td> 
-                                    <td width="510">"'.$password.'"</td>
                                   </tr>
                                   <tr>
                                     <td colspan="3" height="6px"> </td>
@@ -70,7 +52,6 @@ if(isset($_POST["submit"]))
                                     <td width="2" align="center"  valign="bottom" style="padding-top:5px;"> </td>
                                     <td colspan="2" width="394" >
                                        Thank you for your interest in our app!</br>
-                                       The WaitChek Team
                                     </td>
                                   </tr>
 

@@ -6,11 +6,11 @@
   $msg ='';
   if(isset($_SESSION['msg']) == 'success'){
 	if($_SESSION['msg'] == 'success'){
-		$msg = '<div class="alert alert-warning">Resturant added successfully</div>';
+		$msg = '<div class="alert alert-success">Resturant added successfully</div>';
 	    $_SESSION['msg'] ='';
 	}
 	if($_SESSION['msg'] == 'successEdit'){
-		$msg = '<div class="alert alert-warning">Resturant edited successfully</div>';
+		$msg = '<div class="alert alert-success">Resturant edited successfully</div>';
 	    $_SESSION['msg'] ='';
 	}
  }
@@ -27,10 +27,11 @@
                   <div class="x_title">
                     <h2>Restaurant List</h2>
                      <a  href="add_resturant.php" class="btn btn-round btn-primary pull-right">Add Restaurant</a>
-					<?php echo $msg; ?>
+				
                     <div class="clearfix"></div>
                      
                   </div>
+                    <?php echo $msg; ?>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>

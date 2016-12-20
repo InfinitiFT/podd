@@ -29,7 +29,7 @@ if(isset($_REQUEST['submit'])){
 			$target_dir = "../uploads/resturant/";
 			$imageUpload = imageUpload($target_dir,$_FILES["resturant_images"]['name'][$i],$_FILES["resturant_images"]['tmp_name'][$i]);
 			if($imageUpload){
-				$img[] = $imageUpload;
+				$img[] = "uploads/resturant/".$_FILES["resturant_images"]['name'][$i];
 			}else{
 				$_SESSION['msg']= 'image';
 				
@@ -113,15 +113,14 @@ if(isset($_REQUEST['submit'])){
 						  <tr>
 							<td width="2" align="center"  valign="bottom" style="padding-top:5px;"> </td>
 							<td colspan="2" width="394" >
-						  <strong>Hello "'.$_POST['name'].'" ,</strong><br/>
-						  You account is successfully created on IOSNativeAppDevelopment.<br>Your password is  <b>"'.$passwordRandom.'"</b> 
+						  <strong>Hello '.$_POST['name'].' ,</strong><br/>
+						  You account is successfully created on IOSNativeAppDevelopment.<br>Your password is  <b>'.$passwordRandom.'</b> 
 							</td>
 						  </tr>
 						  <tr>
 							<td width="2" align="center"  valign="bottom" style="padding-top:5px;"> </td>
 							<td colspan="2" width="394" >
 							   Thank you for your interest in our app!</br>
-							   The WaitChek Team
 							</td>
 						  </tr>
 
@@ -137,17 +136,21 @@ if(isset($_REQUEST['submit'])){
 			</table>
 		  </body>
 		</html>';
+
+		
+		
       // Always set content-type when sending HTML email
+      
       $headers = "MIME-Version: 1.0" . "\r\n";
       $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
       // More headers
-      $headers .= 'From: ippodDevlopment@gmail.com' . "\r\n";
+      $headers .= 'From: ippodDevlopment@gmail.com' . "\r\n"; 
       if(mail($to,$subject,$message,$headers)){  
-       $_SESSION["successmsg"] = "Password Send to your email.";
-       } else{ 
-       $_SESSION["errormsg"] = "Error in sending email.";
-       } 
+			$_SESSION["successmsg"] = "Password Send to your email.";
+		} else{ 
+			$_SESSION["errormsg"] = "Error in sending email.";
+		} 
 		$_SESSION['msg']= 'success';
 		header('Location: restaurant_list.php');
 	}
@@ -320,16 +323,50 @@ if(isset($_REQUEST['submit'])){
                             data-parsley-validation-threshold="10"><?php if($_POST['about']){ echo $_POST['about'];}else{ echo '';} ?></textarea>
                         </div>
                       </div>
+                      
                       <div class="item form-group">
                         <label for="password" class="control-label col-md-3">Opening Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="opentime" type="text" name="opentime" class="form-control col-md-7 col-xs-12" <?php if($_POST['opentime']){ echo $_POST['opentime'];}else{ echo '';} ?> >
+							<select class="form-control col-md-7 col-xs-12" name="opentime" id="opentime" onchange="timeValidateClose(this)">
+							<?php $i =0;
+								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
+									for($mins=0; $mins<60; $mins+=30){
+										 // the interval for mins is '30'
+									if($i == 0)
+											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										else
+											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										$i =$i+1;
+								 }
+							?>
+							</select>
+                          <!--<input id="opentime" type="text" name="opentime" class="form-control col-md-7 col-xs-12" <?php //if($_POST['opentime']){ echo $_POST['opentime'];}else{ echo '';} ?> >-->
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Closing Time</label>
+                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12" >Closing Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="closetime" type="text" value="<?php if($_POST['closetime']){ echo $_POST['closetime'];}else{ echo '';} ?>" name="closetime" data-validate-linked="password" class="form-control col-md-7 col-xs-12" >
+							<select class="form-control col-md-7 col-xs-12" name="closetime" id="closetime" onchange="timeValidate(this)">
+							<?php 
+								$i =0;
+								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
+									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
+										if($i == 0)
+											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										else
+											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+										$i =$i+1;
+								
+						       }
+							?>
+							</select>
+							<input type="hidden"  id ="countTime" name="countTime" value="1">
                         </div>
                       </div>
                       <div class="item form-group">

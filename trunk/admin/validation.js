@@ -104,6 +104,7 @@ $.validator.methods.alreadyEmail = function(value, element) {
 
   //Add resturant validation
   $("#addResturant").validate({
+	  ignore: "",
     rules: {
 		name: "required",
 		email: {
@@ -121,7 +122,12 @@ $.validator.methods.alreadyEmail = function(value, element) {
 		"resturant_images[]":{
 			 required: true
 		
-    }
+    },
+    countTime: {
+				max: 1
+				
+		}
+    
 },
 
     messages: {
@@ -140,7 +146,12 @@ $.validator.methods.alreadyEmail = function(value, element) {
 		},
 		"resturant_images[]" :{
 			required: "Resturant images required"
+		},
+		countTime: {
+				max: "Close time should be greater than open time"
+				
 		}
+		
       
     }
   });
@@ -164,8 +175,12 @@ $.validator.methods.alreadyEmail = function(value, element) {
 				maxlength: 15
 				
 		},
-		countImg: {
+		countImgs: {
 				min: 1
+				
+		},
+		countTime: {
+				max: 1
 				
 		}
 		
@@ -186,8 +201,12 @@ $.validator.methods.alreadyEmail = function(value, element) {
 				maxlength: "Phone number maximum 15 digits"
 				
 		},
-		countImg: {
+		countImgs: {
 				min: "Resturant images required"
+				
+		},
+		countTime: {
+				max: "Close time should be greater than open time"
 				
 		}
 		
@@ -196,18 +215,95 @@ $.validator.methods.alreadyEmail = function(value, element) {
   });
 
   
- 
-  //$("input[name='file']").on("change", function(){  
-	//  //var name = $(this).attr("name");
-	// alert(name);
- // var numFiles = $(name).get(0).files.length
-  // alert(numFiles);
-//});
+
+function timeValidate(data){
+	var add ='';
+	var openTime = $("#opentime").val();
+	var closeTime = $("#closetime").val();
+	if(openTime==''){
+		alert('Please select open time');
+	}else{
+		var open = openTime.split(':');
+		var close = closeTime.split(':');
+		if((open[0] == close[0])&& (open[1] != close[1])){
+			if(open[1] > close[1]){
+					add = 2;//$("#countTime").val(2);
+			//	return false;
+			}
+		}
+		if((open[0] != close[0]) &&(open[1] == close[1])){
+			if(open[0] > close[0]){
+					add = 2;//$("#countTime").val(2);
+				return false;
+			}
+		}if((open[0] != close[0]) &&(open[1] != close[1])){
+			if(open[0] > close[0]){
+					add = 2;//$("#countTime").val(2);
+				//return false;
+			}else{
+				if((open[0] == close[0])&&(open[1] >close[1]))
+					add = 2;//$("#countTime").val(2);
+					//return false;
+			    }
+			}
+		}
+		
+		
+		if(add ==2){
+			$("#countTime").val(2);
+			
+		}else{
+			$("#countTime").val(0);
+			
+		}
+	}
+
+
+
+function timeValidateClose(data){
+	var add ='';
+	var openTime = $("#opentime").val();
+	var closeTime = $("#closetime").val();
+	if(closeTime==''){
+		alert('Please select close time');
+	}else{
+		var open = openTime.split(':');
+		var close = closeTime.split(':');
+		if((open[0] == close[0])&& (open[1] != close[1])){
+			if(open[1] > close[1]){
+				add = 2;
+				//$("#countTime").val(2);
+				//return false;
+			}
+		}
+		if((open[0] != close[0]) &&(open[1] == close[1])){
+			if(open[0] > close[0]){
+				add = 2;
+			}
+		}if((open[0] != close[0]) &&(open[1] != close[1])){
+			if(open[0] > close[0]){
+				add = 2;
+			}else{
+				if((open[0] == close[0])&&(open[1] >close[1])){
+				   add = 2;
+			   }
+			}
+		}
+	}
+	
+	if(add ==2){
+			$("#countTime").val(2);
+			
+		}else{
+			$("#countTime").val(0);
+			
+		}
+}
 function myFunction22(data){
 var fileCount = data.files.length;
-var imgCount = $("#countImg").val();
-$("#countImg").val(parseInt(imgCount) + fileCount);
-//alert(fileCount);
+var imgCount = $("#countImgs").val();
+$("#countImgs").val(parseInt(imgCount) + fileCount);
+
 }
   
   
@@ -230,11 +326,11 @@ $("#countImg").val(parseInt(imgCount) + fileCount);
     old_password: "Please enter your password.",
     new_password: {
                    required:"Please enter new password",
-                   minlength: "Password atleast 8 digits"
+                   minlength: "New password atleast 8 digits"
                 },
     confirm_password: {
                   required: "Please enter confirm password",
-                  minlength: "Confirm Password atleast 8 digits"    
+                  minlength: "Confirm password atleast 8 digits"    
     }
      
     }
