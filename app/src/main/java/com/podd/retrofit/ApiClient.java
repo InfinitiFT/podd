@@ -2,6 +2,8 @@ package com.podd.retrofit;
 
 
 import android.content.Context;
+import android.util.Base64;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
@@ -16,15 +18,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://247mytutor.mobiloitte.com:8080/";
+    public static final String BASE_URL = "http:172.16.0.9/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
 
     private static Retrofit retrofit = null;
+
 
 
 
     public static Retrofit getClient(Context context) {
         if (retrofit==null) {
 
+            String credentials = "admin:1234";
+
+            final String basic = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new Interceptor() {
@@ -34,6 +40,7 @@ public class ApiClient {
 
                     Request request = original.newBuilder()
                             .header("Content-Type", "application/json")
+                            .header("Authorization",basic)
                             .method(original.method(), original.body())
                             .build();
 

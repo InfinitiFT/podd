@@ -2,6 +2,9 @@ package com.podd.retrofit;
 
 
 
+import com.podd.webservices.JsonRequest;
+import com.podd.webservices.JsonResponse;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -12,6 +15,9 @@ import retrofit2.http.Path;
 
 
 public interface ApiInterface {
+
+    @POST("restaurant_assest_list.php")
+    public  Call<JsonResponse>getCuisineRestaurantList(@Body JsonRequest jsonRequest);
 
     /*@POST("signup")
     Call<JsonResponse> getSignUp(@Body JsonRequest loginRequestModel);

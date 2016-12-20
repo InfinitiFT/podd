@@ -1,11 +1,12 @@
 package com.podd.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Shalini Bishnoi on 17-12-2016.
  */
-public class Restaurant {
+public class Restaurant implements Serializable{
 
     /**
      * The Restaurant id.

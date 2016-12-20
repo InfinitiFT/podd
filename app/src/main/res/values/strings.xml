@@ -93,4 +93,5 @@
     <string name="breakfast">Breakfast Menu</string>
     <string name="lunch_menu">Lunch Menu</string>
     <string name="dinner">Dinner Menu</string>
+    <string name="restaurant_by_cuisine">Search our curated selection of best restaurants by cuisine</string>
 </resources>

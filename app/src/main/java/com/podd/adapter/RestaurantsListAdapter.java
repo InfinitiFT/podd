@@ -15,7 +15,9 @@ import com.podd.R;
  * Created by Shalini Bishnoi on 19-12-2016.
  */
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.MyViewHolder> {
+    private Context context;
     public RestaurantsListAdapter(Context context) {
+        this.context=context;
 
     }
 
