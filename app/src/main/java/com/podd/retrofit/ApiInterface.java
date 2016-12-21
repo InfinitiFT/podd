@@ -14,10 +14,22 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
+/**
+ * The interface Api interface.
+ */
 public interface ApiInterface {
 
+    /**
+     * Get cuisine restaurant list call.
+     *
+     * @param jsonRequest the json request
+     * @return the call
+     */
     @POST("restaurant_assest_list.php")
     public  Call<JsonResponse>getCuisineRestaurantList(@Body JsonRequest jsonRequest);
+
+    @POST("restaurant_list.php")
+    public  Call<JsonResponse>getRestautantsList(@Body JsonRequest jsonRequest);
 
     /*@POST("signup")
     Call<JsonResponse> getSignUp(@Body JsonRequest loginRequestModel);

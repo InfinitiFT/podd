@@ -47,19 +47,11 @@
 
 
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_4"
                 android:layout_height="@dimen/dp_1"
-                android:layout_marginTop="@dimen/dp_5"
                 android:background="@android:color/white" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvRestaurants"
@@ -70,13 +62,10 @@
                     android:orientation="horizontal"
                     android:scrollbars="none" />
 
-            </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
+                android:layout_height="@dimen/dp_1"
                 android:background="@android:color/white" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,12 +110,15 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
+                        <AutoCompleteTextView
                             android:id="@+id/tvLocationType"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:background="@null"
                             android:text="@string/city"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -151,11 +143,14 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
+                        <AutoCompleteTextView
                             android:id="@+id/tvDietaryType"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:background="@null"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
                             android:text="@string/gluten"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -180,12 +175,15 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
+                        <AutoCompleteTextView
                             android:id="@+id/tvCuisinetype"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:background="@null"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
                             android:text="@string/italian"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -211,12 +209,15 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
+                        <AutoCompleteTextView
                             android:id="@+id/tvMealType"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:background="@null"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
                             android:text="@string/lunch"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -241,12 +242,15 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
+                        <AutoCompleteTextView
                             android:id="@+id/tvBusiness"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:background="@null"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
                             android:text="@string/bussiness"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />

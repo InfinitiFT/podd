@@ -13,53 +13,41 @@ import android.widget.TextView;
 import com.podd.R;
 import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
 import com.podd.model.Cuisine;
-import com.podd.model.Restaurant;
 
 import java.util.List;
 
 /**
- * Created by Shalini Bishnoi on 13-12-2016.
+ * Created by Shalini Bishnoi on 21-12-2016.
  */
-public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
+public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineTypeRestaurantAdapter.MyViewHolder>{
     private Context context;
-    private List<Restaurant>restaurantList;
-
-    /**
-     * Instantiates a new Best restaurant adapter.
-     *  @param context the context
-     * @param restaurantList
-     */
-    public BestRestaurantAdapter(Context context, List<Restaurant> restaurantList) {
-
+    private List<Cuisine>cuisineList;
+    public CuisineTypeRestaurantAdapter(Context context, List<Cuisine> cuisineList) {
+        this.cuisineList=cuisineList;
         this.context=context;
-        this.restaurantList=restaurantList;
-
-
     }
-
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_grid_layout, parent, false);
-        return new BestRestaurantAdapter.MyViewHolder(view);
+        return new CuisineTypeRestaurantAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
         if (position%2==0){
             holder.viewBottom.setVisibility(View.VISIBLE);
         }
         else {
             holder.viewBottom.setVisibility(View.GONE);
         }
-        Restaurant restaurant = restaurantList.get(position);
-        holder.tvRestaurantName.setText(restaurant.restaurant_name);
-        holder.tvLocation.setText(restaurant.location);
-        holder.tvDistance.setText(restaurant.distance);
 
-
+        Cuisine cuisine = cuisineList.get(position);
+        holder.tvLocation.setText(cuisine.name);
+        holder.tvDistance.setVisibility(View.GONE);
+        holder.tvPriceRange.setVisibility(View.GONE);
+        holder.tvtypeofRestaurant.setVisibility(View.GONE);
+        holder.tvRestaurantName.setVisibility(View.GONE);
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,15 +59,11 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
 
     }
 
-
     @Override
     public int getItemCount() {
-        return restaurantList.size();
+        return cuisineList.size();
     }
 
-    /**
-     * The type My view holder.
-     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout llMain;
         private ImageView ivRestaurant;

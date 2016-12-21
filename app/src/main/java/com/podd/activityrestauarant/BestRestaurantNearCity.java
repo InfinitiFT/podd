@@ -13,16 +13,22 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.BestRestaurantAdapter;
+import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
 import com.podd.model.Cuisine;
+import com.podd.model.Restaurant;
 import com.podd.retrofit.ApiClient;
-import com.podd.retrofit.ApiInterface;
+import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -45,16 +51,16 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private Context context;
     private BestRestaurantAdapter bestRestaurantAdapter;
     private TextView tvDeliveredtoYou;
-    private TextView tvBusiness;
+    private AutoCompleteTextView tvBusiness;
     private TextView tvAmbience;
-    private TextView tvMealType;
+    private AutoCompleteTextView tvMealType;
     private TextView tvMeal;
-    private TextView tvCuisinetype;
+    private AutoCompleteTextView tvCuisinetype;
     private TextView tvCuisine;
     private TextView tvDietary;
-    private TextView tvLocationType;
+    private AutoCompleteTextView tvLocationType;
     private TextView tvLocation;
-    private TextView tvDietaryType;
+    private AutoCompleteTextView tvDietaryType;
     private TextView tvSearchBy;
     private TextView tvCityName;
     private TextView tvNearbyRestaurant;
@@ -66,8 +72,16 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private LinearLayout llDeliveredToYou;
     private double currentLat =0.0d;
     private double currentLong=0.0d;
-    private List<Cuisine>cuisine=new ArrayList<>();
+    private List<Cuisine>cuisineList=new ArrayList<>();
+    private List<Restaurant>restaurantList=new ArrayList<>();
     private String TAG=BestRestaurantNearCity.class.getSimpleName();
+    private final String[]location={"abc","abd","aaa","aaaa"};
+    private final String[]dietary={"bbb","abd","bba","bbc"};
+    private final String[]cuisine={"abc","ccc","aca","acaa"};
+    private final String[]meal={"ddd","dddd","dddd","ddddd"};
+    private final String[]ambience={"rrr","rrrrrrr","rrrrr","rrrr"};
+    private int pageNo=1;
+    private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
 
 
     @Override
@@ -78,8 +92,40 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         getIds();
         setListeners();
         setRecycler();
-        fetchLocation();
+        if (CommonUtils.isOnline(context)){
+            fetchLocation();
+        }
+        else {
+            Toast.makeText(context,R.string.Please_connect_to_internet_first,Toast.LENGTH_SHORT).show();
+        }
+
+        selectLocation();
+        selectAmbience();
+        selectCuisine();
+        selectDietary();
+        selectMeal();
     }
+
+    private void selectLocation() {
+        ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_report_type_dropdown, location);
+        tvLocationType.setAdapter(adapter);
+    } private void selectDietary() {
+        ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_report_type_dropdown, dietary);
+        tvDietaryType.setAdapter(adapter);
+    } private void selectCuisine() {
+        ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_report_type_dropdown, cuisine);
+        tvCuisinetype.setAdapter(adapter);
+    } private void selectMeal() {
+        ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_report_type_dropdown, meal);
+        tvMealType.setAdapter(adapter);
+    } private void selectAmbience() {
+        ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_report_type_dropdown, ambience);
+        tvBusiness.setAdapter(adapter);
+    }
+
+
+
+
 
     private void setListeners() {
         llDeliveredToYou.setOnClickListener(this);
@@ -102,16 +148,16 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         tvNearbyRestaurant= (TextView) findViewById(R.id.tvNearbyRestaurant);
         tvCityName= (TextView) findViewById(R.id.tvCityName);
         tvSearchBy= (TextView) findViewById(R.id.tvSearchBy);
-        tvDietaryType= (TextView) findViewById(R.id.tvDietaryType);
+        tvDietaryType= (AutoCompleteTextView) findViewById(R.id.tvDietaryType);
         tvLocation= (TextView) findViewById(R.id.tvLocation);
-        tvLocationType= (TextView) findViewById(R.id.tvLocationType);
+        tvLocationType= (AutoCompleteTextView) findViewById(R.id.tvLocationType);
         tvDietary= (TextView) findViewById(R.id.tvDietary);
         tvCuisine= (TextView) findViewById(R.id.tvCuisine);
-        tvCuisinetype= (TextView) findViewById(R.id.tvCuisinetype);
+        tvCuisinetype= (AutoCompleteTextView) findViewById(R.id.tvCuisinetype);
         tvMeal= (TextView) findViewById(R.id.tvMeal);
-        tvMealType= (TextView) findViewById(R.id.tvMealType);
+        tvMealType= (AutoCompleteTextView) findViewById(R.id.tvMealType);
         tvAmbience= (TextView) findViewById(R.id.tvAmbience);
-        tvBusiness= (TextView) findViewById(R.id.tvBusiness);
+        tvBusiness= (AutoCompleteTextView) findViewById(R.id.tvBusiness);
         tvDeliveredtoYou= (TextView) findViewById(R.id.tvDeliveredtoYou);
 
 
@@ -132,6 +178,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     }
 
     private void fetchLocation(){
+        CommonUtils.showProgressDialog(context);
         new LocationTracker(context, new LocationResult() {
             @Override
             public void gotLocation(Location location) {
@@ -171,9 +218,12 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             city = "";
                         if (country.equalsIgnoreCase("null"))
                             country = "";
-
+                        CommonUtils.disMissProgressDialog(context);
                         tvCityName.setText(city);
+                        //getRestaurantListApi(currentLat,currentLong,pageNo);
                     }else {
+
+
                     }
 
                 } catch (Exception e) {
@@ -187,7 +237,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private void setRecycler() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2,LinearLayoutManager.HORIZONTAL,false);
         rvRestaurants.setLayoutManager(gridLayoutManager);
-        bestRestaurantAdapter = new BestRestaurantAdapter(context);
+        bestRestaurantAdapter = new BestRestaurantAdapter(context,restaurantList);
         rvRestaurants.setAdapter(bestRestaurantAdapter);
         rvRestaurants.setNestedScrollingEnabled(false);
     }
@@ -210,7 +260,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             case R.id.llCuisine:
                 tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
                 tvCityName.setVisibility(View.GONE);
-               getCuisineRestaurantListApi();
+                //getCuisineRestaurantListApi();
                 break;
             case R.id.llMeal:
                 Toast.makeText(context,R.string.work_in_progress,Toast.LENGTH_SHORT).show();
@@ -220,25 +270,103 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 break;
 
         }
+    }
+
+    private void getRestaurantListApi(final double currentLat, double currentLong, int pageNumber){
+        CommonUtils.showProgressDialog(context);
+        final JsonRequest jsonRequest=new JsonRequest();
+        jsonRequest.latitude=String.valueOf(currentLat);
+        jsonRequest.longitude =String.valueOf(currentLong);
+        jsonRequest.page_size="10";
+        jsonRequest.page_number=pageNumber;
+        Log.d(TAG,"" + new Gson().toJsonTree(jsonRequest).toString().trim());
+
+        Call<JsonResponse>call=ApiClient.getApiService().getRestautantsList(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if(response.body()!=null&& !response.body().toString().equalsIgnoreCase("")){
+                    Log.d(TAG,"" + new Gson().toJsonTree(response.body().toString().trim()));
+                    if (response.body().responseCode.equalsIgnoreCase("200")){
+                        if(response.body().restaurant_list !=null && response.body().restaurant_list.size()>0) {
+                            restaurantList.clear();
+                            restaurantList.addAll(response.body().restaurant_list);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(gridLayoutManager);
+                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
+                            rvRestaurants.setAdapter(bestRestaurantAdapter);
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                        }
+                            else {
+                                Toast.makeText(context,response.body().responseMessage,Toast.LENGTH_SHORT).show();
+                            }
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+
 
     }
 
-      private void getCuisineRestaurantListApi() {
-          ApiInterface apiService =
-                  ApiClient.getClient(context).create(ApiInterface.class);
-          JsonRequest jsonRequest= new JsonRequest();
+
+
+
+    private void getCuisineRestaurantListApi() {
+          CommonUtils.showProgressDialog(context);
+
+          final JsonRequest jsonRequest= new JsonRequest();
           jsonRequest.type="cuisine";
-          Call<JsonResponse> call = apiService.getCuisineRestaurantList(jsonRequest);
+          Call<JsonResponse> call = ApiClient.getApiService().getCuisineRestaurantList(jsonRequest);
           call.enqueue(new Callback<JsonResponse>() {
               @Override
               public void onResponse(Call<JsonResponse>call, Response<JsonResponse> response) {
-                  if (response.body()!=null)
-                cuisine=response.body().allList;
-                  Log.d(TAG, "Number of data received: " + cuisine.size());
+
+                  CommonUtils.disMissProgressDialog(context);
+                  if (response.body()!=null && !response.body().toString().equalsIgnoreCase("")) {
+
+                      Log.d(TAG,"" + new Gson().toJsonTree(response.body().toString().trim()));
+
+                      if(response.body().responseCode.equalsIgnoreCase("200")) {
+
+                          if(response.body().allList !=null&& response.body().allList.size()>0) {
+                              cuisineList.clear();
+                              cuisineList.addAll(response.body().allList);
+                              GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2,LinearLayoutManager.HORIZONTAL,false);
+                              rvRestaurants.setLayoutManager(gridLayoutManager);
+                              cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context,cuisineList);
+                              rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
+                              rvRestaurants.setNestedScrollingEnabled(false);
+
+                              Log.d(TAG, "Number of data received: " + cuisineList.size());
+                          }
+
+                          else {
+                              Toast.makeText(context,response.body().responseMessage,Toast.LENGTH_SHORT).show();
+                          }
+
+
+                      }
+
+                      else{
+
+                      }
+                  }
               }
 
               @Override
               public void onFailure(Call<JsonResponse>call, Throwable t) {
+                  CommonUtils.disMissProgressDialog(context);
                   Log.e(TAG, t.toString());
 
               }

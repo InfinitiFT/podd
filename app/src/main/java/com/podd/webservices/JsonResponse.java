@@ -10,6 +10,11 @@ import java.util.List;
 
 public class JsonResponse implements Serializable{
 
+
+    public String responseCode;
+    public String responseMessage;
+
+
     /*   Restaurant List api response */
 
     public List<Restaurant> restaurant_list;
