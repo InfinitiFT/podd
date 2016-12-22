@@ -22,6 +22,13 @@ import java.util.List;
 public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineTypeRestaurantAdapter.MyViewHolder>{
     private Context context;
     private List<Cuisine>cuisineList;
+
+    /**
+     * Instantiates a new Cuisine type restaurant adapter.
+     *
+     * @param context     the context
+     * @param cuisineList the cuisine list
+     */
     public CuisineTypeRestaurantAdapter(Context context, List<Cuisine> cuisineList) {
         this.cuisineList=cuisineList;
         this.context=context;
@@ -43,11 +50,11 @@ public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineT
         }
 
         Cuisine cuisine = cuisineList.get(position);
-        holder.tvLocation.setText(cuisine.name);
+        holder.tvRestaurantName.setText(cuisine.name);
         holder.tvDistance.setVisibility(View.GONE);
         holder.tvPriceRange.setVisibility(View.GONE);
         holder.tvtypeofRestaurant.setVisibility(View.GONE);
-        holder.tvRestaurantName.setVisibility(View.GONE);
+        holder.tvLocation.setVisibility(View.GONE);
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +71,9 @@ public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineT
         return cuisineList.size();
     }
 
+    /**
+     * The type My view holder.
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout llMain;
         private ImageView ivRestaurant;

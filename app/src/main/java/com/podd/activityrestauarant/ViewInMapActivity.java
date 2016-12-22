@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.podd.R;
 
+/**
+ * The type View in map activity.
+ */
 public class ViewInMapActivity extends AppCompatActivity {
 
     @Override

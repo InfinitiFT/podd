@@ -95,4 +95,6 @@
     <string name="dinner">Dinner Menu</string>
     <string name="restaurant_by_cuisine">Search our curated selection of best restaurants by cuisine</string>
     <string name="Please_connect_to_internet_first">Please connect to internet.</string>
+    <string name="server_not_responding">Server not responding.</string>
+    <string name="data_not_found">Data not found.</string>
 </resources>

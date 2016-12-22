@@ -10,12 +10,17 @@ import android.widget.LinearLayout;
 import com.podd.R;
 
 
-
 /**
  * Created by Shalini Bishnoi on 19-12-2016.
  */
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.MyViewHolder> {
     private Context context;
+
+    /**
+     * Instantiates a new Restaurants list adapter.
+     *
+     * @param context the context
+     */
     public RestaurantsListAdapter(Context context) {
         this.context=context;
 
@@ -44,8 +49,20 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
         return 10;
     }
 
+    /**
+     * The type My view holder.
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Ll star restaurants.
+         */
         LinearLayout llStarRestaurants;
+
+        /**
+         * Instantiates a new My view holder.
+         *
+         * @param itemView the item view
+         */
         public MyViewHolder(View itemView) {
             super(itemView);
             getIds();

@@ -59,19 +59,19 @@ public class Restaurant implements Serializable{
     /**
      * The Cuisine.
      */
-    public List<String>cuisine;
+    public List<Cuisine>cuisine;
     /**
      * The Ambience.
      */
-    public List<String>ambience;
+    public List<Ambience>ambience;
     /**
      * The Dietary.
      */
-    public List<String>dietary;
+    public List<Dietary>dietary;
     /**
      * The Price range.
      */
-    public List<String>price_range;
+    public List<PriceRange>price_range;
     /**
      * The Distance.
      */
