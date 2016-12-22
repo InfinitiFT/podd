@@ -20,6 +20,7 @@ public class Restaurant implements Serializable{
      * The Location.
      */
     public String location;
+    public String price_range;
     /**
      * The Postcode.
      */
@@ -68,10 +69,6 @@ public class Restaurant implements Serializable{
      * The Dietary.
      */
     public List<Dietary>dietary;
-    /**
-     * The Price range.
-     */
-    public List<PriceRange>price_range;
     /**
      * The Distance.
      */

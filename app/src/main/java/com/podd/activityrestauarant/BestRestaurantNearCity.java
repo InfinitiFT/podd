@@ -26,6 +26,7 @@ import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
 import com.podd.model.Cuisine;
+import com.podd.model.Dietary;
 import com.podd.model.Restaurant;
 import com.podd.retrofit.ApiClient;
 import com.podd.utils.CommonUtils;
@@ -74,6 +75,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private double currentLong = 0.0d;
     private List<Cuisine> cuisineList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
+    private List<Dietary> dietaryList = new ArrayList<>();
     private String TAG = BestRestaurantNearCity.class.getSimpleName();
     private final String[] location = {"abc", "abd", "aaa", "aaaa"};
     private final String[] dietary = {"bbb", "abd", "bba", "bbc"};
@@ -257,15 +259,17 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.llDietary:
-                Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
+                getDietaryRestaurantListApi();
                 break;
             case R.id.llCuisine:
                 tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
                 tvCityName.setVisibility(View.GONE);
+
                 getCuisineRestaurantListApi();
                 break;
             case R.id.llMeal:
                 Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
+                tvCuisinetype.setFocusable(false);
                 break;
             case R.id.llDeliveredToYou:
                 Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
@@ -273,6 +277,9 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
         }
     }
+
+
+    /******************************Restaurant List Api******************************/
 
     private void getRestaurantListApi(final double currentLat, double currentLong, int pageNumber) {
         CommonUtils.showProgressDialog(context);
@@ -282,7 +289,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.page_size = "10";
         jsonRequest.page_number = pageNumber;
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-
         Call<JsonResponse> call = ApiClient.getApiService().getRestautantsList(jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -309,8 +315,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 } else {
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
                 }
-
-
             }
 
             @Override
@@ -324,12 +328,16 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
     }
 
+    /******************************Cuisine Restaurant List Api******************************/
 
     private void getCuisineRestaurantListApi() {
         CommonUtils.showProgressDialog(context);
 
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "cuisine";
+        jsonRequest.search_content=tvCuisinetype.getText().toString().trim();
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+
         Call<JsonResponse> call = ApiClient.getApiService().getCuisineRestaurantList(jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -338,7 +346,64 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
 
-                    Log.d(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        if (response.body().allList != null && response.body().allList.size() > 0) {
+                            cuisineList.clear();
+                            cuisineList.addAll(response.body().allList);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(gridLayoutManager);
+                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
+                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                            Log.d(TAG, "Number of data received: " + cuisineList.size());
+                        }
+                        else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
+
+
+    /******************************Dietary Restaurant List Api******************************/
+    private void getDietaryRestaurantListApi() {
+        CommonUtils.showProgressDialog(context);
+
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.type = "dietary";
+        jsonRequest.search_content=tvDietaryType.getText().toString().trim();
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+
+        Call<JsonResponse> call = ApiClient.getApiService().getDietaryRestaurantList(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 

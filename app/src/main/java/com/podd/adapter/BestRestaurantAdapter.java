@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
-import com.podd.model.Ambience;
-import com.podd.model.Cuisine;
-import com.podd.model.Dietary;
-import com.podd.model.PriceRange;
 import com.podd.model.Restaurant;
 import com.squareup.picasso.Picasso;
 
@@ -60,15 +56,10 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.viewBottom.setVisibility(View.GONE);
         }
         Restaurant restaurant = restaurantList.get(position);
-       /* Cuisine cuisine=restaurantList.get(position).cuisine.get(position);
-        PriceRange prceRange=restaurantList.get(position).price_range.get(position);
-        Ambience ambience=restaurantList.get(position).ambience.get(position);
-        Dietary dietary=restaurantList.get(position).dietary.get(position);*/
-        holder.tvRestaurantName.setText(restaurantList.get(position).restaurant_name);
-        holder.tvLocation.setText(restaurantList.get(position).location);
-        holder.tvDistance.setText(restaurantList.get(position).distance);
-        /*holder.tvPriceRange.setText(restaurantList.get(position).price_range.get(position).price_range);
-        holder.tvtypeofRestaurant.setText(restaurantList.get(position).cuisine.get(position).cuisine_name);*/
+        holder.tvRestaurantName.setText(restaurant.restaurant_name);
+        holder.tvLocation.setText(restaurant.location);
+        holder.tvDistance.setText(restaurant.distance);
+        holder.tvPriceRange.setText(restaurant.price_range);
         if(restaurantList.get(position).restaurant_images!=null){
             Picasso.with(context)
                     .load(restaurantList.get(position).restaurant_images)
