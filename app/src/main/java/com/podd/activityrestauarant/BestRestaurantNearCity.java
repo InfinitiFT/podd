@@ -26,7 +26,6 @@ import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
 import com.podd.model.Cuisine;
-import com.podd.model.Dietary;
 import com.podd.model.Restaurant;
 import com.podd.retrofit.ApiClient;
 import com.podd.utils.CommonUtils;
@@ -75,7 +74,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private double currentLong = 0.0d;
     private List<Cuisine> cuisineList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
-    private List<Dietary> dietaryList = new ArrayList<>();
     private String TAG = BestRestaurantNearCity.class.getSimpleName();
     private final String[] location = {"abc", "abd", "aaa", "aaaa"};
     private final String[] dietary = {"bbb", "abd", "bba", "bbc"};
@@ -84,6 +82,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private final String[] ambience = {"rrr", "rrrrrrr", "rrrrr", "rrrr"};
     private int pageNo = 1;
     private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
+
 
 
     @Override
@@ -225,7 +224,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (country.equalsIgnoreCase("null"))
                             country = "";
                         CommonUtils.disMissProgressDialog(context);
-                        tvCityName.setText(city);
+                        tvCityName.setText(address);
                         getRestaurantListApi(currentLat, currentLong, pageNo);
                     } else {
 
@@ -239,40 +238,37 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         }).onUpdateLocation();
     }
 
-
-  /*  private void setRecycler() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-        rvRestaurants.setLayoutManager(gridLayoutManager);
-        bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
-        rvRestaurants.setAdapter(bestRestaurantAdapter);
-        rvRestaurants.setNestedScrollingEnabled(false);
-    }*/
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llAmbience:
-                Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
+                tvCityName.setVisibility(View.GONE);
+                tvNearbyRestaurant.setText(R.string.restaurant_by_ambience);
+                getAmbienceRestaurantListApi();
                 break;
             case R.id.llLocation:
-                Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
+                tvCityName.setVisibility(View.GONE);
+                tvNearbyRestaurant.setText(R.string.restaurant_by_location);
+                getLocationRestaurantListApi();
                 break;
             case R.id.llDietary:
+                tvCityName.setVisibility(View.GONE);
+                tvNearbyRestaurant.setText(R.string.restaurant_by_dietary);
                 getDietaryRestaurantListApi();
                 break;
             case R.id.llCuisine:
                 tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
                 tvCityName.setVisibility(View.GONE);
-
                 getCuisineRestaurantListApi();
                 break;
             case R.id.llMeal:
-                Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
-                tvCuisinetype.setFocusable(false);
+                tvNearbyRestaurant.setText(R.string.restaurant_by_meal);
+                tvCityName.setVisibility(View.GONE);
+                getMealRestaurantListApi();
                 break;
             case R.id.llDeliveredToYou:
-                Toast.makeText(context, R.string.work_in_progress, Toast.LENGTH_SHORT).show();
+                tvNearbyRestaurant.setText(R.string.delivered_to_you);
+                tvCityName.setVisibility(View.GONE);
                 break;
 
         }
@@ -440,5 +436,183 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         });
 
     }
+
+
+
+    /********************Ambience Restaurant Api********************/
+
+
+    private void getAmbienceRestaurantListApi() {
+        CommonUtils.showProgressDialog(context);
+
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.type = "ambience";
+        jsonRequest.search_content=tvBusiness.getText().toString().trim();
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+
+        Call<JsonResponse> call = ApiClient.getApiService().getAmbienceRestaurantList(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        if (response.body().allList != null && response.body().allList.size() > 0) {
+                            cuisineList.clear();
+                            cuisineList.addAll(response.body().allList);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(gridLayoutManager);
+                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
+                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                            Log.d(TAG, "Number of data received: " + cuisineList.size());
+                        }
+                        else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
+
+
+    /********************Location Restaurant Api********************/
+
+
+    private void getLocationRestaurantListApi() {
+        CommonUtils.showProgressDialog(context);
+
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.type = "location";
+        jsonRequest.search_content=tvLocationType.getText().toString().trim();
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+
+        Call<JsonResponse> call = ApiClient.getApiService().getLocationRestaurantList(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        if (response.body().allList != null && response.body().allList.size() > 0) {
+                            cuisineList.clear();
+                            cuisineList.addAll(response.body().allList);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(gridLayoutManager);
+                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
+                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                            Log.d(TAG, "Number of data received: " + cuisineList.size());
+                        }
+                        else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
+
+
+    /************************Meal Type Restaurant Api*****************/
+
+
+    private void getMealRestaurantListApi() {
+        CommonUtils.showProgressDialog(context);
+
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.type = "meal";
+        jsonRequest.search_content=tvMealType.getText().toString().trim();
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+
+        Call<JsonResponse> call = ApiClient.getApiService().getMealRestaurantList(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        if (response.body().allList != null && response.body().allList.size() > 0) {
+                            cuisineList.clear();
+                            cuisineList.addAll(response.body().allList);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(gridLayoutManager);
+                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
+                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                            Log.d(TAG, "Number of data received: " + cuisineList.size());
+                        }
+                        else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
 
 }

@@ -25,14 +25,24 @@ public interface ApiInterface {
      * @param jsonRequest the json request
      * @return the call
      */
-    @POST("restaurant_assest_list.php")
-    public  Call<JsonResponse>getCuisineRestaurantList(@Body JsonRequest jsonRequest);
 
     @POST("restaurant_list.php")
     public  Call<JsonResponse>getRestautantsList(@Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
+    public  Call<JsonResponse>getCuisineRestaurantList(@Body JsonRequest jsonRequest);
+
+    @POST("restaurant_assest_list.php")
     public Call<JsonResponse>getDietaryRestaurantList(@Body JsonRequest jsonRequest);
+
+    @POST("restaurant_assest_list.php")
+    public Call<JsonResponse>getMealRestaurantList(@Body JsonRequest jsonRequest);
+
+    @POST("restaurant_assest_list.php")
+    public Call<JsonResponse>getLocationRestaurantList(@Body JsonRequest jsonRequest);
+
+    @POST("restaurant_assest_list.php")
+    public Call<JsonResponse>getAmbienceRestaurantList(@Body JsonRequest jsonRequest);
 
 
     /*@POST("signup")

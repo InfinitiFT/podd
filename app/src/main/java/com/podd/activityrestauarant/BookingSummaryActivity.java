@@ -1,5 +1,7 @@
 package com.podd.activityrestauarant;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
+import com.podd.utils.CommonUtils;
+import com.podd.utils.DialogUtils;
 
 /**
  * The type Booking summary activity.
@@ -31,29 +35,31 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
     private TextView tvConfirmation;
+    private Dialog dialogConfirmBooking;
+    private EditText etEnterOtp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_summary);
-        context=BookingSummaryActivity.this;
+        context = BookingSummaryActivity.this;
         getIds();
         setListeners();
     }
 
     private void getIds() {
-        tvCompleteBooking= (TextView) findViewById(R.id.tvCompleteBooking);
-        etName= (EditText) findViewById(R.id.etName);
-        tvCountryCode= (TextView) findViewById(R.id.tvCountryCode);
-        etPhoneNumber= (EditText) findViewById(R.id.etPhoneNumber);
-        etEmail= (EditText) findViewById(R.id.etEmail);
-        tvBookingSummary= (TextView) findViewById(R.id.tvBookingSummary);
-        tvRestaurantName= (TextView) findViewById(R.id.tvRestaurantName);
-        tvLocation= (TextView) findViewById(R.id.tvLocation);
-        tvDateBooked= (TextView) findViewById(R.id.tvDateBooked);
-        tvTimeBooked= (TextView) findViewById(R.id.tvTimeBooked);
-        tvNumberofPeople= (TextView) findViewById(R.id.tvNumberofPeople);
-        tvConfirmation= (TextView) findViewById(R.id.tvConfirmation);
+        tvCompleteBooking = (TextView) findViewById(R.id.tvCompleteBooking);
+        etName = (EditText) findViewById(R.id.etName);
+        tvCountryCode = (TextView) findViewById(R.id.tvCountryCode);
+        etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
+        tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
+        tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
+        tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
+        tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,41 +84,63 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tvCompleteBooking:
-                if(isValid()) {
-                    intent = new Intent(context, RestaurantReturnToHomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                if (isValid()) {
+
+                    dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
+                    TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
+                    etEnterOtp = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp);
+
+
+                    tvSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if(isValidOtp()) {
+                                dialogConfirmBooking.dismiss();
+                                intent = new Intent(context, RestaurantReturnToHomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        }
+                    });
+
+                    dialogConfirmBooking.show();
+                    break;
                 }
                 break;
 
         }
     }
 
-    private boolean isValid(){
-        if(etName.getText().toString().trim().isEmpty()){
-            Toast.makeText(context,R.string.please_enter_name,Toast.LENGTH_SHORT).show();
+    private boolean isValidOtp() {
+        if (etEnterOtp.getText().toString().trim().isEmpty()) {
+            Toast.makeText(context, R.string.please_enter_otp, Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (etEnterOtp.getText().toString().trim().length() <= 3) {
+            Toast.makeText(context, R.string.please_enter_valid_otp, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean isValid() {
+        if (etName.getText().toString().trim().isEmpty()) {
+            Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_SHORT).show();
             etName.requestFocus();
             return false;
-        }
-        else if(tvCountryCode.getText().toString().trim().isEmpty()){
-            Toast.makeText(context,R.string.please_enter_country_code,Toast.LENGTH_SHORT).show();
-            tvCountryCode.requestFocus();
-            return false;
-        }
-        else if (etPhoneNumber.getText().toString().trim().isEmpty()){
-            Toast.makeText(context,R.string.please_enter_phone_number,Toast.LENGTH_SHORT).show();
+        } else if (etPhoneNumber.getText().toString().trim().isEmpty()) {
+            Toast.makeText(context, R.string.please_enter_phone_number, Toast.LENGTH_SHORT).show();
             etPhoneNumber.requestFocus();
             return false;
-        }
-        else if (etEmail.getText().toString().trim().isEmpty()){
-            Toast.makeText(context,R.string.please_enter_email,Toast.LENGTH_SHORT).show();
+        } else if (etEmail.getText().toString().trim().isEmpty()) {
+            Toast.makeText(context, R.string.please_enter_email, Toast.LENGTH_SHORT).show();
             etEmail.requestFocus();
             return false;
-        }
-        else if (!etEmail.getText().toString().trim().matches(EMAIL_PATTERN)){
-            Toast.makeText(context,R.string.please_enter_valid_email,Toast.LENGTH_SHORT).show();
+        } else if (!etEmail.getText().toString().trim().matches(EMAIL_PATTERN)) {
+            Toast.makeText(context, R.string.please_enter_valid_email, Toast.LENGTH_SHORT).show();
             etEmail.requestFocus();
             return false;
         }
