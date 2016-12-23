@@ -1,9 +1,16 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` < CURRENT_DATE()");
-  //Basic Validation  
-  
+  if($_SESSION['restaurant_id']!="")
+  {
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` < CURRENT_DATE() order by brr.booking_id desc");
+  }
+  else
+  {
+    $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` < CURRENT_DATE() order by brr.booking_id desc");
+
+  }
+
  ?> 
      <!-- page content -->
         <div class="right_col" role="main">
@@ -15,7 +22,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Restaurant Booking History</h2>
+                    <h2>Venue Booking History</h2>
                    <ul class="nav navbar-right panel_toolbox">
                     </ul>
                     <div class="clearfix"></div>
@@ -55,7 +62,15 @@
                                     } ?>
                           </td>
                           <td>
-                             <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button>
+							  <?php if($_SESSION['role'] ==1){ ?>
+							       <a href="edit_booking.php?id=<?php echo $record['booking_id'];?>" class="btn btn-round btn-primary">Edit</a>
+							        <?php } ?>
+                       <?php 
+                        $change = bookingTimeChange($record['booking_date'],$record['booking_time']);
+                        if($change==1){?>
+                         <button type="button" id="timeChange-<?php echo $record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'];?>" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>
+                               <?php } ?>
+                     <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
                           </td>
                          </tr>
                         <?php }}?> 

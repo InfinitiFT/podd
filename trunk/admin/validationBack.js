@@ -6,8 +6,9 @@ $(document).ready(function() {
         required: true,
         email: true
             },
+
       password: "required"
-    },
+},
     messages: {
       email: {
             required:"Please enter email",
@@ -317,7 +318,7 @@ $("#countImgs").val(parseInt(imgCount) + fileCount);
   },
 
     messages: {
-    old_password: "Please enter old password",
+    old_password: "Please enter your password.",
     new_password: {
                    required:"Please enter new password",
                    minlength: "New password atleast 8 digits"

@@ -64,11 +64,20 @@
             <!-- sidebar menu -->
           
                 <ul class="nav side-menu ">
-                  <li><a href = "user_list.php"><i class="fa fa-user"></i>User Management </a></li>
-                  <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Resturant Management</a></li>
-                  <!-- <li><a href = ""><i class="fa fa-car"></i>Taxi Management</a></li>
-                  <li><a href = ""><i class="fa fa-home"></i>Report Section</a></li> -->
-                  <li><a href = "service_management_list.php"><i class="fa fa-home"></i>Service Management</a></li>
+                   <li><a href = "service_management_list.php"><i class="fa fa-home"></i>Service</a></li>
+                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Restaurant & Bars</a>
+                   <ul class="nav child_menu">
+                      <li><a href="restaurant_list.php">Manage Venue</a></li>
+                      <li><a href="booking_list_restaurant.php">Manage bookings</a></li>
+                      <li><a href="booking_history.php">History</a></li> 
+                  </ul>
+                   </li>
+                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Delivery</a></li>
+                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Taxi</a></li>
+                  <!--  <li><a href = "user_list.php"><i class="fa fa-user"></i>User Management </a></li>
+                   
+                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
+                   <li><a href = "booking_history.php"><i class="fa fa-home"></i>Bookings History</a></li> -->
                 </ul>
               
              <?php } elseif($_SESSION['role']=="2"){?>
@@ -111,6 +120,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href="logout.php">Log Out</a></li>
+                     <li><a href="change_password_admin.php">Change Password</a></li>
                   </ul>
                 </li>
               </ul>

@@ -5,11 +5,11 @@ error_reporting(0);
 
 $mes ='';
 if($_SESSION['msg'] == 'maxLimit'){
-	$mes = '<div class="alert alert-warning">Resturant images maximum 6 uploaded</div>';
+	$mes = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
 	$_SESSION['msg'] ='';
 }
 if ($_SESSION['msg'] == 'image'){
-	$mes = '<div class="alert alert-warning">Resturant images not uploaded. Please try again</div>';
+	$mes = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
 	$_SESSION['msg'] ='';
 }
 if ($_SESSION['msg'] == 'location'){
@@ -45,9 +45,10 @@ if(isset($_REQUEST['submit'])){
 		$cuisine = implode(',',$_POST['cuisine']);
 		$ambience = implode(',',$_POST['ambience']);
 		$email = mysqli_real_escape_string($conn,trim($_POST["email"]));
+		$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
 		$passwordRandom = randomPassword();
 		
-		$addUser = mysqli_query($conn,"INSERT INTO `users`(`email`, `password`, `mobile_no`, `role`) VALUES('".$email."','".md5($passwordRandom)."','".$_POST['phone']."','2')");
+		$addUser = mysqli_query($conn,"INSERT INTO `users`(`email`, `password`, `mobile_no`, `role`) VALUES('".$email."','".md5($passwordRandom)."','".$phone."','2')");
 		if($addUser == 1){
 			
 			$id = mysqli_insert_id($conn);
@@ -57,14 +58,23 @@ if(isset($_REQUEST['submit'])){
 						 $_SESSION['msg']= 'location';
 						 header('Location: add_resturant.php');
 					 }
-					
-					 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$_POST['locationTest']."','".$locationData['latitude']."','".$locationData['longitude']."')");
+					 $locationTest = mysqli_real_escape_string($conn,trim($_POST['locationTest']));
+					 $latitude = mysqli_real_escape_string($conn,trim($locationData['latitude']));
+					 $longitude = mysqli_real_escape_string($conn,trim($locationData['longitude']));
+					 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$locationTest."','".$latitude."','".$longitude."')");
 					 $loction = mysqli_insert_id($conn);
 				}else{
-					 $loction = $_POST['location'];
+					 $loction = mysqli_real_escape_string($conn,$_POST['location']);
 				}
-				
-			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`, `deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$_POST['name']."','".$allImages."','".$loction."','".$_POST['deliver']."','".$_POST['opentime']."','".$_POST['closetime']."','".$_POST['about']."','".$_POST['people']."','".$cuisine."','".$ambience."','".$dietary."','".$_POST['price']."','".$id."')");
+				 $name = mysqli_real_escape_string($conn,trim($_POST['name']));
+				 $deliver = mysqli_real_escape_string($conn,$_POST['deliver']);
+				 $opentime = mysqli_real_escape_string($conn,$_POST['opentime']); 
+				 $closetime = mysqli_real_escape_string($conn,$_POST['closetime']);
+				 $about = mysqli_real_escape_string($conn,$_POST['about']);
+				 $people = mysqli_real_escape_string($conn,$_POST['people']);
+				 $price = mysqli_real_escape_string($conn,$_POST['price']);
+
+			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`, `deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$deliver."','".$opentime."','".$closetime."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$id."')");
 			if($resturant){
 				
 				$resturnatID = mysqli_insert_id($conn);
@@ -171,14 +181,14 @@ if(isset($_REQUEST['submit'])){
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2> Add Resturant </h2>
+                    <h2> Add Venue </h2>
                     <?php echo $mes; ?>
 					<div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 					<form class="form-horizontal form-label-left" method="post" id="addResturant" enctype = "multipart/form-data" novalidate>
 					 <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Resturant Images <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" multiple>

@@ -80,7 +80,9 @@
    <script>
      
 
-        $('#datatable-responsive').DataTable();
+        $('#datatable-responsive').DataTable({
+            "ordering": false
+        });
 
         
     </script>

@@ -6,11 +6,11 @@
   $msg ='';
   if(isset($_SESSION['msg']) == 'success'){
 	if($_SESSION['msg'] == 'success'){
-		$msg = '<div class="alert alert-success">Resturant added successfully</div>';
+		$msg = '<div class="alert alert-success">Venue added successfully</div>';
 	    $_SESSION['msg'] ='';
 	}
 	if($_SESSION['msg'] == 'successEdit'){
-		$msg = '<div class="alert alert-success">Resturant edited successfully</div>';
+		$msg = '<div class="alert alert-success">Venue edited successfully</div>';
 	    $_SESSION['msg'] ='';
 	}
  }
@@ -25,8 +25,8 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Restaurant List</h2>
-                     <a  href="add_resturant.php" class="btn btn-round btn-primary pull-right">Add Restaurant</a>
+                    <h2>Venue List</h2>
+                     <a  href="add_resturant.php" class="btn btn-round btn-primary pull-right">Add Venue</a>
 				
                     <div class="clearfix"></div>
                      
@@ -54,12 +54,12 @@
                           <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_location` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
                           <td><?php echo $record['country_code'].$record['mobile_no'];?></td>
                           <td><?php if($record['st'] == 1){?>
-                             <button type="button" id="activatedeactivate-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-warning">Deactivate</button>
+                             <button type="button" id="activatedeactivate-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-warning">Deactivate Venue</button>
                               <?php }else{?>
-                              <button type="button" id="activatedeactivate-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-success">Activate</button>
+                              <button type="button" id="activatedeactivate-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-success">Activate Venue</button>
                               <?php }?>
-                               <a  href="edit_resturant.php?id=<?php echo $record['user_id'];?>" class="btn btn-round btn-primary">Edit</a>
-                             <button type="button" id="deletepopup-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-danger">Delete</button>
+                               <a  href="edit_resturant.php?id=<?php echo $record['user_id'];?>" class="btn btn-round btn-primary">Edit Venue</a>
+                             <button type="button" id="deletepopup-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-danger">Delete Venue</button>
                           </td>
                          </tr>
                         <?php }?> 

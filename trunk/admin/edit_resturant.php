@@ -2,11 +2,11 @@
 	include_once('header.php'); 
 	$mes ='';
 	if($_SESSION['msg'] == 'maxLimit'){
-		$mes = '<div class="alert alert-warning">Resturant images maximum 6 uploaded</div>';
+		$mes = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
 		$_SESSION['msg'] ='';
 	}
 	if ($_SESSION['msg'] == 'image'){
-		$mes = '<div class="alert alert-warning">Resturant images not uploaded. Please try again</div>';
+		$mes = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
 		$_SESSION['msg'] ='';
 	}
 	if ($_SESSION['msg'] == 'location'){
@@ -56,10 +56,13 @@
 					header('Location: edit_resturant.php');
 				
 			 }
-			 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$_POST['locationTest']."','".$locationData['latitude']."','".$locationData['longitude']."')");
+			 $locationTest =  mysqli_real_escape_string($conn,$_POST['locationTest']);
+			 $latitude =  mysqli_real_escape_string($conn,$locationData['latitude']);
+			 $longitude =  mysqli_real_escape_string($conn,$locationData['longitude']);
+			 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$locationTest."','".$latitude."','".$longitude."')");
 			 $loction = mysqli_insert_id($conn);
 		}else{
-			 $loction = $_POST['location'];
+			 $loction = mysqli_real_escape_string($conn,$_POST['location']);
 		}
 		$j =0;
 		if(!empty($_FILES['resturant_images']['name'][0])){
@@ -89,11 +92,20 @@
 		if(empty($_SESSION['msg']))
 		{
 			
-			$email = mysqli_real_escape_string($conn,trim($_POST["email"]));
-			$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',mobile_no ='".$_POST['phone']."' where user_id ='".$_SESSION['user_id']."'");
+			$email = mysqli_real_escape_string($conn,$_POST["email"]);
+			$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
+			$opentime = mysqli_real_escape_string($conn,$_POST['opentime']);
+			$closetime = mysqli_real_escape_string($conn,$_POST['closetime']);
+			$about = mysqli_real_escape_string($conn,$_POST['about']);
+			$people = mysqli_real_escape_string($conn,$_POST['people']);
+			$price = mysqli_real_escape_string($conn,$_POST['price']);
+			$resturantID = mysqli_real_escape_string($conn,$_POST['resturantID']);
+			$user_id = mysqli_real_escape_string($conn,$_SESSION['user_id']);
+		
+			$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',mobile_no ='".$phone."' where user_id ='".$user_id."'");
 			if($updateUser){
-				
-				mysqli_query($conn,"UPDATE `restaurant_details` SET  restaurant_name = '".$_POST['name']."',location='".$loction."',opening_time='".$_POST['opentime']."',closing_time='".$_POST['closetime']."',about_text='".$_POST['about']."',max_people_allowed='".$_POST['people']."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$_POST['price']."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$_POST['resturantID']."'");
+				$name = mysqli_real_escape_string($conn,trim($_POST['name']));
+				mysqli_query($conn,"UPDATE `restaurant_details` SET  restaurant_name = '".$name."',location='".$loction."',opening_time='".$opentime."',closing_time='".$closetime."',about_text='".$about."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$resturantID."'");
 				$allRemoveMeal = implode(',',$_POST['deleteMeal']);
 				$deleteMeal = mysqli_query($conn,"DELETE FROM `restaurant_menu_details` WHERE `id`IN ('".$allRemoveMeal."')");
 				if($deleteMeal){
@@ -116,7 +128,7 @@
 									$pdfUrl = "uploads/menu_file/".$_FILES["document"]["name"][$j];
 							   else
 									$pdfUrl = '';
-								 mysqli_query($conn,"INSERT INTO restaurant_menu_details(restaurant_id, meal, menu_url) VALUES ('".$_POST['resturantID']."','".$allMeal."','".$pdfUrl."')");
+								 mysqli_query($conn,"INSERT INTO restaurant_menu_details(restaurant_id, meal, menu_url) VALUES ('".$resturantID."','".$allMeal."','".$pdfUrl."')");
 						}
 						$j =$j+1;
 						
@@ -153,7 +165,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2> Edit Resturant </h2>
+                    <h2> Edit Venue </h2>
                      <?php echo $mes; ?>
                     <div class="clearfix"></div>
                   </div>
@@ -171,7 +183,7 @@
 						?>
 						<div id="allRemoveImg"></div>
 					 <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Resturant Images <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" onchange="myFunction22(this)" multiple>

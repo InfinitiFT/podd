@@ -92,7 +92,8 @@ catch(Exception $e) {
                         <div class="col-md-4 col-sm-4 col-xs-8">
                           <select class="form-control" id="name" name="name" >
                            <option value="">Choose Meal</option>
-                            <?php $meals_name = get_all_data('restaurant_menu'); while($meal_name = mysqli_fetch_assoc($meals_name)){?>
+                            <?php $meals_name = get_all_data('restaurant_menu'); 
+                            while($meal_name = mysqli_fetch_assoc($meals_name)){?>
                               <option value="<?php echo $meal_name['id']; ?>" ><?php echo $meal_name['menu_name']; ?></option>
                             <?php }?>
                           </select>

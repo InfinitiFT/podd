@@ -14,7 +14,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Restaurant Details</h2>
+                    <h2>Venue Details</h2>
                      <ul class="nav navbar-right panel_toolbox">
                       <li><a href="booking_list_restaurant.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
                       </li>

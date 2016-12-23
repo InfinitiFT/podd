@@ -1,7 +1,17 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` >= CURRENT_DATE()");
+  if($_SESSION['restaurant_id']!="")
+  {
+    $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND brr.booking_date >= CURRENT_DATE()");
+
+  }
+  else
+  {
+     $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` >= CURRENT_DATE() order by booking_id desc");
+
+  }
+  
   //Basic Validation  
   if(isset($_SESSION['msg']) == 'success'){
   if($_SESSION['msg'] == 'success'){
@@ -14,7 +24,7 @@
   }
  }
   
- ?> 
+?> 
 
      <!-- page content -->
         <div class="right_col" role="main">
@@ -55,9 +65,11 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Restaurant Booking List</h2>
+                    <h2>Venue Booking List</h2>
                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a href="restaurant_details.php"><button type="button" class="btn btn-round btn-success">View Restaurant</button></a>
+                       <li><a href="booking_glance.php"><button type="button" class="btn btn-round btn-success">Booking at Glance</button></a>
+                       </li>
+                      <li><a href="restaurant_details.php"><button type="button" class="btn btn-round btn-success">View Venue</button></a>
                       </li>
                       
                     </ul>
@@ -69,27 +81,41 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>User Name</th>
-                          <th>Email</th>
-                          <th>Contact no</th>
-                          <th>Booking Date</th>
-                          <th>Booking Time</th>
-                          <th>Number of people</th>
-                          <th>Status</th>
-                          <th>Action</th>
+                           <th>Name</th>
+                           <th>Mobile</th>
+                           <th>Email</th>
+                           <th>Date</th>
+                           <th>Time</th>
+                           <th>Number of people</th>
+                           <th>Action</th>
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="booked_restaurant">
                       <tbody>
-                       <?php if($data){ while($record = mysqli_fetch_assoc($data)){ ?>
+                       <?php 
+                              $currentDate = date("Y-m-d");
+                              $currentTime = date("H:i");
+                            
+                       if($data)
+                       { 
+                          while($record = mysqli_fetch_assoc($data)){ 
+							
+                            if($currentDate == $record['booking_date'] ){
+                              if(strtotime($currentTime) > strtotime($record['booking_time']))
+                                  continue;
+                           }
+
+                          ?>
                          <tr>
                           <td><?php echo $record['name'];?></td>
-                          <td><?php echo $record['email'];?></td>
                           <td><?php echo $record['contact_no'];?></td>
-                          <td><?php echo $record['booking_date'];?></td>
+                          <td><?php echo $record['email'];?></td>
+                          <td><?php $date = date_create ($record['booking_date']);
+								echo date_format($date,"d M Y");?>
+						  </td>
                           <td><?php echo $record['booking_time'];?></td>
                           <td><?php echo $record['number_of_people'];?></td>
-                          <td><?php if($record['booking_status']=="0"){ 
+                         <!-- <td><?php/* if($record['booking_status']=="0"){ 
                                       echo "Declined";
                                     }
                                     else if($record['booking_status']=="1"){
@@ -97,21 +123,26 @@
                                     }
                                     else{
                                       echo "Accepted";             
-                                    }
-                            ?></td>
-                          <td><?php if($record['booking_status']=="1"){?>
+                                    }*/
+                            ?></td>-->
+                          <td>
+                          <?php if($record['booking_status']=="1"){?>
                              <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
                              <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
-                             <!--<button type="button" id="decline-<?php echo $record['booking_id'];?>" class="btn btn-round btn-warning">Decline</button>-->
                               <?php }else if($record['booking_status']=="2"){?>
-								  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-								   <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
-                              <!--<button type="button" id="decline-<?php echo $record['booking_id'];?>" class="btn btn-round btn-warning">Decline</button>-->
+            								   <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                               
                               <?php }else{?>
                                <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
+                               <?php 
+                               $change = bookingTimeChange($record['booking_date'],$record['booking_time']);
+                               if($change==1){?>
+                               <button type="button" id="timeChange-<?php echo $record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'];?>" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>
+                               <?php } ?>
                               <?php } ?>
-                             <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button>
-                          </td>
+                             <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
+                            
+            							 </td>
                          </tr>
                         <?php }}?> 
                       </tbody>
@@ -148,5 +179,28 @@
       
     </div>
   </div>
-        <?php include_once('footer.php'); ?>
+       
          <!-- Modal -->
+<!-- Modal -->
+<div id="myModal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+       
+        <div id="timeData"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" id="timeYes">Ok</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+ <?php include_once('footer.php'); ?>

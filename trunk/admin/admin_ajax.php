@@ -38,7 +38,22 @@ switch($_REQUEST['type']) {
 	break;
 
 	
-	
+	case 'timeInterval':
+	$start = $_GET['start'];
+	$end = $_GET['end'];
+	$timeInterval = findtimeInterval($start,$end);
+	print $timeInterval;
+	break;
+
+	case 'bookingTimeChange':
+	$time = $_GET['time'];
+	$bookingID = $_GET['bookingID'];
+	$change = bookingTimeChanges($time,$bookingID);
+	print $change;
+	break;
+
+
+
 	
 }
 ?>

@@ -24,7 +24,7 @@ if(isset($_POST["submit"]))
      }
     else
     {
-     $email = $_SESSION["email"];
+     $email =  mysqli_real_escape_string($conn,$_SESSION["email"]);
      $new_password = mysqli_real_escape_string($conn,$_POST["new_password"]);
      $old_password = mysqli_real_escape_string($conn,$_POST["old_password"]);
      $checkQry = mysqli_query($conn,"SELECT * FROM users WHERE email = '".$email."' AND password = '".md5($old_password)."'");

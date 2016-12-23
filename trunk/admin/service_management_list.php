@@ -17,7 +17,7 @@
                   <div class="x_title">
                     <h2>Service Category List</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a href="add_service_category.php"><button type="button" class="btn btn-round btn-success">Add Category</button></a>
+                      <li><a href="add_service_category.php"><button type="button" class="btn btn-round btn-success">Add Service</button></a>
                       </li>
                       
                     </ul>

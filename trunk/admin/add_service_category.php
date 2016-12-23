@@ -4,6 +4,7 @@ include_once('header.php');
 $error="";
 $sucess="";
 try {
+ 
       if(isset($_POST["submit"]))
       { 
         if((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg")|| ($_FILES["image"]["type"] == "image/pjpeg")|| ($_FILES["image"]["type"] == "image/png")|| ($_FILES["image"]["type"] == "image/jpg"))){ 
@@ -11,10 +12,10 @@ try {
           $profile_image1= time().$_FILES['image']['name'];
           $target_path = $_SERVER['DOCUMENT_ROOT']."/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/service_image/";
           $target_path = $target_path . $profile_image1; 
-          //echo $target_path;exit;
           if(move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) 
           {
-            if(mysqli_query($GLOBALS['conn'],"INSERT INTO `service_management`(`service_name`, `service_image`) VALUES ('".trim($_POST['name'])."','".'/uploads/service_image/'.$profile_image1."')")){
+             $name = mysqli_real_escape_string($conn,trim($_POST['name']));
+            if(mysqli_query($GLOBALS['conn'],"INSERT INTO `service_management`(`service_name`, `service_image`) VALUES ('".$name."','".'uploads/service_image/'.$profile_image1."')")){
               $_SESSION["successmsg"] = "Service added successfully.";
               header('Location:service_management_list.php');
              }

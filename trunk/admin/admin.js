@@ -74,32 +74,22 @@ $("[id ^='confirm-']").click(function () {
   var pagetype =  $("#delete_type").val();
   var serviceID  = $(this).attr('id');
   var serviceArr = serviceID.split('-');
-  Lobibox.confirm({
-      msg: "Are you sure you want to Accept?",
-      callback: function ($this, type) {
-      if (type === 'yes') {
-           $.ajax({
-            url:'confirm_decline.php',
-            type: 'post',
-            data: {pagetype:pagetype,id:serviceArr[1],status:'2'},
-            success: function(data, status) {
-             location.reload();  
-             Lobibox.notify('success', {
+  $.ajax({
+    url:'confirm_decline.php',
+    type: 'post',
+    data: {pagetype:pagetype,id:serviceArr[1],status:'2'},
+          success: function(data, status) {
+            location.reload();  
+            Lobibox.notify('success', {
               msg: 'Entity Accept Successfully.'
              });
-            },
-            error: function(xhr, desc, err) {
-                 console.log(xhr);
-             }
+          },
+          error: function(xhr, desc, err) {
+            console.log(xhr);
+          }
           }); 
-      } else if (type === 'no') {
-        Lobibox.notify('info', {
-          msg: 'You have clicked "No" button.'
-        });
-      }
-    }
-  });
-});
+     });
+  
 
 // Popup for Decline functionality
 $("[id ^='decline-']").click(function () {
