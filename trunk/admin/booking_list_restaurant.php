@@ -142,7 +142,7 @@
                               <?php } ?>
                              <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
                             
-            							 </td>
+            			  </td>
                          </tr>
                         <?php }}?> 
                       </tbody>

@@ -1,6 +1,4 @@
 <?php
-
- //error_reporting(0);
   header('Content-type: application/json');
   include('../functions/functions.php');
    $data = json_decode(file_get_contents('php://input'));
@@ -8,11 +6,8 @@
     if (empty($email)) {
 		$response['responseCode'] = 400;
 		$response['responseMessage'] = 'email address field is required.';
-		
-		
-  }
-  
-	 else {
+	}
+  	else {
 		$userQry = mysql_query("SELECT * FROM users WHERE email  = '".$email."'");
 		$userData = mysql_fetch_assoc($userQry);
 		if(mysql_num_rows($userQry) == 0) {

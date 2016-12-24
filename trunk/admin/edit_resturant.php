@@ -424,7 +424,7 @@
 						    }
 							?>
 							</select>
-							<input type="hidden"  id ="countTime" name="countTime" value="2">
+							<input type="hidden"  id ="countTime" name="countTime" value="0">
                           <!--<input id="closetime" type="text"  name="closetime" data-validate-linked="password" class="form-control col-md-7 col-xs-12" value="<?php //if($_POST['closetime']){ echo $_POST['closetime'];}else{ echo $detail['closing_time']; }?>" >-->
                         </div>
                       </div>

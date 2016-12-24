@@ -10,11 +10,12 @@
  $pageSize   = $data->{"page_size"};
  $pageNumber = $data->{"page_number"};
  $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details LEFT JOIN restaurant_menu_details ON restaurant_details.restaurant_id = restaurant_menu_details.restaurant_id");
+
  if ($restaurant_data) {
     $restaurant_rows    = mysqli_num_rows($restaurant_data);
     $maxPageNumber = ceil($restaurant_rows / $pageSize);
     $minLimit      = ($pageNumber - 1) * $pageSize;
-    $restaurant_list = mysqli_query($GLOBALS['conn'],"SELECT *, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance,restaurant_details.restaurant_id as id FROM restaurant_details LEFT JOIN restaurant_menu_details ON restaurant_details.restaurant_id = restaurant_menu_details.restaurant_id ORDER BY distance Limit $minLimit, $pageSize");
+    $restaurant_list = mysqli_query($GLOBALS['conn'],"SELECT *, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance,restaurant_details.restaurant_id as id FROM restaurant_details LEFT JOIN restaurant_menu_details ON restaurant_details.restaurant_id = restaurant_menu_details.restaurant_id Group By restaurant_details.restaurant_id ORDER BY distance   Limit $minLimit, $pageSize");
     $rows=array();
    
     while ($restaurant_data = mysqli_fetch_array($restaurant_list)) {
@@ -25,7 +26,13 @@
         $row['postcode']             = $restaurant_data['postcode'];
         $row['latitude']             = $restaurant_data['latitude'];
         $row['longitude']            = $restaurant_data['longitude'];
-        $row['restaurant_images']    = $restaurant_data['restaurant_images'];
+        $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
+        $res_image_array = array();
+        foreach($restaurant_images as $value)
+         {
+          $res_image_array[] = url().$value;
+         }
+        $row['restaurant_images']    = $res_image_array;
         $row['deliver_food']         = $restaurant_data['deliver_food'];
         $row['opening_time']         = $restaurant_data['opening_time'];
         $row['closing_time ']        = $restaurant_data['closing_time'];
@@ -33,7 +40,7 @@
         $row['max_people_allowed']   = $restaurant_data['max_people_allowed'];
         $cuisine_data                = explode(",",$restaurant_data['cuisine']);
         $cuisine_rows=array();
-        if($cuisine_data)
+        if($cuisine_data[0])
         {
             foreach($cuisine_data as $value)
             {
@@ -44,7 +51,7 @@
         $row['cuisine']              = $cuisine_rows;
         $ambience_data                = explode(",",$restaurant_data['ambience']);
         $ambience_rows=array();
-        if($ambience_data)
+        if($ambience_data[0])
         {
             foreach($ambience_data as $value)
             {
@@ -55,7 +62,7 @@
         $row['ambience']              = $ambience_rows;
         $dietary_data                = explode(",",$restaurant_data['dietary']);
         $dietary_rows=array();
-        if($dietary_data)
+        if($dietary_data[0])
         {
             foreach($dietary_data as $value)
             {
@@ -65,13 +72,13 @@
         }
         $row['dietary']              = $dietary_rows;
         $price_range_data                = explode(",",$restaurant_data['price_range']);
-        $price_range_rows=array();
-        if($price_range_data)
+      
+        if($price_range_data[0])
         {
             foreach($price_range_data as $value)
             {
                $price_range_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_price_range WHERE id = '".$value."'"));
-                $price_range_rows[] = $price_range_name;
+                $price_range_rows = $price_range_name['price_range'];
             }
         }
         $row['price_range']              = $price_range_rows;

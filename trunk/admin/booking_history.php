@@ -33,14 +33,16 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>User Name</th>
+                          <th>Name</th>
                           <th>Email</th>
-                          <th>Contact no</th>
-                          <th>Booking Date</th>
-                          <th>Booking Time</th>
+                          <th>Mobile</th>
+                          <th>Date</th>
+                          <th>Time</th>
                           <th>Number of people</th>
                           <th>Booking Status</th>
-                          <th>Action</th>
+                          <?php if($_SESSION['role'] ==1){ ?>
+							<th>Action</th>
+                          <?php } ?>
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="booked_restaurant">
@@ -70,7 +72,7 @@
                         if($change==1){?>
                          <button type="button" id="timeChange-<?php echo $record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'];?>" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>
                                <?php } ?>
-                     <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
+                           <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
                           </td>
                          </tr>
                         <?php }}?> 
