@@ -107,4 +107,5 @@
     <string name="submit">Submit</string>
     <string name="please_enter_otp">Please enter otp</string>
     <string name="please_enter_valid_otp">Please enter valid otp.</string>
+    <string name="select">Select</string>
 </resources>

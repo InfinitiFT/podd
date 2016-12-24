@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.podd.R;
 import com.podd.adapter.LunchMenuAdapter;
 import com.podd.adapter.RestaurantsAdapter;
+import com.podd.utils.AppConstant;
+
+import java.util.ArrayList;
 
 /**
  * The type View menu activity.
@@ -33,6 +36,8 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvRestauarntName;
     private TextView tvBookNow;
     private Intent intent;
+    private ArrayList<String> restaurantImages;
+    private String restaurantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,9 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         context=ViewMenuActivity.this;
         getIds();
         setListeners();
+        restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
+        restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+        tvRestauarntName.setText(restaurantName);
         setAdapter();
         setLunchMenuAdapter();
         setBreakfastMenu();
@@ -85,7 +93,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void setAdapter() {
-        RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context);
+        RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context,restaurantImages);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         rvRestaurants.setLayoutManager(mLayoutManager);
         rvRestaurants.setAdapter(RestaurantsAdapter);

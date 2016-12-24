@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
+import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.DialogUtils;
 
@@ -37,6 +38,10 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private TextView tvConfirmation;
     private Dialog dialogConfirmBooking;
     private EditText etEnterOtp;
+    private String location;
+    private String dateBooked;
+    private String timeBooked;
+    private String noOfPersons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,15 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         context = BookingSummaryActivity.this;
         getIds();
         setListeners();
+        location=getIntent().getStringExtra(AppConstant.LOCATION);
+        dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
+        timeBooked=getIntent().getStringExtra(AppConstant.TIMEBOOKED);
+        noOfPersons=getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
+        /*tvLocation.setText(location);
+        tvDateBooked.setText(dateBooked);
+        tvTimeBooked.setText(timeBooked);
+        tvNumberofPeople.setText(noOfPersons);*/
+
     }
 
     private void getIds() {

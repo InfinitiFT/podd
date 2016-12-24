@@ -44,6 +44,12 @@ public interface ApiInterface {
     @POST("restaurant_assest_list.php")
     public Call<JsonResponse>getAmbienceRestaurantList(@Body JsonRequest jsonRequest);
 
+    @POST("restaurant_details.php")
+    public Call<JsonResponse>getRestaurantDetails(@Body JsonRequest jsonRequest);
+
+    @POST("time_interval.php")
+    public Call<JsonResponse>getRestaurantTimeInterval(@Body JsonRequest jsonRequest);
+
 
     /*@POST("signup")
     Call<JsonResponse> getSignUp(@Body JsonRequest loginRequestModel);

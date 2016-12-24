@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.podd.R;
 import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
 import com.podd.model.Restaurant;
+import com.podd.utils.AppConstant;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
     private Context context;
     private List<Restaurant>restaurantList;
+    private String location;
 
     /**
      * Instantiates a new Best restaurant adapter.
@@ -47,7 +49,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         if (position%2==0){
             holder.viewBottom.setVisibility(View.VISIBLE);
@@ -58,16 +60,17 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         Restaurant restaurant = restaurantList.get(position);
         holder.tvRestaurantName.setText(restaurant.restaurant_name);
         holder.tvLocation.setText(restaurant.location);
+        location=holder.tvLocation.getText().toString().trim();
         holder.tvDistance.setText(restaurant.distance);
         holder.tvPriceRange.setText(restaurant.price_range);
-        if(restaurantList.get(position).restaurant_images!=null){
+        if(restaurantList.get(position).restaurant_images.get(0)!=null){
             Picasso.with(context)
-                    .load(restaurantList.get(position).restaurant_images)
-                    .placeholder(R.mipmap.podd) // optional
-                    .error(R.mipmap.podd)         // optional
+                    .load(restaurantList.get(position).restaurant_images.get(0).toString())
+                    .placeholder(R.color.colorPrimaryDark) // optional
+                    .error(R.color.colorPrimaryDark)         // optional
                     .into(holder.ivRestaurant);
         }else {
-            holder.ivRestaurant.setImageResource(R.mipmap.podd);
+            holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
         }
 
 
@@ -76,6 +79,10 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             public void onClick(View view) {
                 Intent intent=new Intent(context, RestaurantDetailScreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(AppConstant.RESTAURANTID,restaurantList.get(position).restaurant_id);
+                intent.putExtra(AppConstant.LATITUDE,restaurantList.get(position).latitude);
+                intent.putExtra(AppConstant.LONGITUDE,restaurantList.get(position).longitude);
+                intent.putExtra(location,location);
                 context.startActivity(intent);
             }
         });

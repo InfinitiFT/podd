@@ -10,6 +10,7 @@ public class JsonRequest implements Serializable {
  public String longitude;
  public String page_size;
  public int page_number;
+ public String restaurant_id;
 
 
 

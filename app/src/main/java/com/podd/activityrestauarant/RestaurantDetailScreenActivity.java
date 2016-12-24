@@ -4,16 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.podd.R;
+import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.RestaurantsAdapter;
+import com.podd.model.Restaurant;
+import com.podd.retrofit.ApiClient;
+import com.podd.utils.AppConstant;
+import com.podd.utils.CommonUtils;
+import com.podd.webservices.JsonRequest;
+import com.podd.webservices.JsonResponse;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -42,6 +60,12 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private RecyclerView rvRestaurants;
     private Context context;
     private Intent intent;
+    private String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
+    private List<String>restaurantList=new ArrayList<>();
+    private String latitude,longitude;
+    private String restaurantId;
+    private String restaurantname;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +74,12 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         context=RestaurantDetailScreenActivity.this;
         getIds();
         setListeners();
-        setAdapter();
+        latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
+        longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
+        restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+        getRestaurantDetailApi();
     }
 
-    private void setAdapter() {
-        RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
-        rvRestaurants.setLayoutManager(mLayoutManager);
-        rvRestaurants.setAdapter(RestaurantsAdapter);
-    }
 
     private void getIds() {
         tvRestauarntName= (TextView) findViewById(R.id.tvRestauarntName);
@@ -66,6 +87,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         tvCategory= (TextView) findViewById(R.id.tvCategory);
         tvPriceRange= (TextView) findViewById(R.id.tvPriceRange);
         tvLocation= (TextView) findViewById(R.id.tvLocation);
+        location=tvLocation.getText().toString().trim();
         tvDistance= (TextView) findViewById(R.id.tvDistance);
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         tvAboutRestaurant= (TextView) findViewById(R.id.tvAboutRestaurant);
@@ -111,11 +133,17 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             case R.id.tvBookNow:
                 intent=new Intent(context,RestaurantBookingDetailsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
+                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
+                intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                intent.putExtra(AppConstant.LOCATION,location);
                 startActivity(intent);
                 break;
             case R.id.tvViewMenu:
                 intent=new Intent(context,ViewMenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
+                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
                 startActivity(intent);
                 break;
 
@@ -127,4 +155,67 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         }
 
     }
+
+
+    private void getRestaurantDetailApi() {
+        CommonUtils.showProgressDialog(context);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.latitude = latitude;
+        jsonRequest.longitude = longitude;
+        jsonRequest.restaurant_id = restaurantId;
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+        Call<JsonResponse> call = ApiClient.getApiService().getRestaurantDetails(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        if (response.body()!=null&&response.body().restaurant_images.size()>0) {
+
+                            restaurantList.clear();
+                            restaurantList.addAll(response.body().restaurant_images);
+                            RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context,restaurantList);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+                            rvRestaurants.setLayoutManager(mLayoutManager);
+                            rvRestaurants.setAdapter(RestaurantsAdapter);
+                            tvDescriptionRestaraunt.setText(response.body().about_text);
+                            tvNameRestaraunt.setText(response.body().restaurant_name);
+                            restaurantname=response.body().restaurant_name;
+                            tvLocation.setText(response.body().location);
+                            tvDistance.setText(response.body().distance);
+                            tvPriceRange.setText(response.body().price_range);
+                            tvRestauarntName.setText(response.body().restaurant_name);
+                            if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
+                                tvCategory.setText(response.body().cuisine.get(0).name.trim());
+                            }
+                            else {
+                                Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+
+    }
+
+
 }

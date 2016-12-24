@@ -1,6 +1,7 @@
 package com.podd.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class Restaurant implements Serializable{
     public String postcode;
     public String latitude;
     public String longitude;
-    public String restaurant_images;
+    public ArrayList<String>restaurant_images;
     public String deliver_food;
     public String opening_time;
     public String closing_time;

@@ -9,20 +9,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.podd.R;
+import com.podd.model.Restaurant;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * Created by Shalini Bishnoi on 12-12-2016.
  */
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder> {
     private Context context;
+    private List<String>restaurantList;
 
-    /**
-     * Instantiates a new Restaurants adapter.
-     *
-     * @param context the context
-     */
-    public RestaurantsAdapter(Context context) {
-        context=this.context;
+
+    public RestaurantsAdapter(Context context, List<String> restaurantList) {
+        this.context=context;
+        this.restaurantList=restaurantList;
 
     }
 
@@ -34,34 +36,26 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        String restaurant = restaurantList.get(position);
+        if(restaurantList.get(position)!=null){
+            Picasso.with(context)
+                    .load(restaurantList.get(position).toString())
+                    .placeholder(R.color.colorPrimaryDark) // optional
+                    .error(R.color.colorPrimaryDark)         // optional
+                    .into(holder.ivRestaurantImage);
+        }else {
+            holder.ivRestaurantImage.setImageResource(R.color.colorPrimaryDark);
+        }
 
 
     }
-
-
     @Override
     public int getItemCount() {
-        return 10;
+        return restaurantList.size();
     }
-
-    /**
-     * The type My view holder.
-     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The Iv restaurant image.
-         */
         ImageView ivRestaurantImage;
-        /**
-         * The Ll star restaurants.
-         */
         LinearLayout llStarRestaurants;
-
-        /**
-         * Instantiates a new My view holder.
-         *
-         * @param itemView the item view
-         */
         public MyViewHolder(View itemView) {
             super(itemView);
             ivRestaurantImage= (ImageView) itemView.findViewById(R.id.ivRestaurantImage);
