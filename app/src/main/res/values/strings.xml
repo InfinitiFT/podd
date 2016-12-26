@@ -108,4 +108,7 @@
     <string name="please_enter_otp">Please enter otp</string>
     <string name="please_enter_valid_otp">Please enter valid otp.</string>
     <string name="select">Select</string>
+    <string name="please_select_a_valid_date">Please select a valid date.</string>
+    <string name="please_select_a_valid_time">Please select a valid time.</string>
+    <string name="please_select_number_of_people">Please select number of people.</string>
 </resources>

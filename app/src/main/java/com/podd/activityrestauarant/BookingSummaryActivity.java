@@ -7,15 +7,25 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.podd.R;
+import com.podd.retrofit.ApiClient;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.DialogUtils;
+import com.podd.webservices.JsonRequest;
+import com.podd.webservices.JsonResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * The type Booking summary activity.
@@ -42,6 +52,12 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String dateBooked;
     private String timeBooked;
     private String noOfPersons;
+    private String restaurantName;
+    private String restaurantId;
+    private String TAG=BookingSummaryActivity.class.getSimpleName();
+    private String name;
+    private String email;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +66,23 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         context = BookingSummaryActivity.this;
         getIds();
         setListeners();
+        restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         location=getIntent().getStringExtra(AppConstant.LOCATION);
         dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
         timeBooked=getIntent().getStringExtra(AppConstant.TIMEBOOKED);
         noOfPersons=getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
-        /*tvLocation.setText(location);
+        restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+
+        tvRestaurantName.setText(restaurantName);
+        tvLocation.setText(location);
         tvDateBooked.setText(dateBooked);
         tvTimeBooked.setText(timeBooked);
-        tvNumberofPeople.setText(noOfPersons);*/
+        tvNumberofPeople.setText(noOfPersons);
+
+
+
+
+
 
     }
 
@@ -101,6 +126,10 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.tvCompleteBooking:
                 if (isValid()) {
+                    name=etName.getText().toString().trim();
+                    phone=etPhoneNumber.getText().toString().trim();
+                    email=etEmail.getText().toString().trim();
+                    sendOtpApi();
 
                     dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
                     TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
@@ -160,4 +189,54 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         }
         return true;
     }
+
+
+
+    private void sendOtpApi() {
+        CommonUtils.showProgressDialog(context);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.restaurant_id=restaurantId;
+        jsonRequest.booking_date=dateBooked;
+        jsonRequest.booking_time=timeBooked;
+        jsonRequest.number_of_people=noOfPersons;
+        jsonRequest.name=name;
+        jsonRequest.email=email;
+        jsonRequest.contact_no=phone;
+
+
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+        Call<JsonResponse> call = ApiClient.getApiService().sendOtp(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+
+
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
+
+
 }

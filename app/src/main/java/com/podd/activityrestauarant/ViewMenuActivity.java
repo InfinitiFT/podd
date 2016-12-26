@@ -16,6 +16,7 @@ import com.podd.adapter.LunchMenuAdapter;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.utils.AppConstant;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -38,6 +39,8 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     private Intent intent;
     private ArrayList<String> restaurantImages;
     private String restaurantName;
+    private String restaurantId;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         setListeners();
         restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
         restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+        restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+        location=getIntent().getStringExtra(AppConstant.LOCATION);
         tvRestauarntName.setText(restaurantName);
         setAdapter();
         setLunchMenuAdapter();
@@ -124,7 +129,12 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvBookNow:
+
                 intent=new Intent(context,RestaurantBookingDetailsActivity.class);
+                intent.putExtra(AppConstant.RESTAURANTIMAGES,restaurantImages);
+                intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantName);
+                intent.putExtra(AppConstant.LOCATION,location);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
