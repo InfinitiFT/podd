@@ -4,11 +4,9 @@ import com.podd.model.Ambience;
 import com.podd.model.Cuisine;
 import com.podd.model.Dietary;
 import com.podd.model.Pagination;
-import com.podd.model.PriceRange;
 import com.podd.model.Restaurant;
-import com.podd.model.RestaurantImages;
 import com.podd.model.RestaurantMenu;
-import com.podd.model.RestaurantTimeInterval;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +18,7 @@ public class JsonResponse implements Serializable{
 
     public String responseCode;
     public String responseMessage;
+    public String verification_status;
 
 
     /*   Restaurant List api response */

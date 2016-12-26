@@ -50,6 +50,9 @@ public interface ApiInterface {
     @POST("time_interval.php")
     public Call<JsonResponse>getRestaurantTimeInterval(@Body JsonRequest jsonRequest);
 
+    @POST("restaurant_booking.php")
+    public Call<JsonResponse>sendOtp(@Body JsonRequest jsonRequest);
+
 
     /*@POST("signup")
     Call<JsonResponse> getSignUp(@Body JsonRequest loginRequestModel);

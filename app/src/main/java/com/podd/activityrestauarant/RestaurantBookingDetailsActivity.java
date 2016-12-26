@@ -41,7 +41,7 @@ import retrofit2.Response;
 /**
  * The type Restraunt booking details activity.
  */
-public class RestaurantBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener,Serializable {
+public class RestaurantBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, Serializable {
     private Context context;
     private RecyclerView rvRestaurants;
     private TextView tvBookNow;
@@ -61,7 +61,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String currentDateString;
     private ArrayList<String> restaurantImages;
     private String restaurantName;
-    private final String[] numberOfPeopleArray = {"Number of People", "1", "2", "3", "4", "5", "6", "7","8","9","10","11","12"};
+    private final String[] numberOfPeopleArray = {"Number of People", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private String date;
     private String TAG = RestaurantBookingDetailsActivity.class.getSimpleName();
     private String restaurantantId;
@@ -69,7 +69,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     public String dateBooked;
     public String timeBooked;
     public String noOfPersons;
-
+    List<String> restaurant_time_interval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +77,12 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         setContentView(R.layout.activity_restraunt_booking_details);
         context = RestaurantBookingDetailsActivity.this;
         getIds();
+        restaurant_time_interval = new ArrayList<>();
         restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
         restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         tvRestauarntName.setText(restaurantName);
-        restaurantantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
-        location=getIntent().getStringExtra(AppConstant.LOCATION);
+        restaurantantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
+        location = getIntent().getStringExtra(AppConstant.LOCATION);
         getRestauranttimeIntervalApi();
         selectNumberOfPeopleAdapter();
         setAdapter();
@@ -123,11 +124,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     }
 
 
-
-
-
-
-
     private void selectNumberOfPeopleAdapter() {
         ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_textview_spinner_type, numberOfPeopleArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
@@ -158,20 +154,22 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBookNow:
-            if(isValid()) {
-                dateBooked=tvDateBooked.getText().toString().trim();
+                dateBooked = tvDateBooked.getText().toString().trim();
                 timeBooked = tvTimeBooked.getText().toString().trim();
                 noOfPersons = tvNoOfPersons.getText().toString().trim();
 
-                intent = new Intent(context, BookingSummaryActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.DATEBOOKED, dateBooked);
-                intent.putExtra(AppConstant.TIMEBOOKED, timeBooked);
-                intent.putExtra(AppConstant.NOOFPEOPLE, noOfPersons);
-                intent.putExtra(AppConstant.LOCATION, location);
-                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantName);
-                startActivity(intent);
-            }
+                if (isValid()) {
+
+                    intent = new Intent(context, BookingSummaryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(AppConstant.DATEBOOKED, dateBooked);
+                    intent.putExtra(AppConstant.TIMEBOOKED, timeBooked);
+                    intent.putExtra(AppConstant.NOOFPEOPLE, noOfPersons);
+                    intent.putExtra(AppConstant.LOCATION, location);
+                    intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
+                    intent.putExtra(AppConstant.RESTAURANTID, restaurantantId);
+                    startActivity(intent);
+                }
                 break;
             case R.id.tvSelectfromCalender:
                 tvToday.setText(R.string.today);
@@ -244,7 +242,12 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        tvTimeBooked.setText(spSelectTime.getSelectedItem().toString().trim());
+
+        if (restaurant_time_interval != null && restaurant_time_interval.size() > 0) {
+            tvTimeBooked.setText(spSelectTime.getSelectedItem() != null ? spSelectTime.getSelectedItem().toString() : restaurant_time_interval.get(0));
+        } else {
+
+        }
 
         tvNoOfPersons.setText(spSelectPeople.getSelectedItem().toString().trim());
 
@@ -260,7 +263,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private void getRestauranttimeIntervalApi() {
         CommonUtils.showProgressDialog(context);
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.restaurant_id=restaurantantId;
+        jsonRequest.restaurant_id = restaurantantId;
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = ApiClient.getApiService().getRestaurantTimeInterval(jsonRequest);
@@ -272,8 +275,9 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         if (response.body().restaurant_time_interval.size() > 0) {
-
-                            ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_textview_spinner_type,response.body().restaurant_time_interval);
+                            restaurant_time_interval.clear();
+                            restaurant_time_interval = response.body().restaurant_time_interval;
+                            ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_textview_spinner_type, response.body().restaurant_time_interval);
                             adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
                             spSelectTime.setAdapter(adapter);
 
@@ -300,25 +304,21 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     }
 
 
-    private boolean isValid(){
-        if (tvDateBooked.getText().toString().trim()=="DATE BOOKED"){
-            Toast.makeText(context,R.string.please_select_a_valid_date,Toast.LENGTH_SHORT).show();
+    private boolean isValid() {
+        if (dateBooked.trim().matches(String.valueOf(R.string.date_booked))) {
+            Toast.makeText(context, R.string.please_select_a_valid_date, Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else if (tvTimeBooked.getText().toString().trim()=="11:00"){
-            Toast.makeText(context,R.string.please_select_a_valid_time,Toast.LENGTH_SHORT).show();
+        } else if (timeBooked.trim().matches(String.valueOf(R.string.time_booked))) {
+            Toast.makeText(context, R.string.please_select_a_valid_time, Toast.LENGTH_SHORT).show();
             return false;
-        }
-
-        else if (tvNoOfPersons.getText().toString().trim()=="Number of People"){
-            Toast.makeText(context,R.string.please_select_number_of_people,Toast.LENGTH_SHORT).show();
+        } else if (noOfPersons.trim().matches(String.valueOf(R.string.number_of_people))) {
+            Toast.makeText(context, R.string.please_select_number_of_people, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         return true;
 
     }
-
 
 
 }
