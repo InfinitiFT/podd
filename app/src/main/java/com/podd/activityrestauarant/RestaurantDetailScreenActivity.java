@@ -144,6 +144,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
                 intent.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
+                intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                intent.putExtra(AppConstant.LOCATION,location);
                 startActivity(intent);
                 break;
 

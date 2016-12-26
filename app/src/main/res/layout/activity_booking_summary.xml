@@ -51,7 +51,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tvadditionalInfo"
+                android:id="@+id/tvLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -63,7 +63,7 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvDateBooked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -73,7 +73,7 @@
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/tvTime"
+                android:id="@+id/tvTimeBooked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

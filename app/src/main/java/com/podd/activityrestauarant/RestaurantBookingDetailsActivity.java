@@ -26,6 +26,7 @@ import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ import retrofit2.Response;
 /**
  * The type Restraunt booking details activity.
  */
-public class RestaurantBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class RestaurantBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener,Serializable {
     private Context context;
     private RecyclerView rvRestaurants;
     private TextView tvBookNow;
@@ -60,14 +61,14 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String currentDateString;
     private ArrayList<String> restaurantImages;
     private String restaurantName;
-    private final String[] numberOfPeopleArray = {"Number of People", "1", "2", "3", "4", "5", "6", "7"};
+    private final String[] numberOfPeopleArray = {"Number of People", "1", "2", "3", "4", "5", "6", "7","8","9","10","11","12"};
     private String date;
     private String TAG = RestaurantBookingDetailsActivity.class.getSimpleName();
     private String restaurantantId;
     private String location;
-    private String dateBooked;
-    private String timeBooked;
-    private String noOfPersons;
+    public String dateBooked;
+    public String timeBooked;
+    public String noOfPersons;
 
 
     @Override
@@ -76,16 +77,16 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         setContentView(R.layout.activity_restraunt_booking_details);
         context = RestaurantBookingDetailsActivity.this;
         getIds();
-        setListeners();
-        selectNumberOfPeopleAdapter();
         restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
         restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         tvRestauarntName.setText(restaurantName);
         restaurantantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
         location=getIntent().getStringExtra(AppConstant.LOCATION);
-
-        setAdapter();
         getRestauranttimeIntervalApi();
+        selectNumberOfPeopleAdapter();
+        setAdapter();
+        setListeners();
+
     }
 
     private void getIds() {
@@ -101,7 +102,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
-        dateBooked=tvDateBooked.getText().toString().trim();
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNoOfPersons = (TextView) findViewById(R.id.tvNoOfPersons);
 
@@ -136,12 +136,14 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     }
 
     private void setListeners() {
-        tvBookNow.setOnClickListener(this);
+
+
         tvSelectfromCalender.setOnClickListener(this);
         spSelectPeople.setOnItemSelectedListener(this);
         spSelectTime.setOnItemSelectedListener(this);
         tvToday.setOnClickListener(this);
         tvTomorrow.setOnClickListener(this);
+        tvBookNow.setOnClickListener(this);
 
     }
 
@@ -156,13 +158,20 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBookNow:
+            if(isValid()) {
+                dateBooked=tvDateBooked.getText().toString().trim();
+                timeBooked = tvTimeBooked.getText().toString().trim();
+                noOfPersons = tvNoOfPersons.getText().toString().trim();
+
                 intent = new Intent(context, BookingSummaryActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.DATEBOOKED,dateBooked);
-                intent.putExtra(AppConstant.TIMEBOOKED,timeBooked);
-                intent.putExtra(AppConstant.NOOFPEOPLE,noOfPersons);
-                intent.putExtra(AppConstant.LOCATION,location);
+                intent.putExtra(AppConstant.DATEBOOKED, dateBooked);
+                intent.putExtra(AppConstant.TIMEBOOKED, timeBooked);
+                intent.putExtra(AppConstant.NOOFPEOPLE, noOfPersons);
+                intent.putExtra(AppConstant.LOCATION, location);
+                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantName);
                 startActivity(intent);
+            }
                 break;
             case R.id.tvSelectfromCalender:
                 tvToday.setText(R.string.today);
@@ -236,9 +245,9 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         tvTimeBooked.setText(spSelectTime.getSelectedItem().toString().trim());
-        timeBooked = tvTimeBooked.getText().toString().trim();
+
         tvNoOfPersons.setText(spSelectPeople.getSelectedItem().toString().trim());
-        noOfPersons=tvNoOfPersons.getText().toString().trim();
+
 
     }
 
@@ -262,12 +271,11 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-                        if (response.body() != null && response.body().restaurant_time_interval.size() > 0) {
+                        if (response.body().restaurant_time_interval.size() > 0) {
 
                             ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_textview_spinner_type,response.body().restaurant_time_interval);
                             adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
                             spSelectTime.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
 
                         } else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -290,4 +298,27 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         });
 
     }
+
+
+    private boolean isValid(){
+        if (tvDateBooked.getText().toString().trim()=="DATE BOOKED"){
+            Toast.makeText(context,R.string.please_select_a_valid_date,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (tvTimeBooked.getText().toString().trim()=="11:00"){
+            Toast.makeText(context,R.string.please_select_a_valid_time,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        else if (tvNoOfPersons.getText().toString().trim()=="Number of People"){
+            Toast.makeText(context,R.string.please_select_number_of_people,Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+
 }

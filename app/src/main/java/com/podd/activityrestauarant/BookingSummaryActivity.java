@@ -42,6 +42,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String dateBooked;
     private String timeBooked;
     private String noOfPersons;
+    private String restaurantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +51,20 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         context = BookingSummaryActivity.this;
         getIds();
         setListeners();
+        restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         location=getIntent().getStringExtra(AppConstant.LOCATION);
         dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
         timeBooked=getIntent().getStringExtra(AppConstant.TIMEBOOKED);
         noOfPersons=getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
-        /*tvLocation.setText(location);
+
+        tvRestaurantName.setText(restaurantName);
+        tvLocation.setText(location);
         tvDateBooked.setText(dateBooked);
         tvTimeBooked.setText(timeBooked);
-        tvNumberofPeople.setText(noOfPersons);*/
+        tvNumberofPeople.setText(noOfPersons);
+
+
+
 
     }
 
