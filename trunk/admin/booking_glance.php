@@ -32,7 +32,6 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a href="booking_list_restaurant.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
                             </li>
-
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -132,19 +131,26 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
     function getDaysInMonth(year, month) {
         return new Date(year, month, 0).getDate();
     }
+
+    //padding a number
+    function pad ( num, size ) {
+        return ( Math.pow( 10, size ) + ~~num ).toString().substring( 1 );
+    }
     
 </script>
 <script>
+    var restaurant_id = "<?php echo $_REQUEST['restaurant_id'];?>";
     $('document').ready(function () {
         var d = new Date();
         var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
         $("#day_name").html("<b>Today</b>");
         $("#cur_date").val(d.getDay());
         $("#cur_date1").val(strDate);
+
         $.ajax({
             type: 'POST',
             url: 'booking_glance_details.php',
-            data: {"date1":strDate},
+            data: {"date1":strDate,"restaurant_id":restaurant_id},
             success: function (response) {
                 $(".x_content").html(response);
             }
@@ -156,11 +162,34 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         var cur_date = $('#cur_date').val();
         var cur_date1 = $('#cur_date1').val();
         var splitArr = cur_date1.split('-');
-        var increase_dayDate = parseInt(splitArr[2]) + 1;
 
-        console.log(isLeapYear(splitArr[0])+"leapyear "+getDaysInMonth(splitArr[0], splitArr[1]));
 
-        var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;
+        //console.log(isLeapYear(splitArr[0])+"leapyear "+getDaysInMonth(splitArr[0], splitArr[1]));
+        if(splitArr[2] == getDaysInMonth(splitArr[0], splitArr[1])){
+            if (splitArr[1] == 12){
+                var increase_year = parseInt(splitArr[0]) + 1;
+                var increase_month = pad(1,2);
+                var increase_dayDate = pad(1,2);
+                var strDate = increase_year + "-" + increase_month + "-" + increase_dayDate;
+            } else {
+                if (parseInt(splitArr[1]) + 1 < 10){
+                    var increase_month = pad(parseInt(splitArr[1]) + 1, 2);
+                } else {
+                    var increase_month = parseInt(splitArr[1]) + 1;
+                }
+                var increase_dayDate = pad(1,2);
+                var strDate = splitArr[0] + "-" + increase_month + "-" + increase_dayDate;
+            }
+        } else {
+            if (parseInt(splitArr[2]) + 1 < 10){
+                var increase_dayDate = pad(parseInt(splitArr[2]) + 1,2);
+            } else {
+                var increase_dayDate = parseInt(splitArr[2]) + 1;
+            }
+            var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;
+        }
+        console.log(strDate);
+        /*var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;*/
         var increase_day = parseInt(cur_date) + 1;
         if (count++ == 1){
             $("#day_name").html("<b>Tomorrow</b>");
@@ -186,7 +215,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         $.ajax({
             type: 'POST',
             url: 'booking_glance_details.php',
-            data: {"date1":strDate},
+            data: {"date1":strDate,"restaurant_id":restaurant_id},
             success: function (response) {
                 $(".x_content").html(response);
             }
@@ -199,37 +228,62 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         var cur_date = $('#cur_date').val();
         var cur_date1 = $('#cur_date1').val();
         var splitArr = cur_date1.split('-');
-        var increase_dayDate = parseInt(splitArr[2]) - 1;
-        var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;
-        var increase_day = parseInt(cur_date) - 1;
+
+        if(splitArr[2] == 01){
+            if (splitArr[1] == 01){
+                var decrease_year = parseInt(splitArr[0]) - 1;
+                var decrease_month = 12;
+                var decrease_dayDate = 31;
+                var strDate = decrease_year + "-" + decrease_month + "-" + decrease_dayDate;
+            } else {
+                if (parseInt(splitArr[1]) - 1 < 10){
+                    var decrease_month = pad(parseInt(splitArr[1]) - 1, 2);
+                } else {
+                    var decrease_month = parseInt(splitArr[1]) - 1;
+                }
+                var decrease_dayDate = getDaysInMonth(splitArr[0], splitArr[1] - 1);
+                var strDate = splitArr[0] + "-" + decrease_month + "-" + decrease_dayDate;
+            }
+        } else {
+            if (parseInt(splitArr[2]) - 1 < 10){
+                var decrease_dayDate = pad(parseInt(splitArr[2]) - 1,2);
+            } else {
+                var decrease_dayDate = parseInt(splitArr[2]) - 1;
+            }
+            var strDate = splitArr[0] + "-" + splitArr[1] + "-" + decrease_dayDate;
+        }
+        console.log(strDate);
+        //var increase_dayDate = parseInt(splitArr[2]) - 1;
+        //var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;
+        var decrease_day = parseInt(cur_date) - 1;
         if (count++ == 1){
             $("#day_name").html("<b>Yesterday</b>");
-            $("#cur_date").val(increase_day.toString());
+            $("#cur_date").val(decrease_day.toString());
             $("#cur_date1").val(strDate);
         } else {
             var d = new Date();
-            if (d.getDay() == increase_day){
+            if (d.getDay() == decrease_day){
                 $("#day_name").html("<b>Today</b>");
-                $("#cur_date").val(increase_day.toString());
+                $("#cur_date").val(decrease_day.toString());
                 $("#cur_date1").val(strDate);
             }else {
-                if (increase_day < 0) {
-                    increase_day = 6;
+                if (decrease_day < 0) {
+                    decrease_day = 6;
                 }
-                var name = get_day_name(increase_day);
-                $("#cur_date").val(increase_day.toString());
+                var name = get_day_name(decrease_day);
+                $("#cur_date").val(decrease_day.toString());
                 $("#cur_date1").val(strDate);
                 $("#day_name").html("<b>" + name + "</b>");
             }
-            $.ajax({
-                type: 'POST',
-                url: 'booking_glance_details.php',
-                data: {"date1":strDate},
-                success: function (response) {
-                    $(".x_content").html(response);
-                }
-            });
         }
+        $.ajax({
+            type: 'POST',
+            url: 'booking_glance_details.php',
+            data: {"date1":strDate,"restaurant_id":restaurant_id},
+            success: function (response) {
+                $(".x_content").html(response);
+            }
+        });
     });
 
 </script>

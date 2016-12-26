@@ -20,7 +20,7 @@ if ($_SESSION['msg'] == 'location'){
 $bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` WHERE `booking_id` ='".$_GET['id']."'"));
 if(isset($_REQUEST['submit'])){
 	
-	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET booking_time ='".$_POST['booking_time']."',number_of_people ='".$_POST['people']."',name='".$_POST['name']."',email='".$_POST['email']."',booking_date='".$_POST['boking_date']."',contact_no='".$_POST['phone']."' WHERE `booking_id` ='".$_GET['id']."'");
+	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET booking_time ='".$_POST['booking_time']."',number_of_people ='".$_POST['people']."',name='".$_POST['name']."',email='".$_POST['email']."',booking_date='".$_POST['booking_date']."',contact_no='".$_POST['phone']."' WHERE `booking_id` ='".$_GET['id']."'");
 	if($update){
 		$_SESSION['updateBooking'] = 1;
 		header('Location: booking_history.php');
@@ -44,7 +44,7 @@ if(isset($_REQUEST['submit'])){
 					<div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-					<form class="form-horizontal form-label-left" method="post" id="" novalidate>
+					<form class="form-horizontal form-label-left" method="post" id="edit_booking" novalidate>
 					 
                      <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name 
@@ -62,22 +62,22 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Phone 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="phone" name="phone"  value="<?php if($_POST['phone']){ echo $_POST['phone'];}else{ echo $bookingData['contact_no'];} ?>" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Booking Date </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Booking Date </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="single_cal3" name="boking_date"  value=" " data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="booking_date" name="booking_date"  value="<?php if($_POST['booking_date']){ echo $_POST['booking_date'];}else{ echo $bookingData['booking_date'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12" aria-describedby="inputSuccess2Status" >
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label for="password" class="control-label col-md-3">Booking Time</label>
+                        <label for="booking_time" class="control-label col-md-3">Booking Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="opentime" onchange="timeValidateClose(this)">
+							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time" onchange="timeValidateClose(this)">
 							<?php $i =0;
 								for($hours=0; $hours<24; $hours++){ // the interval for hours is '1'
 									for($mins=0; $mins<60; $mins+=30){
@@ -99,7 +99,7 @@ if(isset($_REQUEST['submit'])){
                       </div>
                      
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Max number of people </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="people">Max number of people </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="people" name="people"  value="<?php if($_POST['people']){ echo $_POST['people'];}else{ echo $bookingData['number_of_people'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>
@@ -121,3 +121,14 @@ if(isset($_REQUEST['submit'])){
         <!-- /page content -->
 
     <?php include_once('footer.php'); ?>
+<script>
+    $(document).ready(function() {
+        $('#booking_date').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            calender_style: "picker_1",
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+        </script>

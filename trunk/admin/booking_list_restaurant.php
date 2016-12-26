@@ -3,12 +3,12 @@
   $result = array();
   if($_SESSION['restaurant_id']!="")
   {
-    $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND brr.booking_date >= CURRENT_DATE()");
+    $data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND brr.booking_date >= CURRENT_DATE() order by booking_id desc");
 
   }
   else
   {
-     $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` >= CURRENT_DATE() order by booking_id desc");
+     $data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where `booking_date` >= CURRENT_DATE()  order by booking_id desc");
 
   }
   
@@ -25,7 +25,6 @@
  }
   
 ?> 
-
      <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -67,11 +66,10 @@
                   <div class="x_title">
                     <h2>Venue Booking List</h2>
                    <ul class="nav navbar-right panel_toolbox">
+                   <?php if($_SESSION['restaurant_id']!=""){ ?>
                        <li><a href="booking_glance.php"><button type="button" class="btn btn-round btn-success">Booking at Glance</button></a>
-                       </li>
-                      <li><a href="restaurant_details.php"><button type="button" class="btn btn-round btn-success">View Venue</button></a>
-                      </li>
-                      
+                       </li>    
+                   <?php }?>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -83,10 +81,12 @@
                         <tr>
                            <th>Name</th>
                            <th>Mobile</th>
-                           <th>Email</th>
+                           <th>User Email</th>
+                           <th>Venue Email</th>
                            <th>Date</th>
                            <th>Time</th>
                            <th>Number of people</th>
+                           <th>Booking Status</th>
                            <th>Action</th>
                         </tr>
                       </thead>
@@ -109,13 +109,14 @@
                          <tr>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['contact_no'];?></td>
-                          <td><?php echo $record['email'];?></td>
+                          <td><?php echo $record['booking_email'];?></td>
+                           <td><?php echo $record['user_email'];?></td>
                           <td><?php $date = date_create ($record['booking_date']);
 								echo date_format($date,"d M Y");?>
 						  </td>
                           <td><?php echo $record['booking_time'];?></td>
                           <td><?php echo $record['number_of_people'];?></td>
-                         <!-- <td><?php/* if($record['booking_status']=="0"){ 
+                           <td><?php if($record['booking_status']=="0"){ 
                                       echo "Declined";
                                     }
                                     else if($record['booking_status']=="1"){
@@ -123,14 +124,19 @@
                                     }
                                     else{
                                       echo "Accepted";             
-                                    }*/
-                            ?></td>-->
+                                    }
+                            ?></td>
                           <td>
                           <?php if($record['booking_status']=="1"){?>
                              <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
                              <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
                               <?php }else if($record['booking_status']=="2"){?>
             								   <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                                <?php 
+                               $change = bookingTimeChange($record['booking_date'],$record['booking_time']);
+                               if($change==1){?>
+                               <button type="button" id="timeChange-<?php echo $record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'];?>" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>
+                               <?php } ?>
                                
                               <?php }else{?>
                                <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
@@ -165,11 +171,16 @@
         </div>
         <div class="modal-body">
           <select id="declined" name="declined" value="">
-			 <option value="">Select Region</option>
+			 <option value="">Select Reason</option>
 			<option value="Venue closed">Venue closed</option>
 			<option value="No availability for selected date">No availability for selected date</option>
 			<option value="No availability for selected time">No availability for selected time</option>
+			<option value="Other">Other</option>
           </select>
+          <input type="hidden" name="booking_res_id" id="booking_res_id">          
+			<ul class="nav navbar-right panel_toolbox">                            
+				<li><input type="text" class="form-control" placeholder="Enter custom reason"  id="reason" name="reason" style="display:none; width:220px; top:100px" value=""/></li>
+			</ul>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

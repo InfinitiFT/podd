@@ -65,7 +65,8 @@
                           </td>
                           <td>
 							  <?php if($_SESSION['role'] ==1){ ?>
-							       <a href="edit_booking.php?id=<?php echo $record['booking_id'];?>" class="btn btn-round btn-primary">Edit</a>
+
+							       <a href="edit_booking.php?id=<?php echo $record['booking_id'];?>" class="btn btn-round btn-primary">Modify</a>
 							        <?php } ?>
                        <?php 
                         $change = bookingTimeChange($record['booking_date'],$record['booking_time']);

@@ -74,6 +74,7 @@
                    </li>
                    <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Delivery</a></li>
                    <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Taxi</a></li>
+                   <li><a href = "admin_message.php"><i class="fa fa-home"></i>Admin Message</a></li>
                   <!--  <li><a href = "user_list.php"><i class="fa fa-user"></i>User Management </a></li>
                    
                    <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
@@ -85,6 +86,7 @@
                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
                    <!-- <li><a href = "restaurant_menu_management.php"><i class="fa fa-home"></i>Menu Management</a></li> -->
                    <li><a href = "booking_history.php"><i class="fa fa-home"></i>Bookings History</a></li>
+                   <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
                   <!--  <li><a href = "table_management.php"><i class="fa fa-table"></i>Table Management</a></li> -->
                   
                 </ul>

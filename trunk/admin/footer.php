@@ -72,6 +72,7 @@
     <script src="../assets/lobibox-master/demo/demo.js"></script>
     <script src="../assets/vendors/raphael/raphael.min.js"></script>
     <script src="../assets/vendors/morris.js/morris.min.js"></script>
+    <script src="../assets/plugins/ckeditor/ckeditor.js"></script>
     <script src="../assets/js/admin-common-validation.js"></script>
     <script src="../assets/js/jquery.validate.min.js"></script>
     <script src="validation.js"></script>

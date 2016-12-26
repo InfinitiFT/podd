@@ -182,8 +182,14 @@ if(isset($_REQUEST['submit'])){
                 <div class="x_panel">
                   <div class="x_title">
                     <h2> Add Venue </h2>
+                     <ul class="nav navbar-right panel_toolbox">
+                            <li><a href="restaurant_list.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+                            </li>
+                        </ul>
                     <?php echo $mes; ?>
+                    
 					<div class="clearfix"></div>
+					
                   </div>
                   <div class="x_content">
 					<form class="form-horizontal form-label-left" method="post" id="addResturant" enctype = "multipart/form-data" novalidate>

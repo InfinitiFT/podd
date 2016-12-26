@@ -56,6 +56,10 @@ if(isset($_POST["submit"]))
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Change Password</h2>
+                     <ul class="nav navbar-right panel_toolbox">
+						<li><a href="restaurant_list.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+						</li>
+					 </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">

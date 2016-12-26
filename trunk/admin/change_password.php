@@ -98,6 +98,10 @@ if(isset($_POST["submit"]))
          
             <form action="" method="post" id="change_password">
               <h1>Change Password</h1>
+              <ul class="nav navbar-right panel_toolbox">
+				<li><a href="restaurant_list.phps"><button type="button" class="btn btn-round btn-success">Back</button></a>
+				</li>
+			 </ul>
               <?php
                 if(isset($_SESSION["successmsg"])) {
                   $success = $_SESSION["successmsg"];

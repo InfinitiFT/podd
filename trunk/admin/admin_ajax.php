@@ -27,9 +27,10 @@ switch($_REQUEST['type']) {
 		print 0;
 	break;
 
-	case 'decline':
+	case 'decline':	
 	$bookingID = $_GET['bookingID'];
 	$declined = $_GET['declined'];
+	//alert($bookingID);
 	$update = mysqli_query($conn,"UPDATE `booked_records_restaurant` SET `booking_status`='0',`decline_region`='".$declined."' WHERE `booking_id`='".$bookingID."'");
 	if($update)
 		print 1;

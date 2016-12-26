@@ -329,6 +329,29 @@ $("#countImgs").val(parseInt(imgCount) + fileCount);
      
     }
   });
+
+//Edit resturant booking
+$("#edit_booking").validate({
+    rules: {
+        name: "required",
+        email: "required",
+        phone: "required",
+        booking_date: "required",
+        booking_time: "required",
+        people: "required"
+
+    },
+
+    messages: {
+        name: "Please enter the name",
+        email: "Please enter the email",
+        phone: "Please enter the phone",
+        booking_date: "Please enter the booking date",
+        booking_time: "Please enter the booking time",
+        people: "Please enter the number of people"
+    }
+});
+
   
   
   

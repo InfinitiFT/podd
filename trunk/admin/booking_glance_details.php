@@ -7,7 +7,8 @@
  */
 session_start();
 include('../functions/config.php');
-$find_interval = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".$_SESSION['restaurant_id']."' "));
+$restaurant_id = isset($_SESSION['restaurant_id']) ? $_SESSION['restaurant_id'] : $_REQUEST['restaurant_id'];
+$find_interval = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".$restaurant_id."' "));
 $a = explode(':',$find_interval['opening_time']);
 $b = explode(':',$find_interval['closing_time']);
 $array = array();
@@ -33,8 +34,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
     <?php
     $i= 1;
     foreach ($array as $value) {
-
-        $find_booking = mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$_SESSION['restaurant_id']."' AND booking_time = '".$value."' AND booking_date = '".$_POST['date1']."' ");
+        $find_booking = mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_time = '".$value."' AND booking_date = '".$_POST['date1']."' ");
         $wholeArray = array();
         while($no_of_booking = mysqli_fetch_assoc($find_booking)){
             $wholeArray[] = $no_of_booking['number_of_people'];

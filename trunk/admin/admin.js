@@ -36,7 +36,7 @@ $("[id ^='activatedeactivate-']").click(function () {
     var serviceID  = $(this).attr('id');
     var serviceArr = serviceID.split('-');
     var buttonText = $(this).html();
-    if(buttonText == 'Deactivate') {
+    if(buttonText == 'Deactivate Venue') {
         var status = '0'; 
     }
     else {
