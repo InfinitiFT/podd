@@ -17,5 +17,6 @@ public class JsonRequest implements Serializable {
  public String name;
  public String email;
  public String contact_no;
+ public String otp;
 
 }
