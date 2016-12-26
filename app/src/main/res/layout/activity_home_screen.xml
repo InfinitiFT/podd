@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/black"
     tools:context="com.podd.activitytaxi.HomeScreenActivity">
 
     <include layout="@layout/toolbar"/>
@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="start">
 
@@ -35,7 +35,7 @@
         android:id="@+id/tvServicedApartment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/serviced_apartment"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_10"
@@ -49,13 +49,14 @@
         android:text="@string/stay_london"
         android:textColor="@android:color/white"
         android:padding="@dimen/dp_6"
-        android:textSize="@dimen/dp_10"/>
+        android:textSize="@dimen/text_size_12"/>
 
     <LinearLayout
         android:id="@+id/llInner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:baselineAligned="false"
         android:padding="@dimen/dp_6">
 
         <LinearLayout
@@ -71,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon1"
+            android:contentDescription="@null"
             android:padding="@dimen/dp_4"/>
 
             <TextView
@@ -96,6 +98,7 @@
             android:id="@+id/ivTaxi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@null"
             android:src="@mipmap/icon2"
             android:padding="@dimen/dp_4"/>
 
@@ -124,6 +127,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon3"
+            android:contentDescription="@null"
+
             android:padding="@dimen/dp_4"/>
 
             <TextView
@@ -152,6 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon4"
+            android:contentDescription="@null"
             android:padding="@dimen/dp_4"/>
 
             <TextView

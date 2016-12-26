@@ -14,7 +14,7 @@
     <string name="discover_london">Discover expertly curated experiences in London</string>
     <string name="serviced_apartment">From the most desirable fine dining Restaurants in London to unique experiences, family outings and taxi bookings, you can now plan and book a range of experiences directly from comfort of your hotel or serviced apartment.</string>
     <string name="stay_london">Enjoy using <b> podd </b> for a memorable stay in London.</string>
-    <string name="restraunt">Restraunt</string>
+    <string name="restraunt">Restaurant</string>
     <string name="taxi">Taxi</string>
     <string name="health"><![CDATA[Health, Fitness & Wellbeing]]></string>
     <string name="happening">Happening in London</string>
@@ -93,4 +93,19 @@
     <string name="breakfast">Breakfast Menu</string>
     <string name="lunch_menu">Lunch Menu</string>
     <string name="dinner">Dinner Menu</string>
+    <string name="restaurant_by_cuisine">Search our curated selection of best restaurants by cuisine</string>
+    <string name="restaurant_by_dietary">Search our curated selection of best restaurants by dietary</string>
+    <string name="restaurant_by_meal">Search our curated selection of best restaurants by meal</string>
+    <string name="restaurant_by_ambience">Search our curated selection of best restaurants by ambience</string>
+    <string name="restaurant_by_location">Search our curated selection of best restaurants by location</string>
+    <string name="delivered_to_you">Delivered to you</string>
+    <string name="Please_connect_to_internet_first">Please connect to internet.</string>
+    <string name="server_not_responding">Server not responding.</string>
+    <string name="data_not_found">Data not found.</string>
+    <string name="please_enter_otp_to_confirm_booking">Please enter otp to confirm booking.</string>
+    <string name="otp">Otp</string>
+    <string name="submit">Submit</string>
+    <string name="please_enter_otp">Please enter otp</string>
+    <string name="please_enter_valid_otp">Please enter valid otp.</string>
+    <string name="select">Select</string>
 </resources>

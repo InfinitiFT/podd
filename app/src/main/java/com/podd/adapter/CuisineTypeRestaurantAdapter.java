@@ -12,87 +12,63 @@ import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
-import com.podd.model.Restaurant;
-import com.podd.utils.AppConstant;
-import com.squareup.picasso.Picasso;
+import com.podd.model.Cuisine;
 
 import java.util.List;
 
 /**
- * Created by Shalini Bishnoi on 13-12-2016.
+ * Created by Shalini Bishnoi on 21-12-2016.
  */
-public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
+public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineTypeRestaurantAdapter.MyViewHolder>{
     private Context context;
-    private List<Restaurant>restaurantList;
-    private String location;
+    private List<Cuisine>cuisineList;
 
     /**
-     * Instantiates a new Best restaurant adapter.
+     * Instantiates a new Cuisine type restaurant adapter.
      *
-     * @param context        the context
-     * @param restaurantList the restaurant list
+     * @param context     the context
+     * @param cuisineList the cuisine list
      */
-    public BestRestaurantAdapter(Context context, List<Restaurant> restaurantList) {
-
+    public CuisineTypeRestaurantAdapter(Context context, List<Cuisine> cuisineList) {
+        this.cuisineList=cuisineList;
         this.context=context;
-        this.restaurantList=restaurantList;
-
-
     }
-
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_grid_layout, parent, false);
-        return new BestRestaurantAdapter.MyViewHolder(view);
+        return new CuisineTypeRestaurantAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         if (position%2==0){
             holder.viewBottom.setVisibility(View.VISIBLE);
         }
         else {
             holder.viewBottom.setVisibility(View.GONE);
         }
-        Restaurant restaurant = restaurantList.get(position);
-        holder.tvRestaurantName.setText(restaurant.restaurant_name);
-        holder.tvLocation.setText(restaurant.location);
-        location=holder.tvLocation.getText().toString().trim();
-        holder.tvDistance.setText(restaurant.distance);
-        holder.tvPriceRange.setText(restaurant.price_range);
-        if(restaurantList.get(position).restaurant_images.get(0)!=null){
-            Picasso.with(context)
-                    .load(restaurantList.get(position).restaurant_images.get(0).toString())
-                    .placeholder(R.color.colorPrimaryDark) // optional
-                    .error(R.color.colorPrimaryDark)         // optional
-                    .into(holder.ivRestaurant);
-        }else {
-            holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
-        }
 
-
+        Cuisine cuisine = cuisineList.get(position);
+        holder.tvRestaurantName.setText(cuisine.name);
+        holder.tvDistance.setVisibility(View.GONE);
+        holder.tvPriceRange.setVisibility(View.GONE);
+        holder.tvtypeofRestaurant.setVisibility(View.GONE);
+        holder.tvLocation.setVisibility(View.GONE);
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, RestaurantDetailScreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.RESTAURANTID,restaurantList.get(position).restaurant_id);
-                intent.putExtra(AppConstant.LATITUDE,restaurantList.get(position).latitude);
-                intent.putExtra(AppConstant.LONGITUDE,restaurantList.get(position).longitude);
-                intent.putExtra(location,location);
                 context.startActivity(intent);
             }
         });
 
     }
 
-
     @Override
     public int getItemCount() {
-        return restaurantList.size();
+        return cuisineList.size();
     }
 
     /**

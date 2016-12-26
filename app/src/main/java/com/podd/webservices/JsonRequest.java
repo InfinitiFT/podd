@@ -1,9 +1,19 @@
 package com.podd.webservices;
 
-/**
- * Created by keshavkumar on 14/12/16.
- */
 
-public class JsonRequest {
+import java.io.Serializable;
+
+public class JsonRequest implements Serializable {
+ public  String   type;
+ public  String   search_content;
+ public String latitude;
+ public String longitude;
+ public String page_size;
+ public int page_number;
+ public String restaurant_id;
+
+
+
+
 
 }

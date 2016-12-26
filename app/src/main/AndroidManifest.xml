@@ -53,7 +53,7 @@
         <activity
             android:name=".activityrestauarant.BestRestaurantNearCity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activityrestauarant.RestaurantBookingDetailsActivity"
             android:screenOrientation="landscape"
@@ -70,7 +70,9 @@
             android:name=".activityrestauarant.ViewMenuActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".activityrestauarant.ViewInMapActivity"></activity>
+        <activity android:name=".activityrestauarant.ViewInMapActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
     </application>
 
 </manifest>

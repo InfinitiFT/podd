@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/black"
     tools:context="com.podd.activitytaxi.MainHomeScreenThreeActivity">
 
     <include layout="@layout/toolbar"/>
@@ -40,6 +40,7 @@
                 android:src="@mipmap/icon2"
                 android:layout_gravity="center"
                 android:padding="@dimen/dp_8"
+                android:contentDescription="@null"
                 android:layout_marginTop="@dimen/dp_30"/>
 
 
@@ -54,7 +55,7 @@
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/dp_8"
-                android:gravity="right"/>
+                android:gravity="end"/>
 
 
 

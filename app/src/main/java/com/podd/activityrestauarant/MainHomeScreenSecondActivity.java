@@ -1,15 +1,15 @@
 package com.podd.activityrestauarant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.podd.R;
+import com.podd.adapter.RestaurantsListAdapter;
 
 /**
  * The type Main home screen second activity.
@@ -17,12 +17,9 @@ import com.podd.R;
 public class MainHomeScreenSecondActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvDiscoverRestaurantsBars;
     private TextView tvViewAndBook;
-    private LinearLayout llStarRestaurants;
-    private LinearLayout llCasualEats;
-    private LinearLayout llLateNightVenues;
-    private LinearLayout llMealsDelivered;
-    private LinearLayout llInner;
     private Context context;
+    private RecyclerView rvRestaurantsList;
+    private Intent intent;
 
 
     @Override
@@ -32,48 +29,36 @@ public class MainHomeScreenSecondActivity extends AppCompatActivity implements V
         context=MainHomeScreenSecondActivity.this;
         getIds();
         setListeners();
+        setAdapter();
     }
 
     private void getIds() {
         tvDiscoverRestaurantsBars= (TextView) findViewById(R.id.tvDiscoverRestaurantsBars);
         tvViewAndBook= (TextView) findViewById(R.id.tvViewAndBook);
-        llStarRestaurants= (LinearLayout) findViewById(R.id.llStarRestaurants);
-        llCasualEats= (LinearLayout) findViewById(R.id.llCasualEats);
-        llMealsDelivered= (LinearLayout) findViewById(R.id.llMealsDelivered);
-        llLateNightVenues= (LinearLayout) findViewById(R.id.llLateNightVenues);
-        llInner= (LinearLayout) findViewById(R.id.llInner);
-
+        rvRestaurantsList= (RecyclerView) findViewById(R.id.rvRestaurantsList);
 
 
     }
 
     private void setListeners() {
-        llStarRestaurants.setOnClickListener(this);
-        llCasualEats.setOnClickListener(this);
-        llLateNightVenues.setOnClickListener(this);
-        llMealsDelivered.setOnClickListener(this);
         tvViewAndBook.setOnClickListener(this);
 
+    }
+
+    private void setAdapter() {
+        RestaurantsListAdapter restaurantsListAdapter = new RestaurantsListAdapter(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+        rvRestaurantsList.setLayoutManager(mLayoutManager);
+        rvRestaurantsList.setAdapter(restaurantsListAdapter);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.llStarRestaurants:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.llCasualEats:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.llMealsDelivered:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.llLateNightVenues:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
-                break;
             case R.id.tvViewAndBook:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
-                break;
+                intent=new Intent(context, BestRestaurantNearCity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
         }
 

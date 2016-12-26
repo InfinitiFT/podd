@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="horizontal">
+    <View
+        android:layout_width="@dimen/dp_0.5"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"/>
+
+    <LinearLayout
+        android:id="@+id/llStarRestaurants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/podd"
+            android:contentDescription="@null"
+            android:padding="@dimen/dp_8"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dp_6"
+            android:textStyle="bold"
+            android:text="@string/michelin_star_restaurants"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_8"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

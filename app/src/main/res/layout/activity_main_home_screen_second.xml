@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/black"
     tools:context="com.podd.activityrestauarant.MainHomeScreenSecondActivity">
 
 
     <include layout="@layout/toolbar"/>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -37,137 +37,38 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:layout_marginTop="@dimen/dp_30"
-            android:background="@android:color/white"/>
+            android:layout_height="@dimen/dp_0.5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@android:color/white" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llStarRestaurants"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/dp_5"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/podd"
-                    android:padding="@dimen/dp_6"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_5"
-                    android:textStyle="bold"
-                    android:text="@string/michelin_star_restaurants"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_8"/>
 
-            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvRestaurantsList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fadingEdge="none"
+                android:orientation="horizontal"
+                android:scrollbars="none" />
+
             <View
-                android:layout_width="@dimen/dp_1"
+                android:layout_width="@dimen/dp_0.5"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"/>
 
-            <LinearLayout
-                android:id="@+id/llCasualEats"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/dp_5"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/podd"
-                    android:padding="@dimen/dp_6"
-                    android:id="@+id/imageView2" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/casualEats"
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:padding="@dimen/dp_5"
-                    android:textSize="@dimen/text_size_8"/>
-
-            </LinearLayout>
-            <View
-                android:layout_width="@dimen/dp_1"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"/>
-
-            <LinearLayout
-                android:id="@+id/llLateNightVenues"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/dp_5"
-                android:gravity="center"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/podd"
-                    android:padding="@dimen/dp_6"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lateNightVenues"
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:padding="@dimen/dp_5"
-                    android:textSize="@dimen/text_size_8"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="@dimen/dp_1"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"/>
-
-            <LinearLayout
-                android:id="@+id/llMealsDelivered"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/dp_5"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/podd"
-                    android:padding="@dimen/dp_6"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/dp_5"
-                    android:textStyle="bold"
-                    android:text="@string/mealsDeliveredToYou"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_8"/>
-
-            </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@android:color/white"
-            android:layout_marginBottom="@dimen/dp_20"/>
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@android:color/white" />
 
 
         <TextView
@@ -178,7 +79,7 @@
             android:text="@string/viewAndBookrestaurants"
             android:padding="@dimen/dp_4"
             android:textSize="@dimen/text_size_10"
-            android:gravity="right"
+            android:gravity="end"
             android:textStyle="bold"
             android:textColor="@android:color/white"/>
 
@@ -186,11 +87,5 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
-
-
-
-
-
+    </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

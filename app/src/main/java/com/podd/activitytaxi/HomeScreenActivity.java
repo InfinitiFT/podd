@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activityrestauarant.BestRestaurantNearCity;
+import com.podd.activityrestauarant.MainHomeScreenSecondActivity;
 
 
 /**
@@ -76,7 +77,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         switch (view.getId()){
             case R.id.llfood:
-                intent=new Intent(context, BestRestaurantNearCity.class);
+                intent=new Intent(context, MainHomeScreenSecondActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;

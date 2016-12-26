@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/flMain"
+    android:layout_width="500dp"
+    android:layout_height="300dp">
+
+    <ImageView
+        android:id="@+id/ivRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:background="@color/black"
+        android:contentDescription="@null"
+        android:layout_gravity="center"
+      />
+<LinearLayout
     android:id="@+id/llMain"
     android:layout_width="500dp"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <View
@@ -15,15 +29,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/colorPrimaryDark"
+        android:layout_gravity="bottom"
+
         android:orientation="vertical">
-    <ImageView
-        android:id="@+id/ivRestaurant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/podd"
-        android:layout_gravity="center"
-        android:padding="@dimen/dp_20"/>
+
 
             <TextView
                 android:id="@+id/tvRestaurantName"
@@ -31,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/restaraunt_name"
                 android:textSize="@dimen/text_size_8"
+                android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:padding="@dimen/dp_2"/>
 
@@ -40,6 +50,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dietary"
                 android:textSize="@dimen/text_size_8"
+                android:textStyle="bold"
+
                 android:textColor="@android:color/white"
                 android:padding="@dimen/dp_2"/>
 
@@ -54,6 +66,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/location"
+                android:textStyle="bold"
+
                 android:textSize="@dimen/text_size_8"
                 android:textColor="@android:color/white"
                 android:padding="@dimen/dp_2"/>
@@ -64,6 +78,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/distance"
+                    android:textStyle="bold"
+
                     android:textSize="@dimen/text_size_8"
                     android:gravity="bottom|center"
                     android:padding="@dimen/dp_2"
@@ -76,22 +92,32 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/price_range"
+                    android:textStyle="bold"
+
                     android:textSize="@dimen/text_size_8"
                     android:gravity="bottom|center"
                     android:padding="@dimen/dp_2"
                     android:textColor="@android:color/white"
                     />
-                </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@android:color/white"/>
 
-</LinearLayout>
 
+            </LinearLayout>
+        <View
+            android:id="@+id/viewBottom"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@android:color/white"/>
+
+
+
+    </LinearLayout>
     <View
         android:layout_width="@dimen/dp_0.5"
         android:layout_height="match_parent"
         android:background="@android:color/white"/>
+
+
 </LinearLayout>
+    </FrameLayout>

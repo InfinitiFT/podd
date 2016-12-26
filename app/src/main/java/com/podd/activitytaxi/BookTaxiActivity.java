@@ -19,8 +19,10 @@ import com.podd.R;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * The type Book taxi activity.
@@ -51,6 +53,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private final String[]requirementsArray={"Select Additional Requirements","AC","Others"};
     private TextView tvBack;
     private String date;
+    private String currentDateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
         tvSelectfromCalender.setOnClickListener(this);
+        tvToday.setOnClickListener(this);
+        tvTomorrow.setOnClickListener(this);
 
 
     }
@@ -142,7 +147,28 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.tvSelectfromCalender:
+                tvToday.setText(R.string.today);
+                tvTomorrow.setText(R.string.tomorrow);
                 pickDate();
+                break;
+            case R.id.tvTomorrow:
+                tvToday.setText(R.string.today);
+                tvSelectfromCalender.setText(R.string.select_from_calender);
+
+                 /*  getting tomorrow date  */
+
+                currentDateString = DateFormat.getDateInstance().format(new Date());
+                date = DateFormat.getDateInstance().format(System.currentTimeMillis()+(24*3600000));
+                tvTomorrow.setText(date);
+                break;
+            case R.id.tvToday:
+                tvSelectfromCalender.setText(R.string.select_from_calender);
+                tvTomorrow.setText(R.string.tomorrow);
+
+                /*  getting current date  */
+
+                currentDateString = DateFormat.getDateInstance().format(new Date());
+                tvToday.setText(currentDateString);
                 break;
 
 
@@ -194,7 +220,9 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         }, cYear, cMonth, cDay);
         DatePicker dp = dpd.getDatePicker();
         if (date != null) {
-            dpd.getDatePicker().updateDate(CommonUtils.getPreferencesInt(context, AppConstant.YEAR), CommonUtils.getPreferencesInt(context, AppConstant.MONTH), CommonUtils.getPreferencesInt(context, AppConstant.DATE));
+            dpd.getDatePicker().updateDate(CommonUtils.getPreferencesInt(context, AppConstant.YEAR),
+                    CommonUtils.getPreferencesInt(context, AppConstant.MONTH),
+                    CommonUtils.getPreferencesInt(context, AppConstant.DATE));
         } else {
             dp.setMaxDate(Calendar.getInstance().getTimeInMillis());
         }
