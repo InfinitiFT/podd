@@ -48,5 +48,12 @@ public interface ApiInterface {
     public Call<JsonResponse>sendOtp(@Body JsonRequest jsonRequest);
 
 
+    @POST("otp_verification.php")
+    public Call<JsonResponse>otpVerification(@Body JsonRequest jsonRequest);
+
+    @POST("resend_otp.php")
+    public Call<JsonResponse>resendOtp(@Body JsonRequest jsonRequest);
+
+
 
 }

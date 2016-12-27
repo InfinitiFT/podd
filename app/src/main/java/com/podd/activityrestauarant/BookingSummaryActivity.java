@@ -1,6 +1,6 @@
 package com.podd.activityrestauarant;
 
-import android.app.Activity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +9,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.retrofit.ApiClient;
@@ -22,14 +20,11 @@ import com.podd.utils.CommonUtils;
 import com.podd.utils.DialogUtils;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * The type Booking summary activity.
- */
+
 public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener {
     private Intent intent;
     private Context context;
@@ -58,6 +53,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String name;
     private String email;
     private String phone;
+    private String otp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +129,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
                     dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
                     TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
+                    TextView tvResendOtp = (TextView) dialogConfirmBooking.findViewById(R.id.tvResendOtp);
                     etEnterOtp = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp);
 
 
@@ -141,11 +138,18 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                         public void onClick(View v) {
 
                             if(isValidOtp()) {
-                                dialogConfirmBooking.dismiss();
-                                intent = new Intent(context, RestaurantReturnToHomeActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
+                                otp=etEnterOtp.getText().toString().trim();
+                                otpVerificationApi();
+
                             }
+                        }
+                    });
+
+                    tvResendOtp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            resendOtpService();
+
                         }
                     });
 
@@ -217,6 +221,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
 
 
+
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))
                     {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
@@ -236,6 +241,96 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         });
 
     }
+
+
+    private void otpVerificationApi() {
+        CommonUtils.showProgressDialog(context);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.contact_no=phone;
+        jsonRequest.otp=otp;
+
+
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+        Call<JsonResponse> call = ApiClient.getApiService().otpVerification(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        dialogConfirmBooking.dismiss();
+
+                        intent = new Intent(context, RestaurantReturnToHomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
+
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
+
+    private void resendOtpService() {
+        CommonUtils.showProgressDialog(context);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.contact_no=phone;
+
+        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+        Call<JsonResponse> call = ApiClient.getApiService().resendOtp(jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        sendOtpApi();
+                        /*intent =new Intent(context,BookingSummaryActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);*/
+
+                    }
+
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
 
 
 

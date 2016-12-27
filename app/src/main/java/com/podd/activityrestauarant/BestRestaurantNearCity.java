@@ -627,7 +627,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     @Override
     public void onSearchableItemClicked(Object item, int position) {
 
-//        callsearchedTextApi();
+       callsearchedTextApi();
 
        /* GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
         rvRestaurants.setLayoutManager(gridLayoutManager);
@@ -638,7 +638,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
     }
 
-   /* private void callsearchedTextApi() {
+    private void callsearchedTextApi() {
         CommonUtils.showProgressDialog(context);
 
         final JsonRequest jsonRequest = new JsonRequest();
@@ -695,5 +695,5 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
             }
         });
-    }*/
+    }
 }

@@ -245,8 +245,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
         if (restaurant_time_interval != null && restaurant_time_interval.size() > 0) {
             tvTimeBooked.setText(spSelectTime.getSelectedItem() != null ? spSelectTime.getSelectedItem().toString() : restaurant_time_interval.get(0));
-        } else {
-
         }
 
         tvNoOfPersons.setText(spSelectPeople.getSelectedItem().toString().trim());
