@@ -66,6 +66,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private String restaurantId;
     private String restaurantname;
     private String location;
+    private List<String> categories=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +175,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-                        if (response.body()!=null&&response.body().restaurant_images.size()>0) {
+                        if (response.body()!=null) {
 
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_images);
@@ -189,12 +190,44 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                             tvDistance.setText(response.body().distance);
                             tvPriceRange.setText(response.body().price_range);
                             tvRestauarntName.setText(response.body().restaurant_name);
+
                             if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
-                                tvCategory.setText(response.body().cuisine.get(0).name.trim());
+                                for (int i = 0; i <response.body().cuisine.size() ; i++) {
+                                    if(response.body().cuisine.get(i).name!=null && !response.body().cuisine.get(i).name.equalsIgnoreCase("") )
+
+                                        categories.add(response.body().cuisine.get(i).name);
+                                }
                             }
                             else {
                                 Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                             }
+
+                            if(response.body().dietary!=null&&response.body().dietary.size()>0) {
+                                for (int i = 0; i <response.body().dietary.size() ; i++) {
+                                    if(response.body().dietary.get(i).name!=null && !response.body().dietary.get(i).name.equalsIgnoreCase("") )
+
+                                        categories.add(response.body().dietary.get(i).name);
+                                }
+                            }
+                            else {
+                                Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                            }
+
+                            if(response.body().ambience!=null&&response.body().ambience.size()>0) {
+                                for (int i = 0; i <response.body().ambience.size() ; i++) {
+                                    if(response.body().ambience.get(i).name!=null && !response.body().ambience.get(i).name.equalsIgnoreCase("") )
+                                    categories.add(response.body().ambience.get(i).name);
+                                }
+                            }
+                            else {
+                                Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                            }
+                            String s1="";
+                            for (int i = 0; i <categories.size() ; i++) {
+
+                                    s1 = categories.get(i).toString() + ", " + s1;
+                            }
+                             tvCategory.setText(s1);
 
                         } else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
