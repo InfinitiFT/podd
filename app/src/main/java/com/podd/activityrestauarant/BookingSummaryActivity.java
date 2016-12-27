@@ -264,6 +264,12 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                         dialogConfirmBooking.dismiss();
 
                         intent = new Intent(context, RestaurantReturnToHomeActivity.class);
+                        intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                        intent.putExtra(AppConstant.RESTAURANTNAME,restaurantName);
+                        intent.putExtra(AppConstant.LOCATION,location);
+                        intent.putExtra(AppConstant.DATEBOOKED,dateBooked);
+                        intent.putExtra(AppConstant.TIMEBOOKED,timeBooked);
+                        intent.putExtra(AppConstant.NOOFPEOPLE,noOfPersons);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
