@@ -17,6 +17,13 @@ public class JsonRequest implements Serializable {
  public String name;
  public String email;
  public String contact_no;
+
+ public String cusine;
+ public String dietary;
+ public String ambience;
+ public String location;
+ public String meal;
  public String otp;
+
 
 }

@@ -13,7 +13,8 @@ public class Cuisine implements Serializable{
     public String cuisine_name;
     public String created_on;
 
-
-
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }
