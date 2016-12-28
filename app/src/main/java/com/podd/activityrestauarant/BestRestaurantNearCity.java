@@ -85,6 +85,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private SearchableListDialog _searchableListDialog;
     private List<String> categories;
     private String selectedItem="";
+    private String cuisineId;
+    private String locationId;
+    private String mealId;
+    private String dietaryId;
+    private String ambienceId;
 
 
     @Override
@@ -622,20 +627,71 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
             case "cuisine":
                 tvCuisinetype.setText(cuisine.name);
-                callsearchedTextApi();
+                cuisineId=cuisine.id;
+                locationId="";
+                dietaryId="";
+                mealId="";
+                ambienceId="";
+                tvLocationType.setText("");
+                tvDietaryType.setText("");
+                tvMealType.setText("");
+                tvBusiness.setText("");
+                callsearchedTextApi(pageNo);
                 break;
             case "location":
                 tvLocationType.setText(cuisine.name);
-                callsearchedTextApi();
+                locationId=cuisine.id;
+                dietaryId="";
+                mealId="";
+                ambienceId="";
+                cuisineId="";
+                tvDietaryType.setText("");
+                tvMealType.setText("");
+                tvBusiness.setText("");
+                tvCuisinetype.setText("");
+                callsearchedTextApi(pageNo);
                 break;
             case "dietary":
                 tvDietaryType.setText(cuisine.name);
+                dietaryId=cuisine.id;
+                mealId="";
+                ambienceId="";
+                cuisineId="";
+                locationId="";
+                tvMealType.setText("");
+                tvBusiness.setText("");
+                tvCuisinetype.setText("");
+                tvLocationType.setText("");
+                callsearchedTextApi(pageNo);
+
                 break;
             case "meal":
                 tvMealType.setText(cuisine.name);
+                mealId=cuisine.id;
+                ambienceId="";
+                cuisineId="";
+                locationId="";
+                mealId="";
+                tvBusiness.setText("");
+                tvCuisinetype.setText("");
+                tvLocationType.setText("");
+                tvDietaryType.setText("");
+                callsearchedTextApi(pageNo);
+
                 break;
             case "ambience":
                 tvBusiness.setText(cuisine.name);
+                ambienceId=cuisine.id;
+                cuisineId="";
+                locationId="";
+                mealId="";
+                dietaryId="";
+                tvCuisinetype.setText("");
+                tvLocationType.setText("");
+                tvDietaryType.setText("");
+                tvMealType.setText("");
+                callsearchedTextApi(pageNo);
+
                 break;
 
         }
@@ -650,17 +706,19 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
     }
 
-    private void callsearchedTextApi() {
+    private void callsearchedTextApi(int pageNumber) {
         CommonUtils.showProgressDialog(context);
 
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.cusine = tvCuisinetype.getText().toString().trim();
-        jsonRequest.dietary = tvDietaryType.getText().toString().trim();
-        jsonRequest.meal = tvMealType.getText().toString().trim();
-        jsonRequest.ambience = tvBusiness.getText().toString().trim();
-        jsonRequest.location=tvLocationType.getText().toString().trim();
+        jsonRequest.cusine = cuisineId;
+        jsonRequest.dietary = dietaryId;
+        jsonRequest.meal = mealId;
+        jsonRequest.ambience = ambienceId;
+        jsonRequest.location=locationId;
         jsonRequest.latitude="";
         jsonRequest.longitude="";
+        jsonRequest.page_number=pageNumber;
+        jsonRequest.page_size="10";
        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = ApiClient.getApiService().getSearchRestaurantApi(jsonRequest);

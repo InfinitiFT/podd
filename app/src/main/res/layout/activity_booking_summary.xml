@@ -204,6 +204,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"
                     android:maxLines="1"
+                    android:maxLength="30"
                     android:padding="@dimen/dp_6"
                     android:text=""
                     android:textColor="@color/colorPrimaryDark"
