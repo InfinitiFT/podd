@@ -19,11 +19,19 @@ if ($_SESSION['msg'] == 'location'){
 
 $bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` WHERE `booking_id` ='".$_GET['id']."'"));
 if(isset($_REQUEST['submit'])){
-	
-	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET booking_time ='".$_POST['booking_time']."',number_of_people ='".$_POST['people']."',name='".$_POST['name']."',email='".$_POST['email']."',booking_date='".$_POST['booking_date']."',contact_no='".$_POST['phone']."' WHERE `booking_id` ='".$_GET['id']."'");
+	$booking_time = mysqli_real_escape_string($conn,trim($_POST['booking_time']));
+	$people = mysqli_real_escape_string($conn,trim($_POST['people']));
+	$name = mysqli_real_escape_string($conn,trim($_POST['name']));
+	$email = mysqli_real_escape_string($conn,trim($_POST['email']));
+	$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
+	$booking_date = mysqli_real_escape_string($conn,trim($_POST['booking_date']));
+	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET booking_time ='".$booking_time."',number_of_people ='".$people."',name='".$name."',email='".$email."',booking_date='".$booking_date."',contact_no='".$phone."' WHERE `booking_id` ='".mysqli_real_escape_string($conn,$_GET['id'])."'");
 	if($update){
 		$_SESSION['updateBooking'] = 1;
-		header('Location: booking_history.php');
+		if($_GET['list'] == 'list')
+			header('Location: booking_list_restaurant.php');
+		else
+			header('Location: booking_history.php');
 	}	
 
 }

@@ -48,12 +48,7 @@ catch(Exception $e) {
                         } else {
                           $success = "";
                         }
-                        if(isset($_SESSION["errormsg"])) {
-                          $error1 = $_SESSION["errormsg"];
-                          $_SESSION["errormsg"]="";
-                        } else {
-                          $error1 = "";
-                        }
+                       
                       ?>
             
                     <?php  if($success!=""){ ?>
@@ -62,11 +57,7 @@ catch(Exception $e) {
                     </div>
           
                    <?php }else{}?>
-                  <?php  if($error1!=""){ ?>
-                   <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                     </button><?php echo $error1; ?>
-                   </div>
-                  <?php }else{}?>
+                 
                      
                       
                       <div class="item form-group">

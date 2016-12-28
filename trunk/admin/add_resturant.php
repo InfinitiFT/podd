@@ -2,7 +2,6 @@
 ob_start();
 include_once('header.php'); 
 error_reporting(0);
-
 $mes ='';
 if($_SESSION['msg'] == 'maxLimit'){
 	$mes = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
@@ -79,6 +78,7 @@ if(isset($_REQUEST['submit'])){
 				
 				$resturnatID = mysqli_insert_id($conn);
 				foreach($_POST['meal'] as $meal){
+					 $meals = mysqli_real_escape_string($conn,$_POST['meal']);
 					$target_dir = "../uploads/menu_file/";
 					$pdfUrl ='';
 					if($_FILES["document"]["name"][$j]){
@@ -87,10 +87,10 @@ if(isset($_REQUEST['submit'])){
 							if($_FILES["document"]["name"][$j])
 								$pdfUrl = 'uploads/resturant/'.$_FILES["document"]["name"][$j];
 								
-							mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`, `menu_url`) VALUES('".$resturnatID."','".$meal."','".$pdfUrl."')");
+							mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`, `menu_url`) VALUES('".$resturnatID."','".$meals."','".$pdfUrl."')");
 						}
 				   }else{
-					   mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`) VALUES('".$resturnatID."','".$meal."')");
+					   mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`) VALUES('".$resturnatID."','".$meals."')");
 				   }
 					$j =$j +1;
 				}
@@ -197,7 +197,8 @@ if(isset($_REQUEST['submit'])){
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" multiple>
+                          <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file"  onchange ="fileCount(this)" multiple>
+                          <input type="hidden" value="" id="imageCount" name="imageCount">
                         </div>
                       </div>
                      <div class="item form-group">
@@ -276,7 +277,11 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                       <div id="addMeal"></div>
-                       <span class="glyphicon glyphicon-plus" id="meal-1" onclick="addMeal(this)"></span>
+                       <div class="item form-group">
+						  <div class="col-md-6 col-sm-offset-3">
+							   <span class="glyphicon glyphicon-plus btn btn-success" id="meal-1" onclick="addMeal(this)">Add</span>
+							</div>
+					  </div>
                       
                         <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Ambience</label>

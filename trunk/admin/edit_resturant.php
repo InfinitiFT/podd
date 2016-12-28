@@ -17,7 +17,6 @@
 		$_SESSION['user_id'] = $_GET['id'];
 		
 	}
-	//print_r($_SESSION);
 	error_reporting(0);
 	if($_SESSION['user_id']){
 		$detail = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM `users` as u join restaurant_details as r on u.`user_id` = r.user_id where u.`user_id`='".$_SESSION['user_id']."'"));
@@ -151,8 +150,8 @@
 				header('Location: edit_resturant.php');
 		}
 	}	
-	
-?>
+	 $mealCount = mysqli_num_rows(get_all_data('restaurant_menu'));
+	 ?>
 
 
         <div class="right_col" role="main">
@@ -167,7 +166,12 @@
                   <div class="x_title">
                     <h2> Edit Venue </h2>
                      <ul class="nav navbar-right panel_toolbox">
-						<li><a href="restaurant_list.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+						<li>
+							<?php if($_SESSION['restaurant_id']){?>
+									<a href="restaurant_details.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+							<?php } else{?>
+									<a href="restaurant_list.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+							<?php  } ?>
 						</li>
 					</ul>
                      <?php echo $mes; ?>
@@ -175,16 +179,23 @@
                   </div>
                   <div class="x_content">
 					<form class="form-horizontal form-label-left" method="post" id="editResturant" enctype = "multipart/form-data" novalidate>
-						<?php $i = 1;
+						<div class="item form-group">
+						<div class="img-sel col-sm-6 col-sm-offset-3">
+							<ul>
+							<?php $i = 1;
 							if($allImages[0]){
 								foreach($allImages as $allImg){
-									echo '<p class="glyphicon glyphicon-remove" onclick ="removeImg(this)" id="removeImg-'.$i.'"><img src="'.url().$allImg.'"  height="60" width="60"><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></p>';
+									echo '<li id="removeImg-'.$i.'"><i class="glyphicon glyphicon-remove"  id="removeImgs-'.$i.'" onclick ="removeImg(this)" ></i>
+									<img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
 									$i =$i +1;
 								}
 							}
 							$p = $i -1;
 							
 						?>
+						</ul>
+						</div>
+						</div>
 						<div id="allRemoveImg"></div>
 					 <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
@@ -256,17 +267,18 @@
                       </div>
                        
                       <?php  
+                     
 						$j = 1;
 						$selectMeal = array();
 						while($allMeal = mysqli_fetch_assoc($mealRecord))
 							{ ?>
 							  <div class="item form-group" id="allMeal-<?php echo $j;?>">
-								   <div class="item form-group col-sm-6">
+								<div class="item form-group col-sm-6">
 								<label class="control-label col-md-6 col-sm-3 col-xs-12">Select Meal</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 								  <select class="select2_multiple form-control" name="meal[]" id="allMealling-<?php echo $j;?>">
 									<?php 
-										$k = 0;
+										 $k = 0;
 									  $meal = get_all_data('restaurant_menu');
 										while($mealData = mysqli_fetch_assoc($meal)){
 											$k = $k +1;
@@ -294,15 +306,21 @@
 								 <input type="hidden" value="<?php echo $allMeal['id'];?>" name="removeMeal[]" id="removeMeal-<?php echo $j;?>">
 								 <?php if($j != 1){?>
 									 
-									<span class="glyphicon glyphicon-remove" id="removeMeal-<?php echo $j;?>" onclick="removeMeal(<?php echo $j;?>)"></span>
+									<span class="glyphicon glyphicon-remove btn btn-danger" id="removeMeal-<?php echo $j;?>" onclick="removeMeal(<?php echo $j;?>)"></span>
 								 <?php } ?>
 							  </div>
 						  <?php $j =$j +1;} $allSelectMeasl = implode(',',$selectMeal); ?>
+						 
 							<input type="hidden" name="selected_meals" id="selected_meals" value="<?php echo $allSelectMeasl;?>" />
-						   <input type="hidden" value="<?php echo $k;?>" id="totalMeal">
+						   <input type="hidden" value="<?php echo $mealCount;?>" id="totalMeal">
                       <div id="addMeal"></div>
                       <div id="deleteMeal"></div>
-                       <span class="glyphicon glyphicon-plus" id="meal-<?php echo $j-1;?>" onclick="addMeal(this)"></span>
+                      <div class="item form-group">
+						  <div class="col-md-6 col-sm-offset-3">
+							   <span class="glyphicon glyphicon-plus btn btn-success" id="meal-<?php echo $j-1;?>" onclick="addMeal(this)">Add</span>
+							</div>
+					  </div>
+                      
                       
                         <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Ambience</label>

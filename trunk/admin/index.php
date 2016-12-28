@@ -74,7 +74,7 @@ if(isset($_POST["submit"]))
                 setcookie('email', '', $twoDaysBack);
                 setcookie('password', '', $twoDaysBack);
                } 
-             header("Location:user_list.php");
+             header("Location:service_management_list.php");
            }
 
       }
@@ -174,7 +174,7 @@ if(isset($_POST["submit"]))
 						<a href="forget_password.php" class="to_register">Forgot Password ?</a>
 					  </div>
 					<div class="col-xs-6" style="text-align: right;">
-						<input type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?>class="flat"> Remember Me
+						<input style="margin:0;vertical-align: middle;" type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?>class="flat"> Remember Me
 					</div>
 			 	</div>
                 <div class="clearfix"></div>

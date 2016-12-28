@@ -30,7 +30,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                     <div class="x_title">
                         <h2>Booking at Glance</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <li><a href="booking_list_restaurant.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+                            <li><a href="restaurant_list.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
@@ -50,22 +50,18 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
 </style>
                     <div id="text-carousel" class="carousel slide" data-ride="carousel">
                         <!-- Wrapper for slides -->
-                        <div class="row">
-                            <div class="col-xs-offset-3 col-xs-6">
+
                                 <div class="carousel-inner">
                                     <div class="item active">
                                         <div class="carousel-content">
-                                            <div>
                                                 <input type="hidden" id="cur_date">
                                                 <input type="hidden" id="cur_date1">
                                                 <p id="day_name"></p>
-                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
-                            </div>
-                        </div>
+
                         <!-- Controls --> <a class="left carousel-control" href="#text-carousel" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
@@ -85,6 +81,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         </div>
     </div>
 </div>
+
 <!-- /page content -->
 
 <?php include_once('footer.php'); ?>
@@ -143,7 +140,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
     $('document').ready(function () {
         var d = new Date();
         var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-        $("#day_name").html("<b>Today</b>");
+        $("#day_name").html("<b><strong>"+strDate+":- </strong> Today</b>");
         $("#cur_date").val(d.getDay());
         $("#cur_date1").val(strDate);
 
@@ -191,14 +188,28 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         console.log(strDate);
         /*var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;*/
         var increase_day = parseInt(cur_date) + 1;
-        if (count++ == 1){
-            $("#day_name").html("<b>Tomorrow</b>");
+        var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+        var day = currentDate.getDate()
+        var previous_day = currentDate.getDate() - 2
+        var month = currentDate.getMonth() + 1
+        var year = currentDate.getFullYear()
+        var checkTomorrowDate = year + "-" + month + "-" + day;
+        var checkYesterdayDate = year + "-" + month + "-" + previous_day;
+
+        console.log(checkTomorrowDate+"   "+checkYesterdayDate);
+        if (count++ == 1 || checkTomorrowDate == strDate){
+            $("#day_name").html("<b><strong>"+strDate+":- </strong>Tomorrow</b>");
             $("#cur_date").val(increase_day.toString());
             $("#cur_date1").val(strDate);
-        } else {
+        }else if (checkYesterdayDate == strDate){
+            $("#day_name").html("<b><strong>"+strDate+":- </strong>Yesterday</b>");
+            $("#cur_date").val(increase_day.toString());
+            $("#cur_date1").val(strDate);
+        }else {
             var d = new Date();
-            if (d.getDay() == increase_day){
-                $("#day_name").html("<b>Today</b>");
+            var checkTodayDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+            if (checkTodayDate == strDate){
+                $("#day_name").html("<b><strong>"+strDate+":- </strong>Today</b>");
                 $("#cur_date").val(increase_day.toString());
                 $("#cur_date1").val(strDate);
             }else {
@@ -208,7 +219,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                 var name = get_day_name(increase_day);
                 $("#cur_date").val(increase_day.toString());
                 $("#cur_date1").val(strDate);
-                $("#day_name").html("<b>" + name + "</b>");
+                $("#day_name").html("<b><strong>"+strDate+":- </strong>" + name + "</b>");
             }
         }
 
@@ -256,14 +267,27 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         //var increase_dayDate = parseInt(splitArr[2]) - 1;
         //var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;
         var decrease_day = parseInt(cur_date) - 1;
-        if (count++ == 1){
-            $("#day_name").html("<b>Yesterday</b>");
+        var yesterday = new Date(new Date() - 24*60*60*1000);
+        var day = yesterday.getDate()
+        var next_day = yesterday.getDate() + 2
+        var month = yesterday.getMonth() + 1
+        var year = yesterday.getFullYear()
+        var checkYesterdayDate = year + "-" + month + "-" + day;
+        var checkTomorrowDate = year + "-" + month + "-" + next_day;
+        console.log(checkYesterdayDate+'   '+checkTomorrowDate);
+        if (count++ == 1 || checkYesterdayDate == strDate){
+            $("#day_name").html("<b><strong>"+strDate+":- </strong>Yesterday</b>");
             $("#cur_date").val(decrease_day.toString());
             $("#cur_date1").val(strDate);
-        } else {
+        }else if (checkTomorrowDate == strDate){
+            $("#day_name").html("<b><strong>"+strDate+":- </strong>Tomorrow</b>");
+            $("#cur_date").val(decrease_day.toString());
+            $("#cur_date1").val(strDate);
+        }else {
             var d = new Date();
-            if (d.getDay() == decrease_day){
-                $("#day_name").html("<b>Today</b>");
+            var checkTodayDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+            if (checkTodayDate == strDate){
+                $("#day_name").html("<b><strong>"+strDate+":- </strong>Today</b>");
                 $("#cur_date").val(decrease_day.toString());
                 $("#cur_date1").val(strDate);
             }else {
@@ -273,7 +297,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                 var name = get_day_name(decrease_day);
                 $("#cur_date").val(decrease_day.toString());
                 $("#cur_date1").val(strDate);
-                $("#day_name").html("<b>" + name + "</b>");
+                $("#day_name").html("<b><strong>"+strDate+":- </strong>" + name + "</b>");
             }
         }
         $.ajax({
@@ -285,5 +309,4 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
             }
         });
     });
-
 </script>

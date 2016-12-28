@@ -10,15 +10,15 @@
   
   //Basic Validation  
 	if($type == 'cuisine')
-	  $data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_cuisine WHERE cuisine_name LIKE '%''.$search_content.''%'');
+	  $data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_cuisine WHERE cuisine_name LIKE '%''.mysqli_real_escape_string($GLOBALS['conn'],$search_content).''%'');
 	else if($type == 'dietary')
-		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_dietary WHERE dietary_name LIKE '%''.$search_content.''%'');
+		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_dietary WHERE dietary_name LIKE '%''.mysqli_real_escape_string($GLOBALS['conn'],$search_content).''%'');
 	else if($type == 'ambience')
-		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_dietary WHERE ambience_name LIKE '%''.$search_content.''%'');
+		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_dietary WHERE ambience_name LIKE '%''.mysqli_real_escape_string($GLOBALS['conn'],$search_content).''%'');
 	else if($type == 'meal')
-		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_menu WHERE menu_name LIKE '%''.$search_content.''%'');
+		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_menu WHERE menu_name LIKE '%''.mysqli_real_escape_string($GLOBALS['conn'],$search_content).''%'');
 	else
-		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_price_range WHERE price_range LIKE '%''.$search_content.''%'');
+		$data = mysqli_query($GLOBALS['conn'],'SELECT * FROM restaurant_price_range WHERE price_range LIKE '%''.mysqli_real_escape_string($GLOBALS['conn'],$search_content).''%'');
 	while($record = mysqli_fetch_assoc($data)){
 		$allData['id'] = $record['id'];
 		if($type == 'cuisine')

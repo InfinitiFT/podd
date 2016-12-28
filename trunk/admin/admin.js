@@ -12,6 +12,7 @@ $("[id ^='deletepopup-']").click(function () {
             type: 'post',
             data: {pagetype:pagetype,id:serviceArr[1]},
             success: function(data, status) { 
+				
              location.reload();  
              Lobibox.notify('success', {
               msg: 'Entity deleted Successfully.'
@@ -31,7 +32,7 @@ $("[id ^='deletepopup-']").click(function () {
 });
 
 // Popup for activate deactivate functionality
-$("[id ^='activatedeactivate-']").click(function () {
+$("[id ^='activatedeactivate1-']").click(function () {
     var pagetype =  $("#delete_type").val();
     var serviceID  = $(this).attr('id');
     var serviceArr = serviceID.split('-');
@@ -68,9 +69,46 @@ $("[id ^='activatedeactivate-']").click(function () {
     }
   });
 });
-
+$("[id ^='activatedeactivate-']").click(function () {
+    var pagetype =  $("#delete_type").val();
+    var serviceID  = $(this).attr('id');
+    var serviceArr = serviceID.split('-');
+    var buttonText = $(this).html();
+    if(buttonText == 'Deactivate') {
+        var status = '0'; 
+    }
+    else {
+        var status = '1'; 
+    }
+    Lobibox.confirm({
+      msg: "Are you sure you want to " + buttonText + "?",
+      callback: function ($this, type) {
+      if (type === 'yes') {
+         $.ajax({
+          url:'activate_deactivate_entity.php',
+          type: 'post',
+          data: {pagetype:pagetype,id:serviceArr[1],status:status},
+          success: function(data, status) { 
+             location.reload();  
+             Lobibox.notify('success', {
+              msg: 'Entity Successfully '+ buttonText +'d.'
+             });
+            },
+            error: function(xhr, desc, err) {
+                 console.log(xhr);
+             }
+          });
+      } else if (type === 'no') {
+        Lobibox.notify('info', {
+          msg: 'You have clicked "No" button.'
+        });
+      }
+    }
+  });
+});
 // Popup for Confirm functionality
-$("[id ^='confirm-']").click(function () {
+
+  $(document).on("click", "[id ^='confirm-']", function(event){
   var pagetype =  $("#delete_type").val();
   var serviceID  = $(this).attr('id');
   var serviceArr = serviceID.split('-');

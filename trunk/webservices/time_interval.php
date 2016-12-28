@@ -12,7 +12,7 @@
   }  
   else {
     $result = array();
-    $find_interval = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".$restaurant_id."' "));
+    $find_interval = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".mysqli_real_escape_string($conn,trim($restaurant_id))."' "));
     $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['opening_time'],$find_interval['closing_time']);
 	  $response['responseCode'] = 200;
 	}

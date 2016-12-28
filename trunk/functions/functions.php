@@ -200,8 +200,10 @@ function findtimeIntervalweb($start,$end){
 			 // the interval for mins is '30'
 			if($endTime[0] == $hours){
 				if($endTime[1] != '00'){
+				
 					if(str_pad($mins,2,'0',STR_PAD_LEFT) != '30')
 						$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
+						
 				}
 			}else{
 				$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
@@ -210,7 +212,40 @@ function findtimeIntervalweb($start,$end){
 	}
 	return $arr;
 }
-
+function findtimeIntervalwebGlance($start,$end){
+	$startTime = explode(':',$start);
+	$endTime = explode(':',$end);
+	$arr = array();
+	$i =0;
+	for($hours= $startTime[0]; $hours <=$endTime[0]; $hours++){ // the interval for hours is '1'
+		for($mins=0; $mins<60; $mins+=30){
+			 // the interval for mins is '30'
+			 
+			if($endTime[0] == $hours){
+				if(($endTime[1] == '00') &&(str_pad($mins,2,'0',STR_PAD_LEFT) == '00')){
+					$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
+				}
+				else if($endTime[1] == '30'){
+					$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
+				}
+			}else{
+				if($startTime[0] == $hours){
+					if(($startTime[1] == '00') &&(str_pad($mins,2,'0',STR_PAD_LEFT) == '00')){
+						$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
+					}
+				else if($startTime[1] == '30'){
+					$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
+				}
+			}else{
+				$arr[] = str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT);
+				
+			}
+			}
+			
+		}
+	}
+	return $arr;
+}
 
 function bookingTimeChanges($time,$bookingID){
 	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET `booking_time`='".$time."' WHERE `booking_id`='".$bookingID."'");
@@ -231,4 +266,86 @@ function findAdminEmail(){
 	return $record['email'];
 
 } 
+
+function get_all_data_with_condition($table,$column_name,$value)
+{
+	/*$all_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM '".$table."' WHERE '".mysqli_real_escape_string($GLOBALS['conn'],$column_name)."' LIKE '%".mysqli_real_escape_string($GLOBALS['conn'],$value)."%'"));*/
+	echo "SELECT * FROM '".$table."' WHERE '".mysqli_real_escape_string($GLOBALS['conn'],$column_name)."' LIKE '%".mysqli_real_escape_string($GLOBALS['conn'],$value)."%'";
+	exit;
+	return $all_data;
+}
+
+
+function bookingRecordStatus($status,$session){
+	if($session!=""){
+		$data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where brr.restaurant_id = '".$session."' AND brr.booking_status = '".$status."' AND brr.booking_date >= CURRENT_DATE() order by booking_id desc");
+    }else{
+		$data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where `booking_date` >= CURRENT_DATE() AND brr.booking_status = '".$status."' order by booking_id desc");
+	}	
+		$currentTime = date("H:i");
+        $currentDate = date("Y-m-d");
+        $html ='';
+	while($record = mysqli_fetch_assoc($data)){
+		 $recordShow = 0;
+		  if($currentDate == $record['booking_date']){
+			 if(strtotime($currentTime) <= strtotime(date('H:i', strtotime($record['booking_time'].'+1 hour'))))
+			   $recordShow =1;
+			}else{
+				$recordShow =1;
+			}	
+		if($recordShow){
+			$date = date_create ($record['booking_date']);
+			if($record['booking_status']=="0"){ 
+			  $statusData = "Declined";
+			}
+			else if($record['booking_status']=="1"){
+			   $statusData =  "Pending";
+			}
+			else{
+			   $statusData =  "Accepted";             
+			}
+                            
+				$html .= '<tr>
+                          <td>'.$record['name'].'</td>
+                          <td>'.$record['contact_no'].'</td>
+                          <td>'.$record['booking_email'].'</td>
+                           <td>'.$record['user_email'].'</td>
+                          <td>'.date_format($date,"d M Y").'</td>
+                          <td>'.$record['booking_time'].'</td>
+                          <td>'.$record['number_of_people'].'</td>
+                           <td>'.$statusData.'</td>
+                          <td>';
+					  if($record['booking_status']=="1"){
+						$html .= '<button type="button" id="confirm-'.$record['booking_id'].'" class="btn btn-round btn-success">Accept</button>
+						 <button type="button" class="btn btn-round btn-warning"  id="declines-'.$record['booking_id'].'" data-toggle="modal" data-target="#myModal">Decline</button>';
+					  }else if($record['booking_status']=="2")
+					  {
+							$html .= '<button type="button" class="btn btn-round btn-warning"  id="declines-'.$record['booking_id'].'" data-toggle="modal" data-target="#myModal">Decline</button>';
+							$change = bookingTimeChange($record['booking_date'],$record['booking_time']);
+						   if($change==1){
+								$html .= '<button type="button" id="timeChange-'.$record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'].'" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>';
+							} 
+					   
+					 }else{
+						   $html .= '<button type="button" id="confirm-'.$record['booking_id'].'" class="btn btn-round btn-success">Accept</button>';
+						 
+						   $change = bookingTimeChange($record['booking_date'],$record['booking_time']);
+						   if($change==1){
+						   $html .= '<button type="button" id="timeChange-'.$record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'].'" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>';
+						   }
+						  } 
+						$html .= '<a href="edit_booking.php?id='.$record['booking_id'].'&list=list" class="btn btn-round btn-info">Edit</a></td></tr>';
+	    }
+    }
+    print_r($html);
+		
+}
+
+	
+	
+	
+
+
+
+
 ?>

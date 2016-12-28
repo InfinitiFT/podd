@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` >= CURRENT_DATE() ");
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".mysqli_real_escape_string($GLOBALS['conn'],$_SESSION['restaurant_id'])."' AND `booking_date` >= CURRENT_DATE() ");
   //Basic Validation  
   
  ?> 

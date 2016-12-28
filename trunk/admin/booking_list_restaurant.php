@@ -1,15 +1,19 @@
 <?php 
   include_once('header.php');
   $result = array();
+  if($_SESSION['updateBooking'] == 1){
+		$msg = '<div class="alert alert-success">Booking updated successfully</div>';
+	    $_SESSION['updateBooking'] ='';
+	}
   if($_SESSION['restaurant_id']!="")
   {
     $data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND brr.booking_date >= CURRENT_DATE() order by booking_id desc");
-
   }
   else
   {
+	 
      $data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where `booking_date` >= CURRENT_DATE()  order by booking_id desc");
-
+    
   }
   
   //Basic Validation  
@@ -66,13 +70,18 @@
                   <div class="x_title">
                     <h2>Venue Booking List</h2>
                    <ul class="nav navbar-right panel_toolbox">
-                   <?php if($_SESSION['restaurant_id']!=""){ ?>
-                       <li><a href="booking_glance.php"><button type="button" class="btn btn-round btn-success">Booking at Glance</button></a>
-                       </li>    
-                   <?php }?>
+					<li>
+						<select class="form-control" id="selectStatus">
+							<option value="">Select Status</option>
+							<option value="1">Pending</option>
+							<option value="2">Accept</option>
+							<option value="0">Decline</option>
+						</select>
+						<input type="hidden" value="<?php echo $_SESSION['restaurant_id'];?>" id="session">
                     </ul>
                     <div class="clearfix"></div>
                   </div>
+                    <?php echo $msg; ?>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -91,20 +100,21 @@
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="booked_restaurant">
-                      <tbody>
+                      <tbody id="statusContent">
                        <?php 
-                              $currentDate = date("Y-m-d");
-                              $currentTime = date("H:i");
-                            
-                       if($data)
-                       { 
-                          while($record = mysqli_fetch_assoc($data)){ 
-							
-                            if($currentDate == $record['booking_date'] ){
-                              if(strtotime($currentTime) > strtotime($record['booking_time']))
-                                  continue;
-                           }
-
+                             $currentTime = date("H:i");
+                             $currentDate = date("Y-m-d");
+                             if($data)
+                             { 
+                               while($record = mysqli_fetch_assoc($data)){ 
+								   $recordShow = 0;
+							      if($currentDate == $record['booking_date']){
+									 if(strtotime($currentTime) <= strtotime(date('H:i', strtotime($record['booking_time'].'+1 hour'))))
+									   $recordShow =1;
+									}else{
+										$recordShow =1;
+									}	
+								if($recordShow){
                           ?>
                          <tr>
                           <td><?php echo $record['name'];?></td>
@@ -147,10 +157,10 @@
                                <?php } ?>
                               <?php } ?>
                              <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
-                            
+                            <a href="edit_booking.php?id=<?php echo $record['booking_id'];?>&list=list" class="btn btn-round btn-info">Edit</a>
             			  </td>
                          </tr>
-                        <?php }}?> 
+                        <?php }}}?> 
                       </tbody>
                     </table>
                   </div>
@@ -170,21 +180,29 @@
           <h4 class="modal-title">Decline</h4>
         </div>
         <div class="modal-body">
-          <select id="declined" name="declined" value="">
-			 <option value="">Select Reason</option>
-			<option value="Venue closed">Venue closed</option>
-			<option value="No availability for selected date">No availability for selected date</option>
-			<option value="No availability for selected time">No availability for selected time</option>
-			<option value="Other">Other</option>
-          </select>
-          <input type="hidden" name="booking_res_id" id="booking_res_id">          
-			<ul class="nav navbar-right panel_toolbox">                            
-				<li><input type="text" class="form-control" placeholder="Enter custom reason"  id="reason" name="reason" style="display:none; width:220px; top:100px" value=""/></li>
-			</ul>
+			<div class="row">
+				<div class="col-sm-6">
+				 <select class="form-control" id="declined" name="declined" value="">
+					 <option value="">Select Reason</option>
+					<option value="Venue closed">Venue closed</option>
+					<option value="No availability for selected date">No availability for selected date</option>
+					<option value="No availability for selected time">No availability for selected time</option>
+					<option value="Other">Other</option>
+				  </select>
+				  <input type="hidden" name="booking_res_id" id="booking_res_id">  
+				</div>
+				<div class="col-sm-6">
+				<ul class="nav  panel_toolbox">                            
+					<li><input type="text" class="form-control" placeholder="Enter custom reason"  id="reason" name="reason" style="display:none;" value=""/></li>
+				</ul>
+				</div>
+			</div>
+                 
+			
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-default" id="yes">OK</button>
+          <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default btn-ok" id="yes">OK</button>
         </div>
       </div>
       

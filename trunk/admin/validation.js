@@ -123,6 +123,9 @@ $.validator.methods.alreadyEmail = function(value, element) {
 			 required: true
 		
     },
+    /*imageCount: {
+			max: 6
+			},*/
     countTime: {
 				max: 1
 				
@@ -145,8 +148,11 @@ $.validator.methods.alreadyEmail = function(value, element) {
 				
 		},
 		"resturant_images[]" :{
-			required: "Resturant images required"
+			required: "Venue images required"
 		},
+		/*imageCount: {
+			max: "Venue images not greater than 6"
+			},*/
 		countTime: {
 				max: "Close time should be greater than open time"
 				
@@ -213,93 +219,6 @@ $.validator.methods.alreadyEmail = function(value, element) {
       
     }
   });
-
-  
-
-function timeValidate(data){
-	var add ='';
-	var openTime = $("#opentime").val();
-	var closeTime = $("#closetime").val();
-	if(openTime==''){
-		alert('Please select open time');
-	}else{
-		var open = openTime.split(':');
-		var close = closeTime.split(':');
-		if((open[0] == close[0])&& (open[1] != close[1])){
-			if(open[1] > close[1]){
-					add = 2;
-			}
-		}
-		if((open[0] != close[0]) &&(open[1] == close[1])){
-			if(open[0] > close[0]){
-					add = 2;
-			}
-		}if((open[0] != close[0]) &&(open[1] != close[1])){
-			if(open[0] > close[0]){
-					add = 2;
-			}else{
-				if((open[0] == close[0])&&(open[1] >close[1]))
-					add = 2;
-			    }
-			}
-		}
-		if(add ==2){
-			$("#countTime").val(2);
-			
-		}else{
-			$("#countTime").val(0);
-			
-		}
-	}
-
-
-
-function timeValidateClose(data){
-	var add ='';
-	var openTime = $("#opentime").val();
-	var closeTime = $("#closetime").val();
-	if(closeTime==''){
-		alert('Please select close time');
-	}else{
-		var open = openTime.split(':');
-		var close = closeTime.split(':');
-		if((open[0] == close[0])&& (open[1] != close[1])){
-			if(open[1] > close[1]){
-				add = 2;
-				//$("#countTime").val(2);
-				//return false;
-			}
-		}
-		if((open[0] != close[0]) &&(open[1] == close[1])){
-			if(open[0] > close[0]){
-				add = 2;
-			}
-		}if((open[0] != close[0]) &&(open[1] != close[1])){
-			if(open[0] > close[0]){
-				add = 2;
-			}else{
-				if((open[0] == close[0])&&(open[1] >close[1])){
-				   add = 2;
-			   }
-			}
-		}
-	}
-	
-	if(add ==2){
-			$("#countTime").val(2);
-			
-		}else{
-			$("#countTime").val(0);
-			
-		}
-}
-function myFunction22(data){
-var fileCount = data.files.length;
-var imgCount = $("#countImgs").val();
-$("#countImgs").val(parseInt(imgCount) + fileCount);
-
-}
-  
   
   //Add resturant validation
   $("#change_password").validate({
@@ -307,11 +226,13 @@ $("#countImgs").val(parseInt(imgCount) + fileCount);
     old_password: "required",
     new_password: {
         required: true,
-        minlength: 8  
+        minlength: 8,
+        maxlength: 15  
     },
     confirm_password: {
         required: true,
-        minlength: 8  
+        minlength: 8,
+        maxlength: 15  
     }
     
   },
@@ -320,11 +241,13 @@ $("#countImgs").val(parseInt(imgCount) + fileCount);
     old_password: "Please enter old password",
     new_password: {
                    required:"Please enter new password",
-                   minlength: "New password atleast 8 digits"
+                   minlength: "New password atleast 8 digits",
+                   maxlength: "New password not more than 15 digits"
                 },
     confirm_password: {
                   required: "Please enter confirm password",
-                  minlength: "Confirm password atleast 8 digits"    
+                  minlength: "Confirm password atleast 8 digits",
+                  maxlength: "New password not more than 15 digits"    
     }
      
     }

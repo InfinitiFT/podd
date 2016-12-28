@@ -16,7 +16,9 @@ try {
             if(move_uploaded_file($_FILES['menu']['tmp_name'], $target_path)) 
             {
               $restaurant_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details WHERE `user_id` = '".$_SESSION['user_id']."'"));
-              if(mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_menu_details` (`restaurant_id`,`meal`, `menu_url`) VALUES ('".$restaurant_id['restaurant_id']."','".trim($_POST['name'])."','".$menu_file1."')")){
+              $name = mysqli_real_escape_string($conn,trim($_POST["name"]));
+              $menu_file = mysqli_real_escape_string($conn,$menu_file1);
+              if(mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_menu_details` (`restaurant_id`,`meal`, `menu_url`) VALUES ('".$restaurant_id['restaurant_id']."','".$name."','".$menu_file."')")){
                  header('Location:restaurant_menu_management.php');
              }
             else

@@ -9,8 +9,9 @@ if(isset($_POST["submit"]))
     }
     else{
       $email = mysqli_real_escape_string($conn,trim($_POST["email"]));
-    $admin_valid_email = validate_email_admin($email);
+      $admin_valid_email = validate_email_admin($email);
     if($admin_valid_email){
+    	$password = rand(11111111,99999999);
                    $to = $email;
                    $subject = "Forget password";
                    $message = '
@@ -74,8 +75,16 @@ if(isset($_POST["submit"]))
 
       // More headers
       $headers .= 'From: ippodDevlopment@gmail.com' . "\r\n";
-      if(mail($to,$subject,$message,$headers)){  
-       $_SESSION["successmsg"] = "Password Send to your email.";
+      if(mail($to,$subject,$message,$headers)){ 
+          if(mysqli_query($GLOBALS['conn'],"UPDATE `users` SET `password`='".md5($password)."' WHERE `email`='".$email."'"))
+          {
+        	$_SESSION["successmsg"] = "Password Send to your email.";
+          }
+          else
+          {
+             $_SESSION["successmsg"] = "error.";
+          }
+       
        } else{ 
        $_SESSION["errormsg"] = "Error in sending email.";
        }  

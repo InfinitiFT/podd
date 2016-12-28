@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $restaurant_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rd.*,GROUP_CONCAT(DISTINCT(rc.cuisine_name)) as cuisine_name,GROUP_CONCAT(DISTINCT(rdd.dietary_name)) as dietary_name,GROUP_CONCAT(DISTINCT(ra.ambience_name)) as ambience_name,GROUP_CONCAT(DISTINCT(rp.price_range)) as price_range1 FROM restaurant_details rd LEFT JOIN restaurant_cuisine as rc ON find_in_set(rc.id, rd.cuisine) LEFT JOIN restaurant_dietary as rdd ON find_in_set(rdd.id, rd.dietary) LEFT JOIN restaurant_ambience as ra ON find_in_set(ra.id, rd.ambience) LEFT JOIN restaurant_price_range as rp ON find_in_set(rp.id, rd.price_range) where rd.restaurant_id= '".$_SESSION['restaurant_id']."'"));
+  $restaurant_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rd.*,GROUP_CONCAT(DISTINCT(rc.cuisine_name)) as cuisine_name,GROUP_CONCAT(DISTINCT(rdd.dietary_name)) as dietary_name,GROUP_CONCAT(DISTINCT(ra.ambience_name)) as ambience_name,GROUP_CONCAT(DISTINCT(rp.price_range)) as price_range1 FROM restaurant_details rd LEFT JOIN restaurant_cuisine as rc ON find_in_set(rc.id, rd.cuisine) LEFT JOIN restaurant_dietary as rdd ON find_in_set(rdd.id, rd.dietary) LEFT JOIN restaurant_ambience as ra ON find_in_set(ra.id, rd.ambience) LEFT JOIN restaurant_price_range as rp ON find_in_set(rp.id, rd.price_range) where rd.restaurant_id= '".mysqli_real_escape_string($GLOBALS['conn'],$_SESSION['restaurant_id'])."'"));
   //Basic Validation  
  // print_r($restaurant_data);exit;
   
@@ -16,7 +16,7 @@
                   <div class="x_title">
                     <h2>Venue Details</h2>
                      <ul class="nav navbar-right panel_toolbox">
-                      <li><a href="booking_list_restaurant.php"><button type="button" class="btn btn-round btn-success">Back</button></a>
+                      
                       </li>
                       
                     </ul>
@@ -30,8 +30,8 @@
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['restaurant_name']; ?>
+                        <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                        <label class="control-label control-label-left col-md-12 col-sm-12 col-xs-12" for="name"> <?php echo $restaurant_data['restaurant_name']; ?>
                         
                         </div>
                       </div>
@@ -41,89 +41,88 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email"> 
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                         <?php $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
+						<div class="img-sel col-md-6 col-sm-offset-1 col-sm-6 col-xs-12 ">
+							<ul>
+							<?php $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
                            if($restaurant_images[0])
                             {
-                              foreach($restaurant_images as $value){  ?>
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">  <img src="<?php echo url().$value; ?>"  height="42" width="42"></label>
-                             <?php }} ?>
-                        
-                        </div>
-                      </div>
+                              foreach($restaurant_images as $value){  ?> <li> <img src="<?php echo url().$value; ?>"  height="42" width="42"></li>
+									 <?php }} ?>
+						</ul>
+						</div>
+						</div>
+                      
+                      
+                      
 
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Location
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['location']; ?>
+                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['location']; ?>
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Deliver Food
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php  if($restaurant_data['deliver_food']==1) echo 'YES'; else echo 'NO'; ?>
+                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php  if($restaurant_data['deliver_food']==1) echo 'YES'; else echo 'NO'; ?>
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Opening Time 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['opening_time']; ?>
+                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['opening_time']; ?>
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Closing Time
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['closing_time']; ?> 
+                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['closing_time']; ?> 
                         </div>
                       </div>
                       <div class="item form-group">
                         <label for="password" class="control-label col-md-3">About Text</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['about_text']; ?>
+                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                        <label class="control-label control-label-left col-md-12 col-sm-12 col-xs-12" for="name"> <?php echo $restaurant_data['about_text']; ?>
                         
                          
                         </div>
                       </div>
                       <div class="item form-group">
                         <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Max people Allowed</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['max_people_allowed']; ?>
+                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                         <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['max_people_allowed']; ?>
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Cuisine 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['cuisine_name']; ?>
+                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['cuisine_name']; ?>
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Dietary 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['dietary_name']; ?>
+                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['dietary_name']; ?>
                         </div>
                       </div>
                        <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Ambience 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['ambience_name']; ?>
+                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['ambience_name']; ?>
                         </div>
                       </div>
                        <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Price Range 
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['price_range1']; ?>
+                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['price_range1']; ?>
                         </div>
                       </div>
                        <div class="item form-group">

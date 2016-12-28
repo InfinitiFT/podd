@@ -44,7 +44,7 @@
         {
             foreach($cuisine_data as $value)
             {
-               $cuisine_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_cuisine WHERE id = '".$value."'"));
+               $cuisine_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_cuisine WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$value)."'"));
                 $cuisine_rows[] = $cuisine_name;
             }
         }
@@ -55,7 +55,7 @@
         {
             foreach($ambience_data as $value)
             {
-               $ambience_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_ambience WHERE id = '".$value."'"));
+               $ambience_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_ambience WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$value)."'"));
                 $ambience_rows[] = $ambience_name;
             }
         }
@@ -66,7 +66,7 @@
         {
             foreach($dietary_data as $value)
             {
-               $dietary_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_dietary WHERE id = '".$value."'"));
+               $dietary_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_dietary WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$value)."'"));
                 $dietary_rows[] = $dietary_name;
             }
         }
@@ -77,7 +77,7 @@
         {
             foreach($price_range_data as $value)
             {
-               $price_range_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_price_range WHERE id = '".$value."'"));
+               $price_range_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_price_range WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$value)."'"));
                 $price_range_rows = $price_range_name['price_range'];
             }
         }

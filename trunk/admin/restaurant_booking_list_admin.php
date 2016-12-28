@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id where `booking_date` >= CURRENT_DATE()");
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id where `booking_date` >= CURRENT_DATE() and date('H:i:s', booking_time)> DATE_SUB( NOW( ) , INTERVAL 1 HOUR )");
   //Basic Validation  
   
  ?> 

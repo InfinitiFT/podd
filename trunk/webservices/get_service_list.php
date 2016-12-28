@@ -11,6 +11,8 @@
 		$allData['id'] = $record['service_id'];
 		$allData['service_name'] = $record['service_name'];
 		$allData['service_name'] = url().$record['service_image'];
+		$allData['status'] = $record['status'];
+		$allData['message'] = $record['message'];
 		$result[] = $allData;
 	}
 		$response['allServiceList'] = $result;

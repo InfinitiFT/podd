@@ -2,6 +2,7 @@
   include('../functions/config.php');
    include('../functions/session.php');
   include('../functions/functions.php'); 
+ 
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +51,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>PODD</span></a>
+            <a href="#" class="site_title"><i class="fa fa-paw"></i> <span>PODD</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -83,10 +84,12 @@
               
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
-                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
+					 <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
+                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking</a></li>
                    <!-- <li><a href = "restaurant_menu_management.php"><i class="fa fa-home"></i>Menu Management</a></li> -->
-                   <li><a href = "booking_history.php"><i class="fa fa-home"></i>Bookings History</a></li>
-                   <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
+                    <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
+                   <li><a href = "booking_history.php"><i class="fa fa-home"></i>History</a></li>
+                   
                   <!--  <li><a href = "table_management.php"><i class="fa fa-table"></i>Table Management</a></li> -->
                   
                 </ul>
@@ -121,8 +124,8 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
+					<li><a href="change_password_admin.php">Change Password</a></li>
                     <li><a href="logout.php">Log Out</a></li>
-                     <li><a href="change_password_admin.php">Change Password</a></li>
                   </ul>
                 </li>
               </ul>
