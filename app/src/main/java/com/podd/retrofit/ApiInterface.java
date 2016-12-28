@@ -55,5 +55,10 @@ public interface ApiInterface {
     public Call<JsonResponse>resendOtp(@Body JsonRequest jsonRequest);
 
 
+    @POST("search_restaurant.php")
+    public Call<JsonResponse>getSearchRestaurantApi(@Body JsonRequest jsonRequest);
+
+
+
 
 }

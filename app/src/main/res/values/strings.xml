@@ -112,4 +112,5 @@
     <string name="please_select_a_valid_time">Please select a valid time.</string>
     <string name="please_select_number_of_people">Please select number of people.</string>
     <string name="Resend">Resend</string>
+    <string name="bars"><![CDATA[Restaurants & Bars]]></string>
 </resources>
