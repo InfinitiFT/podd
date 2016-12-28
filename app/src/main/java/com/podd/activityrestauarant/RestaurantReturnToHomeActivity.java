@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activitytaxi.HomeScreenActivity;
+import com.podd.utils.AppConstant;
 
 /**
  * The type Restaurant return to home activity.
@@ -25,6 +26,12 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvNumberofPeople;
     private TextView tvConfirmation;
     private TextView tvThanks;
+    private String restaurantName;
+    private String restaurantId;
+    private String dateBooked;
+    private String timeBooked;
+    private String location;
+    private String noOfPersons;
 
 
     @Override
@@ -32,8 +39,21 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_return_to_home);
         context=RestaurantReturnToHomeActivity.this;
+        restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+        restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+        dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
+        timeBooked=getIntent().getStringExtra(AppConstant.TIMEBOOKED);
+        location=getIntent().getStringExtra(AppConstant.LOCATION);
+        noOfPersons=getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
+
         getIds();
         setListeners();
+
+        tvLocation.setText(location);
+        tvTimeBooked.setText(timeBooked);
+        tvDateBooked.setText(dateBooked);
+        tvNumberofPeople.setText(noOfPersons);
+
     }
 
     private void getIds() {

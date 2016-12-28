@@ -110,14 +110,12 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <AutoCompleteTextView
+                        <TextView
                             android:id="@+id/tvLocationType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
                             android:background="@null"
                             android:text="@string/city"
                             android:textColor="@color/colorPrimaryDark"
@@ -143,14 +141,12 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <AutoCompleteTextView
+                        <TextView
                             android:id="@+id/tvDietaryType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:background="@null"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
                             android:text="@string/gluten"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -175,15 +171,13 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <AutoCompleteTextView
+                        <TextView
                             android:id="@+id/tvCuisinetype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:background="@null"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
                             android:text="@string/italian"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -209,15 +203,13 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <AutoCompleteTextView
+                        <TextView
                             android:id="@+id/tvMealType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:background="@null"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
                             android:text="@string/lunch"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
@@ -242,15 +234,13 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_10" />
 
-                        <AutoCompleteTextView
+                        <TextView
                             android:id="@+id/tvBusiness"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:background="@null"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
                             android:text="@string/bussiness"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/text_size_8" />
