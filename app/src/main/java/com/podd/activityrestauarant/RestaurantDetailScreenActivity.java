@@ -2,6 +2,7 @@ package com.podd.activityrestauarant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -62,7 +63,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private Intent intent;
     private String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
     private List<String>restaurantList=new ArrayList<>();
-    private String latitude,longitude;
+    private String latitude,longitude,lat,longi;
     private String restaurantId;
     private String restaurantname;
     private String location;
@@ -77,6 +78,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         setListeners();
         latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
         longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
+        lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);
+        longi = CommonUtils.getPreferences(this,AppConstant.LONGITUDE);
         restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
         getRestaurantDetailApi();
     }
@@ -151,7 +154,12 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 break;
 
             case R.id.tvViewInMap:
-                Toast.makeText(context,"Work in progress.",Toast.LENGTH_SHORT).show();
+
+                String uriString = "http://maps.google.com/maps?saddr="+lat+","+longi+"&daddr="+latitude+","+longitude;
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(uriString));
+                startActivity(intent);
+
                 break;
 
 
