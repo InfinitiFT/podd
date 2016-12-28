@@ -83,6 +83,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
     private  ArrayAdapter adapterLocation;
     private SearchableListDialog _searchableListDialog;
+    private List<String> categories;
+    private String selectedItem="";
 
 
     @Override
@@ -285,11 +287,17 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }
-
-                } else {
+                }
+                else {
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+
                 }
             }
+
+
+
+
+
 
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
@@ -329,6 +337,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             cuisineList.addAll(response.body().allList);
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
+                            selectedItem="cuisine";
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
@@ -386,6 +395,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             cuisineList.addAll(response.body().allList);
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
+                            selectedItem="dietary";
+
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
                             _searchableListDialog.show(getFragmentManager(), TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
@@ -446,6 +457,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             cuisineList.addAll(response.body().allList);
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
+                            selectedItem="ambience";
+
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
@@ -505,6 +518,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             cuisineList.addAll(response.body().allList);
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
+                            selectedItem="location";
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
@@ -570,6 +584,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             cuisineList.addAll(response.body().allList);
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
+                            selectedItem="meal";
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
@@ -602,7 +617,29 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     @Override
     public void onSearchableItemClicked(Object item, int position) {
 
-       callsearchedTextApi();
+        Cuisine cuisine=(Cuisine)item;
+        switch (selectedItem){
+
+            case "cuisine":
+                tvCuisinetype.setText(cuisine.name);
+                callsearchedTextApi();
+                break;
+            case "location":
+                tvLocationType.setText(cuisine.name);
+                callsearchedTextApi();
+                break;
+            case "dietary":
+                tvDietaryType.setText(cuisine.name);
+                break;
+            case "meal":
+                tvMealType.setText(cuisine.name);
+                break;
+            case "ambience":
+                tvBusiness.setText(cuisine.name);
+                break;
+
+        }
+
 
        /* GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
         rvRestaurants.setLayoutManager(gridLayoutManager);
@@ -624,9 +661,9 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.location=tvLocationType.getText().toString().trim();
         jsonRequest.latitude="";
         jsonRequest.longitude="";
-       // Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+       Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getMealRestaurantList(jsonRequest);
+        Call<JsonResponse> call = ApiClient.getApiService().getSearchRestaurantApi(jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -640,12 +677,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                         if (response.body().allList != null && response.body().allList.size() > 0) {
                             cuisineList.clear();
-                            cuisineList.addAll(response.body().allList);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
-                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
-                            rvRestaurants.setNestedScrollingEnabled(false);
+
                             // Log.d(TAG, "Number of data received: " + cuisineList.size());
                         }
                         else {

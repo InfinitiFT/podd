@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -25,11 +28,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private Intent intent;
     private Context context;
     private EditText etName;
-    private TextView tvCountryCode;
+    private Spinner spCountryCode;
     private EditText etPhoneNumber;
     private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText etEmail;
@@ -54,6 +57,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String email;
     private String phone;
     private String otp;
+    private final String[]Countrycode={"+91","+11"};
+    private String countryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         context = BookingSummaryActivity.this;
         getIds();
         setListeners();
+        setSpinner();
+        etName.requestFocus();
         restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         location=getIntent().getStringExtra(AppConstant.LOCATION);
         dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
@@ -75,12 +82,20 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         tvTimeBooked.setText(timeBooked);
         tvNumberofPeople.setText(noOfPersons);
 
+
+
+    }
+
+    private void setSpinner() {
+        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,Countrycode);
+        adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
+        spCountryCode.setAdapter(adapter);
     }
 
     private void getIds() {
         tvCompleteBooking = (TextView) findViewById(R.id.tvCompleteBooking);
         etName = (EditText) findViewById(R.id.etName);
-        tvCountryCode = (TextView) findViewById(R.id.tvCountryCode);
+        spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
         tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
@@ -110,6 +125,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void setListeners() {
         tvCompleteBooking.setOnClickListener(this);
+        spCountryCode.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -117,43 +133,45 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.tvCompleteBooking:
                 if (isValid()) {
-                    name=etName.getText().toString().trim();
-                    phone=etPhoneNumber.getText().toString().trim();
-                    email=etEmail.getText().toString().trim();
                     sendOtpApi();
-
-                    dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
-                    TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
-                    TextView tvResendOtp = (TextView) dialogConfirmBooking.findViewById(R.id.tvResendOtp);
-                    etEnterOtp = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp);
-
-
-                    tvSubmit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if(isValidOtp()) {
-                                otp=etEnterOtp.getText().toString().trim();
-                                otpVerificationApi();
-
-                            }
-                        }
-                    });
-
-                    tvResendOtp.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            resendOtpService();
-
-                        }
-                    });
-
-                    dialogConfirmBooking.show();
+                    /*name=etName.getText().toString().trim();
+                    phone=etPhoneNumber.getText().toString().trim();
+                    email=etEmail.getText().toString().trim();*/
                     break;
                 }
                 break;
 
         }
+    }
+
+    private void showOtpDialog() {
+        dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
+        TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
+        TextView tvResendOtp = (TextView) dialogConfirmBooking.findViewById(R.id.tvResendOtp);
+        etEnterOtp = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp);
+
+
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isValidOtp()) {
+                    otp=etEnterOtp.getText().toString().trim();
+                    otpVerificationApi();
+
+                }
+            }
+        });
+
+        tvResendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resendOtpService();
+
+            }
+        });
+
+        dialogConfirmBooking.show();
     }
 
     private boolean isValidOtp() {
@@ -194,13 +212,13 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private void sendOtpApi() {
         CommonUtils.showProgressDialog(context);
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.restaurant_id=restaurantId;
-        jsonRequest.booking_date=dateBooked;
-        jsonRequest.booking_time=timeBooked;
-        jsonRequest.number_of_people=noOfPersons;
-        jsonRequest.name=name;
-        jsonRequest.email=email;
-        jsonRequest.contact_no=phone;
+        jsonRequest.restaurant_id="";
+        jsonRequest.booking_date="";
+        jsonRequest.booking_time="";
+        jsonRequest.number_of_people="";
+        jsonRequest.name="";
+        jsonRequest.email=etEmail.getText().toString().trim();
+        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
 
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
@@ -212,10 +230,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-
-                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
-
-
+                        showOtpDialog();
 
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))
                     {
@@ -241,11 +256,15 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private void otpVerificationApi() {
         CommonUtils.showProgressDialog(context);
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.contact_no=phone;
-        jsonRequest.otp=otp;
-
-
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+        jsonRequest.restaurant_id=restaurantId;
+        jsonRequest.booking_date=dateBooked;
+        jsonRequest.booking_time=timeBooked;
+        jsonRequest.number_of_people=noOfPersons;
+        jsonRequest.name=etName.getText().toString().trim();
+        jsonRequest.email=etEmail.getText().toString().trim();
+        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.otp=etEnterOtp.getText().toString().trim();
+       Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = ApiClient.getApiService().otpVerification(jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -311,9 +330,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                     {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                         sendOtpApi();
-                        /*intent =new Intent(context,BookingSummaryActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);*/
+
 
                     }
 
@@ -333,6 +350,14 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        countryCode=spCountryCode.getSelectedItem().toString().trim();
 
+    }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

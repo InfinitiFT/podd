@@ -77,7 +77,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         switch (view.getId()){
             case R.id.llfood:
-                intent=new Intent(context, MainHomeScreenSecondActivity.class);
+                intent=new Intent(context, BestRestaurantNearCity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;

@@ -234,7 +234,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
             dp.setMaxDate(Calendar.getInstance().getTimeInMillis());
         }
         dpd.show();
-        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+        dpd.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
         dpd.getDatePicker().setMaxDate(System.nanoTime());
         dpd.setCancelable(true);
     }

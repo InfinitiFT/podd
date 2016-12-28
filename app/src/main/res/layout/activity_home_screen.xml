@@ -79,7 +79,7 @@
                 android:id="@+id/tvFood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/food"
+                android:text="@string/bars"
                 android:padding="@dimen/dp_4"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_10"/>
