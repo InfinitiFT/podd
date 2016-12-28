@@ -75,11 +75,6 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         tvTimeBooked.setText(timeBooked);
         tvNumberofPeople.setText(noOfPersons);
 
-
-
-
-
-
     }
 
     private void getIds() {
