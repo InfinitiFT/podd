@@ -671,20 +671,19 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
 
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
-
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-
-                        if (response.body().allList != null && response.body().allList.size() > 0) {
-                            cuisineList.clear();
-
-                            // Log.d(TAG, "Number of data received: " + cuisineList.size());
+                        if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
+                            restaurantList.clear();
+                            restaurantList.addAll(response.body().restaurant_list);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(gridLayoutManager);
+                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
+                            rvRestaurants.setAdapter(bestRestaurantAdapter);
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                        } else {
+                            Toast.makeText(context, "There is no restaurant list.", Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }
                 }
