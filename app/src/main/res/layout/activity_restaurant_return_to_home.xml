@@ -32,47 +32,120 @@
                 android:textSize="@dimen/text_size_16"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tvLocation"
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp_2"
-                android:layout_marginTop="@dimen/dp_8"
-                android:text="@string/location"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tvDateBooked"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_2"
+                    android:text="Location : "
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:gravity="center|left"
+                    android:padding="@dimen/dp_2"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp_2"
-                android:text="@string/date_Booked"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tvTimeBooked"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_2"
+                    android:text="Date Booked : "
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvDateBooked"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="@dimen/dp_2"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp_2"
-                android:text="@string/time_Booked"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tvNumberofPeople"
+                android:orientation="horizontal">
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_2"
+                    android:text="Time Booked : "
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTimeBooked"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="@dimen/dp_2"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp_2"
-                android:text="@string/number_of_people"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold"/>
+                android:orientation="horizontal">
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_2"
+                    android:text="Number of people :"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvNumberofPeople"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:padding="@dimen/dp_2"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
 
 

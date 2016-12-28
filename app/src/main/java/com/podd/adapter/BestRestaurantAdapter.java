@@ -63,7 +63,12 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         holder.tvLocation.setText(restaurant.location);
         location = holder.tvLocation.getText().toString().trim();
         holder.tvDistance.setText(restaurant.distance);
-        holder.tvPriceRange.setText(restaurant.price_range);
+        String priceRange =restaurant.price_range;
+        String[] splited = priceRange.split("-");
+
+        String split_one = splited[0];
+        String split_second = splited[1];
+        holder.tvPriceRange.setText("$ "+split_one+" - "+"$ "+split_second);
 
         if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
             holder.tvtypeofRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);

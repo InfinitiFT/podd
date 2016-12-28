@@ -48,7 +48,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
 
         getIds();
         setListeners();
-
+        tvRestauarntName.setText(restaurantName);
         tvLocation.setText(location);
         tvTimeBooked.setText(timeBooked);
         tvDateBooked.setText(dateBooked);
@@ -96,5 +96,13 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        intent=new Intent(context, HomeScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
