@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -25,11 +28,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private Intent intent;
     private Context context;
     private EditText etName;
-    private TextView tvCountryCode;
+    private Spinner spCountryCode;
     private EditText etPhoneNumber;
     private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText etEmail;
@@ -54,6 +57,9 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String email;
     private String phone;
     private String otp;
+    private final String[]Countrycode={"+91","+11"};
+    private String countryCode;
+    private String contact_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         context = BookingSummaryActivity.this;
         getIds();
         setListeners();
+        setSpinner();
+        etName.requestFocus();
         restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         location=getIntent().getStringExtra(AppConstant.LOCATION);
         dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
@@ -75,6 +83,9 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         tvTimeBooked.setText(timeBooked);
         tvNumberofPeople.setText(noOfPersons);
 
+        contact_number=phone + countryCode;
+
+
 
 
 
@@ -82,10 +93,16 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     }
 
+    private void setSpinner() {
+        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,Countrycode);
+        adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
+        spCountryCode.setAdapter(adapter);
+    }
+
     private void getIds() {
         tvCompleteBooking = (TextView) findViewById(R.id.tvCompleteBooking);
         etName = (EditText) findViewById(R.id.etName);
-        tvCountryCode = (TextView) findViewById(R.id.tvCountryCode);
+        spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
         tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
@@ -115,6 +132,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void setListeners() {
         tvCompleteBooking.setOnClickListener(this);
+        spCountryCode.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -124,6 +142,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                 if (isValid()) {
                     name=etName.getText().toString().trim();
                     phone=etPhoneNumber.getText().toString().trim();
+
                     email=etEmail.getText().toString().trim();
                     sendOtpApi();
 
@@ -205,7 +224,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.number_of_people=noOfPersons;
         jsonRequest.name=name;
         jsonRequest.email=email;
-        jsonRequest.contact_no=phone;
+        jsonRequest.contact_no=countryCode+""+phone;
 
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
@@ -316,9 +335,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                     {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                         sendOtpApi();
-                        /*intent =new Intent(context,BookingSummaryActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);*/
+
 
                     }
 
@@ -338,6 +355,14 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        countryCode=spCountryCode.getSelectedItem().toString().trim();
 
+    }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

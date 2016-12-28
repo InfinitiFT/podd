@@ -61,7 +61,7 @@
         <activity
             android:name=".activityrestauarant.BookingSummaryActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activityrestauarant.RestaurantReturnToHomeActivity"
             android:screenOrientation="landscape"

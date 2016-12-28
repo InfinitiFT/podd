@@ -66,8 +66,6 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         holder.tvPriceRange.setText(restaurant.price_range);
 
         if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
-
-
             holder.tvtypeofRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
         } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
             holder.tvtypeofRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
@@ -78,7 +76,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         }
 
 
-        if (restaurantList.get(position).restaurant_images.get(0) != null) {
+        if (restaurantList.get(position).restaurant_images.get(0) != null&&restaurantList.get(position).restaurant_images.size()>0) {
             Picasso.with(context)
                     .load(restaurantList.get(position).restaurant_images.get(0).toString())
                     .placeholder(R.color.colorPrimaryDark) // optional
