@@ -28,6 +28,7 @@ import com.podd.location.LocationTracker;
 import com.podd.model.Cuisine;
 import com.podd.model.Restaurant;
 import com.podd.retrofit.ApiClient;
+import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
@@ -189,6 +190,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                 currentLat = location.getLatitude();
                 currentLong = location.getLongitude();
+                CommonUtils.savePreferencesString(BestRestaurantNearCity.this, AppConstant.LATITUDE,String.valueOf(currentLat));
+                CommonUtils.savePreferencesString(BestRestaurantNearCity.this, AppConstant.LONGITUDE,String.valueOf(currentLong));
                 Log.i("ChangeLocationActivity", "Location_Latitude" + String.valueOf(currentLat));
                 Log.i("ChangeLocationActivity", "Location_Longitude" + String.valueOf(currentLong));
                 try {
