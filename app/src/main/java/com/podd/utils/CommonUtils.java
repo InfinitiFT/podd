@@ -66,12 +66,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+
 /**
  * The type Common utils.
  */
 public class CommonUtils {
     private static final float ALPHA_LIGHT = 0.45f;
     private static final float ALPHA_DARK = 1.0f;
+    public final static int PERMISSION_REQUEST_CODE = 101;
     /**
      * The constant accept.
      */
@@ -1361,26 +1363,6 @@ public class CommonUtils {
         }
     }
 
-  /*  public static void showCustomProgressBar(Context context, String text) {
-        customProgressDialog = new CustomProgressDialog(context);
-        try {
-
-            customProgressDialog.setIndeterminate(false);
-            customProgressDialog.setCancelable(false);
-            customProgressDialog.show();
-            customProgressDialog.setText(text);
-
-        } catch (Exception e) {
-        }
-    }
-
-    public static void disMissCustomProgressDialog(Context mContext) {
-        if (customProgressDialog != null) {
-            customProgressDialog.dismiss();
-            customProgressDialog = null;
-        }
-    }*/
-
     /**
      * Clear preference.
      *
@@ -1481,29 +1463,6 @@ public class CommonUtils {
         }
     }
 
-    /**
-     * Request permission gps.
-     *
-     * @param context the context
-     */
-    public static void requestPermissionGPS(Activity context) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstant.PERMISSION_REQUEST_GPS_CODE);
-        } else {
-            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstant.PERMISSION_REQUEST_GPS_CODE);
-        }
-    }
-
-    /**
-     * Check permission gps boolean.
-     *
-     * @param context the context
-     * @return the boolean
-     */
-    public static boolean checkPermissionGPS(Activity context) {
-        int result = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-        return result == PackageManager.PERMISSION_GRANTED;
-    }
 
 
     /**
@@ -1522,40 +1481,6 @@ public class CommonUtils {
     }
 
 
-/*
-    public  static int diffTime(String date){
-        SimpleDateFormat dfDate  = new SimpleDateFormat("dd/MM/yyyy");
-        Date d = null;
-        Date d1 = null;
-        Calendar cal = Calendar.getInstance();
-        try {
-
-            d = dfDate.parse(date);
-            d1 = dfDate.parse(dfDate.format(cal.getTime()));//Returns 15/10/2012
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        assert d1 != null;
-        int diffInDays = (int) ((d1.getTime() - d.getTime())/ (1000 * 60 * 60 * 24));
-        System.out.println(diffInDays);
-        return  diffInDays;
-
-    }
-*/
-/*
-    public static String getDateOfTimestamp2(long timeStamp) {
-        java.text.DateFormat objFormatter = new SimpleDateFormat("dd/MM/yyyy");
-
-        Calendar objCalendar = Calendar.getInstance();
-
-        objCalendar.setTimeInMillis(timeStamp * 1000);//edit
-        String result = objFormatter.format(objCalendar.getTime());
-        objCalendar.clear();
-        return result;
-
-    }
-*/
 
     /**
      * Remove decimal string.
@@ -1802,7 +1727,24 @@ public class CommonUtils {
     }
 
 
+    public static void requestPermissionGPS(Activity context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstant.PERMISSION_REQUEST_GPS_CODE);
+        } else {
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstant.PERMISSION_REQUEST_GPS_CODE);
+        }
+    }
 
+    public static boolean checkPermissionGPS(Activity context) {
+        int result = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+
+        } else {
+            return false;
+
+        }
+    }
 
 
 

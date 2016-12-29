@@ -196,13 +196,17 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                             restaurantname=response.body().restaurant_name;
                             tvLocation.setText(response.body().location);
                             tvDistance.setText(response.body().distance);
-                            String priceRange =response.body().price_range;
-                            String[] splited = priceRange.split("-");
+                            if(response.body().price_range!=null&&response.body().price_range.length()>0) {
+                                String priceRange = response.body().price_range;
+                                String[] splited = priceRange.split("-");
 
-                            String split_one = splited[0];
-                            String split_second = splited[1];
-                            tvPriceRange.setText("$ "+split_one+" - "+"$ "+split_second);
-                           // tvPriceRange.setText(response.body().price_range);
+                                String split_one = splited[0];
+                                String split_second = splited[1];
+                                tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
+                            }
+                            else {
+                                tvPriceRange.setText(response.body().price_range);
+                            }
                             tvRestauarntName.setText(response.body().restaurant_name);
 
                             if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {

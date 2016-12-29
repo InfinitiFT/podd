@@ -75,10 +75,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private List<Restaurant> restaurantList = new ArrayList<>();
     private List<String> location=new ArrayList<>();
     private String TAG = BestRestaurantNearCity.class.getSimpleName();
-    private final String[] dietary = {"bbb", "abd", "bba", "bbc"};
-    private final String[] cuisine = {"abc", "ccc", "aca", "acaa"};
-    private final String[] meal = {"ddd", "dddd", "dddd", "ddddd"};
-    private final String[] ambience = {"rrr", "rrrrrrr", "rrrrr", "rrrr"};
     private int pageNo = 1;
     private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
     private  ArrayAdapter adapterLocation;
@@ -90,6 +86,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private String mealId;
     private String dietaryId;
     private String ambienceId;
+    private GridLayoutManager gridLayoutManager;
+
 
 
     @Override
@@ -99,19 +97,30 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         context = BestRestaurantNearCity.this;
         getIds();
         setListeners();
-       /* setRecycler();*/
         if (CommonUtils.isOnline(context)) {
+
             fetchLocation();
         } else {
             Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
         }
 
 
+     /*   try {
+            endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener((GridLayoutManager) gridLayoutManager) {
+                @Override
+                public void onLoadMore(int current_page) {
+                    if(restaurantList.size() % AppConstant.visibleThreshold == 0 ){
+                        pageNo++;
+                        getRestaurantListApi(currentLat, currentLong, pageNo);
+                    }
+                }
+            };
+        }catch (Exception exc){
+            exc.printStackTrace();
+        }
+        rvRestaurants.addOnScrollListener(endlessRecyclerOnScrollListener);*/
 
     }
-
-
-
 
     private void setListeners() {
         llDeliveredToYou.setOnClickListener(this);
@@ -165,6 +174,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
     private void fetchLocation() {
         CommonUtils.showProgressDialog(context);
+
         new LocationTracker(context, new LocationResult() {
             @Override
             public void gotLocation(Location location) {
@@ -209,9 +219,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         CommonUtils.disMissProgressDialog(context);
                         tvCityName.setText(address);
                         getRestaurantListApi(currentLat, currentLong, pageNo);
-                    } else {
-
-
                     }
 
                 } catch (Exception e) {
@@ -281,7 +288,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_list);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
                             rvRestaurants.setLayoutManager(gridLayoutManager);
                             bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
                             rvRestaurants.setAdapter(bestRestaurantAdapter);
@@ -401,7 +408,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem="dietary";
-
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
                             _searchableListDialog.show(getFragmentManager(), TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));

@@ -312,7 +312,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private void resendOtpService() {
         CommonUtils.showProgressDialog(context);
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.contact_no=phone;
+        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = ApiClient.getApiService().resendOtp(jsonRequest);

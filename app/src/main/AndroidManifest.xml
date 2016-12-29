@@ -70,9 +70,19 @@
             android:name=".activityrestauarant.ViewMenuActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".activityrestauarant.ViewInMapActivity"
+        <activity
+            android:name=".activityrestauarant.ViewInMapActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".activityrestauarant.NewHomeScreenActivity"></activity>
     </application>
 
 </manifest>

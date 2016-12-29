@@ -24,4 +24,5 @@ public class AppConstant {
     public static String DATEBOOKED="date_booked";
     public static String TIMEBOOKED="time_booked";
     public static String NOOFPEOPLE="no_of_people";
+    public static int visibleThreshold=20;
 }
