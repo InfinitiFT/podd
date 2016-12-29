@@ -64,6 +64,10 @@ if(isset($_REQUEST['submit'])){
 					 $loction = mysqli_insert_id($conn);
 				}else{
 					 $loction = mysqli_real_escape_string($conn,$_POST['location']);
+					 $lat_long_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_location WHERE id = '".$loction."'"));
+					 $latitude = $lat_long_data['latitude'];
+					 $longitude = $lat_long_data['longitude'];
+
 				}
 				 $name = mysqli_real_escape_string($conn,trim($_POST['name']));
 				 $deliver = mysqli_real_escape_string($conn,$_POST['deliver']);
@@ -73,12 +77,12 @@ if(isset($_REQUEST['submit'])){
 				 $people = mysqli_real_escape_string($conn,$_POST['people']);
 				 $price = mysqli_real_escape_string($conn,$_POST['price']);
 
-			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`, `deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$deliver."','".$opentime."','".$closetime."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$id."')");
+			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`,`latitude`,`longitude`,`deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$latitude."','".$longitude."','".$deliver."','".$opentime."','".$closetime."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$id."')");
 			if($resturant){
 				
 				$resturnatID = mysqli_insert_id($conn);
 				foreach($_POST['meal'] as $meal){
-					 $meals = mysqli_real_escape_string($conn,$_POST['meal']);
+					 $meals = mysqli_real_escape_string($conn,$meal);
 					$target_dir = "../uploads/menu_file/";
 					$pdfUrl ='';
 					if($_FILES["document"]["name"][$j]){
@@ -86,7 +90,7 @@ if(isset($_REQUEST['submit'])){
 						if($imageUpload){
 							if($_FILES["document"]["name"][$j])
 								$pdfUrl = 'uploads/resturant/'.$_FILES["document"]["name"][$j];
-								
+							//ECHO "INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`, `menu_url`) VALUES('".$resturnatID."','".$meals."','".$pdfUrl."')";EXIT;	
 							mysqli_query($conn,"INSERT INTO `restaurant_menu_details`(`restaurant_id`, `meal`, `menu_url`) VALUES('".$resturnatID."','".$meals."','".$pdfUrl."')");
 						}
 				   }else{
@@ -98,7 +102,7 @@ if(isset($_REQUEST['submit'])){
 			
 		}
 
-		 $to = $email;
+		   $to = $email;
 		   $subject = "Password";
 		   $message = '
 			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

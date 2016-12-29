@@ -33,13 +33,21 @@ function user_authenticate($email, $password) {
 
 //Function for validate Email
 function validate_email_admin($email,$userID) {
-	if($userID){
+	if($userID){ 
 		
 		$adminEmail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT email FROM `users` WHERE email = '".$email."' and user_id!='".$userID."'"));
 	}else{
 		$adminEmail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT email FROM `users` WHERE email = '".$email."'"));
 	}
 	return $adminEmail;
+}
+function validate_items($item) {		
+$item = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT name FROM `items` WHERE name = '".$item."'"));	
+return $item;
+}
+function validate_items_edit($item,$item_id) {		
+$item = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT name FROM `items` WHERE name = '".$item."' and id != '".$item_id."'"));	
+return $item;
 }
 //Function for Get All data
 function get_all_data($table) {

@@ -85,6 +85,19 @@ else if($type == "menu_management")
   
 
 } 
+else if($type == "items")
+{
+  if(mysqli_query($GLOBALS['conn'],"DELETE FROM `items` WHERE `id` = '".mysqli_real_escape_string($GLOBALS['conn'],$id)."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+  
+
+}
 else{
 
 }

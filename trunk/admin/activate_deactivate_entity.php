@@ -64,7 +64,17 @@ else if($type == "menu_management")
     echo "error";
   }
 }
- 
+else if($type == "items")
+{
+  if(mysqli_query($GLOBALS['conn'],"UPDATE `items` SET `status`= '".mysqli_real_escape_string($GLOBALS['conn'],$status)."' WHERE `id` = '".mysqli_real_escape_string($GLOBALS['conn'],$id)."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+} 
  
 ?>
 

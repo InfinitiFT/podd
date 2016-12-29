@@ -39,7 +39,23 @@ switch($_REQUEST['type']) {
 	else
 		print 0;
 	break;
-
+    case 'val_item':
+	$item = $_POST['item'];
+	$data = validate_items($item);
+	if($data)
+		print 1;
+	else
+		print 0;
+	break;
+	case 'alreadyitemedit':
+	$item = $_POST['item'];
+	$item_id = $_POST['item_id'];
+	$data = validate_items_edit($item,$item_id);
+	if($data)
+		print 1;
+	else
+		print 0;
+	break;
 	case 'decline':	
 	$bookingID = $_GET['bookingID'];
 	$declined = $_GET['declined'];

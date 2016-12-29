@@ -58,7 +58,7 @@
 			 $locationTest =  mysqli_real_escape_string($conn,$_POST['locationTest']);
 			 $latitude =  mysqli_real_escape_string($conn,$locationData['latitude']);
 			 $longitude =  mysqli_real_escape_string($conn,$locationData['longitude']);
-			 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`, `latitude`, `longitude`) VALUES('".$locationTest."','".$latitude."','".$longitude."')");
+			 $locationAdd = mysqli_query($conn,"INSERT INTO `restaurant_location`(`location`,`latitude`, `longitude`) VALUES('".$locationTest."','".$latitude."','".$longitude."')");
 			 $loction = mysqli_insert_id($conn);
 		}else{
 			 $loction = mysqli_real_escape_string($conn,$_POST['location']);
@@ -104,7 +104,10 @@
 			$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',mobile_no ='".$phone."' where user_id ='".$user_id."'");
 			if($updateUser){
 				$name = mysqli_real_escape_string($conn,trim($_POST['name']));
-				mysqli_query($conn,"UPDATE `restaurant_details` SET  restaurant_name = '".$name."',location='".$loction."',opening_time='".$opentime."',closing_time='".$closetime."',about_text='".$about."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$resturantID."'");
+				$lat_long_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_location WHERE id = '".$loction."'"));
+				$latitude = $lat_long_data['latitude'];
+				$longitude = $lat_long_data['longitude'];
+				mysqli_query($conn,"UPDATE `restaurant_details` SET  restaurant_name = '".$name."',location='".$loction."',latitude='".$latitude."',longitude='".$longitude."',opening_time='".$opentime."',closing_time='".$closetime."',about_text='".$about."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$resturantID."'");
 				$allRemoveMeal = implode(',',$_POST['deleteMeal']);
 				$deleteMeal = mysqli_query($conn,"DELETE FROM `restaurant_menu_details` WHERE `id`IN ('".$allRemoveMeal."')");
 				if($deleteMeal){
@@ -142,7 +145,7 @@
 			if($_GET['id'])
 				header('Location: restaurant_list.php');
 			else
-				header('Location: booking_list_restaurant.php');
+				header('Location: restaurant_details.php');
 		}else{
 			if($_GET['id'])
 				header('Location: edit_resturant.php?id='.$_GET['id']);
@@ -201,9 +204,10 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" onchange="myFunction22(this)" multiple>
+                          <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" onchange="fileCountEdit(this)" multiple>
                          <?php  echo '<input type="hidden" name="countImg" id ="countImg" value="'.$p.'">';
-                         echo '<input type="hidden"  id ="countImgs" name="countImgs" value="'.$p.'">';?>
+                         echo '<input type="hidden"  id ="countImgs" name="countImgs" value="'.$p.'">';
+                             echo '<input type="hidden" value="'.$p.'" id="imageCount" name="imageCount">';?>
                         </div>
                       </div>
                       <input type="hidden" value="<?php echo $detail['user_id'];?>" id="userID">

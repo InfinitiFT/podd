@@ -18,6 +18,7 @@ if ($_SESSION['msg'] == 'location'){
 }
 
 $bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` WHERE `booking_id` ='".$_GET['id']."'"));
+$restaurant_opening_closing = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `booking_id` ='".$_GET['id']."'"));
 if(isset($_REQUEST['submit'])){
 	$booking_time = mysqli_real_escape_string($conn,trim($_POST['booking_time']));
 	$people = mysqli_real_escape_string($conn,trim($_POST['people']));
@@ -85,22 +86,17 @@ if(isset($_REQUEST['submit'])){
                       <div class="item form-group">
                         <label for="booking_time" class="control-label col-md-3">Booking Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time" onchange="timeValidateClose(this)">
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++){ // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-										 if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										 $selected ='';
-										if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $bookingData['booking_time'])
-											$selected ='selected';
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										   $i =$i+1;
-								    }
-							    }
-							?>
+							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time">
+							<?php 
+              $all_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr join restaurant_details rd on brr.restaurant_id = rd.restaurant_id where brr.booking_id = '".$_GET['id']."'" ));
+              
+              $time_interval = findtimeIntervalweb($all_data['opening_time'],$all_data['closing_time']);
+              
+                foreach($time_interval as $record){
+               
+              ?>
+              <option value= "<?php echo $record;?>"><?php echo $record;?></option>>
+              <?php } ?>
 							</select>
                           
                         </div>
