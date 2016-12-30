@@ -19,11 +19,11 @@
   //Basic Validation  
   if(isset($_SESSION['msg']) == 'success'){
   if($_SESSION['msg'] == 'success'){
-    $msg = '<div class="alert alert-warning">Resturant added successfully</div>';
+    $msg = '<div class="alert alert-warning">Venue added successfully</div>';
       $_SESSION['msg'] ='';
   }
   if($_SESSION['msg'] == 'successEdit'){
-    $msg = '<div class="alert alert-warning">Resturant edited successfully</div>';
+    $msg = '<div class="alert alert-warning">Venue edited successfully</div>';
       $_SESSION['msg'] ='';
   }
  }

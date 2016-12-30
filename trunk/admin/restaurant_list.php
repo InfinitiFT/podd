@@ -61,6 +61,7 @@
                                <a  href="edit_resturant.php?id=<?php echo $record['user_id'];?>" class="btn btn-round btn-primary">Edit Venue</a>
                              <button type="button" id="deletepopup-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-danger">Delete Venue</button>
                               <a href="booking_glance.php?restaurant_id=<?php echo $record['restaurant_id'];?>"><button type="button" id="" class="btn btn-round btn-success">Booking at Glance</button></a>
+                              <a href="venue_meal.php?id=<?php echo $record['restaurant_id'];?>"><button type="button" id="" class="btn btn-round btn-success">Venue meal</button></a>
                           </td>
                          </tr>
                         <?php }?> 

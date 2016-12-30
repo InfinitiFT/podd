@@ -78,7 +78,7 @@ if(isset($_REQUEST['submit'])){
 				 $price = mysqli_real_escape_string($conn,$_POST['price']);
 
 			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`,`latitude`,`longitude`,`deliver_food`, `opening_time`, `closing_time`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$latitude."','".$longitude."','".$deliver."','".$opentime."','".$closetime."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$id."')");
-			if($resturant){
+			/*if($resturant){
 				
 				$resturnatID = mysqli_insert_id($conn);
 				foreach($_POST['meal'] as $meal){
@@ -98,7 +98,7 @@ if(isset($_REQUEST['submit'])){
 				   }
 					$j =$j +1;
 				}
-			}
+			}*/
 			
 		}
 
@@ -253,25 +253,25 @@ if(isset($_REQUEST['submit'])){
                           </select>
                         </div>
                       </div>
-                      <input type="hidden" name="selected_meals" id="selected_meals" value="" />
+                     <!-- <input type="hidden" name="selected_meals" id="selected_meals" value="" />
                       <div class="item form-group" id="allMeal-1">
 						   <div class="item form-group col-sm-6">
                         <label class="control-label col-md-6 col-sm-3 col-xs-12">Select Meal</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" name="meal[]" id="allMealling-1">
 							   <option value="">Select Meal</option>
-						   <?php 
+						   <?php /*
 							  $meal = get_all_data('restaurant_menu');
 							  $i =1;
 								while($mealData = mysqli_fetch_assoc($meal)){
 								  echo '<option value="'.$mealData['id'].'">'.$mealData['menu_name'].'</option>';
 								  $i = $i +1;
 							    }
-							?>
+							*/?>
                           </select>
                         </div>
                         </div>
-                        <input type="hidden" value="<?php echo $i-1;?>" id="totalMeal">
+                        <input type="hidden" value="<?php /*echo $i-1;*/?>" id="totalMeal">
                          <div class="item form-group col-sm-6">
 							<label class="control-label col-md-2 col-sm-6 col-xs-6">Menu</label>
                            <div class="col-md-6 col-sm-6 col-xs-12">
@@ -285,8 +285,8 @@ if(isset($_REQUEST['submit'])){
 						  <div class="col-md-6 col-sm-offset-3">
 							   <span class="glyphicon glyphicon-plus btn btn-success" id="meal-1" onclick="addMeal(this)">Add</span>
 							</div>
-					  </div>
-                      
+					  </div>-->
+
                         <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Ambience</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">

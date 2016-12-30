@@ -77,6 +77,7 @@
                    <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Taxi</a></li>
                    <li><a href = "admin_message.php"><i class="fa fa-home"></i>Admin Message</a></li>
                    <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li>
+                    <li><a href = "menu_list.php"><i class="fa fa-home"></i>Menu</a></li>
                   <!--  <li><a href = "user_list.php"><i class="fa fa-user"></i>User Management </a></li>
                    
                    <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
