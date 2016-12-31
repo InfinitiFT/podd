@@ -87,7 +87,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private String dietaryId;
     private String ambienceId;
     private GridLayoutManager gridLayoutManager;
-
+    private EndlessScrollListener scrollListener;
 
 
     @Override
@@ -105,20 +105,21 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         }
 
 
-     /*   try {
-            endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener((GridLayoutManager) gridLayoutManager) {
+        try {
+            scrollListener = new EndlessScrollListener(gridLayoutManager) {
                 @Override
-                public void onLoadMore(int current_page) {
-                    if(restaurantList.size() % AppConstant.visibleThreshold == 0 ){
-                        pageNo++;
-                        getRestaurantListApi(currentLat, currentLong, pageNo);
-                    }
-                }
-            };
-        }catch (Exception exc){
+           public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+               // Triggered only when new data needs to be appended to the list
+               // Add whatever code is needed to append new items to the bottom of the list
+               getRestaurantListApi(currentLat,currentLong,pageNo);
+           }
+      };
+      // Adds the scroll listener to RecyclerView
+      rvRestaurants.addOnScrollListener(scrollListener);
+  }catch (Exception exc){
             exc.printStackTrace();
         }
-        rvRestaurants.addOnScrollListener(endlessRecyclerOnScrollListener);*/
+        rvRestaurants.addOnScrollListener(scrollListener);
 
     }
 
