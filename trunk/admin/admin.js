@@ -161,4 +161,68 @@ $("[id ^='decline-']").click(function () {
   });
 });
 
+// Add item functionality
+   var max_fields      = 10;
+    var additem      = $(".add_item"); //Fields wrapper
+    var add_button      = $(".add_field_button"); //Add button ID
+     
+    
+     //initlal text box count
+    var count = 2;
+    $(add_button).click(function(e){ //on add input button click
+        e.preventDefault();
+       //text box increment
+        if(count < max_fields){ //max input box allowed
+        
+            count++; 
+            $(additem).append(  '<div class="add_item">'+
+                                   '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
+                                   '</div>'+
+                                   '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
+                                      '<input type="text" class="form-control has-feedback-left ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="inputSuccess-'+count+'">'+
+                                   '</div>'+
+                                   '<input type="hidden" id="txtAllowSearchID[]"><div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
+                                      '<input type="text" class="form-control" name="price[]" id="inputSuccess3" placeholder="Price">'+
+                                  '</div>'+
+                               '<button type="button" class="btn btn-danger remove_field">✖</button></div>'); //add input box
+        
+    
+    $(additem).on("click",".remove_field", function(e){
+      e.preventDefault(); $(this).parent('div').remove();count--; 
+    })
+     
+  }
+});
+
+/*$("#inputSuccess-"+count).autocomplete({
+                source: "select_items.php"
+
+            })*/
+    $("#inputSuccess-1").autocomplete({
+                source: "select_items.php",
+        select: function (event, ui) {
+            $("#txtAllowSearch").val(ui.item.label); // display the selected text
+            $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
+        }
+
+            });
+
+    $(function() {
+
+      $(document).bind('DOMNodeInserted', function(e) {
+            $("[id ^='inputSuccess-']").autocomplete({
+                source: "select_items.php",
+                select: function (event, ui) {
+                    $(".ui-menu-item").val(ui.item.label); // display the selected text
+                    $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
+                }
+
+            });
+      });
+   });
+
+
+   
+
+
       

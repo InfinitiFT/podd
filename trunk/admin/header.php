@@ -16,6 +16,7 @@
     <title>IOSAndroidAppDevelopment! | </title>
 
     <!-- Bootstrap -->
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -77,23 +78,15 @@
                    <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Taxi</a></li>
                    <li><a href = "admin_message.php"><i class="fa fa-home"></i>Admin Message</a></li>
                    <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li>
-                    <li><a href = "menu_list.php"><i class="fa fa-home"></i>Menu</a></li>
-                  <!--  <li><a href = "user_list.php"><i class="fa fa-user"></i>User Management </a></li>
-                   
-                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
-                   <li><a href = "booking_history.php"><i class="fa fa-home"></i>Bookings History</a></li> -->
                 </ul>
               
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
 					 <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking</a></li>
-                   <!-- <li><a href = "restaurant_menu_management.php"><i class="fa fa-home"></i>Menu Management</a></li> -->
-                    <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
+                   <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu</a></li>
+                   <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
                    <li><a href = "booking_history.php"><i class="fa fa-home"></i>History</a></li>
-                   
-                  <!--  <li><a href = "table_management.php"><i class="fa fa-table"></i>Table Management</a></li> -->
-                  
                 </ul>
              <?php }else{ ?>
                   <ul class="nav side-menu">

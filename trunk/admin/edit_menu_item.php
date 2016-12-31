@@ -13,17 +13,9 @@ try {
 
     if(isset($_POST["submit"]))
     {
-       // print_r($_POST);exit;
-        $deliver_food = isset($_REQUEST['deliver_food']) ? $_REQUEST['deliver_food'] : '0';
-        $restaurant_id = isset($_SESSION['restaurant_id']) ? $_SESSION['restaurant_id'] : $_REQUEST['restaurant_id'];
-        if(mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_meal_details`(`restaurant_id`,`meal`,`deliver_food`) VALUES ('".$restaurant_id."','".$_REQUEST['meal']."','".$deliver_food."')")){
-            $restaurant_menu_id = mysqli_insert_id($GLOBALS['conn']);
-
-            foreach ($_REQUEST['item'] as $value){
-                print_r("INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$value."','100','9')");exit;
-                $add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$value."','100','9')");
-            }
-
+        print_r($_POST);exit;
+        $name = mysqli_real_escape_string($conn,trim($_POST['name']));
+        if(mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`created_by`) VALUES ('".$name."','".$_SESSION['user_id']."')")){
             $_SESSION["successmsg"] = "Service added successfully.";
             header('Location:item_list.php');
         }
@@ -53,7 +45,7 @@ catch(Exception $e) {
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Add Menu</h2>
+                            <h2>Edit Menu Item</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -90,7 +82,7 @@ catch(Exception $e) {
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
-                                       <select class="select2_multiple form-control" name="meal" id="allMealling">
+                                       <select class="select2_multiple form-control" name="meal[]" id="allMealling">
                                                 <option value="">Select Meal</option>
                                                 <?php
                                                    $meal = get_all_data('meals');
@@ -103,7 +95,7 @@ catch(Exception $e) {
                                             </select>
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
-                                        <label><input type="checkbox" name="deliver_food" class="form-control" id="inputSuccess3" value="1">Deliver Food</label>
+                                        <label><input type="checkbox" name="deliver_food" class="form-control" id="inputSuccess3">Deliver Food</label>
                                     </div>
                                     <div class="col-md-5 col-sm-5 col-xs-10 form-group has-feedback">
                                     </div>
@@ -114,14 +106,12 @@ catch(Exception $e) {
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
-                                       <input type="text" class="form-control has-feedback-left auto" name="item[]" id="inputSuccess-1" placeholder="Select Item">
+                                       <input type="text" class="form-control has-feedback-left auto" id="inputSuccess-1" placeholder="Select Item">
                                     </div>
-                                    <input type="hidden" id="txtAllowSearchID[]">
-                                    <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
-                                        <input type="text" name="price[]" class="form-control" id="inputSuccess3" placeholder="Price">
+                                    <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
+                                        <input type="text" class="form-control" id="inputSuccess3" placeholder="Price">
                                     </div>
-                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                    </div> -->
+                                
                                 </div>
                                 
                                   <button  name="add_more"  class="btn btn-success add_field_button">Add More</button>

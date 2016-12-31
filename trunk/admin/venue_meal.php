@@ -1,7 +1,15 @@
 <?php 
   include_once('header.php');
   $result = array();
-   $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id  where rmd.restaurant_id = '".$_GET['id']."'");
+  if($_SESSION['restaurant_id']!="")
+  {
+   $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id  where rmd.restaurant_id = '".$_SESSION['restaurant_id']."'");
+  }
+  else
+  {
+     $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id  where rmd.restaurant_id = '".$_GET['id']."'");
+    
+  }
  
   //Basic Validation  
   
@@ -17,7 +25,7 @@
                   <div class="x_title">
                     <h2>Venue Item List</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a href="add_menu_item.php"><button type="button" class="btn btn-round btn-success">Add Item With Price</button></a>
+                      <li><a href="add_menu_item.php?restaurant_id=<?php echo $_GET['id'];?>"><button type="button" class="btn btn-round btn-success">Add Item With Price</button></a>
                       </li>
                       
                     </ul>

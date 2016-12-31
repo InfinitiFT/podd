@@ -12,6 +12,7 @@
 
     <!-- jQuery -->
     <script src="../assets/vendors/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <!-- Bootstrap -->
     <script src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     
