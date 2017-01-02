@@ -426,5 +426,68 @@ $.validator.methods.alreadyitemedit = function(value, element) {
      
     }
   });
+
+   /*Custom validation for space is not allowed*/
+$.validator.methods.alreadyadd_item_price = function(value, element) {
+  var restaurant_id = $('#restaurant_id').val();
+  var meal_id = $("#allMealling option:selected").val();
+   $.ajax({
+                method: "post",
+                url: "admin_ajax.php",
+                data: { type: "alreadyadd_item_price",item:value,restaurant_id:restaurant_id,meal_id:meal_id},
+                async: false,
+                success: function(data) {
+        
+                    if(data == 1) {
+                        ab = false;             
+                    }
+                    else {
+                        ab = true;
+                    }
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            });
+            return ab;
+};
+
+
+  //Add Category Validation
+  $("#add_item_price").validate({
+    rules: {
+    meal: {
+      required:true
+      },
+    "item[]": {
+      required:true,
+      alreadyadd_item_price:true
+      },
+     "quantity[]": {
+      required:true
+      },
+     "price[]": {
+      required:true
+      }
+    },
+    messages: {
+   "item[]": {
+      required: "Please enter your item.",
+      alreadyadd_item_price: "Item already added for this restaurant."
+      },
+    meal: {
+      required: "Please select meal."
+      
+      },
+    "quantity[]": {
+      required: "Please enter quantity."
+      },
+    "price[]": {
+      required: "Please enter price."
+      }
+     
+    }
+  });
+
   
  

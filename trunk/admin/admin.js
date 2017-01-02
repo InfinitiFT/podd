@@ -1,4 +1,6 @@
 // Popup for delete functionality
+var a = [];
+
 $("[id ^='deletepopup-']").click(function () {
   var pagetype =  $("#delete_type").val();
   var serviceID  = $(this).attr('id');
@@ -174,50 +176,57 @@ $("[id ^='decline-']").click(function () {
        //text box increment
         if(count < max_fields){ //max input box allowed
         
-            count++; 
-            $(additem).append(  '<div class="add_item">'+
+           
+            $("#dataAdd").append(  '<div class="add_item row" id= "remove_del-'+count+'">'+
                                    '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
                                    '</div>'+
                                    '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
                                       '<input type="text" class="form-control has-feedback-left ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="inputSuccess-'+count+'">'+
                                    '</div>'+
                                    '<input type="hidden" id="txtAllowSearchID[]"><div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
+                                    '<input type="text" name="quantity[]" class="form-control" placeholder="Quantity">'+
+                                    '</div>'+
+                                   '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
                                       '<input type="text" class="form-control" name="price[]" id="inputSuccess3" placeholder="Price">'+
                                   '</div>'+
-                               '<button type="button" class="btn btn-danger remove_field">✖</button></div>'); //add input box
+                               '<button type="button" id ="remove_field-'+count+'" class="btn btn-danger remove_field">✖</button></div>'); //add input box
         
-    
-    $(additem).on("click",".remove_field", function(e){
-      e.preventDefault(); $(this).parent('div').remove();count--; 
-    })
+  
      
   }
+   count++; 
 });
 
-/*$("#inputSuccess-"+count).autocomplete({
-                source: "select_items.php"
-
-            })*/
+$(document).on("click", "[id ^='remove_field-']", function(event){
+        var serviceID  = $(this).attr('id');
+        var serviceArr =serviceID.split('-');
+      $('#remove_del-'+serviceArr[1]+'').remove();count--;
+    });
+$(document).on("change", "[id ^='inputSuccess-']", function(event){
+    a.push($(this).val());
+});  
     $("#inputSuccess-1").autocomplete({
-                source: "select_items.php",
+        source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
         select: function (event, ui) {
             $("#txtAllowSearch").val(ui.item.label); // display the selected text
             $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
         }
 
             });
-
+   
+       
     $(function() {
-
+      
       $(document).bind('DOMNodeInserted', function(e) {
             $("[id ^='inputSuccess-']").autocomplete({
-                source: "select_items.php",
+                source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
                 select: function (event, ui) {
                     $(".ui-menu-item").val(ui.item.label); // display the selected text
                     $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
                 }
 
             });
+           
       });
    });
 
