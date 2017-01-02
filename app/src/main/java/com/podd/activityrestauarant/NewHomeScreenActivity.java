@@ -22,7 +22,7 @@ public class NewHomeScreenActivity extends AppCompatActivity {
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
     private int itemsImages[]={R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4,R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4};
-    private String itemsName[] = {"Front Desk", "Food & Drinks", "Taxi & Limousines", "Car Hire", "Health & Wellness", "Beauty Services", "Art & Culture", "Happening in London"};
+    private String itemsName[] = {"Front\nDesk" , "Food &\nDrinks", "Taxi &\nLimousines", "Car \nHire", "Health &\nWellness", "Beauty \nServices", "Art &\nCulture", "Happening \nin London"};
 
 
 

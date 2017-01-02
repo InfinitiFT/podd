@@ -103,9 +103,10 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         } else {
             Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
         }
+    }
 
 
-        try {
+        /*try {
             scrollListener = new EndlessScrollListener(gridLayoutManager) {
                 @Override
            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -121,7 +122,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         }
         rvRestaurants.addOnScrollListener(scrollListener);
 
-    }
+    }*/
 
     private void setListeners() {
         llDeliveredToYou.setOnClickListener(this);
