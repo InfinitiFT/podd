@@ -6,9 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.AbsListView;
 
-/**
- * Created by Shalini Bishnoi on 31-12-2016.
- */
+
 
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
