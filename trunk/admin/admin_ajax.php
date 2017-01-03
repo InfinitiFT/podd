@@ -71,23 +71,22 @@ switch($_REQUEST['type']) {
 	$meal_id = $_REQUEST['meal_id'];
 	$item = $_REQUEST['item'];
 	//alert($bookingID);
-	if(!empty($meal_id))
-	{
-		$num_rows = mysqli_query($conn,"SELECT * FROM items WHERE id IN (SELECT item_id FROM restaurant_item_price JOIN restaurant_meal_details ON restaurant_item_price.restaurant_meal_id = restaurant_meal_details.id WHERE restaurant_meal_details.restaurant_id =  '".$restaurant_id."' AND restaurant_meal_details.meal =  '".$meal_id."'
+	$num_rows = mysqli_query($conn,"SELECT * FROM items WHERE id IN (SELECT item_id FROM restaurant_item_price JOIN restaurant_meal_details ON restaurant_item_price.restaurant_meal_id = restaurant_meal_details.id WHERE restaurant_meal_details.restaurant_id =  '".$restaurant_id."' 
          ) AND status =  '1' AND name = '".$item."'");
-
-	}
-	else
-	{
-		$num_rows = mysqli_query($conn,"SELECT * FROM items WHERE id IN (SELECT item_id FROM restaurant_item_price JOIN restaurant_meal_details ON restaurant_item_price.restaurant_meal_id = restaurant_meal_details.id WHERE restaurant_meal_details.restaurant_id =  '".$restaurant_id."') AND status =  '1' AND name = '".$item."'");
-
-	}
+	
 	if(mysqli_num_rows($num_rows)>0)
 		print 1;
 	else
 		print 0;
 	break;
-	
+	case 'alreadyadd_exists_or_not':	
+	$item = $_REQUEST['item'];
+	$num_rows = mysqli_query($conn,"SELECT * FROM items WHERE status =  '1' AND name = '".$item."'");
+	if(mysqli_num_rows($num_rows)>0)
+		print 0;
+	else
+		print 1;
+	break;
 	case 'timeInterval':
 	$start = $_GET['start'];
 	$end = $_GET['end'];

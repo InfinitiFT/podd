@@ -98,6 +98,20 @@ else if($type == "items")
   
 
 }
+else if($type == "items_price")
+{
+  
+  if(mysqli_query($GLOBALS['conn'],"DELETE FROM `restaurant_item_price` WHERE `id` = '".mysqli_real_escape_string($GLOBALS['conn'],$id)."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+  
+
+}
 else{
 
 }

@@ -87,6 +87,7 @@
                    <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu</a></li>
                    <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
                    <li><a href = "booking_history.php"><i class="fa fa-home"></i>History</a></li>
+                   <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li>
                 </ul>
              <?php }else{ ?>
                   <ul class="nav side-menu">

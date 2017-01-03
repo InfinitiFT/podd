@@ -14,7 +14,6 @@ $("[id ^='deletepopup-']").click(function () {
             type: 'post',
             data: {pagetype:pagetype,id:serviceArr[1]},
             success: function(data, status) { 
-				
              location.reload();  
              Lobibox.notify('success', {
               msg: 'Entity deleted Successfully.'
@@ -91,6 +90,7 @@ $("[id ^='activatedeactivate-']").click(function () {
           type: 'post',
           data: {pagetype:pagetype,id:serviceArr[1],status:status},
           success: function(data, status) { 
+
              location.reload();  
              Lobibox.notify('success', {
               msg: 'Entity Successfully '+ buttonText +'d.'
@@ -183,11 +183,11 @@ $("[id ^='decline-']").click(function () {
                                    '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
                                       '<input type="text" class="form-control has-feedback-left ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="inputSuccess-'+count+'">'+
                                    '</div>'+
-                                   '<input type="hidden" id="txtAllowSearchID[]"><div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
-                                    '<input type="text" name="quantity[]" class="form-control" placeholder="Quantity">'+
+                                   '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
+                                    '<input type="text" name="quantity[]" class="form-control" placeholder="Quantity" id="inputquan-'+count+'">'+
                                     '</div>'+
                                    '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
-                                      '<input type="text" class="form-control" name="price[]" id="inputSuccess3" placeholder="Price">'+
+                                      '<input type="text" class="form-control" name="price[]" placeholder="Price" id="inputprice-'+count+'">'+
                                   '</div>'+
                                '<button type="button" id ="remove_field-'+count+'" class="btn btn-danger remove_field">✖</button></div>'); //add input box
         

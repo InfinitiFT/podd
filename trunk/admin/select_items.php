@@ -8,17 +8,12 @@
 include('../functions/config.php');
 $searchTerm = $_GET['term'];
 //get matched data from skills table
-if(!empty($_GET['restaurant_id']) && !empty($_GET['meal_id'])){
-	$query = mysqli_query($GLOBALS['conn'],"SELECT * FROM items WHERE id NOT IN (SELECT item_id FROM restaurant_item_price JOIN restaurant_meal_details ON restaurant_item_price.restaurant_meal_id = restaurant_meal_details.id WHERE restaurant_meal_details.restaurant_id =  '".$_GET['restaurant_id']."' AND restaurant_meal_details.meal =  '".$_GET['meal_id']."'
-         ) AND status =  '1' AND name LIKE  '%".$searchTerm."%' ORDER BY name ASC ");
+if(!empty($_GET['restaurant_id'])){
+	$query = mysqli_query($GLOBALS['conn'],"SELECT * FROM items WHERE id NOT IN (SELECT item_id FROM restaurant_item_price JOIN restaurant_meal_details ON restaurant_item_price.restaurant_meal_id = restaurant_meal_details.id WHERE restaurant_meal_details.restaurant_id =  '".$_GET['restaurant_id']."' ) AND status =  '1' AND name LIKE  '%".$searchTerm."%' ORDER BY name ASC ");
 	 
 	
 }
-else if(!empty($_GET['restaurant_id']))
-{
-	$query = mysqli_query($GLOBALS['conn'],"SELECT * FROM items WHERE id NOT IN (SELECT item_id FROM restaurant_item_price JOIN restaurant_meal_details ON restaurant_item_price.restaurant_meal_id = restaurant_meal_details.id WHERE restaurant_meal_details.restaurant_id =  '".$_GET['restaurant_id']."' ) AND status =  '1' AND name LIKE  '%".$searchTerm."%' ORDER BY name ASC ");
 
-}
 else
 {
 	

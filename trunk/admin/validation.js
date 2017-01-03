@@ -379,6 +379,7 @@ $.validator.methods.alreadyitemedit = function(value, element) {
 
   //Add Category Validation
   $("#add_item").validate({
+    ignore: [],
     rules: {
     name: {
       required:true,
@@ -452,15 +453,39 @@ $.validator.methods.alreadyadd_item_price = function(value, element) {
             return ab;
 };
 
+$.validator.methods.alreadyadd_exists_or_not = function(value, element) {
+  
+   $.ajax({
+                method: "post",
+                url: "admin_ajax.php",
+                data: { type: "alreadyadd_exists_or_not",item:value},
+                async: false,
+                success: function(data) {
+        
+                    if(data == 1) {
+                        ab = false;             
+                    }
+                    else {
+                        ab = true;
+                    }
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            });
+            return ab;
+};
 
   //Add Category Validation
   $("#add_item_price").validate({
+	 ignore: [],
     rules: {
     meal: {
       required:true
       },
     "item[]": {
       required:true,
+      alreadyadd_exists_or_not:true,
       alreadyadd_item_price:true
       },
      "quantity[]": {
@@ -471,23 +496,63 @@ $.validator.methods.alreadyadd_item_price = function(value, element) {
       }
     },
     messages: {
-   "item[]": {
-      required: "Please enter your item.",
-      alreadyadd_item_price: "Item already added for this restaurant."
-      },
+   
     meal: {
       required: "Please select meal."
       
       },
-    "quantity[]": {
+      "item[]": {
+      required: "Please enter your item.",
+      alreadyadd_item_price: "Item already added for this restaurant.",
+      alreadyadd_exists_or_not:"Item name doesnot exists in database."
+      },
+      "quantity[]": {
       required: "Please enter quantity."
       },
-    "price[]": {
+      "price[]": {
       required: "Please enter price."
       }
      
     }
   });
 
-  
+  //Add Category Validation
+  $("#edit_item_price").validate({
+   ignore: [],
+    rules: {
+    meal: {
+      required:true
+      },
+    item: {
+      required:true,
+      alreadyadd_exists_or_not:true,
+      alreadyadd_item_price:true
+      },
+     quantity: {
+      required:true
+      },
+     price: {
+      required:true
+      }
+    },
+    messages: {
+   
+    meal: {
+      required: "Please select meal."
+      
+      },
+      item: {
+      required: "Please enter your item.",
+      alreadyadd_item_price: "Item already added for this restaurant.",
+      alreadyadd_exists_or_not:"Item name doesnot exists in database."
+      },
+      quantity: {
+      required: "Please enter quantity."
+      },
+      price: {
+      required: "Please enter price."
+      }
+     
+    }
+  });
  
