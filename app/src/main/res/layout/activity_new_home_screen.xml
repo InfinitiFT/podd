@@ -26,6 +26,7 @@
             android:id="@+id/ivPodd"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
+            android:contentDescription="@string/logo"
             android:src="@mipmap/podd"
             android:layout_gravity="center"/>
 

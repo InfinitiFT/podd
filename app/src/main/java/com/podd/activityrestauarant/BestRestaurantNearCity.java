@@ -239,8 +239,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 getAmbienceRestaurantListApi();
                 break;
             case R.id.llLocation:
-
-
                 tvCityName.setVisibility(View.GONE);
                 tvNearbyRestaurant.setText(R.string.restaurant_by_location);
                 getLocationRestaurantListApi();
@@ -248,7 +246,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             case R.id.llDietary:
                 tvCityName.setVisibility(View.GONE);
                 tvNearbyRestaurant.setText(R.string.restaurant_by_dietary);
-              getDietaryRestaurantListApi();
+                getDietaryRestaurantListApi();
                 break;
             case R.id.llCuisine:
                 tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);

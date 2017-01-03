@@ -116,4 +116,6 @@
     <string name="permission_denied_you_can_not_access_location_data">Permission denied you can not access location data</string>
     <string name="message_added_from_admin">PERSONALIZED MESSAGE ADDED FROM ADMIN</string>
     <string name="personal_concierge">YOUR PERSONAL CONCIERGE</string>
+    <string name="image">image</string>
+    <string name="logo">logo</string>
 </resources>

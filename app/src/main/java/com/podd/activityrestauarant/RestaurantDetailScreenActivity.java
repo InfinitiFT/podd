@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,22 +13,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.RestaurantsAdapter;
-import com.podd.model.Restaurant;
 import com.podd.retrofit.ApiClient;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,7 +78,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         getRestaurantDetailApi();
     }
 
-
     private void getIds() {
         tvRestauarntName= (TextView) findViewById(R.id.tvRestauarntName);
         tvNameRestaraunt= (TextView) findViewById(R.id.tvNameRestaraunt);
@@ -106,8 +99,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         llCategory= (LinearLayout) findViewById(R.id.llCategory);
         llRestaurantName= (LinearLayout) findViewById(R.id.llRestaurantName);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -121,7 +112,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 onBackPressed();
             }
         });
-
     }
 
     private void setListeners() {
@@ -243,7 +233,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                             String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
 
-                                    s1 = categories.get(i).toString() + ", " + s1;
+                                    s1 = categories.get(i) + ", " + s1;
                             }
                              tvCategory.setText(s1);
 
