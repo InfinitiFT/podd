@@ -103,7 +103,7 @@ catch(Exception $e) {
                                         </select> 
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
-                                        <label><input type="checkbox" name="deliver_food" class="form-control" id="inputSuccess3" value="1" <?php echo $deliver_food_details['deliver_food']=='1'?' checked="checked" ':''; ?>>Deliver Food</label>
+                                        <label><input type="checkbox" name="deliver_food" class="form-control" id="inputSuccess3" value="1" <?php echo $deliver_food_details['deliver_food']=='1'?' checked="checked" ':''; ?>>Home delivery?</label>
                                     </div>
                                     <div class="col-md-5 col-sm-5 col-xs-10 form-group has-feedback">
                                     </div>

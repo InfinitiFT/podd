@@ -41,25 +41,28 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         </div>
-						<div class="img-sel col-md-6 col-sm-offset-1 col-sm-6 col-xs-12 ">
-							<ul>
-							<?php $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
+						          <div class="img-sel col-md-6 col-sm-offset-1 col-sm-6 col-xs-12 ">
+							          <ul>
+							            <?php $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
                            if($restaurant_images[0])
                             {
                               foreach($restaurant_images as $value){  ?> <li> <img src="<?php echo url().$value; ?>"  height="42" width="42"></li>
-									 <?php }} ?>
-						</ul>
-						</div>
-						</div>
+									       <?php }} ?>
+						            </ul>
+						         </div>
+						       </div>
                       
-                      
-                      
-
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Location
                         </label>
                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['location']; ?>
+                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php 
+                          if($restaurant_data['location'])
+                          {
+                           $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT location FROM restaurant_location WHERE id = '".$restaurant_data['location']."'"));
+                           echo $location['location'];
+                          }
+                         ?> 
                         </div>
                       </div>
                       <div class="item form-group">
@@ -84,7 +87,7 @@
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label for="password" class="control-label col-md-3">About Text</label>
+                        <label for="password" class="control-label col-md-3">Venue Description</label>
                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
                         <label class="control-label control-label-left col-md-12 col-sm-12 col-xs-12" for="name"> <?php echo $restaurant_data['about_text']; ?>
                         
@@ -92,7 +95,7 @@
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Max people Allowed</label>
+                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Maximum covers</label>
                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['max_people_allowed']; ?>
                         </div>

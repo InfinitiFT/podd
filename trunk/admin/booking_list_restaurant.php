@@ -38,28 +38,28 @@
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
                   <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` Where `booking_status`= 1 AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));?></div>
-                  <h3>Pending Bookings</h3>
+                  <h3>Pending</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-comments-o"></i></div>
                   <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` Where `booking_status`= 2 AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));?></div>
-                  <h3>Accepted Bookings</h3>
+                  <h3>Accepted</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
                   <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` Where `booking_status`= 0 AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));?></div>
-                  <h3>Declined Bookings</h3>
+                  <h3>Declined</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-check-square-o"></i></div>
                   <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` Where `booking_date` < CURRENT_DATE() AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));?></div>
-                  <h3>Confirmed Bookings</h3>
+                  <h3>Confirmed</h3>
                 </div>
               </div>
             </div>
@@ -68,14 +68,14 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Venue Booking List</h2>
+                    <h2>Booking Management</h2>
                    <ul class="nav navbar-right panel_toolbox">
 					<li>
 						<select class="form-control" id="selectStatus">
-							<option value="">Select Status</option>
+							<option value="">Select</option>
 							<option value="1">Pending</option>
-							<option value="2">Accept</option>
-							<option value="0">Decline</option>
+							<option value="2">Accepted</option>
+							<option value="0">Declined</option>
 						</select>
 						<input type="hidden" value="<?php echo $_SESSION['restaurant_id'];?>" id="session">
                     </ul>
@@ -91,7 +91,9 @@
                            <th>Name</th>
                            <th>Mobile</th>
                            <th>User Email</th>
+                           <?php if($_SESSION['role'] == '1'){ ?>
                            <th>Venue Email</th>
+                           <?php } ?>
                            <th>Date</th>
                            <th>Time</th>
                            <th>Number of people</th>
@@ -119,7 +121,10 @@
                          <tr>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['contact_no'];?></td>
-                          <td><?php echo $record['booking_email'];?></td>
+                          <?php if($_SESSION['role'] == '1'){ ?>
+                           <td><?php echo $record['booking_email'];?></td>
+                           <?php } ?>
+                          
                            <td><?php echo $record['user_email'];?></td>
                           <td><?php $date = date_create ($record['booking_date']);
 								echo date_format($date,"d M Y");?>

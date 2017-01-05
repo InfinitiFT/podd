@@ -341,7 +341,7 @@ if(isset($_REQUEST['submit'])){
                       
                       
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">About 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Venue Description 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <textarea id="about"  class="form-control" name="about" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
@@ -395,7 +395,7 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Max number of people </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Maximum covers </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="people" name="people"  value="<?php if($_POST['people']){ echo $_POST['people'];}else{ echo '';} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>

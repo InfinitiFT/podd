@@ -49,7 +49,12 @@
                       <tbody>
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
-                          <td><?php echo $record['restaurant_name'];?></td>
+                          <td><?php if(strlen($record['restaurant_name'])>300){
+                    echo $small = stripslashes(substr($record['restaurant_name'], 0, 30)).'.........';
+                    }
+                    else{
+                      echo $small = stripslashes($record['restaurant_name']);
+                      } ?></td>
                           <td><?php echo $record['email'];?></td>
                           <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_location` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
                           <td><?php echo $record['country_code'].$record['mobile_no'];?></td>

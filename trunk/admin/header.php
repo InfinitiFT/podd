@@ -67,23 +67,29 @@
           
                 <ul class="nav side-menu ">
                    <li><a href = "service_management_list.php"><i class="fa fa-home"></i>Service</a></li>
-                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Restaurant & Bars</a>
-                   <ul class="nav child_menu">
-                      <li><a href="restaurant_list.php">Manage Venue</a></li>
-                      <li><a href="booking_list_restaurant.php">Manage bookings</a></li>
-                      <li><a href="booking_history.php">History</a></li> 
-                  </ul>
-                   </li>
-                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Delivery</a></li>
+                   <li><a href = "#"><i class="fa fa-home"></i>Restaurant & Bars</a>
+                       <ul class="nav child_menu">
+                          <li><a href="restaurant_list.php">Manage Venue</a></li>
+                          <li><a href="booking_list_restaurant.php">Manage bookings</a></li>
+                          <li><a href="booking_history.php">History</a></li> 
+                      </ul>
+                  </li>
+                   
                    <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Taxi</a></li>
                    <li><a href = "admin_message.php"><i class="fa fa-home"></i>Admin Message</a></li>
                    <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li>
+                   <li><a href = "#"><i class="fa fa-home"></i>Delivery</a>
+                   <ul class="nav child_menu">
+                      <li><a href="restaurant_list_delivery.php">Manage Venue</a></li>
+                      <li><a href="booking_list_restaurant_delivery.php">Manage bookings</a></li>
+                      <li><a href="booking_history_delivery.php">History</a></li> 
+                  </ul>
                 </ul>
               
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
 					 <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
-                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking</a></li>
+                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
                    <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu</a></li>
                    <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
                    <li><a href = "booking_history.php"><i class="fa fa-home"></i>History</a></li>

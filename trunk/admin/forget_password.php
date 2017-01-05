@@ -78,7 +78,7 @@ if(isset($_POST["submit"]))
       if(mail($to,$subject,$message,$headers)){ 
           if(mysqli_query($GLOBALS['conn'],"UPDATE `users` SET `password`='".md5($password)."' WHERE `email`='".$email."'"))
           {
-        	$_SESSION["successmsg"] = "Password Send to your email.";
+        	$_SESSION["successmsg"] = "password sent to your email.";
           }
           else
           {
@@ -90,7 +90,7 @@ if(isset($_POST["submit"]))
        }  
      } 
       else{
-       $_SESSION["errormsg"] = "Invalid Email.";
+       $_SESSION["errormsg"] = "Email doesnot exists in database.";
      }
 
     }

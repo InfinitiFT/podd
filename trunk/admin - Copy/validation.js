@@ -106,7 +106,10 @@ $.validator.methods.alreadyEmail = function(value, element) {
   $("#addResturant").validate({
 	  ignore: "",
     rules: {
-		name: "required",
+		name: {
+        required: true,
+        maxlength: 256
+      },
 		email: {
 				required: true,
 				email: true,
@@ -134,7 +137,10 @@ $.validator.methods.alreadyEmail = function(value, element) {
 },
 
     messages: {
-		name: "Please enter name.",
+		name: {
+            required:"Please enter name",
+            maxlength: "Name maximum 256 charecters"
+          },
 		email: {
                   required:"Please enter email",
                    email: "Please enter valid email",
@@ -168,7 +174,10 @@ $.validator.methods.alreadyEmail = function(value, element) {
   $("#editResturant").validate({
 	  ignore: "",
     rules: {
-		name: "required",
+		name: {
+        required: true,
+        maxlength: 256
+      },
 		email: {
 				required: true,
 				email: true,
@@ -198,7 +207,10 @@ $.validator.methods.alreadyEmail = function(value, element) {
 },
 
     messages: {
-		name: "Please enter name.",
+		name: {
+            required:"Please enter name",
+            maxlength: "Name maximum 256 charecters"
+          },
 		email: {
                   required:"Please enter email",
                    email: "Please enter valid email",
@@ -384,7 +396,6 @@ $.validator.methods.alreadyitemedit = function(value, element) {
     name: {
       required:true,
       minlength:2,
-      maxlength:100,
       alreadyitem:true,
       }
     },
@@ -392,9 +403,7 @@ $.validator.methods.alreadyitemedit = function(value, element) {
     name: {
       required: "Please enter your item.",
       alreadyitem: "Item already added in database .",
-      minlength:"Please enter atleast 2 characters",
-      maxlength:"Please enter only 100 characters"
-      
+      minlength:"Please enter atleast 2 characters"
       }
       
      
@@ -409,7 +418,6 @@ $.validator.methods.alreadyitemedit = function(value, element) {
     name: {
       required:true,
       minlength:2,
-      maxlength:100,
       alreadyitemedit:true,
       
 
@@ -419,7 +427,6 @@ $.validator.methods.alreadyitemedit = function(value, element) {
     name: {
       required: "Please enter your item.",
       minlength:"Please enter atleast 2 characters",
-      maxlength:"Please enter only 100 characters",
       alreadyitemedit: "Item already added in database ."
       
       }

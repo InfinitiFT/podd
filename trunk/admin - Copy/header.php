@@ -89,7 +89,7 @@
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
 					 <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
-                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking</a></li>
+                  <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
                    <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu</a></li>
                    <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
                    <li><a href = "booking_history.php"><i class="fa fa-home"></i>History</a></li>
