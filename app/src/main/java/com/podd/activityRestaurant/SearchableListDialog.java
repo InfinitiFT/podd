@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -35,7 +35,7 @@ public class SearchableListDialog extends DialogFragment implements
 
     private static final String ITEMS = "items";
 
-    private ArrayAdapter listAdapter;
+    private ArrayAdapter<String> listAdapter;
 
     private ListView _listViewItems;
 
@@ -104,8 +104,8 @@ public class SearchableListDialog extends DialogFragment implements
             _searchableItem = (SearchableItem) savedInstanceState.getSerializable("item");
         }
         // Change End
-
-        View rootView = inflater.inflate(R.layout.searchable_list_dialog, null);
+        ViewGroup nullPass = null;
+        View rootView = inflater.inflate(R.layout.searchable_list_dialog, nullPass);
         setData(rootView);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
@@ -201,7 +201,7 @@ public class SearchableListDialog extends DialogFragment implements
         _listViewItems = (ListView) rootView.findViewById(R.id.listItems);
 
         //create the adapter by passing your ArrayList data
-        listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
+        listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
                 items);
         //attach the adapter to the list
         _listViewItems.setAdapter(listAdapter);

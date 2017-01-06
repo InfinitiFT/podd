@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityTaxi;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,9 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,87 +28,120 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.podd.R;
-import com.podd.adapter.HomeItemsAdapter;
+import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
-import com.podd.model.HomeItemsModel;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
-    private ImageView ivPodd;
-    private TextView tvAdminMessage;
-    private TextView tvPersonal;
-    private RecyclerView rvHomeItems;
-    private HomeItemsAdapter homeItemsAdapter;
+/**
+ * The type Home screen activity.
+ */
+public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, LocationResult {
     private Context context;
-    private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
-    private int itemsImages[]={R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4,R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4};
-    private String itemsName[] = {"Front\nDesk" , "Food &\nDrinks", "Taxi &\nLimousines", "Car \nHire", "Health &\nWellness", "Beauty \nServices", "Art &\nCulture", "Happening \nin London"};
+    private TextView tvDiscoverLondon;
+    private TextView tvServicedApartment;
+    private TextView tvStayLondon;
+    private TextView tvFood;
+    private TextView tvTaxi;
+    private TextView tvHealth;
+    private TextView tvHappeningInLondon;
+    private LinearLayout llHappening;
+    private LinearLayout llHealth;
+    private LinearLayout llTaxi;
+    private LinearLayout llFood;
+    private ImageView ivFood;
+    private ImageView ivTaxi;
+    private ImageView ivHealth;
+    private ImageView ivHappeningInLondon;
     private Intent intent;
-    private int REQUEST_LOCATION=123;
+    private final int REQUEST_LOCATION=123;
     private LocationManager locationManager;
     private LocationTracker locationTracker;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_home_screen);
-        context=NewHomeScreenActivity.this;
+        setContentView(R.layout.activity_home_screen);
+        context=HomeScreenActivity.this;
         getIds();
-        setRecycler();
-        setRecyclerData();
+        setListeners();
 
         locationTracker = new LocationTracker(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        checkPermission();
 
     }
 
-    private void setRecycler() {
-        homeItemsAdapter = new HomeItemsAdapter(context,homeItemsModelList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
-        rvHomeItems.setLayoutManager(mLayoutManager);
-        rvHomeItems.setAdapter(homeItemsAdapter);
-    }
-
-    private void setRecyclerData(){
-
-        for (int i = 0; i < itemsName.length; i++) {
-            HomeItemsModel homeItemsModel = new HomeItemsModel();
-            homeItemsModel.setItemName(itemsName[i]);
-            homeItemsModel.setItemImage(itemsImages[i]);
-
-            homeItemsModelList.add(homeItemsModel);
-        }
+    private void setListeners() {
+        llFood.setOnClickListener(this);
+        llTaxi.setOnClickListener(this);
 
     }
 
     private void getIds() {
-        ivPodd= (ImageView) findViewById(R.id.ivPodd);
-        tvAdminMessage= (TextView) findViewById(R.id.tvAdminMessage);
-        tvPersonal= (TextView) findViewById(R.id.tvPersonal);
-        rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
+        tvDiscoverLondon= (TextView) findViewById(R.id.tvDiscoverLondon);
+        tvServicedApartment= (TextView) findViewById(R.id.tvServicedApartment);
+        tvStayLondon= (TextView) findViewById(R.id.tvStayLondon);
+        tvFood= (TextView) findViewById(R.id.tvFood);
+        tvTaxi= (TextView) findViewById(R.id.tvTaxi);
+        tvHealth= (TextView) findViewById(R.id.tvHealth);
+        tvHappeningInLondon= (TextView) findViewById(R.id.tvHappeningInLondon);
+        llHappening= (LinearLayout) findViewById(R.id.llHappening);
+        llHealth= (LinearLayout) findViewById(R.id.llHealth);
+        llTaxi= (LinearLayout) findViewById(R.id.llTaxi);
+        llFood= (LinearLayout) findViewById(R.id.llfood);
+        ivFood= (ImageView) findViewById(R.id.ivfood);
+        ivTaxi= (ImageView) findViewById(R.id.ivTaxi);
+        ivHealth= (ImageView) findViewById(R.id.ivHealth);
+        ivHappeningInLondon= (ImageView) findViewById(R.id.ivHappeningInLondon);
+
+
+
     }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+            case R.id.llfood:
+                checkPermission();
+                break;
+            case R.id.llTaxi:
+                intent =new Intent(context,MainHomeScreenThreeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
     /*=============================================Location============================================*/
     private void checkPermission() {
-        if (CommonUtils.checkPermissionGPS(NewHomeScreenActivity.this)) {
+        if (CommonUtils.checkPermissionGPS(HomeScreenActivity.this)) {
 
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 enableLoc();
 
             } else {
-
+                intent=new Intent(context, BestRestaurantNearCity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         } else {
-            CommonUtils.requestPermissionGPS(NewHomeScreenActivity.this);
+            CommonUtils.requestPermissionGPS(HomeScreenActivity.this);
         }
     }
 
@@ -202,6 +235,4 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     public void gotLocation(Location location) {
 
     }
-
-
 }

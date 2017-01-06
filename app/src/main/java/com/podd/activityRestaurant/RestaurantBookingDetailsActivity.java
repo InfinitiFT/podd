@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,13 +64,13 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String restaurantName;
     private final String[] numberOfPeopleArray = {"Number of People", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private String date;
-    private String TAG = RestaurantBookingDetailsActivity.class.getSimpleName();
+    private final String TAG = RestaurantBookingDetailsActivity.class.getSimpleName();
     private String restaurantantId;
     private String location;
-    public String dateBooked;
-    public String timeBooked;
-    public String noOfPersons;
-    List<String> restaurant_time_interval;
+    private String dateBooked;
+    private String timeBooked;
+    private String noOfPersons;
+    private List<String> restaurant_time_interval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
 
     private void selectNumberOfPeopleAdapter() {
-        ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_textview_spinner_type, numberOfPeopleArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.row_textview_spinner_type, numberOfPeopleArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectPeople.setAdapter(adapter);
 
@@ -214,8 +215,8 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat smdf = new SimpleDateFormat("dd/MM/yyyy");
-                date = smdf.format(calendar.getTime());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                date = simpleDateFormat.format(calendar.getTime());
                 //selected = Long.parseLong(String.valueOf((CommonUtils.getTimeStampDate(date, "dd/MM/yyyy"))));
 
                 tvSelectfromCalender.setText(date);
@@ -275,7 +276,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                         if (response.body().restaurant_time_interval.size() > 0) {
                             restaurant_time_interval.clear();
                             restaurant_time_interval = response.body().restaurant_time_interval;
-                            ArrayAdapter adapter = new ArrayAdapter(context, R.layout.row_textview_spinner_type, response.body().restaurant_time_interval);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.row_textview_spinner_type, response.body().restaurant_time_interval);
                             adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
                             spSelectTime.setAdapter(adapter);
 

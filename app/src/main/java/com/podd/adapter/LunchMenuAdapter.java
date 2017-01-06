@@ -9,11 +9,8 @@ import android.widget.TextView;
 
 import com.podd.R;
 
-/**
- * Created by Shalini Bishnoi on 16-12-2016.
- */
 public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyViewHolder>{
-    private Context context;
+    private final Context context;
 
     /**
      * Instantiates a new Lunch menu adapter.
@@ -50,7 +47,7 @@ public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyV
         /**
          * The Tv item.
          */
-        TextView tvItem;
+        final TextView tvItem;
 
         /**
          * Instantiates a new My view holder.

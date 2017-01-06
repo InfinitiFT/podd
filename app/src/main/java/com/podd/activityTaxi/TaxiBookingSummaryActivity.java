@@ -1,4 +1,4 @@
-package com.podd.activitytaxi;
+package com.podd.activityTaxi;
 
 import android.content.Context;
 import android.content.Intent;

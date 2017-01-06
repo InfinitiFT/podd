@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context="com.podd.activityrestauarant.RestaurantDetailScreenActivity">
+    tools:context="com.podd.activityRestaurant.RestaurantDetailScreenActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -141,7 +141,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="Glutten free, Italian"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
@@ -174,7 +174,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="$5 - $10"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
@@ -207,7 +207,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="City of London"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
@@ -240,7 +240,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="500m"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 

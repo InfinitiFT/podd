@@ -8,18 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.podd.R;
-import com.podd.activityrestauarant.BestRestaurantNearCity;
+import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.model.HomeItemsModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Shalini Bishnoi on 31-12-2016.
- */
+
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
-    private Context context;
+    private final Context context;
     private List<HomeItemsModel>homeItemsModelList;
     private Intent intent;
 
@@ -40,8 +40,56 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
-        holder.ivItemImage.setImageResource(homeItemsModel.getItemImage());
-        holder.tvItemName.setText(homeItemsModel.getItemName());
+        if(homeItemsModel.service_image!= null){
+            Picasso.with(context).load(homeItemsModel.service_image).into(holder.ivItemImage);
+        }
+
+        if(homeItemsModel.service_name!= null){
+            holder.tvItemName.setText(homeItemsModel.service_name);
+        }
+        final String serviceName = homeItemsModel.service_name;
+
+        holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(serviceName){
+                    case "Front Desk":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Restaurants & Bars":
+                        intent=new Intent(context, BestRestaurantNearCity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                        break;
+                    case "Delivery":
+                        break;
+                    case "Taxi & Limousines":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Car Hire":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Health & Wellness":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Beauty services":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Art & Culture":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Happening in London":
+                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        switch (homeItemsModel.service_name){
+
+
+        }
+
+
         if (position==1){
             holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,8 +111,8 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvItemName;
-        private ImageView ivItemImage;
+        private final TextView tvItemName;
+        private final ImageView ivItemImage;
         public MyViewHolder(View itemView) {
             super(itemView);
             tvItemName= (TextView) itemView.findViewById(R.id.tvItemName);

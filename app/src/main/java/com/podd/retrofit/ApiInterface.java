@@ -19,9 +19,11 @@ import retrofit2.http.Path;
  */
 public interface ApiInterface {
 
+    @POST("get_service_list.php")
+    Call<JsonResponse>getServiceList();
 
     @POST("restaurant_list.php")
-    Call<JsonResponse>getRestautantsList(@Body JsonRequest jsonRequest);
+    Call<JsonResponse>getRestaurantsList(@Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
     Call<JsonResponse>getCuisineRestaurantList(@Body JsonRequest jsonRequest);
@@ -45,18 +47,18 @@ public interface ApiInterface {
     Call<JsonResponse>getRestaurantTimeInterval(@Body JsonRequest jsonRequest);
 
     @POST("restaurant_booking.php")
-    public Call<JsonResponse>sendOtp(@Body JsonRequest jsonRequest);
+    Call<JsonResponse>sendOtp(@Body JsonRequest jsonRequest);
 
 
     @POST("otp_verification.php")
-    public Call<JsonResponse>otpVerification(@Body JsonRequest jsonRequest);
+    Call<JsonResponse>otpVerification(@Body JsonRequest jsonRequest);
 
     @POST("resend_otp.php")
-    public Call<JsonResponse>resendOtp(@Body JsonRequest jsonRequest);
+    Call<JsonResponse>resendOtp(@Body JsonRequest jsonRequest);
 
 
     @POST("search_restaurant.php")
-    public Call<JsonResponse>getSearchRestaurantApi(@Body JsonRequest jsonRequest);
+    Call<JsonResponse>getSearchRestaurantApi(@Body JsonRequest jsonRequest);
 
 
 

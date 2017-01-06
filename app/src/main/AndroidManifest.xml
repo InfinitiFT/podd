@@ -11,12 +11,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activityrestauarant.NewHomeScreenActivity"
+        <activity android:name=".activityRestaurant.NewHomeScreenActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
 
@@ -27,51 +26,51 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activityrestauarant.MainHomeScreenSecondActivity"
+            android:name=".activityRestaurant.MainHomeScreenSecondActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activitytaxi.MainHomeScreenThreeActivity"
+            android:name=".activityTaxi.MainHomeScreenThreeActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.RestaurantDetailScreenActivity"
+            android:name=".activityRestaurant.RestaurantDetailScreenActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activitytaxi.BookTaxiActivity"
+            android:name=".activityTaxi.BookTaxiActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activitytaxi.TaxiBookingSummaryActivity"
+            android:name=".activityTaxi.TaxiBookingSummaryActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activitytaxi.TaxiReturnToHomeScreen"
+            android:name=".activityTaxi.TaxiReturnToHomeScreen"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.BestRestaurantNearCity"
+            android:name=".activityRestaurant.BestRestaurantNearCity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.RestaurantBookingDetailsActivity"
+            android:name=".activityRestaurant.RestaurantBookingDetailsActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.BookingSummaryActivity"
+            android:name=".activityRestaurant.BookingSummaryActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.RestaurantReturnToHomeActivity"
+            android:name=".activityRestaurant.RestaurantReturnToHomeActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.ViewMenuActivity"
+            android:name=".activityRestaurant.ViewMenuActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityrestauarant.ViewInMapActivity"
+            android:name=".activityRestaurant.ViewInMapActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 

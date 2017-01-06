@@ -3,6 +3,7 @@ package com.podd.webservices;
 import com.podd.model.Ambience;
 import com.podd.model.Cuisine;
 import com.podd.model.Dietary;
+import com.podd.model.HomeItemsModel;
 import com.podd.model.Pagination;
 import com.podd.model.Restaurant;
 import com.podd.model.RestaurantMenu;
@@ -55,6 +56,7 @@ public class JsonResponse implements Serializable{
     /*   Restaurant time interval  */
 
     public List<String>restaurant_time_interval;
+    public List<HomeItemsModel>allServiceList;
 
 
 

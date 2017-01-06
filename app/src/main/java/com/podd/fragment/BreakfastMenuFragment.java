@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import com.podd.R;
 import com.podd.adapter.LunchMenuAdapter;
 
-/**
- * Created by Shalini Bishnoi on 02-01-2017.
- */
+
 public class BreakfastMenuFragment extends Fragment{
     private Context context;
     private View view;

@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import com.podd.R;
-import com.podd.activitytaxi.HomeScreenActivity;
+import com.podd.activityTaxi.HomeScreenActivity;
 import com.podd.utils.AppConstant;
 
 /**
@@ -63,8 +63,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
-        TextView tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
-        TextView tvThanks = (TextView) findViewById(R.id.tvThanks);
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 
 import android.app.Dialog;
@@ -37,13 +37,12 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText etEmail;
     private TextView tvCompleteBooking;
-    private TextView tvBookingSummary;
     private TextView tvRestaurantName;
     private TextView tvLocation;
     private TextView tvDateBooked;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
-    private TextView tvConfirmation;
+
     private Dialog dialogConfirmBooking;
     private EditText etEnterOtp;
     private String location;
@@ -52,12 +51,11 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String noOfPersons;
     private String restaurantName;
     private String restaurantId;
-    private String TAG=BookingSummaryActivity.class.getSimpleName();
-    private String name;
+    private final String TAG=BookingSummaryActivity.class.getSimpleName();
     private String email;
     private String phone;
     private String otp;
-    private final String[]Countrycode={"+93","+91","+358","+355","+213","+1684","+376","+244","+1264","+1268","+54","+374","+297","+61","+43","+994","+1242","+973","+880","+1246","+375","+32","+501","+229","+1441","+975","+591","+5997","+387","+267","+55","+246","+1284","+1 340","+673","+359","+226","+257","+855","+237","+1","+238","+1345","+236","+235","+56","+86","+61","+57","+269","+242","+243","+682","+506","+385","+53","+599","+357","+420","+45","+253","+1767","+1809","+1849","+1829","+593","+503","+240","+291","+372","+251","+500","+298","+679","+358","+33","+594","+689","+241","+220","+995","+49","+233","+350","+299","+1473","+590","+1671","+502","+44","+224","+245","+592","+509","+379","+504"};
+    private final String[]countryCodeArray={"+93","+91","+358","+355","+213","+1684","+376","+244","+1264","+1268","+54","+374","+297","+61","+43","+994","+1242","+973","+880","+1246","+375","+32","+501","+229","+1441","+975","+591","+5997","+387","+267","+55","+246","+1284","+1 340","+673","+359","+226","+257","+855","+237","+1","+238","+1345","+236","+235","+56","+86","+61","+57","+269","+242","+243","+682","+506","+385","+53","+599","+357","+420","+45","+253","+1767","+1809","+1849","+1829","+593","+503","+240","+291","+372","+251","+500","+298","+679","+358","+33","+594","+689","+241","+220","+995","+49","+233","+350","+299","+1473","+590","+1671","+502","+44","+224","+245","+592","+509","+379","+504"};
     private String countryCode;
 
     @Override
@@ -87,7 +85,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     }
 
     private void setSpinner() {
-        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,Countrycode);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,countryCodeArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spCountryCode.setAdapter(adapter);
     }
@@ -98,13 +96,13 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
-        tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
+       TextView tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
         tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
-        tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
+       TextView tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

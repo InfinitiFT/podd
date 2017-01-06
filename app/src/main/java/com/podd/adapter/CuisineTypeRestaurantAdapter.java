@@ -11,16 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.podd.R;
-import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
+import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.model.Cuisine;
 
 import java.util.List;
 
-/**
- * Created by Shalini Bishnoi on 21-12-2016.
- */
+
 public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineTypeRestaurantAdapter.MyViewHolder>{
-    private Context context;
+    private final Context context;
     private List<Cuisine>cuisineList;
 
     /**
@@ -53,7 +51,7 @@ public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineT
         holder.tvRestaurantName.setText(cuisine.name);
         holder.tvDistance.setVisibility(View.GONE);
         holder.tvPriceRange.setVisibility(View.GONE);
-        holder.tvtypeofRestaurant.setVisibility(View.GONE);
+        holder.tvtypeOfRestaurant.setVisibility(View.GONE);
         holder.tvLocation.setVisibility(View.GONE);
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +76,7 @@ public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineT
         private LinearLayout llMain;
         private ImageView ivRestaurant;
         private TextView tvRestaurantName;
-        private TextView tvtypeofRestaurant;
+        private TextView tvtypeOfRestaurant;
         private TextView tvLocation;
         private TextView tvDistance;
         private TextView tvPriceRange;
@@ -94,7 +92,7 @@ public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineT
             llMain= (LinearLayout) itemView.findViewById(R.id.llMain);
             ivRestaurant= (ImageView) itemView.findViewById(R.id.ivRestaurant);
             tvRestaurantName= (TextView) itemView.findViewById(R.id.tvRestaurantName);
-            tvtypeofRestaurant= (TextView) itemView.findViewById(R.id.tvtypeofRestaurant);
+            tvtypeOfRestaurant= (TextView) itemView.findViewById(R.id.tvtypeofRestaurant);
             tvLocation= (TextView) itemView.findViewById(R.id.tvLocation);
             tvDistance= (TextView) itemView.findViewById(R.id.tvDistance);
             tvPriceRange= (TextView) itemView.findViewById(R.id.tvPriceRange);

@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -55,13 +55,13 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private RecyclerView rvRestaurants;
     private Context context;
     private Intent intent;
-    private String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
-    private List<String>restaurantList=new ArrayList<>();
+    private final String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
+    private final List<String>restaurantList=new ArrayList<>();
     private String latitude,longitude,lat,longi;
     private String restaurantId;
     private String restaurantname;
     private String location;
-    private List<String> categories=new ArrayList<>();
+    private final List<String> categories=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

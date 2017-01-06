@@ -1,4 +1,4 @@
-package com.podd.activitytaxi;
+package com.podd.activityTaxi;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.podd.R;
 
@@ -34,7 +33,7 @@ public class MainHomeScreenThreeActivity extends AppCompatActivity implements Vi
         tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
         tvGoingSomewhere= (TextView) findViewById(R.id.tvGoingSomewhere);
         ivTaxi= (ImageView) findViewById(R.id.ivTaxi);
-        ImageView ivHeader= (ImageView) findViewById(R.id.ivHeader);
+
     }
 
     private void setListeners() {

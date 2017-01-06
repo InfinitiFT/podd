@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.location.Address;
@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,18 +48,12 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private RecyclerView rvRestaurants;
     private Context context;
     private BestRestaurantAdapter bestRestaurantAdapter;
-    private TextView tvDeliveredtoYou;
     private TextView tvBusiness;
-    private TextView tvAmbience;
     private TextView tvMealType;
-    private TextView tvMeal;
-    private TextView tvCuisinetype;
-    private TextView tvCuisine;
-    private TextView tvDietary;
+
+    private TextView tvCuisineType;
     private TextView tvLocationType;
-    private TextView tvLocation;
     private TextView tvDietaryType;
-    private TextView tvSearchBy;
     private TextView tvCityName;
     private TextView tvNearbyRestaurant;
     private LinearLayout llLocation;
@@ -144,18 +137,18 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         llLocation = (LinearLayout) findViewById(R.id.llLocation);
         tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
-        tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
+       TextView tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
         tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
-        tvLocation = (TextView) findViewById(R.id.tvLocation);
+       TextView tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvLocationType = (TextView) findViewById(R.id.tvLocationType);
-        tvDietary = (TextView) findViewById(R.id.tvDietary);
-        tvCuisine = (TextView) findViewById(R.id.tvCuisine);
-        tvCuisinetype = (TextView) findViewById(R.id.tvCuisinetype);
-        tvMeal = (TextView) findViewById(R.id.tvMeal);
+       TextView tvDietary = (TextView) findViewById(R.id.tvDietary);
+        TextView tvCuisine = (TextView) findViewById(R.id.tvCuisine);
+        tvCuisineType = (TextView) findViewById(R.id.tvCuisineType);
+       TextView tvMeal = (TextView) findViewById(R.id.tvMeal);
         tvMealType = (TextView) findViewById(R.id.tvMealType);
-        tvAmbience = (TextView) findViewById(R.id.tvAmbience);
+       TextView tvAmbience = (TextView) findViewById(R.id.tvAmbience);
         tvBusiness = (TextView) findViewById(R.id.tvBusiness);
-        tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredtoYou);
+        TextView tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -277,7 +270,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.page_size = "10";
         jsonRequest.page_number = pageNumber;
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().getRestautantsList(jsonRequest);
+        Call<JsonResponse> call = ApiClient.getApiService().getRestaurantsList(jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -632,7 +625,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         switch (selectedItem){
 
             case "cuisine":
-                tvCuisinetype.setText(cuisine.name);
+                tvCuisineType.setText(cuisine.name);
                 cuisineId=cuisine.id;
                 locationId="";
                 dietaryId="";
@@ -654,7 +647,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 tvDietaryType.setText("");
                 tvMealType.setText("");
                 tvBusiness.setText("");
-                tvCuisinetype.setText("");
+                tvCuisineType.setText("");
                 callsearchedTextApi(pageNo);
                 break;
             case "dietary":
@@ -666,7 +659,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 locationId="";
                 tvMealType.setText("");
                 tvBusiness.setText("");
-                tvCuisinetype.setText("");
+                tvCuisineType.setText("");
                 tvLocationType.setText("");
                 callsearchedTextApi(pageNo);
 
@@ -679,7 +672,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 locationId="";
                 mealId="";
                 tvBusiness.setText("");
-                tvCuisinetype.setText("");
+                tvCuisineType.setText("");
                 tvLocationType.setText("");
                 tvDietaryType.setText("");
                 callsearchedTextApi(pageNo);
@@ -692,7 +685,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 locationId="";
                 mealId="";
                 dietaryId="";
-                tvCuisinetype.setText("");
+                tvCuisineType.setText("");
                 tvLocationType.setText("");
                 tvDietaryType.setText("");
                 tvMealType.setText("");
@@ -760,8 +753,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 CommonUtils.disMissProgressDialog(context);
-                Log.e(TAG, t.toString());
-
             }
         });
     }
