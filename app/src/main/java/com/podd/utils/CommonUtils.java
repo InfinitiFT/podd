@@ -37,6 +37,7 @@ import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -1618,6 +1619,21 @@ public class CommonUtils {
     public static boolean checkPermissionGPS(Activity context) {
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
         return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static  int getDeviceWidth(Activity mContext)
+    {
+        Display mDisplay = mContext.getWindowManager().getDefaultDisplay();
+        final int width  = mDisplay.getWidth();
+
+        return  width;
+    }
+
+    public  static int getDeviceHeight(Activity mContext)
+    {
+        Display mDisplay = mContext.getWindowManager().getDefaultDisplay();
+        final int width  = mDisplay.getHeight();
+        return  width;
     }
 
 

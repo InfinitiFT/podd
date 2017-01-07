@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,8 +58,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private HomeItemsAdapter homeItemsAdapter;
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
-    private int itemsImages[]={R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4,R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4};
-    private String itemsName[] = {"Front\nDesk" , "Food &\nDrinks", "Taxi &\nLimousines", "Car \nHire", "Health &\nWellness", "Beauty \nServices", "Art &\nCulture", "Happening \nin London"};
+ //   private int itemsImages[]={R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4,R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4};
+  //  private String itemsName[] = {"Front\nDesk" , "Food &\nDrinks", "Taxi &\nLimousines", "Car \nHire", "Health &\nWellness", "Beauty \nServices", "Art &\nCulture", "Happening \nin London"};
     private Intent intent;
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
@@ -72,7 +73,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         context=NewHomeScreenActivity.this;
         getIds();
         setRecycler();
-        setRecyclerData();
+        //setRecyclerData();
 
         if(CommonUtils.isNetworkConnected(this)){
             callHomeApi();
@@ -99,6 +100,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         homeItemsModelList.clear();
+                        tvAdminMessage.setText(Html.fromHtml(response.body().message));
                         if (response.body().allServiceList != null && response.body().allServiceList.size() > 0) {
                             homeItemsModelList.addAll(response.body().allServiceList);
                             homeItemsAdapter.notifyDataSetChanged();
@@ -131,7 +133,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         rvHomeItems.setAdapter(homeItemsAdapter);
     }
 
-    private void setRecyclerData(){
+   /* private void setRecyclerData(){
 
         for (int i = 0; i < itemsName.length; i++) {
             HomeItemsModel homeItemsModel = new HomeItemsModel();
@@ -141,7 +143,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             homeItemsModelList.add(homeItemsModel);
         }
 
-    }
+    }*/
 
     private void getIds() {
         ivPodd= (ImageView) findViewById(R.id.ivPodd);

@@ -122,4 +122,5 @@
     <string name="date_booked_">Date Booked :</string>
     <string name="time_booked_">Time Booked :</string>
     <string name="number_of_people_">Number of people :</string>
+    <string name="coming_soon">Coming soon</string>
 </resources>

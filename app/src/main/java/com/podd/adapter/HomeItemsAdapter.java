@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
+import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
 import com.podd.model.HomeItemsModel;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +55,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
             public void onClick(View view) {
                 switch(serviceName){
                     case "Front Desk":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Restaurants & Bars":
                         intent=new Intent(context, BestRestaurantNearCity.class);
@@ -62,35 +63,35 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
                         context.startActivity(intent);
                         break;
                     case "Delivery":
+                        intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
                         break;
                     case "Taxi & Limousines":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Car Hire":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Health & Wellness":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Beauty services":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Art & Culture":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Happening in London":
-                        Toast.makeText(context,"Coming soon",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         });
-        switch (homeItemsModel.service_name){
 
 
-        }
 
-
-        if (position==1){
+        /*if (position==1){
             holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -99,7 +100,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
                     context.startActivity(intent);
                 }
             });
-        }
+        }*/
 
 
     }

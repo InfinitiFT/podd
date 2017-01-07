@@ -8,7 +8,7 @@ public class HomeItemsModel {
     public String service_image;
 
 
-    public int getItemImage() {
+   /* public int getItemImage() {
         return ItemImage;
     }
 
@@ -25,6 +25,6 @@ public class HomeItemsModel {
     }
 
     private int ItemImage;
-    private String ItemName;
+    private String ItemName;*/
 
 }

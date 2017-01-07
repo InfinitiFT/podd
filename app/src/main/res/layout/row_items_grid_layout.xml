@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="bottom"
-
         android:orientation="vertical">
 
 
@@ -38,7 +37,7 @@
                 android:id="@+id/tvRestaurantName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/restaraunt_name"
+                android:text=""
                 android:textSize="@dimen/text_size_8"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
@@ -48,7 +47,7 @@
                 android:id="@+id/tvtypeofRestaurant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dietary"
+                android:text=""
                 android:textSize="@dimen/text_size_8"
                 android:textStyle="bold"
 
@@ -65,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/location"
+                android:text=""
                 android:textStyle="bold"
 
                 android:textSize="@dimen/text_size_8"
@@ -77,7 +76,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/distance"
+                    android:text=""
                     android:textStyle="bold"
 
                     android:textSize="@dimen/text_size_8"
@@ -91,7 +90,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/price_range"
+                    android:text=""
                     android:textStyle="bold"
 
                     android:textSize="@dimen/text_size_8"

@@ -36,6 +36,7 @@ public class JsonResponse implements Serializable{
     public String restaurant_id;
     public String restaurant_name;
     public String location;
+    public String message;
     public String postcode;
     public String latitude;
     public String longitude;
@@ -56,7 +57,7 @@ public class JsonResponse implements Serializable{
     /*   Restaurant time interval  */
 
     public List<String>restaurant_time_interval;
-    public List<HomeItemsModel>allServiceList;
+    public List<HomeItemsModel> allServiceList;
 
 
 

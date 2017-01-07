@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.podd.R;
 import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
+import com.podd.activityRestaurant.ViewMenuActivity;
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
+public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestRestaurantForDeliveryAdapter.MyViewHolder> {
     private final Context context;
     private List<Restaurant> restaurantList = new ArrayList<>();
     private String location;
@@ -34,7 +35,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
      * @param context        the context
      * @param restaurantList the restaurant list
      */
-    public BestRestaurantAdapter(Context context, List<Restaurant> restaurantList) {
+    public BestRestaurantForDeliveryAdapter(Context context, List<Restaurant> restaurantList) {
 
         this.context = context;
         this.restaurantList = restaurantList;
@@ -46,7 +47,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_grid_layout, parent, false);
-        return new BestRestaurantAdapter.MyViewHolder(view);
+        return new BestRestaurantForDeliveryAdapter.MyViewHolder(view);
     }
 
     @Override
@@ -58,8 +59,6 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.viewBottom.setVisibility(View.GONE);
         }
         Restaurant restaurant = restaurantList.get(position);
-
-
 
 
             holder.tvRestaurantName.setText(restaurant.restaurant_name);
@@ -99,10 +98,11 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                 holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
             }
 
+
             holder.llMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
+                    Intent intent = new Intent(context, ViewMenuActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
                     intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
@@ -111,6 +111,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                     context.startActivity(intent);
                 }
             });
+
     }
 
 

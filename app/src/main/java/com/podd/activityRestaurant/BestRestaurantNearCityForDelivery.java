@@ -4,8 +4,8 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.BestRestaurantAdapter;
+import com.podd.adapter.BestRestaurantForDeliveryAdapter;
 import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
@@ -36,18 +37,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-
-public class BestRestaurantNearCity extends AppCompatActivity implements View.OnClickListener,SearchableListDialog.SearchableItem {
+public class BestRestaurantNearCityForDelivery extends AppCompatActivity implements View.OnClickListener,SearchableListDialog.SearchableItem {
 
     private RecyclerView rvRestaurants;
     private Context context;
-    private BestRestaurantAdapter bestRestaurantAdapter;
+    private BestRestaurantForDeliveryAdapter bestRestaurantAdapter;
     private TextView tvBusiness;
     private TextView tvMealType;
 
@@ -67,7 +66,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private List<Cuisine> cuisineList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
     private List<String> location=new ArrayList<>();
-    private String TAG = BestRestaurantNearCity.class.getSimpleName();
+    private String TAG = BestRestaurantNearCityForDelivery.class.getSimpleName();
     private int pageNo = 1;
     private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
     private  ArrayAdapter adapterLocation;
@@ -87,7 +86,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_best_restaurant_near_city);
-        context = BestRestaurantNearCity.this;
+        context = BestRestaurantNearCityForDelivery.this;
         getIds();
         setListeners();
         if (CommonUtils.isOnline(context)) {
@@ -176,14 +175,14 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                 currentLat = location.getLatitude();
                 currentLong = location.getLongitude();
-                CommonUtils.savePreferencesString(BestRestaurantNearCity.this, AppConstant.LATITUDE,String.valueOf(currentLat));
-                CommonUtils.savePreferencesString(BestRestaurantNearCity.this, AppConstant.LONGITUDE,String.valueOf(currentLong));
+                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LATITUDE,String.valueOf(currentLat));
+                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LONGITUDE,String.valueOf(currentLong));
                 Log.i("ChangeLocationActivity", "Location_Latitude" + String.valueOf(currentLat));
                 Log.i("ChangeLocationActivity", "Location_Longitude" + String.valueOf(currentLong));
                 try {
                     Geocoder geocoder;
                     List<Address> addresses;
-                    geocoder = new Geocoder(BestRestaurantNearCity.this, Locale.getDefault());
+                    geocoder = new Geocoder(BestRestaurantNearCityForDelivery.this, Locale.getDefault());
 
                     addresses = geocoder.getFromLocation(currentLat, currentLong, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
@@ -268,7 +267,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.latitude = String.valueOf(currentLat);
         jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.page_size = "10";
-        jsonRequest.deliver_food = "";
+        jsonRequest.deliver_food = "1";
         jsonRequest.page_number = pageNumber;
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = ApiClient.getApiService().getRestaurantsList(jsonRequest);
@@ -277,13 +276,14 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_list);
                             gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
                             rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
+                            bestRestaurantAdapter = new BestRestaurantForDeliveryAdapter(context, restaurantList);
                             rvRestaurants.setAdapter(bestRestaurantAdapter);
                             rvRestaurants.setNestedScrollingEnabled(false);
                         } else {
@@ -337,7 +337,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem="cuisine";
-                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCityForDelivery.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
                             Log.d(TAG, "Number of data received: " + cuisineList.size());
@@ -395,7 +395,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem="dietary";
-                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCityForDelivery.this);
                             _searchableListDialog.show(getFragmentManager(), TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
 
@@ -457,7 +457,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                                     (cuisineList);
                             selectedItem="ambience";
 
-                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCityForDelivery.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
 
@@ -517,7 +517,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem="location";
-                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCityForDelivery.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
 
@@ -583,7 +583,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem="meal";
-                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCityForDelivery.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
                         }
@@ -728,7 +728,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             restaurantList.addAll(response.body().restaurant_list);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
                             rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
+                            bestRestaurantAdapter = new BestRestaurantForDeliveryAdapter(context, restaurantList);
                             rvRestaurants.setAdapter(bestRestaurantAdapter);
                             rvRestaurants.setNestedScrollingEnabled(false);
                         } else {
