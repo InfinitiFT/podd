@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
@@ -79,11 +80,14 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         context = RestaurantBookingDetailsActivity.this;
         getIds();
         restaurant_time_interval = new ArrayList<>();
-        restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
-        restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
-        tvRestauarntName.setText(restaurantName);
-        restaurantantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
-        location = getIntent().getStringExtra(AppConstant.LOCATION);
+        if(getIntent()!= null) {
+            restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
+            restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+            tvRestauarntName.setText(restaurantName);
+            restaurantantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
+            location = getIntent().getStringExtra(AppConstant.LOCATION);
+
+        }
         getRestauranttimeIntervalApi();
         selectNumberOfPeopleAdapter();
         setAdapter();
@@ -155,17 +159,15 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBookNow:
-                dateBooked = tvDateBooked.getText().toString().trim();
+                /*dateBooked = tvDateBooked.getText().toString().trim();
                 timeBooked = tvTimeBooked.getText().toString().trim();
-                noOfPersons = tvNoOfPersons.getText().toString().trim();
-
+                noOfPersons = tvNoOfPersons.getText().toString().trim();*/
                 if (isValid()) {
-
                     intent = new Intent(context, BookingSummaryActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(AppConstant.DATEBOOKED, dateBooked);
-                    intent.putExtra(AppConstant.TIMEBOOKED, timeBooked);
-                    intent.putExtra(AppConstant.NOOFPEOPLE, noOfPersons);
+                    intent.putExtra(AppConstant.DATEBOOKED, tvDateBooked.getText().toString().trim());
+                    intent.putExtra(AppConstant.TIMEBOOKED, tvTimeBooked.getText().toString().trim());
+                    intent.putExtra(AppConstant.NOOFPEOPLE, tvNoOfPersons.getText().toString().trim());
                     intent.putExtra(AppConstant.LOCATION, location);
                     intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantantId);
@@ -261,11 +263,12 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
     private void getRestauranttimeIntervalApi() {
         CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id = restaurantantId;
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().getRestaurantTimeInterval(jsonRequest);
+        Call<JsonResponse> call = apiServices.getRestaurantTimeInterval(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {

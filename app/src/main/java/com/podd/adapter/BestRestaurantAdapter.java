@@ -58,14 +58,24 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.viewBottom.setVisibility(View.GONE);
         }
         Restaurant restaurant = restaurantList.get(position);
-
-
-
-
+        if(restaurant.restaurant_name!= null){
             holder.tvRestaurantName.setText(restaurant.restaurant_name);
+        }else{
+            holder.tvRestaurantName.setText("");
+        }
+
+        if(restaurant.location!= null){
             holder.tvLocation.setText(restaurant.location);
-            location = holder.tvLocation.getText().toString().trim();
+        }else{
+            holder.tvLocation.setText("");
+        }
+        if(restaurant.distance!= null){
             holder.tvDistance.setText(restaurant.distance);
+        }else{
+            holder.tvDistance.setText("");
+        }
+            location = holder.tvLocation.getText().toString().trim();
+
 
             if (restaurant.price_range != null) {
                 String priceRange = restaurant.price_range;
@@ -92,8 +102,8 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Picasso.with(context)
                         .load(restaurantList.get(position).restaurant_images.get(0))
-                        .placeholder(R.mipmap.place_holder) // optional
-                        .error(R.mipmap.place_holder)         // optional
+                        .placeholder(R.color.colorPrimaryDark) // optional
+                        .error(R.color.colorPrimaryDark)         // optional
                         .into(holder.ivRestaurant);
             } else {
                 holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
@@ -107,7 +117,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
                     intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
                     intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
-                    intent.putExtra(location, location);
+                    intent.putExtra(location, restaurantList.get(position).location);
                     context.startActivity(intent);
                 }
             });

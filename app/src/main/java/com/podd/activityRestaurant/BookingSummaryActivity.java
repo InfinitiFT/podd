@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.DialogUtils;
@@ -205,10 +206,9 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         return true;
     }
 
-
-
     private void sendOtpApi() {
         CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id="";
         jsonRequest.booking_date="";
@@ -218,9 +218,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.email=etEmail.getText().toString().trim();
         jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
 
-
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().sendOtp(jsonRequest);
+        Call<JsonResponse> call = apiServices.sendOtp(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -253,6 +252,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void otpVerificationApi() {
         CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id=restaurantId;
         jsonRequest.booking_date=dateBooked;
@@ -263,7 +263,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
         jsonRequest.otp=etEnterOtp.getText().toString().trim();
        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().otpVerification(jsonRequest);
+        Call<JsonResponse> call = apiServices.otpVerification(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -309,11 +309,12 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void resendOtpService() {
         CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().resendOtp(jsonRequest);
+        Call<JsonResponse> call = apiServices.resendOtp(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {

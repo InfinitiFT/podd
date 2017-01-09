@@ -33,11 +33,13 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if(restaurantList.get(position)!=null){
-            Picasso.with(context)
-                    .load(restaurantList.get(position))
-                    .placeholder(R.color.colorPrimaryDark) // optional
-                    .error(R.color.colorPrimaryDark)         // optional
-                    .into(holder.ivRestaurantImage);
+            for (int i = 0; i <restaurantList.size() ; i++) {
+                Picasso.with(context)
+                        .load(restaurantList.get(position))
+                        .placeholder(R.color.colorPrimaryDark) // optional
+                        .error(R.color.colorPrimaryDark)         // optional
+                        .into(holder.ivRestaurantImage);
+            }
         }else {
             holder.ivRestaurantImage.setImageResource(R.color.colorPrimaryDark);
         }

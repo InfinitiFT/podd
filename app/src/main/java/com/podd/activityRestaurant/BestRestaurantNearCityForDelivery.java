@@ -28,6 +28,7 @@ import com.podd.location.LocationTracker;
 import com.podd.model.Cuisine;
 import com.podd.model.Restaurant;
 import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
@@ -89,12 +90,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         context = BestRestaurantNearCityForDelivery.this;
         getIds();
         setListeners();
-        if (CommonUtils.isOnline(context)) {
-
-            fetchLocation();
-        } else {
-            Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
-        }
+        fetchLocation();
     }
 
 
@@ -167,59 +163,37 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     }
 
     private void fetchLocation() {
-        CommonUtils.showProgressDialog(context);
-
         new LocationTracker(context, new LocationResult() {
             @Override
             public void gotLocation(Location location) {
-
                 currentLat = location.getLatitude();
                 currentLong = location.getLongitude();
+                getAddressFromPlaceApi(String.valueOf(currentLat),String.valueOf(currentLong));
                 CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LATITUDE,String.valueOf(currentLat));
                 CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LONGITUDE,String.valueOf(currentLong));
-                Log.i("ChangeLocationActivity", "Location_Latitude" + String.valueOf(currentLat));
-                Log.i("ChangeLocationActivity", "Location_Longitude" + String.valueOf(currentLong));
-                try {
-                    Geocoder geocoder;
-                    List<Address> addresses;
-                    geocoder = new Geocoder(BestRestaurantNearCityForDelivery.this, Locale.getDefault());
-
-                    addresses = geocoder.getFromLocation(currentLat, currentLong, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-
-                    if (addresses.size() > 0) {
-                        String address = TextUtils.isEmpty(addresses.get(0).getAddressLine(0)) ? "" : addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                        String area = TextUtils.isEmpty(addresses.get(0).getSubLocality()) ? "" : ", " + addresses.get(0).getSubLocality();
-                        String city = TextUtils.isEmpty(addresses.get(0).getLocality()) ? "" : addresses.get(0).getLocality();
-                        String state = TextUtils.isEmpty(addresses.get(0).getAdminArea()) ? "" : addresses.get(0).getAdminArea();
-                        String country = TextUtils.isEmpty(addresses.get(0).getCountryName()) ? "" : addresses.get(0).getCountryName();
-                        String postalCode = TextUtils.isEmpty(addresses.get(0).getPostalCode()) ? "" : addresses.get(0).getPostalCode();
-                        String knownName = TextUtils.isEmpty(addresses.get(0).getFeatureName()) ? "" : addresses.get(0).getFeatureName(); // Only if available else return NULL
-
-                        Log.i("ChangeLocationActivity", ":::address:::" + address);
-                        Log.i("ChangeLocationActivity", ":::area:::" + area);
-                        Log.i("ChangeLocationActivity", ":::city:::" + city);
-                        Log.i("ChangeLocationActivity", ":::state:::" + state);
-                        Log.i("ChangeLocationActivity", ":::country:::" + country);
-                        Log.i("ChangeLocationActivity", ":::postalCode:::" + postalCode);
-                        Log.i("ChangeLocationActivity", ":::knownName:::" + knownName);
-                        if (address.equalsIgnoreCase("null"))
-                            address = "";
-                        if (area.equalsIgnoreCase(", null"))
-                            area = "";
-                        if (city.equalsIgnoreCase("null"))
-                            city = "";
-                        if (country.equalsIgnoreCase("null"))
-                            country = "";
-                        CommonUtils.disMissProgressDialog(context);
-                        tvCityName.setText(address);
-                        getRestaurantListApi(currentLat, currentLong, pageNo);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         }).onUpdateLocation();
+    }
+
+    private void getAddressFromPlaceApi(String currLat,String currLong) {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        String latLong= currLat+","+ currLong;
+        Call<JsonResponse> call = apiServices.getPlaceApi(latLong);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                tvCityName.setText(response.body().results.get(0).formatted_address);
+                getRestaurantListApi(currentLat, currentLong, pageNo);
+            }
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
     }
 
     @Override
@@ -263,6 +237,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     private void getRestaurantListApi(final double currentLat, double currentLong, int pageNumber) {
         CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.latitude = String.valueOf(currentLat);
         jsonRequest.longitude = String.valueOf(currentLong);
@@ -270,7 +245,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         jsonRequest.deliver_food = "1";
         jsonRequest.page_number = pageNumber;
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().getRestaurantsList(jsonRequest);
+        Call<JsonResponse> call = apiServices.getRestaurantsList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -313,13 +288,13 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     private void getCuisineRestaurantListApi() {
         CommonUtils.showProgressDialog(context);
-
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "cuisine";
         jsonRequest.search_content="";
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getCuisineRestaurantList(jsonRequest);
+        Call<JsonResponse> call = apiServices.getCuisineRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -371,13 +346,13 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     /******************************Dietary Restaurant List Api******************************/
     private void getDietaryRestaurantListApi() {
         CommonUtils.showProgressDialog(context);
-
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "dietary";
         jsonRequest.search_content="";
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getDietaryRestaurantList(jsonRequest);
+        Call<JsonResponse> call = apiServices.getDietaryRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -432,13 +407,13 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     private void getAmbienceRestaurantListApi() {
         CommonUtils.showProgressDialog(context);
-
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "ambience";
         jsonRequest.search_content="";
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getAmbienceRestaurantList(jsonRequest);
+        Call<JsonResponse> call = apiServices.getAmbienceRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -493,13 +468,13 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     private void getLocationRestaurantListApi() {
         CommonUtils.showProgressDialog(context);
-
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "location";
         jsonRequest.search_content="";
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getLocationRestaurantList(jsonRequest);
+        Call<JsonResponse> call = apiServices.getLocationRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -559,13 +534,13 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     private void getMealRestaurantListApi() {
         CommonUtils.showProgressDialog(context);
-
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "meal";
         jsonRequest.search_content=tvMealType.getText().toString().trim();
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getMealRestaurantList(jsonRequest);
+        Call<JsonResponse> call = apiServices.getMealRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -701,7 +676,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     private void callsearchedTextApi(int pageNumber) {
         CommonUtils.showProgressDialog(context);
-
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.cusine = cuisineId;
         jsonRequest.dietary = dietaryId;
@@ -714,7 +689,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         jsonRequest.page_size="10";
        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
-        Call<JsonResponse> call = ApiClient.getApiService().getSearchRestaurantApi(jsonRequest);
+        Call<JsonResponse> call = apiServices.getSearchRestaurantApi(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {

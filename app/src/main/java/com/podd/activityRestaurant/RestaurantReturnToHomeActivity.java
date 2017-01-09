@@ -64,8 +64,6 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
 
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

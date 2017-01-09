@@ -38,6 +38,7 @@ import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
 import com.podd.model.HomeItemsModel;
 import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
@@ -90,8 +91,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
     private void callHomeApi() {
         CommonUtils.showProgressDialog(context);
-
-        Call<JsonResponse> call = ApiClient.getApiService().getServiceList();
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        Call<JsonResponse> call = apiServices.getServiceList(CommonUtils.getPreferences(this,AppConstant.AppToken));
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {

@@ -23,5 +23,6 @@ public class AppConstant {
     public static final String DATEBOOKED="date_booked";
     public static final String TIMEBOOKED="time_booked";
     public static final String NOOFPEOPLE="no_of_people";
+    public static final String AppToken="app_token";
 
 }
