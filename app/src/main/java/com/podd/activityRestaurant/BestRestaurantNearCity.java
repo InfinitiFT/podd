@@ -30,6 +30,7 @@ import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
+import com.podd.utils.Logger;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -172,11 +173,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 /*currentLat = 51.4662;
                 currentLong = 0.1617;*/
                 if(CommonUtils.isNetworkConnected(BestRestaurantNearCity.this)){
-
+                    getAddressFromPlaceApi(String.valueOf(currentLat),String.valueOf(currentLong));
                 }else{
-
+                    Toast.makeText(BestRestaurantNearCity.this,getString(R.string.server_not_responding),Toast.LENGTH_SHORT).show();
                 }
-                getAddressFromPlaceApi(String.valueOf(currentLat),String.valueOf(currentLong));
+
                 CommonUtils.savePreferencesString(BestRestaurantNearCity.this, AppConstant.LATITUDE,String.valueOf(currentLat));
                 CommonUtils.savePreferencesString(BestRestaurantNearCity.this, AppConstant.LONGITUDE,String.valueOf(currentLong));
             }
@@ -194,12 +195,14 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 CommonUtils.disMissProgressDialog(context);
                 tvCityName.setText(response.body().results.get(0).formatted_address);
                 getRestaurantListApi(currentLat, currentLong, pageNo);
+                Logger.addRecordToLog("Response "+response);
             }
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 CommonUtils.disMissProgressDialog(context);
+                Logger.addRecordToLog("Exception :"+t.getMessage());
+                CommonUtils.disMissProgressDialog(context);
                 Log.e(TAG, t.toString());
-
             }
         });
     }
