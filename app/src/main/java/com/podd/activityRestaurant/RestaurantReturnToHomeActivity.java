@@ -38,20 +38,22 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_return_to_home);
         context = RestaurantReturnToHomeActivity.this;
-        restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
-        restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
-        dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
-        timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
-        location = getIntent().getStringExtra(AppConstant.LOCATION);
-        noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
-
         getIds();
         setListeners();
-        tvRestauarntName.setText(restaurantName);
-        tvLocation.setText(location);
-        tvTimeBooked.setText(timeBooked);
-        tvDateBooked.setText(dateBooked);
-        tvNumberofPeople.setText(noOfPersons);
+        if(getIntent()!=null) {
+            restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+            restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
+            dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
+            timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
+            location = getIntent().getStringExtra(AppConstant.LOCATION);
+            noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
+
+            tvRestauarntName.setText(restaurantName);
+            tvLocation.setText(location);
+            tvTimeBooked.setText(timeBooked);
+            tvDateBooked.setText(dateBooked);
+            tvNumberofPeople.setText(noOfPersons);
+        }
 
 
     }

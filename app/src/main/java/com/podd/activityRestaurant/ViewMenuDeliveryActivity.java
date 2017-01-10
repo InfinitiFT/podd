@@ -47,11 +47,13 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         context = ViewMenuDeliveryActivity.this;
         getIds();
         setListeners();
-        restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
-        restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
-        restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
-        location = getIntent().getStringExtra(AppConstant.LOCATION);
-        tvRestaurantName.setText(restaurantName);
+        if(getIntent()!=null) {
+            restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
+            restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+            restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
+            location = getIntent().getStringExtra(AppConstant.LOCATION);
+            tvRestaurantName.setText(restaurantName);
+        }
         setAdapter();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
