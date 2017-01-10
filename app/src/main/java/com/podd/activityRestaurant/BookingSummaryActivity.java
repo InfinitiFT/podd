@@ -68,18 +68,20 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         setListeners();
         setSpinner();
         etName.requestFocus();
-        restaurantName=getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
-        location=getIntent().getStringExtra(AppConstant.LOCATION);
-        dateBooked=getIntent().getStringExtra(AppConstant.DATEBOOKED);
-        timeBooked=getIntent().getStringExtra(AppConstant.TIMEBOOKED);
-        noOfPersons=getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
-        restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+        if(getIntent()!=null) {
+            restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+            location = getIntent().getStringExtra(AppConstant.LOCATION);
+            dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
+            timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
+            noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
+            restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
 
-        tvRestaurantName.setText(restaurantName);
-        tvLocation.setText(location);
-        tvDateBooked.setText(dateBooked);
-        tvTimeBooked.setText(timeBooked);
-        tvNumberofPeople.setText(noOfPersons);
+            tvRestaurantName.setText(restaurantName);
+            tvLocation.setText(location);
+            tvDateBooked.setText(dateBooked);
+            tvTimeBooked.setText(timeBooked);
+            tvNumberofPeople.setText(noOfPersons);
+        }
 
 
 

@@ -184,11 +184,32 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
                         rvRestaurants.setLayoutManager(mLayoutManager);
                         rvRestaurants.setAdapter(RestaurantsAdapter);
-                        tvDescriptionRestaraunt.setText(response.body().about_text);
-                        tvNameRestaraunt.setText(response.body().restaurant_name);
-                        restaurantname=response.body().restaurant_name;
-                        tvLocation.setText(response.body().location);
-                        tvDistance.setText(response.body().distance);
+                        if(response.body().about_text!=null) {
+                            tvDescriptionRestaraunt.setText(response.body().about_text);
+                        }
+                        else{
+                            tvDescriptionRestaraunt.setText("");
+                        }
+                        if(response.body().restaurant_name!=null) {
+                            tvNameRestaraunt.setText(response.body().restaurant_name);
+                            restaurantname=response.body().restaurant_name;
+                        }
+                        else{
+                            tvNameRestaraunt.setText("");
+                            restaurantname=tvNameRestaraunt.getText().toString().trim();
+                        }
+                        if (response.body().location!=null) {
+                            tvLocation.setText(response.body().location);
+                        }
+                        else {
+                            tvLocation.setText("");
+                        }
+                        if (response.body().distance!=null) {
+                            tvDistance.setText(response.body().distance);
+                        }
+                        else {
+                            tvDistance.setText("");
+                        }
                         if(response.body().price_range!=null&&response.body().price_range.length()>0) {
                             String priceRange = response.body().price_range;
                             String[] splited = priceRange.split("-");
@@ -200,7 +221,13 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             tvPriceRange.setText(response.body().price_range);
                         }
-                        tvRestauarntName.setText(response.body().restaurant_name);
+
+                        if(response.body().restaurant_name!=null) {
+                            tvRestauarntName.setText(response.body().restaurant_name);
+                        }
+                        else {
+                            tvRestauarntName.setText("");
+                        }
 
                         if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
                             for (int i = 0; i <response.body().cuisine.size() ; i++) {
