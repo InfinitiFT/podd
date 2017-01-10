@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
@@ -55,13 +56,13 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private RecyclerView rvRestaurants;
     private Context context;
     private Intent intent;
-    private String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
-    private List<String>restaurantList=new ArrayList<>();
+    private final String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
+    private final List<String>restaurantList=new ArrayList<>();
     private String latitude,longitude,lat,longi;
     private String restaurantId;
     private String restaurantname;
     private String location;
-    private List<String> categories=new ArrayList<>();
+    private final List<String> categories=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +71,15 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         context=RestaurantDetailScreenActivity.this;
         getIds();
         setListeners();
-        latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
-        longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
+        if(getIntent()!=null){
+            latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
+            longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
+            restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+        }
+
         lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);
         longi = CommonUtils.getPreferences(this,AppConstant.LONGITUDE);
-        restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+
         getRestaurantDetailApi();
     }
 
@@ -160,90 +165,83 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
     private void getRestaurantDetailApi() {
         CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.latitude = latitude;
         jsonRequest.longitude = longitude;
         jsonRequest.restaurant_id = restaurantId;
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
-        Call<JsonResponse> call = ApiClient.getApiService().getRestaurantDetails(jsonRequest);
+        Call<JsonResponse> call = apiServices.getRestaurantDetails(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
+
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-                        if (response.body()!=null) {
+                        restaurantList.clear();
+                        restaurantList.addAll(response.body().restaurant_images);
+                        RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context,restaurantList);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+                        rvRestaurants.setLayoutManager(mLayoutManager);
+                        rvRestaurants.setAdapter(RestaurantsAdapter);
+                        tvDescriptionRestaraunt.setText(response.body().about_text);
+                        tvNameRestaraunt.setText(response.body().restaurant_name);
+                        restaurantname=response.body().restaurant_name;
+                        tvLocation.setText(response.body().location);
+                        tvDistance.setText(response.body().distance);
+                        if(response.body().price_range!=null&&response.body().price_range.length()>0) {
+                            String priceRange = response.body().price_range;
+                            String[] splited = priceRange.split("-");
 
-                            restaurantList.clear();
-                            restaurantList.addAll(response.body().restaurant_images);
-                            RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context,restaurantList);
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
-                            rvRestaurants.setLayoutManager(mLayoutManager);
-                            rvRestaurants.setAdapter(RestaurantsAdapter);
-                            tvDescriptionRestaraunt.setText(response.body().about_text);
-                            tvNameRestaraunt.setText(response.body().restaurant_name);
-                            restaurantname=response.body().restaurant_name;
-                            tvLocation.setText(response.body().location);
-                            tvDistance.setText(response.body().distance);
-                            if(response.body().price_range!=null&&response.body().price_range.length()>0) {
-                                String priceRange = response.body().price_range;
-                                String[] splited = priceRange.split("-");
+                            String split_one = splited[0];
+                            String split_second = splited[1];
+                            tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
+                        }
+                        else {
+                            tvPriceRange.setText(response.body().price_range);
+                        }
+                        tvRestauarntName.setText(response.body().restaurant_name);
 
-                                String split_one = splited[0];
-                                String split_second = splited[1];
-                                tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
-                            }
-                            else {
-                                tvPriceRange.setText(response.body().price_range);
-                            }
-                            tvRestauarntName.setText(response.body().restaurant_name);
+                        if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
+                            for (int i = 0; i <response.body().cuisine.size() ; i++) {
+                                if(response.body().cuisine.get(i).name!=null && !response.body().cuisine.get(i).name.equalsIgnoreCase("") )
 
-                            if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
-                                for (int i = 0; i <response.body().cuisine.size() ; i++) {
-                                    if(response.body().cuisine.get(i).name!=null && !response.body().cuisine.get(i).name.equalsIgnoreCase("") )
-
-                                        categories.add(response.body().cuisine.get(i).name);
-                                }
+                                    categories.add(response.body().cuisine.get(i).name);
                             }
-                            else {
-                                Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
-                            }
-
-                            if(response.body().dietary!=null&&response.body().dietary.size()>0) {
-                                for (int i = 0; i <response.body().dietary.size() ; i++) {
-                                    if(response.body().dietary.get(i).name!=null && !response.body().dietary.get(i).name.equalsIgnoreCase("") )
-
-                                        categories.add(response.body().dietary.get(i).name);
-                                }
-                            }
-                            else {
-                                Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
-                            }
-
-                            if(response.body().ambience!=null&&response.body().ambience.size()>0) {
-                                for (int i = 0; i <response.body().ambience.size() ; i++) {
-                                    if(response.body().ambience.get(i).name!=null && !response.body().ambience.get(i).name.equalsIgnoreCase("") )
-                                    categories.add(response.body().ambience.get(i).name);
-                                }
-                            }
-                            else {
-                                Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
-                            }
-                            String s1="";
-                            for (int i = 0; i <categories.size() ; i++) {
-
-                                    s1 = categories.get(i) + ", " + s1;
-                            }
-                             tvCategory.setText(s1);
-
-                        } else {
+                        }
+                        else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
+
+                        if(response.body().dietary!=null&&response.body().dietary.size()>0) {
+                            for (int i = 0; i <response.body().dietary.size() ; i++) {
+                                if(response.body().dietary.get(i).name!=null && !response.body().dietary.get(i).name.equalsIgnoreCase("") )
+
+                                    categories.add(response.body().dietary.get(i).name);
+                            }
+                        }
+                        else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(response.body().ambience!=null&&response.body().ambience.size()>0) {
+                            for (int i = 0; i <response.body().ambience.size() ; i++) {
+                                if(response.body().ambience.get(i).name!=null && !response.body().ambience.get(i).name.equalsIgnoreCase("") )
+                                    categories.add(response.body().ambience.get(i).name);
+                            }
+                        }
+                        else {
+                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                        }
+                        String s1="";
+                        for (int i = 0; i <categories.size() ; i++) {
+
+                            s1 = categories.get(i) + ", " + s1;
+                        }
+                        tvCategory.setText(s1);
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
                 }

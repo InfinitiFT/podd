@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.podd.activitytaxi.HomeScreenActivity">
+    tools:context="com.podd.activityTaxi.HomeScreenActivity">
 
     <include layout="@layout/toolbar"/>
 
@@ -65,7 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/ivfood"
@@ -92,7 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/ivTaxi"
@@ -120,7 +122,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/ivHealth"
@@ -150,7 +153,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/ivHappeningInLondon"

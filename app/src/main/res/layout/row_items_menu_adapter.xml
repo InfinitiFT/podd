@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:background="@color/colorPrimaryDark"
-        android:text="Panner"
+        android:text=""
         android:textSize="@dimen/text_size_10"
         android:padding="@dimen/dp_4"/>
 

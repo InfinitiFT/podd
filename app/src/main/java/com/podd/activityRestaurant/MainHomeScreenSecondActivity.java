@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;

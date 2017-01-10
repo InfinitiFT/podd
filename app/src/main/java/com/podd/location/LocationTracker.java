@@ -36,8 +36,8 @@ public class LocationTracker implements LocationListener, GoogleApiClient.Connec
 
 	private LocationRequest mLocationRequest;
 	private GoogleApiClient mLocationClient;
-	private Context context;
-	private LocationResult locationResult;
+	private final Context context;
+	private final LocationResult locationResult;
 	public static final int REQUEST_CHECK_SETTINGS = 100;
 
 	public LocationTracker(Context context, LocationResult locationResult) {
@@ -137,15 +137,7 @@ public class LocationTracker implements LocationListener, GoogleApiClient.Connec
 
 	private boolean checkPermission(){
 		int result = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-		if (result == PackageManager.PERMISSION_GRANTED){
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
+		return result == PackageManager.PERMISSION_GRANTED;
 	}
 
 

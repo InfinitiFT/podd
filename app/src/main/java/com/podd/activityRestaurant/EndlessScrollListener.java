@@ -1,11 +1,9 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.widget.AbsListView;
-
 
 
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {

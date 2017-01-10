@@ -1,4 +1,4 @@
-package com.podd.activitytaxi;
+package com.podd.activityTaxi;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * The type Book taxi activity.
@@ -35,7 +36,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private Spinner spSelectAdditionalRequirement;
     private TextView tvBookTaxi;
     private TextView tvBookNow;
-    private TextView tvadditionalRequirements;
+    private TextView tvAdditionalRequirements;
     private TextView tvSelectPeople;
     private TextView tvTime;
     private TextView tvSelectfromCalender;
@@ -89,10 +90,10 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         tvDate= (TextView) findViewById(R.id.tvDate);
         tvToday= (TextView) findViewById(R.id.tvToday);
         tvTomorrow= (TextView) findViewById(R.id.tvTomorrow);
-        tvSelectfromCalender= (TextView) findViewById(R.id.tvSelectfromCalender);
+        tvSelectfromCalender= (TextView) findViewById(R.id.tvSelectFromCalender);
         tvTime= (TextView) findViewById(R.id.tvTime);
         tvSelectPeople= (TextView) findViewById(R.id.tvSelectPeople);
-        tvadditionalRequirements= (TextView) findViewById(R.id.tvadditionalRequirements);
+        tvAdditionalRequirements= (TextView) findViewById(R.id.tvAdditionalRequirements);
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
         llInner= (LinearLayout) findViewById(R.id.llInner);
@@ -115,22 +116,22 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void selectAirportAdapter() {
-        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,airportArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,airportArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectAirport.setAdapter(adapter);
     }
     private void selectTimeAdapter() {
-        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,timeArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,timeArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectTime.setAdapter(adapter);
     }
     private void selectNumberOfPeopleAdapter() {
-        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,numberOfPeopleArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,numberOfPeopleArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectPeople.setAdapter(adapter);
     }
     private void selectAdditionalRequirementsAdapter() {
-        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.row_textview_spinner_type,requirementsArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,requirementsArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectAdditionalRequirement.setAdapter(adapter);
     }
@@ -146,7 +147,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(intent);
                 }
                 break;
-            case R.id.tvSelectfromCalender:
+            case R.id.tvSelectFromCalender:
                 tvToday.setText(R.string.today);
                 tvTomorrow.setText(R.string.tomorrow);
                 pickDate();
@@ -205,8 +206,8 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat smdf = new SimpleDateFormat("dd/MM/yyyy");
-                date = smdf.format(calendar.getTime());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                date = simpleDateFormat.format(calendar.getTime());
                 //selected = Long.parseLong(String.valueOf((CommonUtils.getTimeStampDate(date, "dd/MM/yyyy"))));
 
                 tvSelectfromCalender.setText(date);

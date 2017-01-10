@@ -1,4 +1,4 @@
-package com.podd.activityrestauarant;
+package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,6 @@ import com.podd.fragment.DinnerMenuFragment;
 import com.podd.fragment.LunchMenuFragment;
 import com.podd.utils.AppConstant;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +31,8 @@ import java.util.List;
 public class ViewMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private RecyclerView rvRestaurants;
-    private TextView tvRestauarntName;
+    private TextView tvRestaurantName;
     private TextView tvBookNow;
-    private Intent intent;
     private ArrayList<String> restaurantImages;
     private String restaurantName;
     private String restaurantId;
@@ -53,7 +51,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
         location = getIntent().getStringExtra(AppConstant.LOCATION);
-        tvRestauarntName.setText(restaurantName);
+        tvRestaurantName.setText(restaurantName);
         setAdapter();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
@@ -62,7 +60,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     private void getIds() {
 
         rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
-        tvRestauarntName = (TextView) findViewById(R.id.tvRestauarntName);
+        tvRestaurantName = (TextView) findViewById(R.id.tvRestauarntName);
         tvBookNow = (TextView) findViewById(R.id.tvBookNow);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -102,7 +100,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.tvBookNow:
 
-                intent = new Intent(context, RestaurantBookingDetailsActivity.class);
+               Intent intent = new Intent(context, RestaurantBookingDetailsActivity.class);
                 intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
                 intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
                 intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);

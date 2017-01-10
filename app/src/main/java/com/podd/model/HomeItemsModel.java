@@ -3,7 +3,12 @@ package com.podd.model;
 
 public class HomeItemsModel {
 
-    public int getItemImage() {
+    public String id;
+    public String service_name;
+    public String service_image;
+
+
+   /* public int getItemImage() {
         return ItemImage;
     }
 
@@ -20,6 +25,6 @@ public class HomeItemsModel {
     }
 
     private int ItemImage;
-    private String ItemName;
+    private String ItemName;*/
 
 }

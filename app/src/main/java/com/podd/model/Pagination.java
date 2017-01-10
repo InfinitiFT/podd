@@ -2,9 +2,6 @@ package com.podd.model;
 
 import java.io.Serializable;
 
-/**
- * Created by Shalini Bishnoi on 17-12-2016.
- */
 public class Pagination implements Serializable{
 
     /**

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.podd.activitytaxi.MainHomeScreenThreeActivity">
+    tools:context="com.podd.activityTaxi.MainHomeScreenThreeActivity">
 
     <include layout="@layout/toolbar"/>
 

@@ -6,79 +6,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context="com.podd.activityrestauarant.NewHomeScreenActivity">
-
+    android:background="@color/black"
+    tools:context="com.podd.activityRestaurant.NewHomeScreenActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-        <ImageView
-            android:id="@+id/ivPodd"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
-            android:contentDescription="@string/logo"
-            android:src="@mipmap/podd"
-            android:layout_gravity="center"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/tvAdminMessage"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_10"
-            android:text="@string/message_added_from_admin"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:padding="@dimen/dp_8"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivPodd"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:contentDescription="@string/logo"
+                android:src="@mipmap/podd"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvAdminMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_10"
+                    android:text="@string/message_added_from_admin"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="@dimen/dp_8"/>
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/black"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"/>
 
 
-        <TextView
-            android:id="@+id/tvPersonal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/personal_concierge"
-            android:textSize="@dimen/text_size_12"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:padding="@dimen/dp_4"
-            android:gravity="center"/>
-    </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvHomeItems"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:fadingEdge="none"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10"
-        android:background="@color/black"
-        android:orientation="horizontal"
-        android:scrollbars="none" />
-</LinearLayout>
+                <TextView
+                    android:id="@+id/tvPersonal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/personal_concierge"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:padding="@dimen/dp_4"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvHomeItems"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="bottom|center"
+                android:fadingEdge="none"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:scrollbars="none" />
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
 

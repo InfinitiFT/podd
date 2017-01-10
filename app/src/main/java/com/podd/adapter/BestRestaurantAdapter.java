@@ -1,5 +1,6 @@
 package com.podd.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -9,22 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.podd.R;
-import com.podd.activityrestauarant.RestaurantDetailScreenActivity;
+import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
+import com.podd.utils.CommonUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Shalini Bishnoi on 13-12-2016.
- */
+
 public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
-    private Context context;
+    private final Context context;
     private List<Restaurant> restaurantList = new ArrayList<>();
     private String location;
 
@@ -59,57 +58,69 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.viewBottom.setVisibility(View.GONE);
         }
         Restaurant restaurant = restaurantList.get(position);
-        holder.tvRestaurantName.setText(restaurant.restaurant_name);
-        holder.tvLocation.setText(restaurant.location);
-        location = holder.tvLocation.getText().toString().trim();
-        holder.tvDistance.setText(restaurant.distance);
-
-        if(restaurant.price_range!=null) {
-            String priceRange = restaurant.price_range;
-            String[] splited = priceRange.split("-");
-
-            String split_one = splited[0];
-            String split_second = splited[1];
-            holder.tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
-        }
-        else {
-            holder.tvPriceRange.setText("$" + restaurantList.get(position).price_range);
+        if(restaurant.restaurant_name!= null){
+            holder.tvRestaurantName.setText(restaurant.restaurant_name);
+        }else{
+            holder.tvRestaurantName.setText("");
         }
 
-        if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
-            holder.tvtypeofRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
-        } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
-            holder.tvtypeofRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
-        } else if (restaurantList.get(position).ambience != null && restaurantList.get(position).ambience.size() > 0) {
-            holder.tvtypeofRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name);
-        } else {
-            holder.tvtypeofRestaurant.setText(R.string.cuisine);
+        if(restaurant.location!= null){
+            holder.tvLocation.setText(restaurant.location);
+        }else{
+            holder.tvLocation.setText("");
         }
-
-
-        if (restaurantList.get(position).restaurant_images.get(0) != null&&restaurantList.get(position).restaurant_images.size()>0) {
-            Picasso.with(context)
-                    .load(restaurantList.get(position).restaurant_images.get(0).toString())
-                    .placeholder(R.color.colorPrimaryDark) // optional
-                    .error(R.color.colorPrimaryDark)         // optional
-                    .into(holder.ivRestaurant);
-        } else {
-            holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
+        if(restaurant.distance!= null){
+            holder.tvDistance.setText(restaurant.distance);
+        }else{
+            holder.tvDistance.setText("");
         }
+            location = holder.tvLocation.getText().toString().trim();
 
 
-        holder.llMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
-                intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
-                intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
-                intent.putExtra(location, location);
-                context.startActivity(intent);
+            if (restaurant.price_range != null) {
+                String priceRange = restaurant.price_range;
+                String[] split = priceRange.split("-");
+
+                String split_one = split[0];
+                String split_second = split[1];
+                holder.tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
+            } else {
+                holder.tvPriceRange.setText("$" + restaurantList.get(position).price_range);
             }
-        });
+
+            if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
+                holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
+            } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
+                holder.tvtypeOfRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
+            } else if (restaurantList.get(position).ambience != null && restaurantList.get(position).ambience.size() > 0) {
+                holder.tvtypeOfRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name);
+            } else {
+                holder.tvtypeOfRestaurant.setText(R.string.cuisine);
+            }
+
+            holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
+            if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
+                Picasso.with(context)
+                        .load(restaurantList.get(position).restaurant_images.get(0))
+                        .placeholder(R.color.colorPrimaryDark) // optional
+                        .error(R.color.colorPrimaryDark)         // optional
+                        .into(holder.ivRestaurant);
+            } else {
+                holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
+            }
+
+            holder.llMain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
+                    intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
+                    intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
+                    intent.putExtra(location, restaurantList.get(position).location);
+                    context.startActivity(intent);
+                }
+            });
     }
 
 
@@ -125,7 +136,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         private LinearLayout llMain;
         private ImageView ivRestaurant;
         private TextView tvRestaurantName;
-        private TextView tvtypeofRestaurant;
+        private TextView tvtypeOfRestaurant;
         private TextView tvLocation;
         private TextView tvDistance;
         private TextView tvPriceRange;
@@ -141,7 +152,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             llMain = (LinearLayout) itemView.findViewById(R.id.llMain);
             ivRestaurant = (ImageView) itemView.findViewById(R.id.ivRestaurant);
             tvRestaurantName = (TextView) itemView.findViewById(R.id.tvRestaurantName);
-            tvtypeofRestaurant = (TextView) itemView.findViewById(R.id.tvtypeofRestaurant);
+            tvtypeOfRestaurant = (TextView) itemView.findViewById(R.id.tvtypeofRestaurant);
             tvLocation = (TextView) itemView.findViewById(R.id.tvLocation);
             tvDistance = (TextView) itemView.findViewById(R.id.tvDistance);
             tvPriceRange = (TextView) itemView.findViewById(R.id.tvPriceRange);

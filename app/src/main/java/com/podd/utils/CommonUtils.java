@@ -37,6 +37,7 @@ import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -294,9 +295,8 @@ public class CommonUtils {
             in.hideSoftInputFromWindow(view.getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Throwable e) {
+            e.printStackTrace();
         }
-
-
     }
 
 
@@ -306,7 +306,7 @@ public class CommonUtils {
      * @param target the target
      * @return the boolean
      */
-    public final static boolean isValidEmail(CharSequence target) {
+    public static boolean isValidEmail(CharSequence target) {
         return target != null && Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
@@ -391,7 +391,7 @@ public class CommonUtils {
      * @return the timestamp of date
      */
     public static String getTimestampOfDate(String str_date) {
-        java.text.DateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
+        java.text.DateFormat formatter = new SimpleDateFormat("dd-MM-yyy",Locale.getDefault());
         Date date = null;
         try {
             date = formatter.parse(str_date);
@@ -401,8 +401,7 @@ public class CommonUtils {
         }
         assert date != null;
         long value = (date.getTime()) / 1000L;
-        String timestampValue = String.valueOf(value);
-        return timestampValue;
+        return String.valueOf(value);
     }
 
     /**
@@ -412,7 +411,7 @@ public class CommonUtils {
      * @return the timestamp of date yyymmdd
      */
     public static String getTimestampOfDateYYYMMDD(String str_date) {
-        java.text.DateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
+        java.text.DateFormat formatter = new SimpleDateFormat("yyy-MM-dd",Locale.getDefault());
         Date date = null;
         try {
             date = formatter.parse(str_date);
@@ -434,7 +433,7 @@ public class CommonUtils {
      * @return the timestamp of mmddyy
      */
     public static String getTimestampOfMMDDYY(String str_date) {
-        java.text.DateFormat formatter = new SimpleDateFormat("MM/dd/yyy");
+        java.text.DateFormat formatter = new SimpleDateFormat("MM/dd/yyy",Locale.getDefault());
         Date date = null;
         try {
             date = formatter.parse(str_date);
@@ -444,8 +443,7 @@ public class CommonUtils {
         }
         assert date != null;
         long value = (date.getTime()) / 1000L;
-        String timestampValue = String.valueOf(value);
-        return timestampValue;
+        return String.valueOf(value);
     }
 
     /**
@@ -456,7 +454,7 @@ public class CommonUtils {
      * @return the string
      */
     public static String addDayToDate(String date, int noOfDay) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy",Locale.getDefault());
         Date dtStartDate = null;
         try {
             dtStartDate = sdf.parse(date);
@@ -478,7 +476,7 @@ public class CommonUtils {
      * @return the string
      */
     public static String addDayToDateOtherFormat(String date, int noOfDay) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy",Locale.getDefault());
         Date dtStartDate = null;
         try {
             dtStartDate = sdf.parse(date);
@@ -488,8 +486,7 @@ public class CommonUtils {
         Calendar c = Calendar.getInstance();
         c.setTime(dtStartDate);
         c.add(Calendar.DATE, noOfDay);  // number of days to add
-        String resultDate = sdf.format(c.getTime());  // dt is now the new date
-        return resultDate;
+        return sdf.format(c.getTime());
     }
 
     /**
@@ -524,23 +521,7 @@ public class CommonUtils {
 
     }
 
-    /**
-     * Create dir file.
-     *
-     * @return the file
-     * @throws FileNotFoundException the file not found exception
-     */
-    public static File createDir() throws FileNotFoundException {
-        File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File(sdCard.getAbsolutePath() + "/SccOfflineApp/");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(dir, "scc_database.sqlite");
 
-        return file;
-
-    }
 
     /**
      * Show alert exit.
@@ -658,58 +639,7 @@ public class CommonUtils {
         }
     }
 
-    /**
-     * Show alert ok cancel.
-     *
-     * @param message the message
-     * @param v       the v
-     * @param context the context
-     */
-    public static void showAlertOkCancel(String message, final View v, Activity context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
 
-        try {
-            builder.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Progress dialog.
-     *
-     * @param tittle  the tittle
-     * @param message the message
-     * @param context the context
-     */
-    public static void ProgressDialog(String tittle, String message, Activity context) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        // set title
-        alertDialogBuilder.setTitle(tittle);
-        // set dialog message
-        alertDialogBuilder.setMessage(message).setCancelable(false);
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        // show it
-        alertDialog.show();
-        // After some action
-        alertDialog.dismiss();
-    }
 /*
     public final static boolean isValidEmail(CharSequence target) {
 		if (target == null) {  
@@ -728,7 +658,7 @@ public class CommonUtils {
      * @param target the target
      * @return the boolean
      */
-    public final static boolean isValidPhone(CharSequence target) {
+    public static boolean isValidPhone(CharSequence target) {
         return target != null && Patterns.PHONE.matcher(target).matches() && (target.length() >= 10 && target.length() <= 20);
     }
 
@@ -1001,8 +931,7 @@ public class CommonUtils {
         long dv = Long.valueOf(timestamp_in_string) * 1000;// its need to be in milisecond
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(dv);
-        String date = DateFormat.format("hh:mm:ss", cal).toString();
-        return date;
+        return DateFormat.format("hh:mm:ss", cal).toString();
 
     }
 
@@ -1121,9 +1050,6 @@ public class CommonUtils {
 
             File file = new File(imagepath);
             // We need to recyle unused bitmaps
-            if (bitmapImage != null) {
-                bitmapImage.recycle();
-            }
             bitmapImage = reduceImageSize(file, activity);
             int exifOrientation = 0;
             try {
@@ -1166,9 +1092,8 @@ public class CommonUtils {
             } else {
                 int SCALED_PHOTO_WIDTH = 150;
                 int SCALED_PHOTO_HIGHT = 200;
-                Bitmap myBitmap = Bitmap.createScaledBitmap(bitmapImage,
+                bitmapFromMapActivity = Bitmap.createScaledBitmap(bitmapImage,
                         SCALED_PHOTO_WIDTH, SCALED_PHOTO_HIGHT, true);
-                bitmapFromMapActivity = myBitmap;
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -1215,42 +1140,7 @@ public class CommonUtils {
         return m;
     }
 
-    /**
-     * Print key hash string.
-     *
-     * @param context the context
-     * @return the string
-     */
-    public static String printKeyHash(Activity context) {
-        PackageInfo packageInfo;
-        String key = null;
-        try {
-            //getting application package name, as defined in manifest
-            String packageName = context.getApplicationContext().getPackageName();
 
-            //Retriving package info
-            packageInfo = context.getPackageManager().getPackageInfo(packageName,
-                    PackageManager.GET_SIGNATURES);
-
-            Log.e("Package Name=", context.getApplicationContext().getPackageName());
-
-            for (Signature signature : packageInfo.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                key = new String(Base64.encode(md.digest(), 0));
-                // String key = new String(Base64.encodeBytes(md.digest()));
-                Log.e("Key Hash=", key);
-            }
-        } catch (PackageManager.NameNotFoundException e1) {
-            Log.e("Name not found", e1.toString());
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("No such an algorithm", e.toString());
-        } catch (Exception e) {
-            Log.e("Exception", e.toString());
-        }
-
-        return key;
-    }
 
 
     /**
@@ -1432,15 +1322,7 @@ public class CommonUtils {
     public static boolean checkPermissionStorage(Activity context) {
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int result1 = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-
-            return result1 == PackageManager.PERMISSION_GRANTED;
-
-
-        } else {
-            return false;
-
-        }
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -1544,9 +1426,8 @@ public class CommonUtils {
      * @return the string
      */
     public static String encodeTobase64(Bitmap image) {
-        Bitmap immagex=image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
 
@@ -1737,13 +1618,22 @@ public class CommonUtils {
 
     public static boolean checkPermissionGPS(Activity context) {
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
 
-        } else {
-            return false;
+    public static  int getDeviceWidth(Activity mContext)
+    {
+        Display mDisplay = mContext.getWindowManager().getDefaultDisplay();
+        final int width  = mDisplay.getWidth();
 
-        }
+        return  width;
+    }
+
+    public  static int getDeviceHeight(Activity mContext)
+    {
+        Display mDisplay = mContext.getWindowManager().getDefaultDisplay();
+        final int width  = mDisplay.getHeight();
+        return  width;
     }
 
 

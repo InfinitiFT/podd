@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical">
-    
-    
+    android:orientation="vertical"
+    tools:ignore="UseCompoundDrawables">
+
     <ImageView
         android:id="@+id/ivItemImage"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_40"
         android:padding="@dimen/dp_4"
         android:contentDescription="@string/image"
-        android:src="@mipmap/icon2"/>
-
-
-
+        />
 
     <TextView
         android:id="@+id/tvItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="@dimen/dp_4"
-        android:text="@string/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_2"
+        android:text="Restaurants &amp; Bars"
+        android:background="@color/black"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_8"
-        android:gravity="center" />
-    </LinearLayout>
+        android:gravity="center"
+        android:maxEms="1"
+        android:lines="2"/>
+</LinearLayout>
 

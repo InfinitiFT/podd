@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.podd.activitytaxi.TaxiBookingSummaryActivity">
+    tools:context="com.podd.activityTaxi.TaxiBookingSummaryActivity">
 
 
     <include layout="@layout/toolbar"/>
@@ -160,7 +160,7 @@
                             android:id="@+id/tvCountryCode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+91"
+                            android:text=""
                             android:maxLength="4"
                             android:gravity="center"
                             android:textSize="@dimen/text_size_12"

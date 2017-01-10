@@ -10,11 +10,9 @@ import android.widget.LinearLayout;
 import com.podd.R;
 
 
-/**
- * Created by Shalini Bishnoi on 19-12-2016.
- */
+
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.MyViewHolder> {
-    private Context context;
+    private final Context context;
 
     /**
      * Instantiates a new Restaurants list adapter.

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context="com.podd.activityrestauarant.BestRestaurantNearCity">
+    tools:context="com.podd.activityRestaurant.BestRestaurantNearCity">
 
     <include layout="@layout/toolbar" />
 
@@ -40,8 +40,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="start"
-                    android:paddingStart="@dimen/dp_5"
-                    android:text="@string/mayfair"
+                    android:paddingStart="8dp"
+                    android:text=""
+                    android:maxLength="12"
+                    android:ellipsize="end"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="@dimen/text_size_14" />
 
@@ -172,7 +174,7 @@
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView
-                            android:id="@+id/tvCuisinetype"
+                            android:id="@+id/tvCuisineType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -259,7 +261,7 @@
                         android:padding="@dimen/dp_4">
 
                         <TextView
-                            android:id="@+id/tvDeliveredtoYou"
+                            android:id="@+id/tvDeliveredToYou"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
