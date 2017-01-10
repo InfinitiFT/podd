@@ -118,17 +118,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     /*=============================================Location============================================*/
     private void checkPermission() {
         if (CommonUtils.checkPermissionGPS(HomeScreenActivity.this)) {
