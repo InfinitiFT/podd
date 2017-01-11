@@ -75,6 +75,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
             longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
             restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
+            location=getIntent().getStringExtra(AppConstant.LOCATION);
         }
 
         lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);
@@ -156,10 +157,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 startActivity(intent);
 
                 break;
-
-
         }
-
     }
 
 

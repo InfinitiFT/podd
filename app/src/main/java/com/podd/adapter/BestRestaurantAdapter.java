@@ -117,7 +117,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
                     intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
                     intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
-                    intent.putExtra(location, restaurantList.get(position).location);
+                    intent.putExtra(AppConstant.LOCATION, restaurantList.get(position).location);
                     context.startActivity(intent);
                 }
             });

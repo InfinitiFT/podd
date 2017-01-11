@@ -307,17 +307,16 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
 
     private boolean isValid() {
-        if (dateBooked.trim().matches(String.valueOf(R.string.date_booked))) {
+        if (tvDateBooked.getText().toString().trim().matches(getString(R.string.date_booked))) {
             Toast.makeText(context, R.string.please_select_a_valid_date, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (timeBooked.trim().matches(String.valueOf(R.string.time_booked))) {
+        } else if (tvTimeBooked.getText().toString().trim().matches(getString(R.string.time_booked))) {
             Toast.makeText(context, R.string.please_select_a_valid_time, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (noOfPersons.trim().matches(String.valueOf(R.string.number_of_people))) {
+        } else if (tvNoOfPersons.getText().toString().trim().matches(getString(R.string.number_of_persons))) {
             Toast.makeText(context, R.string.please_select_number_of_people, Toast.LENGTH_SHORT).show();
             return false;
         }
-
         return true;
 
     }

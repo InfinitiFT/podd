@@ -92,27 +92,29 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         context = BestRestaurantNearCity.this;
         getIds();
         setListeners();
+        gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
         fetchLocation();
-    }
 
 
-        /*try {
+
+        try {
             scrollListener = new EndlessScrollListener(gridLayoutManager) {
                 @Override
            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                // Triggered only when new data needs to be appended to the list
                // Add whatever code is needed to append new items to the bottom of the list
+
                getRestaurantListApi(currentLat,currentLong,pageNo);
            }
       };
       // Adds the scroll listener to RecyclerView
       rvRestaurants.addOnScrollListener(scrollListener);
-  }catch (Exception exc){
+  }   catch (Exception exc){
             exc.printStackTrace();
         }
         rvRestaurants.addOnScrollListener(scrollListener);
 
-    }*/
+    }
 
     private void setListeners() {
         llDeliveredToYou.setOnClickListener(this);
@@ -266,7 +268,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_list);
-                            gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+
                             rvRestaurants.setLayoutManager(gridLayoutManager);
                             bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
                             rvRestaurants.setAdapter(bestRestaurantAdapter);
