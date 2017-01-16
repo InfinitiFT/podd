@@ -52,15 +52,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
-    private ImageView ivPodd;
-    private TextView tvAdminMessage;
-    private TextView tvPersonal;
+    private ImageView ivRestaurantImage;
+    private TextView tvAdminMessage, tvDayDate,tvTime;
     private RecyclerView rvHomeItems;
     private HomeItemsAdapter homeItemsAdapter;
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
- //   private int itemsImages[]={R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4,R.mipmap.icon1,R.mipmap.icon2,R.mipmap.icon3,R.mipmap.icon4};
-  //  private String itemsName[] = {"Front\nDesk" , "Food &\nDrinks", "Taxi &\nLimousines", "Car \nHire", "Health &\nWellness", "Beauty \nServices", "Art &\nCulture", "Happening \nin London"};
     private Intent intent;
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
@@ -80,7 +77,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             callHomeApi();
         }else {
             Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
-
         }
 
         locationTracker = new LocationTracker(context, this);
@@ -101,7 +97,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         homeItemsModelList.clear();
-                        tvAdminMessage.setText(Html.fromHtml(response.body().message));
                         if (response.body().allServiceList != null && response.body().allServiceList.size() > 0) {
                             homeItemsModelList.addAll(response.body().allServiceList);
                             homeItemsAdapter.notifyDataSetChanged();
@@ -133,24 +128,15 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         rvHomeItems.setLayoutManager(mLayoutManager);
         rvHomeItems.setAdapter(homeItemsAdapter);
     }
-
-   /* private void setRecyclerData(){
-
-        for (int i = 0; i < itemsName.length; i++) {
-            HomeItemsModel homeItemsModel = new HomeItemsModel();
-            homeItemsModel.setItemName(itemsName[i]);
-            homeItemsModel.setItemImage(itemsImages[i]);
-
-            homeItemsModelList.add(homeItemsModel);
-        }
-
-    }*/
+    
 
     private void getIds() {
-        ivPodd= (ImageView) findViewById(R.id.ivPodd);
-        tvAdminMessage= (TextView) findViewById(R.id.tvAdminMessage);
-        tvPersonal= (TextView) findViewById(R.id.tvPersonal);
+        ivRestaurantImage= (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
+        tvTime =(TextView) findViewById(R.id.tvTime);
+        tvDayDate =(TextView) findViewById(R.id.tvDayDate);
+        tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
+        tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
     }
 
 
@@ -169,8 +155,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             CommonUtils.requestPermissionGPS(NewHomeScreenActivity.this);
         }
     }
-
-
 
     private void enableLoc() {
 

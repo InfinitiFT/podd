@@ -34,7 +34,7 @@ public class ApiClient {
     public static Retrofit getClient(Context context) {
         if (retrofit==null) {
 
-            String credentials = "admin"+":"+"1234";
+            String credentials = "Android123Native"+":"+"native@123#";
             final String basic = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
             CommonUtils.savePreferencesString(context, AppConstant.AppToken,basic);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -42,12 +42,10 @@ public class ApiClient {
                 @Override
                 public Response intercept(Interceptor.Chain chain) throws IOException {
                     Request original = chain.request();
-
                     Request request = original.newBuilder()
                             .header("Content-Type", "application/json")
                             .method(original.method(), original.body())
                             .build();
-
                     return chain.proceed(request);
                 }
             });

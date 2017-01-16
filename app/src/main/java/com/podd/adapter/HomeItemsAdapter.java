@@ -41,16 +41,14 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
-        if(homeItemsModel.service_image!= null){
-            Picasso.with(context).load(homeItemsModel.service_image).into(holder.ivItemImage);
-        }
+
 
         if(homeItemsModel.service_name!= null){
             holder.tvItemName.setText(homeItemsModel.service_name);
         }
         final String serviceName = homeItemsModel.service_name;
 
-        holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
+        holder.tvItemName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch(serviceName){
@@ -89,20 +87,6 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
             }
         });
 
-
-
-        /*if (position==1){
-            holder.ivItemImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    intent=new Intent(context, BestRestaurantNearCity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    context.startActivity(intent);
-                }
-            });
-        }*/
-
-
     }
 
 
@@ -113,11 +97,9 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvItemName;
-        private final ImageView ivItemImage;
         public MyViewHolder(View itemView) {
             super(itemView);
             tvItemName= (TextView) itemView.findViewById(R.id.tvItemName);
-            ivItemImage= (ImageView) itemView.findViewById(R.id.ivItemImage);
         }
     }
 }

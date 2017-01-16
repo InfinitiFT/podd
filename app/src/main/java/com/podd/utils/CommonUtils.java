@@ -425,6 +425,26 @@ public class CommonUtils {
         return timestampValue;
     }
 
+    public static String getDateAndTimeFromTimeStamp(long timeStamp) {
+        if (timeStamp > 0) {
+            return new SimpleDateFormat("E, dd MMM yyyy",Locale.getDefault())
+                    .format(new Date((Long.valueOf(timeStamp))));
+        } else {
+
+            return "";
+        }
+    }
+
+    public static String getTimeFromTimeStamp(long timeStamp) {
+        if (timeStamp > 0) {
+            return new SimpleDateFormat("HH:MM a",Locale.getDefault())
+                    .format(new Date((Long.valueOf(timeStamp))));
+        } else {
+
+            return "";
+        }
+    }
+
 
     /**
      * Gets timestamp of mmddyy.
@@ -1004,6 +1024,15 @@ public class CommonUtils {
     public static String getDateAndTimeFromTSDate(String timeStamp) {
         if (timeStamp.length() > 0) {
             return new SimpleDateFormat("MM-dd-yyyy, hh:mm a",Locale.getDefault())
+                    .format(new Date((Long.valueOf(timeStamp) * 1000)));
+        } else {
+            return "";
+        }
+    }
+
+    public static String getDateFromTSDate(String timeStamp) {
+        if (timeStamp.length() > 0) {
+            return new SimpleDateFormat("EEE, dd MMM yyyy",Locale.getDefault())
                     .format(new Date((Long.valueOf(timeStamp) * 1000)));
         } else {
             return "";

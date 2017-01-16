@@ -52,7 +52,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private BestRestaurantAdapter bestRestaurantAdapter;
     private TextView tvBusiness;
     private TextView tvMealType;
-
     private TextView tvCuisineType;
     private TextView tvLocationType;
     private TextView tvDietaryType;
