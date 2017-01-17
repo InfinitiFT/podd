@@ -110,7 +110,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                 }
                 else {
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
-
                 }
             }
 
@@ -128,7 +127,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         rvHomeItems.setLayoutManager(mLayoutManager);
         rvHomeItems.setAdapter(homeItemsAdapter);
     }
-    
 
     private void getIds() {
         ivRestaurantImage= (ImageView) findViewById(R.id.ivRestaurantImage);
@@ -202,7 +200,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
-
 
 
     @Override

@@ -65,7 +65,6 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -79,12 +78,10 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
                 onBackPressed();
             }
         });
-
     }
 
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
-
     }
 
 
@@ -100,7 +97,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.tvBookNow:
 
-               Intent intent = new Intent(context, RestaurantBookingDetailsActivity.class);
+                Intent intent = new Intent(context, RestaurantBookingDetailsActivity.class);
                 intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
                 intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
                 intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
@@ -118,7 +115,6 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         adapter.addFragment(new BreakfastMenuFragment(), "Breakfast Menu");
         adapter.addFragment(new LunchMenuFragment(), "Lunch Menu");
         adapter.addFragment(new DinnerMenuFragment(), "Dinner Menu");
-
         viewPager.setAdapter(adapter);
     }
 
