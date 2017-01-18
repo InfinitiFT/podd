@@ -12,7 +12,6 @@ import com.podd.R;
 
 
 public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsListAdapter.MyViewHolder> {
-    private final Context context;
 
     /**
      * Instantiates a new Restaurants list adapter.
@@ -20,7 +19,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RestaurantsList
      * @param context the context
      */
     public RestaurantsListAdapter(Context context) {
-        this.context=context;
+        Context context1 = context;
 
     }
 

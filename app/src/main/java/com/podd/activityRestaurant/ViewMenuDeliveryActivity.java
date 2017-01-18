@@ -28,6 +28,7 @@ import java.util.List;
 /**
  * The type View menu activity.
  */
+@SuppressWarnings("ALL")
 public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private RecyclerView rvRestaurants;

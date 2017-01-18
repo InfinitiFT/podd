@@ -2,8 +2,8 @@ package com.podd.activityTaxi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +16,6 @@ import com.podd.R;
  */
 public class MainHomeScreenThreeActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvBookTaxi;
-    private TextView tvGoingSomewhere;
-    private ImageView ivTaxi;
     private Context context;
 
     @Override
@@ -31,8 +29,8 @@ public class MainHomeScreenThreeActivity extends AppCompatActivity implements Vi
 
     private void getIds() {
         tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
-        tvGoingSomewhere= (TextView) findViewById(R.id.tvGoingSomewhere);
-        ivTaxi= (ImageView) findViewById(R.id.ivTaxi);
+        TextView tvGoingSomewhere = (TextView) findViewById(R.id.tvGoingSomewhere);
+        ImageView ivTaxi = (ImageView) findViewById(R.id.ivTaxi);
 
     }
 

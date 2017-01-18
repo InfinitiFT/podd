@@ -9,9 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,7 +46,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import com.podd.R;
 
 import java.io.ByteArrayOutputStream;
@@ -57,8 +54,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +66,7 @@ import java.util.TimeZone;
 /**
  * The type Common utils.
  */
+@SuppressWarnings("ALL")
 public class CommonUtils {
     private static final float ALPHA_LIGHT = 0.45f;
     private static final float ALPHA_DARK = 1.0f;

@@ -2,12 +2,13 @@ package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
 import com.podd.R;
 import com.podd.adapter.RestaurantsListAdapter;
 
@@ -15,11 +16,9 @@ import com.podd.adapter.RestaurantsListAdapter;
  * The type Main home screen second activity.
  */
 public class MainHomeScreenSecondActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvDiscoverRestaurantsBars;
     private TextView tvViewAndBook;
     private Context context;
     private RecyclerView rvRestaurantsList;
-    private Intent intent;
 
 
     @Override
@@ -33,7 +32,7 @@ public class MainHomeScreenSecondActivity extends AppCompatActivity implements V
     }
 
     private void getIds() {
-        tvDiscoverRestaurantsBars= (TextView) findViewById(R.id.tvDiscoverRestaurantsBars);
+        TextView tvDiscoverRestaurantsBars = (TextView) findViewById(R.id.tvDiscoverRestaurantsBars);
         tvViewAndBook= (TextView) findViewById(R.id.tvViewAndBook);
         rvRestaurantsList= (RecyclerView) findViewById(R.id.rvRestaurantsList);
 
@@ -56,7 +55,7 @@ public class MainHomeScreenSecondActivity extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvViewAndBook:
-                intent=new Intent(context, BestRestaurantNearCity.class);
+                Intent intent = new Intent(context, BestRestaurantNearCity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 

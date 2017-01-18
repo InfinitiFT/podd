@@ -1,7 +1,9 @@
 package com.podd.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,6 @@ import com.podd.R;
 
 public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyViewHolder>{
     private final Context context;
-
-    /**
-     * Instantiates a new Lunch menu adapter.
-     *
-     * @param context the context
-     */
     public LunchMenuAdapter(Context context) {
         this.context=context;
 
@@ -24,12 +20,17 @@ public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyV
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_menu_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_items_menu_adapter, parent, false);
         return new LunchMenuAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        SubItemMenuAdapter subItemMenuAdapter = new SubItemMenuAdapter(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+        holder.rvSubItemMenu.setLayoutManager(mLayoutManager);
+        holder.rvSubItemMenu.setAdapter(subItemMenuAdapter);
+
 
     }
 
@@ -37,26 +38,19 @@ public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyV
 
     @Override
     public int getItemCount() {
-        return 20 ;
+        return 3 ;
     }
 
-    /**
-     * The type My view holder.
-     */
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The Tv item.
-         */
-        final TextView tvItem;
 
-        /**
-         * Instantiates a new My view holder.
-         *
-         * @param itemView the item view
-         */
-        public MyViewHolder(View itemView) {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView tvItem;
+        private RecyclerView rvSubItemMenu;
+
+               public MyViewHolder(View itemView) {
             super(itemView);
             tvItem= (TextView) itemView.findViewById(R.id.tvItem);
+            rvSubItemMenu= (RecyclerView) itemView.findViewById(R.id.rvSubItemMenu);
         }
     }
 }

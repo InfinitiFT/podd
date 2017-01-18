@@ -7,10 +7,10 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,25 +40,11 @@ import com.podd.utils.CommonUtils;
  */
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, LocationResult {
     private Context context;
-    private TextView tvDiscoverLondon;
-    private TextView tvServicedApartment;
-    private TextView tvStayLondon;
-    private TextView tvFood;
-    private TextView tvTaxi;
-    private TextView tvHealth;
-    private TextView tvHappeningInLondon;
-    private LinearLayout llHappening;
-    private LinearLayout llHealth;
     private LinearLayout llTaxi;
     private LinearLayout llFood;
-    private ImageView ivFood;
-    private ImageView ivTaxi;
-    private ImageView ivHealth;
-    private ImageView ivHappeningInLondon;
     private Intent intent;
     private final int REQUEST_LOCATION=123;
     private LocationManager locationManager;
-    private LocationTracker locationTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +54,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         getIds();
         setListeners();
 
-        locationTracker = new LocationTracker(context, this);
+        LocationTracker locationTracker = new LocationTracker(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
     }
@@ -80,21 +66,21 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void getIds() {
-        tvDiscoverLondon= (TextView) findViewById(R.id.tvDiscoverLondon);
-        tvServicedApartment= (TextView) findViewById(R.id.tvServicedApartment);
-        tvStayLondon= (TextView) findViewById(R.id.tvStayLondon);
-        tvFood= (TextView) findViewById(R.id.tvFood);
-        tvTaxi= (TextView) findViewById(R.id.tvTaxi);
-        tvHealth= (TextView) findViewById(R.id.tvHealth);
-        tvHappeningInLondon= (TextView) findViewById(R.id.tvHappeningInLondon);
-        llHappening= (LinearLayout) findViewById(R.id.llHappening);
-        llHealth= (LinearLayout) findViewById(R.id.llHealth);
+        TextView tvDiscoverLondon = (TextView) findViewById(R.id.tvDiscoverLondon);
+        TextView tvServicedApartment = (TextView) findViewById(R.id.tvServicedApartment);
+        TextView tvStayLondon = (TextView) findViewById(R.id.tvStayLondon);
+        TextView tvFood = (TextView) findViewById(R.id.tvFood);
+        TextView tvTaxi = (TextView) findViewById(R.id.tvTaxi);
+        TextView tvHealth = (TextView) findViewById(R.id.tvHealth);
+        TextView tvHappeningInLondon = (TextView) findViewById(R.id.tvHappeningInLondon);
+        LinearLayout llHappening = (LinearLayout) findViewById(R.id.llHappening);
+        LinearLayout llHealth = (LinearLayout) findViewById(R.id.llHealth);
         llTaxi= (LinearLayout) findViewById(R.id.llTaxi);
         llFood= (LinearLayout) findViewById(R.id.llfood);
-        ivFood= (ImageView) findViewById(R.id.ivfood);
-        ivTaxi= (ImageView) findViewById(R.id.ivTaxi);
-        ivHealth= (ImageView) findViewById(R.id.ivHealth);
-        ivHappeningInLondon= (ImageView) findViewById(R.id.ivHappeningInLondon);
+        ImageView ivFood = (ImageView) findViewById(R.id.ivfood);
+        ImageView ivTaxi = (ImageView) findViewById(R.id.ivTaxi);
+        ImageView ivHealth = (ImageView) findViewById(R.id.ivHealth);
+        ImageView ivHappeningInLondon = (ImageView) findViewById(R.id.ivHappeningInLondon);
 
 
 

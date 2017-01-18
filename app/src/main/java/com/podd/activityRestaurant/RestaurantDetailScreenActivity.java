@@ -3,8 +3,8 @@ package com.podd.activityRestaurant;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.gson.Gson;
+
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.retrofit.ApiClient;
@@ -22,9 +22,11 @@ import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,20 +44,11 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private TextView tvLocation;
     private TextView tvDistance;
     private TextView tvBookNow;
-    private TextView tvAboutRestaurant;
     private TextView tvDescriptionRestaraunt;
     private TextView tvViewMenu;
     private TextView tvViewInMap;
-    private LinearLayout llInner;
-    private LinearLayout llButtons;
-    private LinearLayout llDistance;
-    private LinearLayout llLocation;
-    private LinearLayout llPriceRange;
-    private LinearLayout llCategory;
-    private LinearLayout llRestaurantName;
     private RecyclerView rvRestaurants;
     private Context context;
-    private Intent intent;
     private final String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
     private final List<String>restaurantList=new ArrayList<>();
     private String latitude,longitude,lat,longi;
@@ -93,17 +86,17 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         location=tvLocation.getText().toString().trim();
         tvDistance= (TextView) findViewById(R.id.tvDistance);
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
-        tvAboutRestaurant= (TextView) findViewById(R.id.tvAboutRestaurant);
+        TextView tvAboutRestaurant = (TextView) findViewById(R.id.tvAboutRestaurant);
         tvDescriptionRestaraunt= (TextView) findViewById(R.id.tvDescriptionRestaraunt);
         tvViewMenu= (TextView) findViewById(R.id.tvViewMenu);
         tvViewInMap= (TextView) findViewById(R.id.tvViewInMap);
-        llInner= (LinearLayout) findViewById(R.id.llInner);
-        llButtons= (LinearLayout) findViewById(R.id.llButtons);
-        llDistance= (LinearLayout) findViewById(R.id.llDistance);
-        llLocation= (LinearLayout) findViewById(R.id.llLocation);
-        llPriceRange= (LinearLayout) findViewById(R.id.llPriceRange);
-        llCategory= (LinearLayout) findViewById(R.id.llCategory);
-        llRestaurantName= (LinearLayout) findViewById(R.id.llRestaurantName);
+        LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
+        LinearLayout llButtons = (LinearLayout) findViewById(R.id.llButtons);
+        LinearLayout llDistance = (LinearLayout) findViewById(R.id.llDistance);
+        LinearLayout llLocation = (LinearLayout) findViewById(R.id.llLocation);
+        LinearLayout llPriceRange = (LinearLayout) findViewById(R.id.llPriceRange);
+        LinearLayout llCategory = (LinearLayout) findViewById(R.id.llCategory);
+        LinearLayout llRestaurantName = (LinearLayout) findViewById(R.id.llRestaurantName);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -131,22 +124,22 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvBookNow:
-                intent=new Intent(context,RestaurantBookingDetailsActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
-                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
-                intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
-                intent.putExtra(AppConstant.LOCATION,location);
-                startActivity(intent);
+                Intent intent1 = new Intent(context, RestaurantBookingDetailsActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
+                intent1.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
+                intent1.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                intent1.putExtra(AppConstant.LOCATION,location);
+                startActivity(intent1);
                 break;
             case R.id.tvViewMenu:
-                intent=new Intent(context,ViewMenuActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
-                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
-                intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
-                intent.putExtra(AppConstant.LOCATION,location);
-                startActivity(intent);
+                intent1 =new Intent(context,ViewMenuActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
+                intent1.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
+                intent1.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                intent1.putExtra(AppConstant.LOCATION,location);
+                startActivity(intent1);
                 break;
 
             case R.id.tvViewInMap:
@@ -177,11 +170,17 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         restaurantList.clear();
-                        restaurantList.addAll(response.body().restaurant_images);
-                        RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context,restaurantList);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
-                        rvRestaurants.setLayoutManager(mLayoutManager);
-                        rvRestaurants.setAdapter(RestaurantsAdapter);
+                        if(response.body().restaurant_images!=null) {
+                            restaurantList.addAll(response.body().restaurant_images);
+                            RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(context, restaurantList);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                            rvRestaurants.setLayoutManager(mLayoutManager);
+                            rvRestaurants.setAdapter(restaurantsAdapter);
+                        }
+                        else {
+                            Toast.makeText(context,R.string.data_not_found,Toast.LENGTH_SHORT).show();
+
+                        }
                         if(response.body().about_text!=null) {
                             tvDescriptionRestaraunt.setText(response.body().about_text);
                         }

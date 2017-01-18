@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@SuppressWarnings("ALL")
 public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAdapter.MyViewHolder> {
     private final Context context;
     private List<Restaurant> restaurantList = new ArrayList<>();
-    private String location;
 
 
     /**
@@ -50,7 +50,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         if (position % 2 == 0) {
             holder.viewBottom.setVisibility(View.VISIBLE);
@@ -74,7 +74,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         }else{
             holder.tvDistance.setText("");
         }
-            location = holder.tvLocation.getText().toString().trim();
+        String location = holder.tvLocation.getText().toString().trim();
 
 
             if (restaurant.price_range != null) {
@@ -102,8 +102,6 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Picasso.with(context)
                         .load(restaurantList.get(position).restaurant_images.get(0))
-                        .placeholder(R.color.colorPrimaryDark) // optional
-                        .error(R.color.colorPrimaryDark)         // optional
                         .into(holder.ivRestaurant);
             } else {
                 holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
@@ -114,10 +112,10 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                 public void onClick(View view) {
                     Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
-                    intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
-                    intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
-                    intent.putExtra(AppConstant.LOCATION, restaurantList.get(position).location);
+                    intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(holder.getAdapterPosition()).restaurant_id);
+                    intent.putExtra(AppConstant.LATITUDE, restaurantList.get(holder.getAdapterPosition()).latitude);
+                    intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(holder.getAdapterPosition()).longitude);
+                    intent.putExtra(AppConstant.LOCATION, restaurantList.get(holder.getAdapterPosition()).location);
                     context.startActivity(intent);
                 }
             });
