@@ -88,7 +88,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         context = BestRestaurantNearCity.this;
         getIds();
         setListeners();
-        gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+        setRecycle();
         fetchLocation();
 
 
@@ -113,8 +113,15 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         } catch (Exception exc) {
             exc.printStackTrace();
         }
-        rvRestaurants.addOnScrollListener(scrollListener);
 
+
+    }
+
+    private void setRecycle() {
+        gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+        rvRestaurants.setLayoutManager(gridLayoutManager);
+        bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
+        rvRestaurants.setAdapter(bestRestaurantAdapter);
     }
 
     private void setListeners() {
@@ -271,13 +278,14 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
-                            restaurantList.clear();
-                            restaurantList.addAll(response.body().restaurant_list);
+                            if(pageNo==1)
+                                restaurantList.clear();
+                                restaurantList.addAll(response.body().restaurant_list);
+                                bestRestaurantAdapter.notifyDataSetChanged();
+                                rvRestaurants.setNestedScrollingEnabled(false);
+                                pageNo++;
 
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
-                            rvRestaurants.setAdapter(bestRestaurantAdapter);
-                            rvRestaurants.setNestedScrollingEnabled(false);
+
                         } else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }

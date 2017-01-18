@@ -27,10 +27,7 @@ public class SubItemMenuAdapter extends RecyclerView.Adapter <SubItemMenuAdapter
 }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        SubItemMenuDetailsAdapter subItemMenuDetailsAdapter = new SubItemMenuDetailsAdapter(context);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
-        holder.rvSubItemDetails.setLayoutManager(mLayoutManager);
-        holder.rvSubItemDetails.setAdapter(subItemMenuDetailsAdapter);
+
 
     }
 
@@ -42,10 +39,10 @@ public class SubItemMenuAdapter extends RecyclerView.Adapter <SubItemMenuAdapter
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView rvSubItemDetails;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            rvSubItemDetails= (RecyclerView) itemView.findViewById(R.id.rvSubItemDetails);
+
         }
     }
 }

@@ -1,9 +1,10 @@
 package com.podd.model;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RestaurantMenu {
+public class RestaurantMenu implements Serializable {
     public String rmd_id;
     public String meal_id;
     public String meal_name;

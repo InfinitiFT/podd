@@ -10,12 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
+import com.podd.model.RestaurantMenu;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
@@ -51,6 +53,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private Context context;
     private final String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
     private final List<String>restaurantList=new ArrayList<>();
+    private final List<RestaurantMenu>restaurantMenu=new ArrayList<>();
+
     private String latitude,longitude,lat,longi;
     private String restaurantId;
     private String restaurantname;
@@ -139,6 +143,9 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 intent1.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
                 intent1.putExtra(AppConstant.RESTAURANTID,restaurantId);
                 intent1.putExtra(AppConstant.LOCATION,location);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable(AppConstant.RESTAURANTMENU,(ArrayList<RestaurantMenu>) restaurantMenu);
+                intent1.putExtra(AppConstant.RESTAURANTMENUBUNDLE,bundle);
                 startActivity(intent1);
                 break;
 
@@ -207,13 +214,23 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             tvDistance.setText("");
                         }
+
+                        if(response.body().restaurant_menu!=null&&response.body().restaurant_menu.size()>0){
+                            restaurantMenu.clear();
+                            restaurantMenu.addAll(response.body().restaurant_menu);
+
+                        }
+                        else {
+                            Toast.makeText(context,R.string.no_menu_found_found_for_this_restaurant,Toast.LENGTH_SHORT).show();
+                        }
+
                         if(response.body().price_range!=null&&response.body().price_range.length()>0) {
                             String priceRange = response.body().price_range;
                             String[] splited = priceRange.split("-");
 
                             String split_one = splited[0];
                             String split_second = splited[1];
-                            tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
+                            tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
                         }
                         else {
                             tvPriceRange.setText(response.body().price_range);

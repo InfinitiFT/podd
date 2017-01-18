@@ -20,6 +20,7 @@ import com.podd.adapter.RestaurantsAdapter;
 import com.podd.fragment.BreakfastMenuFragment;
 import com.podd.fragment.DinnerMenuFragment;
 import com.podd.fragment.LunchMenuFragment;
+import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvRestaurantName;
     private TextView tvBookNow;
     private ArrayList<String> restaurantImages;
+    private ArrayList<RestaurantMenu> restaurantMenu;
     private String restaurantName;
     private String restaurantId;
     private String location;
@@ -53,6 +55,12 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
         location = getIntent().getStringExtra(AppConstant.LOCATION);
         tvRestaurantName.setText(restaurantName);
+        Bundle bundle = new Bundle();
+        bundle = getIntent().getBundleExtra(AppConstant.RESTAURANTMENUBUNDLE);
+        if (bundle != null) {
+            restaurantMenu = (ArrayList<RestaurantMenu>) bundle.getSerializable(AppConstant.RESTAURANTMENU);
+        }
+
         setAdapter();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
@@ -113,9 +121,10 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new BreakfastMenuFragment(), "Breakfast Menu");
-        adapter.addFragment(new LunchMenuFragment(), "Lunch Menu");
-        adapter.addFragment(new DinnerMenuFragment(), "Dinner Menu");
+        for (int i = 0; i < restaurantMenu.size(); i++) {
+            adapter.addFragment(new BreakfastMenuFragment().newInstance(restaurantMenu.get(i).meal_details), restaurantMenu.get(i).meal_name);
+        }
+
         viewPager.setAdapter(adapter);
     }
 

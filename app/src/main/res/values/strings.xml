@@ -126,4 +126,5 @@
     <string name="welcome_to">Welcome to</string>
     <string name="explore_and_book_curated_local_experiences">Explore and book curated local experiences</string>
     <string name="the_armitage">THE ARMITAGE</string>
+    <string name="no_menu_found_found_for_this_restaurant">No menu available for this restaurant.</string>
 </resources>

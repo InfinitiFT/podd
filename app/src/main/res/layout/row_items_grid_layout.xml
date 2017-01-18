@@ -78,7 +78,7 @@
                     android:layout_weight="1"
                     android:text=""
                     android:textStyle="bold"
-
+                    android:maxLength="7"
                     android:textSize="@dimen/text_size_8"
                     android:gravity="bottom|center"
                     android:padding="@dimen/dp_2"

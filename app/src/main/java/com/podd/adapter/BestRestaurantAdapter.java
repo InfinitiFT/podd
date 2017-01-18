@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.podd.R;
 import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.model.Restaurant;
@@ -50,7 +51,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         if (position % 2 == 0) {
             holder.viewBottom.setVisibility(View.VISIBLE);
@@ -70,7 +71,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.tvLocation.setText("");
         }
         if(restaurant.distance!= null){
-            holder.tvDistance.setText(restaurant.distance);
+            holder.tvDistance.setText(restaurant.distance+"km");
         }else{
             holder.tvDistance.setText("");
         }
@@ -83,9 +84,9 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
 
                 String split_one = split[0];
                 String split_second = split[1];
-                holder.tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
+                holder.tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
             } else {
-                holder.tvPriceRange.setText("$" + restaurantList.get(position).price_range);
+                holder.tvPriceRange.setText("£" + restaurantList.get(position).price_range);
             }
 
             if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
@@ -99,6 +100,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             }
 
             holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
+            holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Picasso.with(context)
                         .load(restaurantList.get(position).restaurant_images.get(0))
@@ -112,10 +114,12 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                 public void onClick(View view) {
                     Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(holder.getAdapterPosition()).restaurant_id);
-                    intent.putExtra(AppConstant.LATITUDE, restaurantList.get(holder.getAdapterPosition()).latitude);
-                    intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(holder.getAdapterPosition()).longitude);
-                    intent.putExtra(AppConstant.LOCATION, restaurantList.get(holder.getAdapterPosition()).location);
+                    if (restaurantList.get(position).restaurant_id!=null ){
+                        intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
+                    }
+                    intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
+                    intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
+                    intent.putExtra(AppConstant.LOCATION, restaurantList.get(position).location);
                     context.startActivity(intent);
                 }
             });

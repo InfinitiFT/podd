@@ -21,14 +21,6 @@
         android:padding="@dimen/dp_4"/>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvSubItemDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fadingEdge="none"
-        android:nestedScrollingEnabled="true"
-        android:orientation="vertical"
-        android:scrollbars="none" />
 
 
 
