@@ -262,6 +262,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id = restaurantantId;
+        jsonRequest.date=dateBooked;
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.getRestaurantTimeInterval(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);

@@ -25,6 +25,7 @@ public class JsonRequest implements Serializable {
  public String location;
  public String meal;
  public String otp;
+ public String date;
 
 
 }
