@@ -9,7 +9,6 @@ import com.podd.model.PlaceApiAddress;
 import com.podd.model.Restaurant;
 import com.podd.model.RestaurantMenu;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

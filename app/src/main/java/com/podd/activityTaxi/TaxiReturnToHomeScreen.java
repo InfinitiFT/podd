@@ -15,15 +15,6 @@ import com.podd.R;
  */
 public class TaxiReturnToHomeScreen extends AppCompatActivity implements View.OnClickListener {
     private Context context;
-    private TextView tvThanks;
-    private TextView tvConfirmation;
-    private TextView tvadditionalInfo;
-    private TextView tvNumberofPeople;
-    private TextView tvTime;
-    private TextView tvDate;
-    private TextView tvGoingTo;
-    private TextView tvLeavingFrom;
-    private LinearLayout llInner;
     private TextView tvReturnToHome;
 
     @Override
@@ -37,15 +28,15 @@ public class TaxiReturnToHomeScreen extends AppCompatActivity implements View.On
 
     private void getIds() {
         tvReturnToHome= (TextView) findViewById(R.id.tvReturnToHome);
-        tvLeavingFrom= (TextView) findViewById(R.id.tvLeavingFrom);
-        tvGoingTo= (TextView) findViewById(R.id.tvGoingTo);
-        tvDate= (TextView) findViewById(R.id.tvDate);
-        tvTime= (TextView) findViewById(R.id.tvTime);
-        tvNumberofPeople= (TextView) findViewById(R.id.tvNumberofPeople);
-        tvadditionalInfo= (TextView) findViewById(R.id.tvadditionalInfo);
-        tvConfirmation= (TextView) findViewById(R.id.tvConfirmation);
-        tvThanks= (TextView) findViewById(R.id.tvThanks);
-        llInner= (LinearLayout) findViewById(R.id.llInner);
+        TextView tvLeavingFrom = (TextView) findViewById(R.id.tvLeavingFrom);
+        TextView tvGoingTo = (TextView) findViewById(R.id.tvGoingTo);
+        TextView tvDate = (TextView) findViewById(R.id.tvDate);
+        TextView tvTime = (TextView) findViewById(R.id.tvTime);
+        TextView tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
+        TextView tvadditionalInfo = (TextView) findViewById(R.id.tvadditionalInfo);
+        TextView tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
+        TextView tvThanks = (TextView) findViewById(R.id.tvThanks);
+        LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
 
     }
 

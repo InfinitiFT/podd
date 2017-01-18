@@ -28,6 +28,7 @@ import java.util.List;
 /**
  * The type View menu activity.
  */
+@SuppressWarnings("ALL")
 public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private RecyclerView rvRestaurants;
@@ -118,8 +119,8 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new BreakfastMenuFragment(), "Breakfast Menu");
-        adapter.addFragment(new LunchMenuFragment(), "Lunch Menu");
-        adapter.addFragment(new DinnerMenuFragment(), "Dinner Menu");
+        /*adapter.addFragment(new LunchMenuFragment(), "Lunch Menu");
+        adapter.addFragment(new DinnerMenuFragment(), "Dinner Menu");*/
 
         viewPager.setAdapter(adapter);
     }

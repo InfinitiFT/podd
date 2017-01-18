@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,11 +13,11 @@ import com.podd.R;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
 import com.podd.model.HomeItemsModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
+@SuppressWarnings("ALL")
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
     private final Context context;
     private List<HomeItemsModel>homeItemsModelList;

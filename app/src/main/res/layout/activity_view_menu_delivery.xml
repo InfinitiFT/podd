@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context="com.podd.activityRestaurant.ViewMenuActivity">
+    tools:context="com.podd.activityRestaurant.ViewMenuActivity"
+    tools:ignore="Overdraw">
 
     <include layout="@layout/toolbar" />
 

@@ -1,19 +1,16 @@
 package com.podd.utils;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 
 import com.podd.R;
 
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings("ALL")
 public class DialogUtils {
     public static Dialog createCustomDialog(Context context, int layoutResourceId) {
 

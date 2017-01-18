@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 
+@SuppressWarnings("ALL")
 public class Logger {
     public static FileHandler logger = null;
     private static String filename = "app_logs";

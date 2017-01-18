@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.podd.R;
-import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.activityRestaurant.ViewMenuActivity;
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@SuppressWarnings("ALL")
 public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestRestaurantForDeliveryAdapter.MyViewHolder> {
     private final Context context;
     private List<Restaurant> restaurantList = new ArrayList<>();
@@ -51,7 +51,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         if (position % 2 == 0) {
             holder.viewBottom.setVisibility(View.VISIBLE);
@@ -102,12 +102,12 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
             public void onClick(View view) {
                 Intent intent = new Intent(context, ViewMenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
-                intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
-                intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
+                intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(holder.getAdapterPosition()).restaurant_id);
+                intent.putExtra(AppConstant.LATITUDE, restaurantList.get(holder.getAdapterPosition()).latitude);
+                intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(holder.getAdapterPosition()).longitude);
                 intent.putExtra(AppConstant.LOCATION, location);
-                intent.putExtra(AppConstant.RESTAURANTNAME, restaurantList.get(position).restaurant_name);
-                intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantList.get(position).restaurant_images);
+                intent.putExtra(AppConstant.RESTAURANTNAME, restaurantList.get(holder.getAdapterPosition()).restaurant_name);
+                intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantList.get(holder.getAdapterPosition()).restaurant_images);
                 context.startActivity(intent);
             }
         });

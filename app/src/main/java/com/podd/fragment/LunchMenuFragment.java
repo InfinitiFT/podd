@@ -40,10 +40,10 @@ public class LunchMenuFragment extends Fragment {
     }
 
     private void setBreakfastMenu() {
-        LunchMenuAdapter lunchMenuAdapter = new LunchMenuAdapter(context);
+        /*LunchMenuAdapter lunchMenuAdapter = new LunchMenuAdapter(context);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         rvBreakfastMenu.setLayoutManager(mLayoutManager);
-        rvBreakfastMenu.setAdapter(lunchMenuAdapter);
+        rvBreakfastMenu.setAdapter(lunchMenuAdapter);*/
     }
 }
 

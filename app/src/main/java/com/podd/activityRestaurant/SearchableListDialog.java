@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-
 import com.podd.R;
 
 import java.io.Serializable;
@@ -29,6 +28,7 @@ import java.util.List;
 /**
  * The type Searchable list dialog.
  */
+@SuppressWarnings("ALL")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SearchableListDialog extends DialogFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {

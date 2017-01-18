@@ -3,8 +3,8 @@ package com.podd.activityRestaurant;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,24 +43,20 @@ import retrofit2.Response;
 /**
  * The type Restraunt booking details activity.
  */
+@SuppressWarnings("ALL")
 public class RestaurantBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, Serializable {
     private Context context;
     private RecyclerView rvRestaurants;
     private TextView tvBookNow;
-    private Intent intent;
     private Spinner spSelectTime;
     private Spinner spSelectPeople;
     private TextView tvSelectfromCalender;
     private TextView tvRestauarntName;
-    private TextView tvDate;
     private TextView tvToday;
     private TextView tvTomorrow;
-    private TextView tvTime;
-    private TextView tvBookingSummary;
     private TextView tvDateBooked;
     private TextView tvTimeBooked;
     private TextView tvNoOfPersons;
-    private String currentDateString;
     private ArrayList<String> restaurantImages;
     private String restaurantName;
     private final String[] numberOfPeopleArray = {"Number of People", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
@@ -102,11 +98,11 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         spSelectTime = (Spinner) findViewById(R.id.spSelectTime);
         spSelectPeople = (Spinner) findViewById(R.id.spSelectPeople);
         tvRestauarntName = (TextView) findViewById(R.id.tvRestauarntName);
-        tvDate = (TextView) findViewById(R.id.tvDate);
+        TextView tvDate = (TextView) findViewById(R.id.tvDate);
         tvToday = (TextView) findViewById(R.id.tvToday);
         tvTomorrow = (TextView) findViewById(R.id.tvTomorrow);
-        tvTime = (TextView) findViewById(R.id.tvTime);
-        tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
+        TextView tvTime = (TextView) findViewById(R.id.tvTime);
+        TextView tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNoOfPersons = (TextView) findViewById(R.id.tvNoOfPersons);
@@ -163,7 +159,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 timeBooked = tvTimeBooked.getText().toString().trim();
                 noOfPersons = tvNoOfPersons.getText().toString().trim();*/
                 if (isValid()) {
-                    intent = new Intent(context, BookingSummaryActivity.class);
+                    Intent intent = new Intent(context, BookingSummaryActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(AppConstant.DATEBOOKED, tvDateBooked.getText().toString().trim());
                     intent.putExtra(AppConstant.TIMEBOOKED, tvTimeBooked.getText().toString().trim());
@@ -185,7 +181,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
                  /*  getting tomorrow date  */
 
-                currentDateString = DateFormat.getDateInstance().format(new Date());
+                String currentDateString = DateFormat.getDateInstance().format(new Date());
                 date = DateFormat.getDateInstance().format(System.currentTimeMillis() + (24 * 3600000));
                 tvTomorrow.setText(date);
                 tvDateBooked.setText(date);
@@ -266,6 +262,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id = restaurantantId;
+        jsonRequest.date=dateBooked;
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.getRestaurantTimeInterval(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);

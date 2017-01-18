@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.podd.R;
 import com.squareup.picasso.Picasso;
 
@@ -36,8 +37,6 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             for (int i = 0; i <restaurantList.size() ; i++) {
                 Picasso.with(context)
                         .load(restaurantList.get(position))
-                        .placeholder(R.color.colorPrimaryDark) // optional
-                        .error(R.color.colorPrimaryDark)         // optional
                         .into(holder.ivRestaurantImage);
             }
         }else {

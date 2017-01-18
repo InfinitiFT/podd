@@ -17,6 +17,7 @@ import com.podd.model.Cuisine;
 import java.util.List;
 
 
+@SuppressWarnings("ALL")
 public class CuisineTypeRestaurantAdapter extends RecyclerView.Adapter <CuisineTypeRestaurantAdapter.MyViewHolder>{
     private final Context context;
     private List<Cuisine>cuisineList;

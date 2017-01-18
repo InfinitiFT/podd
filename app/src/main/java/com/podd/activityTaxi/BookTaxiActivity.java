@@ -3,8 +3,8 @@ package com.podd.activityTaxi;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,27 +34,18 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private Spinner spSelectTime;
     private Spinner spSelectPeople;
     private Spinner spSelectAdditionalRequirement;
-    private TextView tvBookTaxi;
     private TextView tvBookNow;
-    private TextView tvAdditionalRequirements;
-    private TextView tvSelectPeople;
-    private TextView tvTime;
     private TextView tvSelectfromCalender;
     private TextView tvTomorrow;
     private TextView tvToday;
-    private TextView tvDate;
-    private TextView tvGoingTo;
-    private TextView tvLeavingFrom;
     private EditText etLeavingAddress;
     private EditText etGoingAddress;
-    private LinearLayout llInner;
     private final String[]airportArray={"Select Airport","Newyork","Others"};
     private final String[]timeArray={"Select Time","10 AM","10:30 AM"};
     private final String[]numberOfPeopleArray={"Select Nember of People","1","2","3"};
     private final String[]requirementsArray={"Select Additional Requirements","AC","Others"};
     private TextView tvBack;
     private String date;
-    private String currentDateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,18 +76,18 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         spSelectTime= (Spinner) findViewById(R.id.spSelectTime);
         etGoingAddress= (EditText) findViewById(R.id.etGoingAddress);
         etLeavingAddress= (EditText) findViewById(R.id.etLeavingAddress);
-        tvLeavingFrom= (TextView) findViewById(R.id.tvLeavingFrom);
-        tvGoingTo= (TextView) findViewById(R.id.tvGoingTo);
-        tvDate= (TextView) findViewById(R.id.tvDate);
+        TextView tvLeavingFrom = (TextView) findViewById(R.id.tvLeavingFrom);
+        TextView tvGoingTo = (TextView) findViewById(R.id.tvGoingTo);
+        TextView tvDate = (TextView) findViewById(R.id.tvDate);
         tvToday= (TextView) findViewById(R.id.tvToday);
         tvTomorrow= (TextView) findViewById(R.id.tvTomorrow);
         tvSelectfromCalender= (TextView) findViewById(R.id.tvSelectFromCalender);
-        tvTime= (TextView) findViewById(R.id.tvTime);
-        tvSelectPeople= (TextView) findViewById(R.id.tvSelectPeople);
-        tvAdditionalRequirements= (TextView) findViewById(R.id.tvAdditionalRequirements);
+        TextView tvTime = (TextView) findViewById(R.id.tvTime);
+        TextView tvSelectPeople = (TextView) findViewById(R.id.tvSelectPeople);
+        TextView tvAdditionalRequirements = (TextView) findViewById(R.id.tvAdditionalRequirements);
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
-        tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
-        llInner= (LinearLayout) findViewById(R.id.llInner);
+        TextView tvBookTaxi = (TextView) findViewById(R.id.tvBookTaxi);
+        LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -158,7 +149,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
 
                  /*  getting tomorrow date  */
 
-                currentDateString = DateFormat.getDateInstance().format(new Date());
+                String currentDateString = DateFormat.getDateInstance().format(new Date());
                 date = DateFormat.getDateInstance().format(System.currentTimeMillis()+(24*3600000));
                 tvTomorrow.setText(date);
                 break;

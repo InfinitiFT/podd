@@ -1,16 +1,13 @@
 package com.podd.activityRestaurant;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,14 +33,13 @@ import com.podd.webservices.JsonResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
+@SuppressWarnings("ALL")
 public class BestRestaurantNearCity extends AppCompatActivity implements View.OnClickListener, SearchableListDialog.SearchableItem {
 
     private RecyclerView rvRestaurants;
@@ -92,7 +88,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         context = BestRestaurantNearCity.this;
         getIds();
         setListeners();
-        gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+        setRecycle();
         fetchLocation();
 
 
@@ -117,8 +113,15 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         } catch (Exception exc) {
             exc.printStackTrace();
         }
-        rvRestaurants.addOnScrollListener(scrollListener);
 
+
+    }
+
+    private void setRecycle() {
+        gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+        rvRestaurants.setLayoutManager(gridLayoutManager);
+        bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
+        rvRestaurants.setAdapter(bestRestaurantAdapter);
     }
 
     private void setListeners() {
@@ -275,13 +278,14 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
-                            restaurantList.clear();
-                            restaurantList.addAll(response.body().restaurant_list);
+                            if(pageNo==1)
+                                restaurantList.clear();
+                                restaurantList.addAll(response.body().restaurant_list);
+                                bestRestaurantAdapter.notifyDataSetChanged();
+                                rvRestaurants.setNestedScrollingEnabled(false);
+                                pageNo++;
 
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
-                            rvRestaurants.setAdapter(bestRestaurantAdapter);
-                            rvRestaurants.setNestedScrollingEnabled(false);
+
                         } else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }

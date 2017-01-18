@@ -7,14 +7,13 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,9 +29,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.HomeItemsAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
@@ -41,27 +38,26 @@ import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
-import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings("ALL")
 public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
-    private ImageView ivRestaurantImage;
-    private TextView tvAdminMessage, tvDayDate,tvTime;
+    private TextView tvAdminMessage;
     private RecyclerView rvHomeItems;
     private HomeItemsAdapter homeItemsAdapter;
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
-    private Intent intent;
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
-    private LocationTracker locationTracker;
 
 
     @Override
@@ -79,7 +75,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
         }
 
-        locationTracker = new LocationTracker(context, this);
+        LocationTracker locationTracker = new LocationTracker(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         checkPermission();
 
@@ -129,12 +125,32 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     }
 
     private void getIds() {
-        ivRestaurantImage= (ImageView) findViewById(R.id.ivRestaurantImage);
+        ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
-        tvTime =(TextView) findViewById(R.id.tvTime);
-        tvDayDate =(TextView) findViewById(R.id.tvDayDate);
+        final TextView tvTime = (TextView) findViewById(R.id.tvTime);
+        TextView tvDayDate = (TextView) findViewById(R.id.tvDayDate);
         tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
-        tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
+       // tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
+
+        /*Calendar calander = Calendar.getInstance();
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("HH:mm");
+        String date = simpledateformat.format(calander.getTime());
+        tvTime.setText(date);*/
+
+        CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                Calendar c = Calendar.getInstance();
+                tvTime.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+            }
+            public void onFinish() {
+
+            }
+        };
+        newtimer.start();
+
+
+
     }
 
     /*=============================================Location============================================*/
@@ -211,7 +227,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         enableLoc();
                     } else {
-                        intent=new Intent(context, BestRestaurantNearCity.class);
+                        Intent intent = new Intent(context, BestRestaurantNearCity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }

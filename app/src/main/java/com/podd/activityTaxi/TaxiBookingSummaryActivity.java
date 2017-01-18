@@ -2,8 +2,8 @@ package com.podd.activityTaxi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -20,19 +20,10 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
     private Context context;
     private TextView tvCompleteBooking;
     private TextView tvBack;
-    private TextView tvadditionalInfo;
-    private TextView tvNumberofPeople;
-    private TextView tvTime;
-    private TextView tvDate;
-    private TextView tvGoingTo;
-    private TextView tvLeavingFrom;
-    private TextView tvBookTaxi;
     private EditText etName;
     private TextView tvCountryCode;
     private EditText etPhoneNumber;
-    private final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private EditText etEmail;
-    private LinearLayout llInner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +36,18 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
 
     private void getIds() {
         tvCompleteBooking= (TextView) findViewById(R.id.tvCompleteBooking);
-        tvadditionalInfo= (TextView) findViewById(R.id.tvadditionalInfo);
-        tvNumberofPeople= (TextView) findViewById(R.id.tvNumberofPeople);
-        tvTime= (TextView) findViewById(R.id.tvTime);
-        tvDate= (TextView) findViewById(R.id.tvDate);
-        tvGoingTo= (TextView) findViewById(R.id.tvGoingTo);
-        tvLeavingFrom= (TextView) findViewById(R.id.tvLeavingFrom);
-        tvBookTaxi= (TextView) findViewById(R.id.tvBookTaxi);
+        TextView tvadditionalInfo = (TextView) findViewById(R.id.tvadditionalInfo);
+        TextView tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
+        TextView tvTime = (TextView) findViewById(R.id.tvTime);
+        TextView tvDate = (TextView) findViewById(R.id.tvDate);
+        TextView tvGoingTo = (TextView) findViewById(R.id.tvGoingTo);
+        TextView tvLeavingFrom = (TextView) findViewById(R.id.tvLeavingFrom);
+        TextView tvBookTaxi = (TextView) findViewById(R.id.tvBookTaxi);
         etName= (EditText) findViewById(R.id.etName);
         tvCountryCode= (TextView) findViewById(R.id.tvCountryCode);
         etPhoneNumber= (EditText) findViewById(R.id.etPhoneNumber);
         etEmail= (EditText) findViewById(R.id.etEmail);
-        llInner= (LinearLayout) findViewById(R.id.llInner);
+        LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -96,6 +87,7 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
     }
 
     private boolean isValid(){
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         if(etName.getText().toString().trim().isEmpty()){
             Toast.makeText(context,R.string.please_enter_name,Toast.LENGTH_SHORT).show();
             etName.requestFocus();

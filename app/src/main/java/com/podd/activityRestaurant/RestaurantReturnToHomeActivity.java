@@ -2,11 +2,12 @@ package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+
 import com.podd.R;
 import com.podd.activityTaxi.HomeScreenActivity;
 import com.podd.utils.AppConstant;
@@ -23,14 +24,6 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvDateBooked;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
-    private String restaurantName;
-    private String restaurantId;
-    private String dateBooked;
-    private String timeBooked;
-    private String location;
-    private String noOfPersons;
-
-
 
 
     @Override
@@ -41,12 +34,12 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         getIds();
         setListeners();
         if(getIntent()!=null) {
-            restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
-            restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
-            dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
-            timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
-            location = getIntent().getStringExtra(AppConstant.LOCATION);
-            noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
+            String restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+            String restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
+            String dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
+            String timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
+            String location = getIntent().getStringExtra(AppConstant.LOCATION);
+            String noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
 
             tvRestauarntName.setText(restaurantName);
             tvLocation.setText(location);

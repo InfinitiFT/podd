@@ -7,29 +7,112 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.podd.R;
+import com.podd.model.MealDetails;
 
-public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyViewHolder>{
+import java.util.ArrayList;
+import java.util.List;
+
+public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdapter.MainVH> {
     private final Context context;
+    private List<MealDetails> meal_details=new ArrayList<>();
 
-    /**
-     * Instantiates a new Lunch menu adapter.
-     *
-     * @param context the context
-     */
-    public LunchMenuAdapter(Context context) {
+
+    public LunchMenuAdapter(Context context, List<MealDetails> meal_details) {
         this.context=context;
+        this.meal_details=meal_details;
+    }
+
+    @Override
+    public int getSectionCount() {
+        return meal_details.size();
+    }
+
+    @Override
+    public int getItemCount(int section) {
+
+        return meal_details.get(section).subtitle_meal_details.size();
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(LunchMenuAdapter.MainVH holder, int section) {
+
+        holder.title.setText(meal_details.get(section).subtitle_name);
 
     }
 
     @Override
+    public int getItemViewType(int section, int relativePosition, int absolutePosition) {
+        if (section == 1)
+            return 0; // VIEW_TYPE_HEADER is -2, VIEW_TYPE_ITEM is -1. You can return 0 or greater.
+        return super.getItemViewType(section, relativePosition, absolutePosition);
+    }
+
+    @Override
+    public void onBindViewHolder(LunchMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
+    {
+        if (meal_details.get(section).subtitle_meal_details!=null&&meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name!=null) {
+            holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name, section, relativePosition, absolutePosition));
+        }
+        else {
+            holder.title.setText("");
+        }
+        if (meal_details.get(section).subtitle_meal_details!=null&&meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price!=null) {
+            holder.titlePrice.setText("£"+String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price, section, relativePosition, absolutePosition));
+        }
+        else {
+            holder.titlePrice.setText("");
+        }
+    }
+
+    @Override
+    public LunchMenuAdapter.MainVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        int layout;
+        switch (viewType) {
+            case VIEW_TYPE_HEADER:
+                layout = R.layout.list_item_header;
+                break;
+            case VIEW_TYPE_ITEM:
+                layout = R.layout.list_item_main;
+                break;
+            default:
+                layout = R.layout.list_item_main_bold;
+                break;
+        }
+
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(layout, parent, false);
+        return new MainVH(v);
+    }
+
+    public class MainVH extends RecyclerView.ViewHolder {
+        final TextView title;
+        final TextView titlePrice;
+
+        public MainVH(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            titlePrice= (TextView) itemView.findViewById(R.id.titlePrice);
+        }
+    }
+
+
+
+
+   /* @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_menu_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_items_menu_adapter, parent, false);
         return new LunchMenuAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        SubItemMenuAdapter subItemMenuAdapter = new SubItemMenuAdapter(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+        holder.rvSubItemMenu.setLayoutManager(mLayoutManager);
+        holder.rvSubItemMenu.setAdapter(subItemMenuAdapter);
+
 
     }
 
@@ -37,26 +120,19 @@ public class LunchMenuAdapter extends RecyclerView.Adapter <LunchMenuAdapter.MyV
 
     @Override
     public int getItemCount() {
-        return 20 ;
+        return 3 ;
     }
 
-    /**
-     * The type My view holder.
-     */
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * The Tv item.
-         */
-        final TextView tvItem;
 
-        /**
-         * Instantiates a new My view holder.
-         *
-         * @param itemView the item view
-         */
-        public MyViewHolder(View itemView) {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView tvItem;
+        private RecyclerView rvSubItemMenu;
+
+               public MyViewHolder(View itemView) {
             super(itemView);
             tvItem= (TextView) itemView.findViewById(R.id.tvItem);
+            rvSubItemMenu= (RecyclerView) itemView.findViewById(R.id.rvSubItemMenu);
         }
-    }
+    }*/
 }

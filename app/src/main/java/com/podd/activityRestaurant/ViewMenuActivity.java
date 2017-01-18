@@ -2,13 +2,13 @@ package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +20,7 @@ import com.podd.adapter.RestaurantsAdapter;
 import com.podd.fragment.BreakfastMenuFragment;
 import com.podd.fragment.DinnerMenuFragment;
 import com.podd.fragment.LunchMenuFragment;
+import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
 
 import java.util.ArrayList;
@@ -28,12 +29,14 @@ import java.util.List;
 /**
  * The type View menu activity.
  */
+@SuppressWarnings("ALL")
 public class ViewMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private RecyclerView rvRestaurants;
     private TextView tvRestaurantName;
     private TextView tvBookNow;
     private ArrayList<String> restaurantImages;
+    private ArrayList<RestaurantMenu> restaurantMenu;
     private String restaurantName;
     private String restaurantId;
     private String location;
@@ -52,6 +55,12 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
         location = getIntent().getStringExtra(AppConstant.LOCATION);
         tvRestaurantName.setText(restaurantName);
+        Bundle bundle = new Bundle();
+        bundle = getIntent().getBundleExtra(AppConstant.RESTAURANTMENUBUNDLE);
+        if (bundle != null) {
+            restaurantMenu = (ArrayList<RestaurantMenu>) bundle.getSerializable(AppConstant.RESTAURANTMENU);
+        }
+
         setAdapter();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
@@ -112,9 +121,10 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new BreakfastMenuFragment(), "Breakfast Menu");
-        adapter.addFragment(new LunchMenuFragment(), "Lunch Menu");
-        adapter.addFragment(new DinnerMenuFragment(), "Dinner Menu");
+        for (int i = 0; i < restaurantMenu.size(); i++) {
+            adapter.addFragment(new BreakfastMenuFragment().newInstance(restaurantMenu.get(i).meal_details), restaurantMenu.get(i).meal_name);
+        }
+
         viewPager.setAdapter(adapter);
     }
 

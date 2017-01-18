@@ -7,17 +7,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="com.podd.activityRestaurant.NewHomeScreenActivity">
+    tools:context="com.podd.activityRestaurant.NewHomeScreenActivity"
+    tools:ignore="Overdraw">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="THE ARMITAGE"
+                        android:text="@string/the_armitage"
                         android:textStyle="bold"
                         android:textSize="@dimen/text_size_18"
                         android:gravity="center"

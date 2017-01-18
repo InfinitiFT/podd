@@ -25,4 +25,6 @@ public class AppConstant {
     public static final String NOOFPEOPLE="no_of_people";
     public static final String AppToken="app_token";
 
+    public static final String RESTAURANTMENU = "restaurant_menu";
+    public static final String RESTAURANTMENUBUNDLE="restaurantmenubundle";
 }

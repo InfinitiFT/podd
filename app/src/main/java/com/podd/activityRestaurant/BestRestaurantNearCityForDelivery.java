@@ -1,8 +1,6 @@
 package com.podd.activityRestaurant;
 
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,7 +17,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.BestRestaurantForDeliveryAdapter;
 import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
@@ -36,13 +32,13 @@ import com.podd.webservices.JsonResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
+@SuppressWarnings("ALL")
 public class BestRestaurantNearCityForDelivery extends AppCompatActivity implements View.OnClickListener,SearchableListDialog.SearchableItem {
 
     private RecyclerView rvRestaurants;
