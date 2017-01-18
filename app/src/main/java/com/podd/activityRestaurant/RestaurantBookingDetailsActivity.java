@@ -84,7 +84,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
             location = getIntent().getStringExtra(AppConstant.LOCATION);
 
         }
-        getRestauranttimeIntervalApi();
+
         selectNumberOfPeopleAdapter();
         setAdapter();
         setListeners();
@@ -185,6 +185,9 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 date = DateFormat.getDateInstance().format(System.currentTimeMillis() + (24 * 3600000));
                 tvTomorrow.setText(date);
                 tvDateBooked.setText(date);
+               // if(!tvDateBooked.getText().toString().equalsIgnoreCase(getString(R.string.date_Booked))){
+                    getRestauranttimeIntervalApi();
+               // }
                 break;
 
             case R.id.tvToday:
@@ -196,6 +199,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 currentDateString = DateFormat.getDateInstance().format(new Date());
                 tvToday.setText(currentDateString);
                 tvDateBooked.setText(currentDateString);
+                getRestauranttimeIntervalApi();
                 break;
 
         }
@@ -219,6 +223,9 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
                 tvSelectfromCalender.setText(date);
                 tvDateBooked.setText(date);
+              //  if(!tvDateBooked.getText().toString().equalsIgnoreCase(getString(R.string.date_Booked))){
+                    getRestauranttimeIntervalApi();
+                //}
                /* tvSelectTimeValue.setText(R.string.select_time);*/
 
                 CommonUtils.savePreferenceInt(context, AppConstant.YEAR, year);
@@ -262,7 +269,10 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id = restaurantantId;
-        jsonRequest.date=dateBooked;
+        if(!tvDateBooked.getText().toString().equalsIgnoreCase("Date Booked")){
+            jsonRequest.date=tvDateBooked.getText().toString().trim();
+        }
+
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.getRestaurantTimeInterval(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
@@ -281,7 +291,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                             spSelectTime.setAdapter(adapter);
 
                         } else {
-                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                            CommonUtils.showAlertOk("Restaurant is closed for the selected date. Please select another date",RestaurantBookingDetailsActivity.this);
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
