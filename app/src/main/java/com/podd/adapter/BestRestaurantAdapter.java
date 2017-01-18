@@ -83,9 +83,9 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
 
                 String split_one = split[0];
                 String split_second = split[1];
-                holder.tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
+                holder.tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
             } else {
-                holder.tvPriceRange.setText("$" + restaurantList.get(position).price_range);
+                holder.tvPriceRange.setText("£" + restaurantList.get(position).price_range);
             }
 
             if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {

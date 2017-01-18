@@ -137,8 +137,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
     }
 
-
-
     /*=============================================Location============================================*/
     private void checkPermission() {
         if (CommonUtils.checkPermissionGPS(NewHomeScreenActivity.this)) {
@@ -236,11 +234,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
     }
 
-
     @Override
     public void gotLocation(Location location) {
 
     }
-
-
 }

@@ -83,8 +83,6 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             tvNumberofPeople.setText(noOfPersons);
         }
 
-
-
     }
 
     private void setSpinner() {
