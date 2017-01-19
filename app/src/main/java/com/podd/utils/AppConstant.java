@@ -27,4 +27,5 @@ public class AppConstant {
 
     public static final String RESTAURANTMENU = "restaurant_menu";
     public static final String RESTAURANTMENUBUNDLE="restaurantmenubundle";
+    public static final String DISTANCE = "distance";
 }

@@ -56,7 +56,7 @@ public class JsonResponse implements Serializable{
 
     /*   Restaurant time interval  */
 
-    public List<String>restaurant_time_interval;
+    public List<String> restaurant_time_interval;
     public List<HomeItemsModel> allServiceList;
     public List<PlaceApiAddress> results;
 

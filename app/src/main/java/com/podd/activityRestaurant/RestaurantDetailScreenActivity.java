@@ -59,6 +59,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private String restaurantId;
     private String restaurantname;
     private String location;
+    private String distance;
     private final List<String> categories=new ArrayList<>();
 
     @Override
@@ -73,6 +74,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
             restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
             location=getIntent().getStringExtra(AppConstant.LOCATION);
+            distance=getIntent().getStringExtra(AppConstant.DISTANCE);
+            tvDistance.setText(distance);
         }
 
         lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);
@@ -208,12 +211,12 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             tvLocation.setText("");
                         }
-                        if (response.body().distance!=null) {
+                       /* if (response.body().distance!=null) {
                             tvDistance.setText(response.body().distance);
                         }
                         else {
                             tvDistance.setText("");
-                        }
+                        }*/
 
                         if(response.body().restaurant_menu!=null&&response.body().restaurant_menu.size()>0){
                             restaurantMenu.clear();
