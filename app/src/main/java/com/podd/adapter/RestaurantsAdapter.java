@@ -36,11 +36,11 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         if(restaurantList.get(position)!=null){
             for (int i = 0; i <restaurantList.size() ; i++) {
                 Picasso.with(context)
-                        .load(restaurantList.get(position))
+                        .load(restaurantList.get(position)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon)
                         .into(holder.ivRestaurantImage);
             }
         }else {
-            holder.ivRestaurantImage.setImageResource(R.color.colorPrimaryDark);
+            holder.ivRestaurantImage.setImageResource(R.mipmap.placeholder_icon);
         }
 
 

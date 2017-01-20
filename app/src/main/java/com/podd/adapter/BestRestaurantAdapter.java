@@ -86,7 +86,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                 String split_second = split[1];
                 holder.tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
             } else {
-                holder.tvPriceRange.setText("£" + restaurantList.get(position).price_range);
+                holder.tvPriceRange.setText("");
             }
 
             if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
@@ -103,10 +103,10 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Picasso.with(context)
-                        .load(restaurantList.get(position).restaurant_images.get(0))
+                        .load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon)
                         .into(holder.ivRestaurant);
             } else {
-                holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
+                holder.ivRestaurant.setImageResource(R.mipmap.placeholder_icon);
             }
 
             holder.llMain.setOnClickListener(new View.OnClickListener() {

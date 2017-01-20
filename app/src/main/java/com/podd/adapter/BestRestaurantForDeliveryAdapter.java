@@ -89,8 +89,8 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
         if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
             Picasso.with(context)
                     .load(restaurantList.get(position).restaurant_images.get(0))
-                    .placeholder(R.mipmap.place_holder) // optional
-                    .error(R.mipmap.place_holder)         // optional
+                    .placeholder(R.mipmap.placeholder_icon) // optional
+                    .error(R.mipmap.placeholder_icon)         // optional
                     .into(holder.ivRestaurant);
         } else {
             holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);

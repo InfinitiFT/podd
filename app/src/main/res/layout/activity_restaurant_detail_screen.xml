@@ -51,14 +51,14 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/white"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvRestaurants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fadingEdge="none"
-                android:orientation="horizontal"
-                android:scrollbars="none" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRestaurants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fadingEdge="none"
+                    android:orientation="horizontal"
+                    android:scrollbars="none" />
 
             </LinearLayout>
 
@@ -70,39 +70,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:orientation="vertical">
 
-
-
-                        <TextView
-                            android:id="@+id/tvNameRestaraunt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text=""
-                            android:ellipsize="marquee"
-                            android:singleLine="true"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                    <TextView
+                        android:id="@+id/tvNameRestaraunt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_2"
+                        android:text=""
+                        android:ellipsize="marquee"
+                        android:singleLine="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_10" />
 
 
 
-                        <TextView
-                            android:id="@+id/tvLocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text=""
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_2"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_10" />
 
 
 
@@ -137,31 +134,31 @@
 
 
                     <LinearLayout
-                    android:id="@+id/llCuisine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.8"
+                        android:id="@+id/llCuisine"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_2"
-                        android:text="@string/cuisine"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_10" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvCuisine"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_2"
-                        android:text=""
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_10" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/cuisine"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvCuisine"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llAmbience"
@@ -219,38 +216,38 @@
 
 
 
-                   <!-- <LinearLayout
-                        android:id="@+id/llDistance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <!-- <LinearLayout
+                         android:id="@+id/llDistance"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/distance"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:padding="@dimen/dp_2"
+                             android:text="@string/distance"
+                             android:textColor="@android:color/white"
+                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/colon"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:padding="@dimen/dp_2"
+                             android:text="@string/colon"
+                             android:textColor="@android:color/white"
+                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
-                            android:id="@+id/tvDistance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text=""
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                         <TextView
+                             android:id="@+id/tvDistance"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:padding="@dimen/dp_2"
+                             android:text=""
+                             android:textColor="@android:color/white"
+                             android:textSize="@dimen/text_size_10" />
 
-                    </LinearLayout>-->
+                     </LinearLayout>-->
 
                     <LinearLayout
                         android:id="@+id/llButtons"
@@ -276,7 +273,7 @@
                         <TextView
                             android:id="@+id/tvViewInMap"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/dp_2"
                             android:padding="@dimen/dp_6"
                             android:gravity="center"
@@ -289,18 +286,19 @@
                             android:id="@+id/tvDistance"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:padding="@dimen/dp_6"
-                            android:gravity="left"
+                            android:gravity="left|center"
                             android:textStyle="bold"
-                            android:singleLine="true"
-                            android:ellipsize="marquee"
-                            android:marqueeRepeatLimit="marquee_forever"
+                            android:maxLines="2"
+                            android:maxLength="10"
+                            android:ellipsize="end"
                             android:scrollHorizontally="true"
                             android:focusableInTouchMode="true"
                             android:freezesText="true"
                             android:focusable="true"
                             android:text=""
+
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
