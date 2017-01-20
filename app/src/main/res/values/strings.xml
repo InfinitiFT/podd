@@ -72,7 +72,7 @@
     <string name="our_curated_selection_of_best_Restaurants">Our curated selection of best restaurants near you </string>
     <string name="mayfair"> Mayfair</string>
     <string name="dietary">DIETARY, CUISINE,</string>
-    <string name="search_by">Search by</string>
+    <string name="search_by">Search venues by</string>
     <string name="city">(Chelsea, City)</string>
     <string name="Dietary">Dietary</string>
     <string name="gluten">(Gluten free,Halal)</string>
@@ -127,4 +127,6 @@
     <string name="explore_and_book_curated_local_experiences">Explore and book curated local experiences</string>
     <string name="the_armitage">THE ARMITAGE</string>
     <string name="no_menu_found_found_for_this_restaurant">No menu available for this restaurant.</string>
+    <string name="showing">Showing </string>
+    <string name="venues_by">venues by</string>
 </resources>

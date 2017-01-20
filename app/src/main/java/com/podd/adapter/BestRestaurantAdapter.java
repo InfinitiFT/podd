@@ -71,7 +71,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.tvLocation.setText("");
         }
         if(restaurant.distance!= null){
-            holder.tvDistance.setText(restaurant.distance+"km");
+            holder.tvDistance.setText(restaurant.distance);
         }else{
             holder.tvDistance.setText("");
         }
@@ -103,7 +103,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Picasso.with(context)
-                        .load(restaurantList.get(position).restaurant_images.get(0)).resize(500,300)
+                        .load(restaurantList.get(position).restaurant_images.get(0))
                         .into(holder.ivRestaurant);
             } else {
                 holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);
@@ -117,6 +117,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                     if (restaurantList.get(position).restaurant_id!=null ){
                         intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
                     }
+                    intent.putExtra(AppConstant.DISTANCE,restaurantList.get(position).distance);
                     intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
                     intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
                     intent.putExtra(AppConstant.LOCATION, restaurantList.get(position).location);

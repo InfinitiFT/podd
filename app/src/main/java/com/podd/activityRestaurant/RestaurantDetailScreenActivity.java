@@ -59,7 +59,11 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private String restaurantId;
     private String restaurantname;
     private String location;
+    private String distance;
     private final List<String> categories=new ArrayList<>();
+    private TextView tvCuisine;
+    private TextView tvDietary;
+    private TextView tvAmbience;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
             restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
             location=getIntent().getStringExtra(AppConstant.LOCATION);
+            distance=getIntent().getStringExtra(AppConstant.DISTANCE);
+            tvDistance.setText(distance);
         }
 
         lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);
@@ -84,23 +90,24 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private void getIds() {
         tvRestauarntName= (TextView) findViewById(R.id.tvRestauarntName);
         tvNameRestaraunt= (TextView) findViewById(R.id.tvNameRestaraunt);
-        tvCategory= (TextView) findViewById(R.id.tvCategory);
         tvPriceRange= (TextView) findViewById(R.id.tvPriceRange);
         tvLocation= (TextView) findViewById(R.id.tvLocation);
         location=tvLocation.getText().toString().trim();
         tvDistance= (TextView) findViewById(R.id.tvDistance);
+        tvDistance.setSelected(true);
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         TextView tvAboutRestaurant = (TextView) findViewById(R.id.tvAboutRestaurant);
         tvDescriptionRestaraunt= (TextView) findViewById(R.id.tvDescriptionRestaraunt);
         tvViewMenu= (TextView) findViewById(R.id.tvViewMenu);
         tvViewInMap= (TextView) findViewById(R.id.tvViewInMap);
+        tvCuisine= (TextView) findViewById(R.id.tvCuisine);
+        tvDietary= (TextView) findViewById(R.id.tvDietary);
+        tvAmbience= (TextView) findViewById(R.id.tvAmbience);
         LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
         LinearLayout llButtons = (LinearLayout) findViewById(R.id.llButtons);
-        LinearLayout llDistance = (LinearLayout) findViewById(R.id.llDistance);
+       /* LinearLayout llDistance = (LinearLayout) findViewById(R.id.llDistance);*/
         LinearLayout llLocation = (LinearLayout) findViewById(R.id.llLocation);
         LinearLayout llPriceRange = (LinearLayout) findViewById(R.id.llPriceRange);
-        LinearLayout llCategory = (LinearLayout) findViewById(R.id.llCategory);
-        LinearLayout llRestaurantName = (LinearLayout) findViewById(R.id.llRestaurantName);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -208,20 +215,17 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             tvLocation.setText("");
                         }
-                        if (response.body().distance!=null) {
+                       /* if (response.body().distance!=null) {
                             tvDistance.setText(response.body().distance);
                         }
                         else {
                             tvDistance.setText("");
-                        }
+                        }*/
 
                         if(response.body().restaurant_menu!=null&&response.body().restaurant_menu.size()>0){
                             restaurantMenu.clear();
                             restaurantMenu.addAll(response.body().restaurant_menu);
 
-                        }
-                        else {
-                            Toast.makeText(context,R.string.no_menu_found_found_for_this_restaurant,Toast.LENGTH_SHORT).show();
                         }
 
                         if(response.body().price_range!=null&&response.body().price_range.length()>0) {
@@ -249,6 +253,21 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
                                     categories.add(response.body().cuisine.get(i).name);
                             }
+                            String s1="";
+                            for (int i = 0; i <categories.size() ; i++) {
+
+                                if (i==categories.size()-1){
+                                    s1=categories.get(i)+s1;
+                                }
+                                else {
+
+                                    s1 = categories.get(i) + ", " + s1;
+                                }
+                            }
+
+
+                            tvCuisine.setText(s1);
+
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -257,9 +276,23 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         if(response.body().dietary!=null&&response.body().dietary.size()>0) {
                             for (int i = 0; i <response.body().dietary.size() ; i++) {
                                 if(response.body().dietary.get(i).name!=null && !response.body().dietary.get(i).name.equalsIgnoreCase("") )
+                                    categories.clear();;
 
                                     categories.add(response.body().dietary.get(i).name);
                             }
+
+                            String s1="";
+                            for (int i = 0; i <categories.size() ; i++) {
+                                if (i==categories.size()-1){
+                                    s1=categories.get(i)+s1;
+                                }
+                                else {
+
+                                    s1 = categories.get(i) + ", " + s1;
+                                }
+                            }
+                            tvDietary.setText(s1);
+
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -268,18 +301,33 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         if(response.body().ambience!=null&&response.body().ambience.size()>0) {
                             for (int i = 0; i <response.body().ambience.size() ; i++) {
                                 if(response.body().ambience.get(i).name!=null && !response.body().ambience.get(i).name.equalsIgnoreCase("") )
+                                    categories.clear();
                                     categories.add(response.body().ambience.get(i).name);
                             }
+
+                            String s1="";
+                            for (int i = 0; i <categories.size() ; i++) {
+
+                                if (categories.size()==1){
+                                    s1=categories.get(i)+s1;
+
+                                }
+                                else {
+
+                                    s1 = categories.get(i) + ", " + s1;
+                                }
+                            }
+                            tvAmbience.setText(s1);
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
-                        String s1="";
+                       /* String s1="";
                         for (int i = 0; i <categories.size() ; i++) {
 
                             s1 = categories.get(i) + ", " + s1;
-                        }
-                        tvCategory.setText(s1);
+                        }*/
+                        /*tvCategory.setText(s1);*/
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }

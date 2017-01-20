@@ -67,7 +67,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String dateBooked;
     private String timeBooked;
     private String noOfPersons;
-    private List<String> restaurant_time_interval;
+    private List<String>restaurantTimeInterval=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
         setContentView(R.layout.activity_restraunt_booking_details);
         context = RestaurantBookingDetailsActivity.this;
         getIds();
-        restaurant_time_interval = new ArrayList<>();
         if(getIntent()!= null) {
             restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
             restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
@@ -181,12 +180,12 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
                  /*  getting tomorrow date  */
 
-                String currentDateString = DateFormat.getDateInstance().format(new Date());
-                date = DateFormat.getDateInstance().format(System.currentTimeMillis() + (24 * 3600000));
+                date = new SimpleDateFormat("dd-MM-yyyy").format(System.currentTimeMillis() + (24 * 3600000));
+              /*  date = DateFormat.getDateInstance().format(System.currentTimeMillis() + (24 * 3600000));*/
                 tvTomorrow.setText(date);
                 tvDateBooked.setText(date);
                // if(!tvDateBooked.getText().toString().equalsIgnoreCase(getString(R.string.date_Booked))){
-                    getRestauranttimeIntervalApi();
+                    getRestauranttimeIntervalApi(date);
                // }
                 break;
 
@@ -196,10 +195,10 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
                 /*  getting current date  */
 
-                currentDateString = DateFormat.getDateInstance().format(new Date());
-                tvToday.setText(currentDateString);
-                tvDateBooked.setText(currentDateString);
-                getRestauranttimeIntervalApi();
+                date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                tvToday.setText(date);
+                tvDateBooked.setText(date);
+                getRestauranttimeIntervalApi(date);
                 break;
 
         }
@@ -217,14 +216,14 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                 date = simpleDateFormat.format(calendar.getTime());
                 //selected = Long.parseLong(String.valueOf((CommonUtils.getTimeStampDate(date, "dd/MM/yyyy"))));
 
                 tvSelectfromCalender.setText(date);
                 tvDateBooked.setText(date);
               //  if(!tvDateBooked.getText().toString().equalsIgnoreCase(getString(R.string.date_Booked))){
-                    getRestauranttimeIntervalApi();
+                    getRestauranttimeIntervalApi(  date);
                 //}
                /* tvSelectTimeValue.setText(R.string.select_time);*/
 
@@ -249,8 +248,8 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-        if (restaurant_time_interval != null && restaurant_time_interval.size() > 0) {
-            tvTimeBooked.setText(spSelectTime.getSelectedItem() != null ? spSelectTime.getSelectedItem().toString() : restaurant_time_interval.get(0));
+        if (restaurantTimeInterval!=null&&restaurantTimeInterval.size()>0) {
+            tvTimeBooked.setText(spSelectTime.getSelectedItem() != null ? spSelectTime.getSelectedItem().toString() : restaurantTimeInterval.get(0));
         }
 
         tvNoOfPersons.setText(spSelectPeople.getSelectedItem().toString().trim());
@@ -264,14 +263,15 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     }
 
 
-    private void getRestauranttimeIntervalApi() {
+    private void getRestauranttimeIntervalApi(String date) {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.restaurant_id = restaurantantId;
-        if(!tvDateBooked.getText().toString().equalsIgnoreCase("Date Booked")){
+        jsonRequest.date=date;
+        /*if(!tvDateBooked.getText().toString().equalsIgnoreCase("Date Booked")){
             jsonRequest.date=tvDateBooked.getText().toString().trim();
-        }
+        }*/
 
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
@@ -283,9 +283,9 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-                        if (response.body().restaurant_time_interval.size() > 0) {
-                            restaurant_time_interval.clear();
-                            restaurant_time_interval = response.body().restaurant_time_interval;
+                        if (response.body().restaurant_time_interval!=null&&response.body().restaurant_time_interval.size()>0) {
+                            restaurantTimeInterval.clear();
+                            restaurantTimeInterval.addAll(response.body().restaurant_time_interval);
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.row_textview_spinner_type, response.body().restaurant_time_interval);
                             adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
                             spSelectTime.setAdapter(adapter);

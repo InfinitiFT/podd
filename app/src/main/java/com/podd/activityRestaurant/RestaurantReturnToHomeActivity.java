@@ -83,7 +83,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvReturnToHome:
-                intent = new Intent(context, HomeScreenActivity.class);
+                intent = new Intent(context, NewHomeScreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
@@ -93,7 +93,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        intent = new Intent(context, HomeScreenActivity.class);
+        intent = new Intent(context, NewHomeScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

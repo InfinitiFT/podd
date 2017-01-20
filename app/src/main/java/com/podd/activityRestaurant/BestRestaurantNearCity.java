@@ -79,6 +79,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private EndlessScrollListener scrollListener;
     private boolean isRestaurant = false;
     private int pageSize = 10;
+    private TextView tvLocationName;
+    private TextView tvNoOfRestaurants;
+    private LinearLayout llCurrentloc;
+    private LinearLayout llVenues;
+    private String restaurantlistSize;
 
 
     @Override
@@ -87,9 +92,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_best_restaurant_near_city);
         context = BestRestaurantNearCity.this;
         getIds();
+
         setListeners();
         setRecycle();
         fetchLocation();
+        tvLocationName.setSelected(true);
 
 
         try {
@@ -103,6 +110,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (restaurantList.size() % pageSize == 0)
                             getRestaurantListApi(currentLat, currentLong, pageNo);
                     } else {
+                        pageNo=1;
                         if (restaurantList.size() % pageSize == 0)
                             callsearchedTextApi(pageNo);
                     }
@@ -156,8 +164,12 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         TextView tvAmbience = (TextView) findViewById(R.id.tvAmbience);
         tvBusiness = (TextView) findViewById(R.id.tvBusiness);
         TextView tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
+        tvLocationName= (TextView) findViewById(R.id.tvLocationName);
+        tvNoOfRestaurants= (TextView) findViewById(R.id.tvNoOfRestaurants);
+        llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
+        llVenues= (LinearLayout) findViewById(R.id.llVenues);
 
-
+/*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -170,7 +182,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             public void onClick(View v) {
                 onBackPressed();
             }
-        });
+        });*/
 
     }
 
@@ -203,8 +215,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 CommonUtils.disMissProgressDialog(context);
-                tvCityName.setText(response.body().results.get(0).formatted_address);
+                /*tvCityName.setText(response.body().results.get(0).formatted_address);*/
                 getRestaurantListApi(currentLat, currentLong, pageNo);
+                llVenues.setVisibility(View.VISIBLE);
+                tvLocationName.setText(response.body().results.get(0).formatted_address);
+
                 Logger.addRecordToLog("Response " + response);
             }
 
@@ -222,33 +237,48 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llAmbience:
-                tvCityName.setVisibility(View.GONE);
-                tvNearbyRestaurant.setText(R.string.restaurant_by_ambience);
+
+                /*tvNearbyRestaurant.setText(R.string.restaurant_by_ambience);*/
                 getAmbienceRestaurantListApi();
+                llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llLocation:
-                tvCityName.setVisibility(View.GONE);
+                llVenues.setVisibility(View.VISIBLE);
+/*
                 tvNearbyRestaurant.setText(R.string.restaurant_by_location);
+*/
                 getLocationRestaurantListApi();
+                llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llDietary:
-                tvCityName.setVisibility(View.GONE);
+
+/*
                 tvNearbyRestaurant.setText(R.string.restaurant_by_dietary);
+*/
                 getDietaryRestaurantListApi();
+                llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llCuisine:
+/*
                 tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
-                tvCityName.setVisibility(View.GONE);
+*/
+
                 getCuisineRestaurantListApi();
+                llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llMeal:
+/*
                 tvNearbyRestaurant.setText(R.string.restaurant_by_meal);
-                tvCityName.setVisibility(View.GONE);
+*/
+
                 getMealRestaurantListApi();
+                llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llDeliveredToYou:
+/*
                 tvNearbyRestaurant.setText(R.string.delivered_to_you);
-                tvCityName.setVisibility(View.GONE);
+*/
+                llVenues.setVisibility(View.VISIBLE);
                 break;
 
         }
@@ -281,6 +311,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             if(pageNo==1)
                                 restaurantList.clear();
                                 restaurantList.addAll(response.body().restaurant_list);
+                                tvNoOfRestaurants.setText(String.valueOf(response.body().pagination.total_record_count));
                                 bestRestaurantAdapter.notifyDataSetChanged();
                                 rvRestaurants.setNestedScrollingEnabled(false);
                                 pageNo++;
@@ -451,6 +482,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (response.body().allList != null && response.body().allList.size() > 0) {
                             cuisineList.clear();
                             cuisineList.addAll(response.body().allList);
+
+
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem = "ambience";
@@ -510,6 +543,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (response.body().allList != null && response.body().allList.size() > 0) {
                             cuisineList.clear();
                             cuisineList.addAll(response.body().allList);
+
                             _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem = "location";
@@ -611,6 +645,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
             case "cuisine":
                 tvCuisineType.setText(cuisine.name);
+                tvLocationName.setText(cuisine.name);
+                pageNo=1;
                 cuisineId = cuisine.id;
                 locationId = "";
                 dietaryId = "";
@@ -625,6 +661,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 break;
             case "location":
                 tvLocationType.setText(cuisine.name);
+                tvLocationName.setText(cuisine.name);
+                pageNo=1;
                 locationId = cuisine.id;
                 dietaryId = "";
                 mealId = "";
@@ -639,6 +677,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 break;
             case "dietary":
                 tvDietaryType.setText(cuisine.name);
+                tvLocationName.setText(cuisine.name);
+                pageNo=1;
                 dietaryId = cuisine.id;
                 mealId = "";
                 ambienceId = "";
@@ -653,6 +693,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 break;
             case "meal":
                 tvMealType.setText(cuisine.name);
+                tvLocationName.setText(cuisine.name);
+                pageNo=1;
                 mealId = cuisine.id;
                 ambienceId = "";
                 cuisineId = "";
@@ -667,7 +709,9 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 break;
             case "ambience":
                 tvBusiness.setText(cuisine.name);
+                tvLocationName.setText(cuisine.name);
                 ambienceId = cuisine.id;
+                pageNo=1;
                 cuisineId = "";
                 locationId = "";
                 mealId = "";
@@ -683,16 +727,10 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         }
 
 
-       /* GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-        rvRestaurants.setLayoutManager(gridLayoutManager);
-        cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
-        rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
-        rvRestaurants.setNestedScrollingEnabled(false);
-        Log.d(TAG, "Number of data received: " + cuisineList.size());*/
-
     }
 
     private void callsearchedTextApi(int pageNumber) {
+
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
@@ -717,15 +755,18 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
+                            if(pageNo==1)
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_list);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+                            tvNoOfRestaurants.setText(String.valueOf(response.body().pagination.total_record_count));
+                            /*GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
                             rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);
-                            rvRestaurants.setAdapter(bestRestaurantAdapter);
+                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);*/
+                            bestRestaurantAdapter.notifyDataSetChanged();
                             rvRestaurants.setNestedScrollingEnabled(false);
+                            pageNo++;
                         } else {
-                            Toast.makeText(context, "There is no restaurant list.", Toast.LENGTH_SHORT).show();
+
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();

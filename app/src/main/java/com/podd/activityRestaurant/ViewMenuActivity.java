@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
@@ -22,6 +23,7 @@ import com.podd.fragment.DinnerMenuFragment;
 import com.podd.fragment.LunchMenuFragment;
 import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
+import com.podd.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,10 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         bundle = getIntent().getBundleExtra(AppConstant.RESTAURANTMENUBUNDLE);
         if (bundle != null) {
             restaurantMenu = (ArrayList<RestaurantMenu>) bundle.getSerializable(AppConstant.RESTAURANTMENU);
+
+        }
+        if(restaurantMenu.size()==0){
+            CommonUtils.showAlertOk("Currently, no menu item is available.",ViewMenuActivity.this);
         }
 
         setAdapter();

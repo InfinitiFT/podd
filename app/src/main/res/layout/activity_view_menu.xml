@@ -78,11 +78,12 @@
                 android:gravity="center"
                 >
 
-                <android.support.design.widget.TabLayout
+             <!--   <android.support.design.widget.TabLayout
                     android:tabStripEnabled="false"
-                    app:tabIndicatorHeight="0dp"
+                    app:tabIndicatorHeight="2dp"
                     android:id="@+id/tab_layout"
                     android:scrollbars="none"
+                    app:tabPadding="@dimen/dp_2"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     app:tabTextColor="@android:color/darker_gray"
@@ -93,7 +94,23 @@
                     app:tabMaxWidth="@dimen/dp_240"
                     android:orientation="vertical"
                     app:tabMode="fixed"
-                   />
+                   />-->
+
+
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:tabMode="fixed"
+                    app:tabTextColor="@android:color/darker_gray"
+                    app:tabTextAppearance="@style/CustomTabWidgetText"
+                    app:tabIndicatorColor="@android:color/white"
+                    app:tabSelectedTextColor="@android:color/white"
+                    app:tabPadding="@dimen/dp_1"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabGravity="fill"/>
+
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
