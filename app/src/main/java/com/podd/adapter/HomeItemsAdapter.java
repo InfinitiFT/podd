@@ -37,9 +37,10 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
+
 
 
         if(homeItemsModel.service_name!= null){
@@ -52,34 +53,51 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
             public void onClick(View view) {
                 switch(serviceName){
                     case "Front Desk":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Restaurants & Bars":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         intent=new Intent(context, BestRestaurantNearCity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                         break;
                     case "Delivery":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                         break;
                     case "Taxi & Limousines":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Car Hire":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Health & Wellness":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Beauty services":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Art & Culture":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case "Happening in London":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                 }

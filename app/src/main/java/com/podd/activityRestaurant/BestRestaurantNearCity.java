@@ -766,7 +766,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             rvRestaurants.setNestedScrollingEnabled(false);
                             pageNo++;
                         } else {
-                            Toast.makeText(context, "There is no restaurant list.", Toast.LENGTH_SHORT).show();
+
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
