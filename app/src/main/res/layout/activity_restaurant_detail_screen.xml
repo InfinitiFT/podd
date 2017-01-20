@@ -70,7 +70,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_20"
+
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -80,66 +80,108 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/llRestaurantName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/restaraunt_name"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/colon"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
 
                         <TextView
                             android:id="@+id/tvNameRestaraunt"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
                             android:text=""
                             android:ellipsize="marquee"
-                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+
+
+                    <LinearLayout
+                        android:id="@+id/llDietary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text="@string/Dietary"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+
+                        <TextView
+                            android:id="@+id/tvDietary"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
                     </LinearLayout>
 
+
                     <LinearLayout
-                        android:id="@+id/llCategory"
-                        android:layout_width="wrap_content"
+                    android:id="@+id/llCuisine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_2"
+                        android:text="@string/cuisine"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_10" />
+
+                    <TextView
+                        android:id="@+id/tvCuisine"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_2"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_10" />
+
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAmbience"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
-                            android:text="@string/category"
+                            android:text="@string/ambience"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/colon"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <TextView
-                            android:id="@+id/tvCategory"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tvAmbience"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
                             android:text=""
@@ -150,12 +192,13 @@
 
                     <LinearLayout
                         android:id="@+id/llPriceRange"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
                             android:text="@string/price_range"
@@ -163,16 +206,9 @@
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/colon"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <TextView
                             android:id="@+id/tvPriceRange"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
                             android:text=""
@@ -181,40 +217,9 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/llLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/location"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text="@string/colon"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <TextView
-                            android:id="@+id/tvLocation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
-                            android:text=""
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                   <!-- <LinearLayout
                         android:id="@+id/llDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -245,10 +250,69 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
+                    </LinearLayout>-->
+
+                    <LinearLayout
+                        android:id="@+id/llButtons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvViewMenu"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_6"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:drawableLeft="@mipmap/menu"
+                            android:layout_marginEnd="@dimen/dp_2"
+                            android:text="@string/view_menu"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvViewInMap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_2"
+                            android:padding="@dimen/dp_6"
+                            android:gravity="center"
+                            android:drawableLeft="@mipmap/map"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvDistance"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_6"
+                            android:gravity="left"
+                            android:textStyle="bold"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:scrollHorizontally="true"
+                            android:focusableInTouchMode="true"
+                            android:freezesText="true"
+                            android:focusable="true"
+                            android:text=""
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
                     </LinearLayout>
 
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -262,6 +326,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_2"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         android:text="@string/text_about_restauarnt"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_size_10" />
@@ -277,39 +342,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/llButtons"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_weight=".5"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvViewMenu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/button_background"
-                        android:padding="@dimen/dp_6"
-                        android:textStyle="bold"
-                        android:text="@string/view_menu"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/text_size_10" />
-
-                    <TextView
-                        android:id="@+id/tvViewInMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_20"
-                        android:background="@drawable/button_background"
-                        android:padding="@dimen/dp_6"
-                        android:textStyle="bold"
-                        android:text="@string/view_in_map"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/text_size_10" />
-
-                </LinearLayout>
             </LinearLayout>
 
             <TextView

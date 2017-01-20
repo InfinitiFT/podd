@@ -103,7 +103,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Picasso.with(context)
-                        .load(restaurantList.get(position).restaurant_images.get(0)).resize(400,200)
+                        .load(restaurantList.get(position).restaurant_images.get(0))
                         .into(holder.ivRestaurant);
             } else {
                 holder.ivRestaurant.setImageResource(R.color.colorPrimaryDark);

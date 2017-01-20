@@ -13,7 +13,7 @@ import com.podd.R;
  * Created by Shalini Bishnoi on 17-01-2017.
  */
 public class SubItemMenuAdapter extends RecyclerView.Adapter <SubItemMenuAdapter.MyViewHolder>{
-    private Context context;
+    private final Context context;
     public SubItemMenuAdapter(Context context) {
         this.context=context;
 
