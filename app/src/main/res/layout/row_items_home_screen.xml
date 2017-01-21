@@ -14,9 +14,10 @@
         android:padding="@dimen/dp_5"
         android:text=""
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_8"
+        android:textSize="@dimen/text_size_10"
         android:layout_margin="@dimen/dp_2"
         android:gravity="center"
+        android:textStyle="bold"
         android:lines="2"/>
 </LinearLayout>
 

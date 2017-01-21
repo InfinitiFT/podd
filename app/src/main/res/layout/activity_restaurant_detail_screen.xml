@@ -9,7 +9,7 @@
     tools:context="com.podd.activityRestaurant.RestaurantDetailScreenActivity"
     tools:ignore="Overdraw">
 
-    <include layout="@layout/toolbar" />
+    <!--<include layout="@layout/toolbar" />-->
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_2"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@android:color/white" />
 
@@ -46,10 +46,10 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <View
+                <!--<View
                     android:layout_width="@dimen/dp_1"
                     android:layout_height="match_parent"
-                    android:background="@android:color/white"/>
+                    android:background="@android:color/white"/>-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvRestaurants"
@@ -64,7 +64,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_2"
                 android:background="@android:color/white" />
 
             <LinearLayout
@@ -76,7 +76,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.8"
                     android:orientation="vertical">
 
                     <TextView
@@ -270,7 +270,7 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
-                        <TextView
+                       <!-- <TextView
                             android:id="@+id/tvViewInMap"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -280,7 +280,7 @@
                             android:drawableLeft="@mipmap/map"
                             android:text=""
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/text_size_10" />
+                            android:textSize="@dimen/text_size_10" />-->
 
                         <TextView
                             android:id="@+id/tvDistance"
@@ -291,19 +291,17 @@
                             android:gravity="left|center"
                             android:textStyle="bold"
                             android:maxLines="2"
-                            android:maxLength="10"
+                            android:drawableLeft="@mipmap/map"
                             android:ellipsize="end"
                             android:scrollHorizontally="true"
                             android:focusableInTouchMode="true"
                             android:freezesText="true"
                             android:focusable="true"
                             android:text=""
-
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 

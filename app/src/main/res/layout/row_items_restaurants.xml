@@ -19,11 +19,11 @@
             android:layout_height="300dp"
             android:scaleType="fitXY"
             android:contentDescription="@null"
-            android:src="@mipmap/podd" />
-        <View
+            android:src="@mipmap/placeholder_icon" />
+       <!-- <View
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
-            android:background="@android:color/white"/>
+            android:background="@android:color/white"/>-->
 
 
 

@@ -78,7 +78,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
             location=getIntent().getStringExtra(AppConstant.LOCATION);
             distance=getIntent().getStringExtra(AppConstant.DISTANCE);
-            tvDistance.setText(distance);
+            tvDistance.setText(distance +"View Map");
         }
 
         lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);
@@ -109,7 +109,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         LinearLayout llLocation = (LinearLayout) findViewById(R.id.llLocation);
         LinearLayout llPriceRange = (LinearLayout) findViewById(R.id.llPriceRange);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -121,7 +121,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 onBackPressed();
             }
-        });
+        });*/
     }
 
     private void setListeners() {

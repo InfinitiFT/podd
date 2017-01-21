@@ -1,6 +1,7 @@
 package com.podd.activityRestaurant;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -79,8 +80,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private EndlessScrollListener scrollListener;
     private boolean isRestaurant = false;
     private int pageSize = 10;
-    private TextView tvLocationName;
-    private TextView tvNoOfRestaurants;
+    private TextView tvLocationName,tvSearchBy,tvLocation,tvDietary,tvShowing,tvVenueBy;
+    private TextView tvNoOfRestaurants,tvCuisine,tvMeal,tvAmbience, tvDeliveredtoYou;
     private LinearLayout llCurrentloc;
     private LinearLayout llVenues;
     private String restaurantlistSize;
@@ -96,6 +97,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         setListeners();
         setRecycle();
         fetchLocation();
+        setFont();
         tvLocationName.setSelected(true);
 
 
@@ -125,6 +127,27 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
     }
 
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvSearchBy.setTypeface(typeface);
+        tvShowing.setTypeface(typeface);
+        tvNoOfRestaurants.setTypeface(typeface);
+        tvVenueBy.setTypeface(typeface);
+        tvLocationName.setTypeface(typeface);
+        tvLocation.setTypeface(typeface);
+        tvLocationType.setTypeface(typeface);
+        tvDietary.setTypeface(typeface);
+        tvDietaryType.setTypeface(typeface);
+        tvMeal.setTypeface(typeface);
+        tvMealType.setTypeface(typeface);
+        tvCuisine.setTypeface(typeface);
+        tvCuisineType.setTypeface(typeface);
+        tvAmbience.setTypeface(typeface);
+        tvBusiness.setTypeface(typeface);
+      //  Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+
+    }
+
     private void setRecycle() {
         gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
         rvRestaurants.setLayoutManager(gridLayoutManager);
@@ -151,19 +174,21 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         llDietary = (LinearLayout) findViewById(R.id.llDietary);
         llLocation = (LinearLayout) findViewById(R.id.llLocation);
         tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
+        tvVenueBy = (TextView) findViewById(R.id.tvVenueBy);
+        tvShowing = (TextView) findViewById(R.id.tvShowing);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
-        TextView tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
+        tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
         tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
-        TextView tvLocation = (TextView) findViewById(R.id.tvLocation);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvLocationType = (TextView) findViewById(R.id.tvLocationType);
-        TextView tvDietary = (TextView) findViewById(R.id.tvDietary);
-        TextView tvCuisine = (TextView) findViewById(R.id.tvCuisine);
+        tvDietary = (TextView) findViewById(R.id.tvDietary);
+        tvCuisine = (TextView) findViewById(R.id.tvCuisine);
         tvCuisineType = (TextView) findViewById(R.id.tvCuisineType);
-        TextView tvMeal = (TextView) findViewById(R.id.tvMeal);
+        tvMeal = (TextView) findViewById(R.id.tvMeal);
         tvMealType = (TextView) findViewById(R.id.tvMealType);
-        TextView tvAmbience = (TextView) findViewById(R.id.tvAmbience);
+        tvAmbience = (TextView) findViewById(R.id.tvAmbience);
         tvBusiness = (TextView) findViewById(R.id.tvBusiness);
-        TextView tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
+        tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
         tvLocationName= (TextView) findViewById(R.id.tvLocationName);
         tvNoOfRestaurants= (TextView) findViewById(R.id.tvNoOfRestaurants);
         llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);

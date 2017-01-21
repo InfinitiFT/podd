@@ -2,6 +2,7 @@ package com.podd.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,10 @@ import java.util.List;
 @SuppressWarnings("ALL")
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
     private final Context context;
-    private List<HomeItemsModel>homeItemsModelList;
+   private List<HomeItemsModel>homeItemsModelList;
     private Intent intent;
 
-    public HomeItemsAdapter(Context context, List<HomeItemsModel> homeItemsModelList) {
+    public HomeItemsAdapter(Context context, List<HomeItemsModel>homeItemsModelList) {
         this.context=context;
         this.homeItemsModelList=homeItemsModelList;
 
@@ -39,14 +40,59 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
+        final HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
 
-
-
-        if(homeItemsModel.service_name!= null){
-            holder.tvItemName.setText(homeItemsModel.service_name);
+        if(homeItemsModel.getService_name()!= null){
+            holder.tvItemName.setText(homeItemsModel.getService_name());
         }
-        final String serviceName = homeItemsModel.service_name;
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+        holder.tvItemName.setTypeface(typeface);
+
+        holder.tvItemName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (homeItemsModel.getService_name()){
+                    case "Front Desk":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Restaurants & Bars":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
+                        intent=new Intent(context, BestRestaurantNearCity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                        break;
+                    case "Meal Delivery":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
+                        intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                        break;
+                    case "Taxi":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
+                        Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Leisure Attractions":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        break;
+                    case "Health & Spa":
+                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+
+                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+
+            }
+        });
+
+
+        /*final String serviceName = homeItemsModel.service_name;
 
         holder.tvItemName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +148,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
                         break;
                 }
             }
-        });
+        });*/
 
     }
 

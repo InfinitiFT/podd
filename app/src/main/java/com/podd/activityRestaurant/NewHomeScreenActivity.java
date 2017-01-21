@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.podd.R;
 import com.podd.adapter.HomeItemsAdapter;
+import com.podd.adapter.HomePagerAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
 import com.podd.model.HomeItemsModel;
@@ -39,10 +42,12 @@ import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonResponse;
+import com.zanlabs.widget.infiniteviewpager.InfiniteViewPager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,6 +63,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
+    private HomePagerAdapter pagerAdapter;
+    private InfiniteViewPager viewPager;
+    private ArrayList<String> banner_image;
+    private TextView tvTime,tvDayDate,tvWelcome;
+    private  int[] img = new int[]{R.mipmap.image4, R.mipmap.image3, R.mipmap.image2, R.mipmap.image1};
+    private  String[] itemName = new String[]{"Front Desk","Restaurants & Bars","Meal Delivery","Taxi","Leisure Attractions","Health & Spa"};
 
 
     @Override
@@ -67,18 +78,42 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         context=NewHomeScreenActivity.this;
         getIds();
         setRecycler();
+        setFont();
+        for (int i = 0; i < itemName.length; i++) {
+            HomeItemsModel hotelItemModel = new HomeItemsModel();
+            hotelItemModel.setService_name(itemName[i]);
+            homeItemsModelList.add(hotelItemModel);
+
+        }
+
+        banner_image = new ArrayList<>();
+        viewPager = (InfiniteViewPager) findViewById(R.id.viewpager);
+        pagerAdapter = new HomePagerAdapter(context, img);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.startAutoScroll(4000);
         //setRecyclerData();
 
-        if(CommonUtils.isNetworkConnected(this)){
+
+        /*if(CommonUtils.isNetworkConnected(this)){
             callHomeApi();
         }else {
             Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         LocationTracker locationTracker = new LocationTracker(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         checkPermission();
 
+    }
+
+    private void setFont() {
+       Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvDayDate.setTypeface(typeface);
+
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        tvTime.setTypeface(typefaceBold);
+        tvAdminMessage.setTypeface(typefaceBold);
+        tvWelcome.setTypeface(typefaceBold);
     }
 
     private void callHomeApi() {
@@ -127,8 +162,10 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private void getIds() {
         ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
-        final TextView tvTime = (TextView) findViewById(R.id.tvTime);
-        TextView tvDayDate = (TextView) findViewById(R.id.tvDayDate);
+        tvTime = (TextView) findViewById(R.id.tvTime);
+        tvDayDate = (TextView) findViewById(R.id.tvDayDate);
+        tvWelcome = (TextView) findViewById(R.id.tvWelcome);
+        tvAdminMessage = (TextView) findViewById(R.id.tvAdminMessage);
         tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
        // tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
 
@@ -141,7 +178,11 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
             public void onTick(long millisUntilFinished) {
                 Calendar c = Calendar.getInstance();
-                tvTime.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+                Date now = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a");
+                String formattedTime = sdf.format(now);
+             //   tvTime.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+                tvTime.setText(formattedTime);
             }
             public void onFinish() {
 
