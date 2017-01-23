@@ -41,7 +41,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-
+                    android:id="@+id/tvLocationLeft"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/tvDateBookedLeft"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -97,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-
+                    android:id="@+id/tvTimeBookedLeft"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -125,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-
+                    android:id="@+id/tvNumberofPeopleLeft"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"

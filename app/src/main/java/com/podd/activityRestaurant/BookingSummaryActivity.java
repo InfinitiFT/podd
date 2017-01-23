@@ -4,6 +4,7 @@ package com.podd.activityRestaurant;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -40,10 +41,10 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private EditText etEmail;
     private TextView tvCompleteBooking;
     private TextView tvRestaurantName;
-    private TextView tvLocation;
-    private TextView tvDateBooked;
-    private TextView tvTimeBooked;
-    private TextView tvNumberofPeople;
+    private TextView tvLocation,tvLocationLeft;
+    private TextView tvDateBooked,tvDateBookedLeft;
+    private TextView tvTimeBooked,tvTimeBookedLeft;
+    private TextView tvNumberofPeople,tvNoOfPeopleLeft,tvBookTaxi,tvConfirmation;
 
     private Dialog dialogConfirmBooking;
     private EditText etEnterOtp;
@@ -67,6 +68,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         context = BookingSummaryActivity.this;
         getIds();
         setListeners();
+        setFont();
         setSpinner();
         etName.requestFocus();
         if(getIntent()!=null) {
@@ -90,10 +92,12 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,countryCodeArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spCountryCode.setAdapter(adapter);
+
     }
 
     private void getIds() {
         tvCompleteBooking = (TextView) findViewById(R.id.tvCompleteBooking);
+        tvBookTaxi = (TextView) findViewById(R.id.tvBookTaxi);
         etName = (EditText) findViewById(R.id.etName);
         spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
@@ -104,10 +108,13 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
-       TextView tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
+        tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
+        tvLocationLeft = (TextView) findViewById(R.id.tvLocationLeft);
+        tvDateBookedLeft = (TextView) findViewById(R.id.tvDateBookedLeft);
+        tvTimeBookedLeft = (TextView) findViewById(R.id.tvTimeBookedLeft);
+        tvNoOfPeopleLeft = (TextView) findViewById(R.id.tvNoOfPeopleLeft);
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -119,7 +126,27 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             public void onClick(View v) {
                 onBackPressed();
             }
-        });
+        });*/
+
+    }
+
+    private void setFont() {
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvRestaurantName.setTypeface(typefaceBold);
+        tvBookTaxi.setTypeface(typefaceBold);
+        tvLocationLeft.setTypeface(typefaceRegular);
+        tvLocation.setTypeface(typefaceRegular);
+        tvDateBookedLeft.setTypeface(typefaceRegular);
+        tvDateBooked.setTypeface(typefaceRegular);
+        tvTimeBookedLeft.setTypeface(typefaceRegular);
+        tvTimeBooked.setTypeface(typefaceRegular);
+        tvNoOfPeopleLeft.setTypeface(typefaceRegular);
+        tvNumberofPeople.setTypeface(typefaceRegular);
+        tvConfirmation.setTypeface(typefaceRegular);
+        etName.setTypeface(typefaceRegular);
+        etPhoneNumber.setTypeface(typefaceRegular);
+        etEmail.setTypeface(typefaceRegular);
 
     }
 
@@ -146,15 +173,21 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void showOtpDialog() {
         dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
+
         TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
+        TextView tvEnterYourEmailId = (TextView) dialogConfirmBooking.findViewById(R.id.tvEnterYourEmailId);
         TextView tvResendOtp = (TextView) dialogConfirmBooking.findViewById(R.id.tvResendOtp);
         etEnterOtp = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp);
-
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        tvEnterYourEmailId.setTypeface(typefaceBold);
+        tvSubmit.setTypeface(typefaceBold);
+        tvResendOtp.setTypeface(typefaceBold);
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        etEnterOtp.setTypeface(typefaceRegular);
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(isValidOtp()) {
                     otp=etEnterOtp.getText().toString().trim();
                     otpVerificationApi();
@@ -189,19 +222,19 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private boolean isValid() {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         if (etName.getText().toString().trim().isEmpty()) {
-            Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_LONG).show();
             etName.requestFocus();
             return false;
         } else if (etPhoneNumber.getText().toString().trim().isEmpty()) {
-            Toast.makeText(context, R.string.please_enter_phone_number, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.please_enter_phone_number, Toast.LENGTH_LONG).show();
             etPhoneNumber.requestFocus();
             return false;
         } else if (etEmail.getText().toString().trim().isEmpty()) {
-            Toast.makeText(context, R.string.please_enter_email, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.please_enter_email, Toast.LENGTH_LONG).show();
             etEmail.requestFocus();
             return false;
         } else if (!etEmail.getText().toString().trim().matches(EMAIL_PATTERN)) {
-            Toast.makeText(context, R.string.please_enter_valid_email, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.please_enter_valid_email, Toast.LENGTH_LONG).show();
             etEmail.requestFocus();
             return false;
         }

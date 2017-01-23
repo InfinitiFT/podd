@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:fullBackupContent="true"
         android:theme="@style/AppTheme"
+        android:largeHeap="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activityRestaurant.NewHomeScreenActivity"
             android:screenOrientation="landscape"

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_taxi_booking_summary"
@@ -10,7 +10,7 @@
     tools:ignore="Overdraw">
 
 
-    <include layout="@layout/toolbar" />
+    <!--<include layout="@layout/toolbar" />-->
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -57,17 +57,29 @@
                 android:orientation="horizontal">
 
             <TextView
-
+                android:id="@+id/tvLocationLeft"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_6"
                 android:gravity="center"
-                android:padding="@dimen/dp_2"
+                android:padding="@dimen/dp_1"
                 android:text="@string/location_"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_1"
+                    android:text="@string/colon"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvLocation"
@@ -87,12 +99,24 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/tvDateBookedLeft"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/dp_2"
+                android:padding="@dimen/dp_1"
                 android:text="@string/date_booked_"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:gravity="center"
+                android:padding="@dimen/dp_2"
+                android:text="@string/colon"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />
@@ -102,8 +126,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
-                android:padding="@dimen/dp_2"
-
+                android:padding="@dimen/dp_1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />
@@ -114,13 +137,25 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-
+                android:id="@+id/tvTimeBookedLeft"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/dp_2"
+                android:padding="@dimen/dp_1"
                 android:text="@string/time_booked_"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:gravity="center"
+                android:padding="@dimen/dp_1"
+                android:text="@string/colon"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />
@@ -131,8 +166,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
-                android:padding="@dimen/dp_2"
-
+                android:padding="@dimen/dp_1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />
@@ -142,13 +176,25 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-
+                android:id="@+id/tvNoOfPeopleLeft"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/dp_2"
+                android:padding="@dimen/dp_1"
                 android:text="@string/number_of_people_"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:gravity="center"
+                android:padding="@dimen/dp_1"
+                android:text="@string/colon"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />
@@ -158,8 +204,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
-                android:padding="@dimen/dp_2"
-
+                android:padding="@dimen/dp_1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12"
                 android:textStyle="bold" />

@@ -2,6 +2,7 @@ package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,9 +20,9 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvReturnToHome;
     private Context context;
     private Intent intent;
-    private TextView tvRestauarntName;
-    private TextView tvLocation;
-    private TextView tvDateBooked;
+    private TextView tvRestauarntName,tvLocationLeft,tvDateBookedLeft;
+    private TextView tvLocation,tvTimeBookedLeft,tvNumberofPeopleLeft;
+    private TextView tvDateBooked,tvConfirmation,tvThanks;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
 
@@ -33,6 +34,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         context = RestaurantReturnToHomeActivity.this;
         getIds();
         setListeners();
+        setFont();
         if(getIntent()!=null) {
             String restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
             String restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
@@ -58,8 +60,14 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNumberofPeople = (TextView) findViewById(R.id.tvNumberofPeople);
+        tvLocationLeft = (TextView) findViewById(R.id.tvLocationLeft);
+        tvDateBookedLeft = (TextView) findViewById(R.id.tvDateBookedLeft);
+        tvTimeBookedLeft = (TextView) findViewById(R.id.tvTimeBookedLeft);
+        tvNumberofPeopleLeft = (TextView) findViewById(R.id.tvNumberofPeopleLeft);
+        tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
+        tvThanks = (TextView) findViewById(R.id.tvThanks);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,7 +79,25 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 onBackPressed();
             }
-        });
+        });*/
+
+    }
+
+    private void setFont() {
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        tvRestauarntName.setTypeface(typefaceBold);
+        tvReturnToHome.setTypeface(typefaceBold);
+        tvLocationLeft.setTypeface(typefaceRegular);
+        tvLocation.setTypeface(typefaceRegular);
+        tvDateBookedLeft.setTypeface(typefaceRegular);
+        tvDateBooked.setTypeface(typefaceRegular);
+        tvTimeBookedLeft.setTypeface(typefaceRegular);
+        tvNumberofPeopleLeft.setTypeface(typefaceRegular);
+        tvTimeBooked.setTypeface(typefaceRegular);
+        tvNumberofPeople.setTypeface(typefaceRegular);
+        tvConfirmation.setTypeface(typefaceRegular);
+        tvThanks.setTypeface(typefaceRegular);
 
     }
 

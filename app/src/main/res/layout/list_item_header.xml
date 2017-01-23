@@ -14,7 +14,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_12"
         android:gravity="left"
-        android:text="hdshjf"
+        android:text=""
         android:padding="@dimen/dp_2"
         android:textStyle="bold"
         tools:ignore="UnusedAttribute" />

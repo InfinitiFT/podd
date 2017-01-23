@@ -3,7 +3,9 @@ package com.podd.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
 import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.model.Restaurant;
@@ -58,6 +61,18 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         } else {
             holder.viewBottom.setVisibility(View.GONE);
         }
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+        holder.tvRestaurantName.setTypeface(typeface);
+
+        Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+        holder.tvLocation.setTypeface(typefaceRegular);
+        holder.tvDistance.setTypeface(typefaceRegular);
+        holder.tvPriceRange.setTypeface(typefaceRegular);
+        holder.tvtypeOfRestaurant.setTypeface(typefaceRegular);
+
+
+
         Restaurant restaurant = restaurantList.get(position);
         if(restaurant.restaurant_name!= null){
             holder.tvRestaurantName.setText(restaurant.restaurant_name);
@@ -72,6 +87,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         }
         if(restaurant.distance!= null){
             holder.tvDistance.setText(restaurant.distance);
+            Log.e("Distance", "Distance Set"+restaurant.distance);
         }else{
             holder.tvDistance.setText("");
         }
@@ -99,12 +115,13 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                 holder.tvtypeOfRestaurant.setText(R.string.cuisine);
             }
 
-            holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
-            holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
+            /*holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
+            holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);*/
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
-                Picasso.with(context)
+                Glide.with(context).load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivRestaurant);
+                /*Picasso.with(context)
                         .load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon)
-                        .into(holder.ivRestaurant);
+                        .into(holder.ivRestaurant);*/
             } else {
                 holder.ivRestaurant.setImageResource(R.mipmap.placeholder_icon);
             }

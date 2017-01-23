@@ -111,11 +111,12 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvDietaryLeft"
                             android:layout_width="0dp"
                             android:layout_weight="0.8"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text="@string/Dietary"
+                            android:paddingLeft="@dimen/dp_1"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
@@ -125,7 +126,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
@@ -140,11 +140,12 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvCuisineLeft"
                             android:layout_width="0dp"
                             android:layout_weight="0.8"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text="@string/cuisine"
+                            android:paddingLeft="@dimen/dp_1"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
@@ -153,7 +154,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
@@ -167,11 +167,12 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvAmbienceLeft"
                             android:layout_width="0dp"
                             android:layout_weight="0.8"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text="@string/ambience"
+                            android:paddingLeft="@dimen/dp_1"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
 
@@ -180,7 +181,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
@@ -194,10 +194,11 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvPriceRangeLeft"
                             android:layout_width="0dp"
                             android:layout_weight="0.8"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
+                            android:paddingLeft="@dimen/dp_1"
                             android:text="@string/price_range"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
@@ -207,7 +208,6 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_2"
                             android:text=""
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_10" />
@@ -262,7 +262,6 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_6"
-                            android:textStyle="bold"
                             android:gravity="center"
                             android:drawableLeft="@mipmap/menu"
                             android:layout_marginEnd="@dimen/dp_2"
@@ -289,10 +288,8 @@
                             android:layout_height="match_parent"
                             android:padding="@dimen/dp_6"
                             android:gravity="left|center"
-                            android:textStyle="bold"
-                            android:maxLines="2"
                             android:drawableLeft="@mipmap/map"
-                            android:ellipsize="end"
+                            android:drawablePadding="@dimen/dp_5"
                             android:scrollHorizontally="true"
                             android:focusableInTouchMode="true"
                             android:freezesText="true"
@@ -350,7 +347,7 @@
                 android:layout_marginRight="@dimen/dp_20"
                 android:background="@drawable/button_background_pink"
                 android:gravity="center"
-                android:padding="@dimen/dp_8"
+                android:padding="@dimen/dp_10"
                 android:textStyle="bold"
                 android:text="@string/book_now"
                 android:textColor="@android:color/white"

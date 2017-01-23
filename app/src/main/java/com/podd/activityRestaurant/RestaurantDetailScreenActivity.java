@@ -2,6 +2,7 @@ package com.podd.activityRestaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -61,9 +62,9 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private String location;
     private String distance;
     private final List<String> categories=new ArrayList<>();
-    private TextView tvCuisine;
-    private TextView tvDietary;
-    private TextView tvAmbience;
+    private TextView tvCuisine,tvCuisineLeft;
+    private TextView tvDietary,tvDietaryLeft;
+    private TextView tvAmbience,tvAmbienceLeft,tvPriceRangeLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         context=RestaurantDetailScreenActivity.this;
         getIds();
         setListeners();
+        setFont();
         if(getIntent()!=null){
             latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
             longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
@@ -94,15 +96,19 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         tvLocation= (TextView) findViewById(R.id.tvLocation);
         location=tvLocation.getText().toString().trim();
         tvDistance= (TextView) findViewById(R.id.tvDistance);
+        tvCuisineLeft= (TextView) findViewById(R.id.tvCuisineLeft);
         tvDistance.setSelected(true);
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         TextView tvAboutRestaurant = (TextView) findViewById(R.id.tvAboutRestaurant);
         tvDescriptionRestaraunt= (TextView) findViewById(R.id.tvDescriptionRestaraunt);
         tvViewMenu= (TextView) findViewById(R.id.tvViewMenu);
-        tvViewInMap= (TextView) findViewById(R.id.tvViewInMap);
+        tvDietaryLeft= (TextView) findViewById(R.id.tvDietaryLeft);
+        //  tvViewInMap= (TextView) findViewById(R.id.tvViewInMap);
         tvCuisine= (TextView) findViewById(R.id.tvCuisine);
         tvDietary= (TextView) findViewById(R.id.tvDietary);
         tvAmbience= (TextView) findViewById(R.id.tvAmbience);
+        tvAmbienceLeft= (TextView) findViewById(R.id.tvAmbienceLeft);
+        tvPriceRangeLeft= (TextView) findViewById(R.id.tvPriceRangeLeft);
         LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
         LinearLayout llButtons = (LinearLayout) findViewById(R.id.llButtons);
        /* LinearLayout llDistance = (LinearLayout) findViewById(R.id.llDistance);*/
@@ -127,7 +133,28 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
         tvViewMenu.setOnClickListener(this);
-        tvViewInMap.setOnClickListener(this);
+        tvDistance.setOnClickListener(this);
+        //  tvViewInMap.setOnClickListener(this);
+
+    }
+
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        tvRestauarntName.setTypeface(typefaceBold);
+        tvNameRestaraunt.setTypeface(typefaceBold);
+        tvBookNow.setTypeface(typefaceBold);
+        tvDietaryLeft.setTypeface(typeface);
+        tvDietary.setTypeface(typeface);
+        tvCuisineLeft.setTypeface(typeface);
+        tvCuisine.setTypeface(typeface);
+        tvAmbienceLeft.setTypeface(typeface);
+        tvAmbience.setTypeface(typeface);
+        tvPriceRangeLeft.setTypeface(typeface);
+        tvPriceRange.setTypeface(typeface);
+        tvViewMenu.setTypeface(typeface);
+        tvDistance.setTypeface(typeface);
+        tvDescriptionRestaraunt.setTypeface(typeface);
 
     }
 
@@ -156,7 +183,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 startActivity(intent1);
                 break;
 
-            case R.id.tvViewInMap:
+            case R.id.tvDistance:
 
                 String uriString = "http://maps.google.com/maps?saddr="+lat+","+longi+"&daddr="+latitude+","+longitude;
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
@@ -249,9 +276,9 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
                         if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
                             for (int i = 0; i <response.body().cuisine.size() ; i++) {
-                                if(response.body().cuisine.get(i).name!=null && !response.body().cuisine.get(i).name.equalsIgnoreCase("") )
+                                if(response.body().cuisine.get(i).cuisine_name!=null && !response.body().cuisine.get(i).cuisine_name.equalsIgnoreCase("") )
 
-                                    categories.add(response.body().cuisine.get(i).name);
+                                    categories.add(response.body().cuisine.get(i).cuisine_name);
                             }
                             String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
@@ -264,10 +291,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-
-
                             tvCuisine.setText(s1);
-
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -275,10 +299,10 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
                         if(response.body().dietary!=null&&response.body().dietary.size()>0) {
                             for (int i = 0; i <response.body().dietary.size() ; i++) {
-                                if(response.body().dietary.get(i).name!=null && !response.body().dietary.get(i).name.equalsIgnoreCase("") )
+                                if(response.body().dietary.get(i).dietary_name!=null && !response.body().dietary.get(i).dietary_name.equalsIgnoreCase("") )
                                     categories.clear();;
 
-                                    categories.add(response.body().dietary.get(i).name);
+                                categories.add(response.body().dietary.get(i).dietary_name);
                             }
 
                             String s1="";
@@ -300,9 +324,9 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
                         if(response.body().ambience!=null&&response.body().ambience.size()>0) {
                             for (int i = 0; i <response.body().ambience.size() ; i++) {
-                                if(response.body().ambience.get(i).name!=null && !response.body().ambience.get(i).name.equalsIgnoreCase("") )
+                                if(response.body().ambience.get(i).ambience_name!=null && !response.body().ambience.get(i).ambience_name.equalsIgnoreCase("") )
                                     categories.clear();
-                                    categories.add(response.body().ambience.get(i).name);
+                                categories.add(response.body().ambience.get(i).ambience_name);
                             }
 
                             String s1="";
@@ -322,12 +346,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
-                       /* String s1="";
-                        for (int i = 0; i <categories.size() ; i++) {
 
-                            s1 = categories.get(i) + ", " + s1;
-                        }*/
-                        /*tvCategory.setText(s1);*/
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }
@@ -343,9 +362,5 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
             }
         });
-
-
     }
-
-
 }

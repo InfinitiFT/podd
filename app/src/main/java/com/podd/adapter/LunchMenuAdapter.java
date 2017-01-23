@@ -1,6 +1,7 @@
 package com.podd.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,8 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
 
     @Override
     public void onBindHeaderViewHolder(LunchMenuAdapter.MainVH holder, int section) {
-
+        Typeface typefaceBold = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+        holder.title.setTypeface(typefaceBold);
         holder.title.setText(meal_details.get(section).subtitle_name);
 
     }
@@ -52,6 +54,9 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
     @Override
     public void onBindViewHolder(LunchMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
     {
+        Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+        holder.title.setTypeface(typefaceRegular);
+        holder.titlePrice.setTypeface(typefaceRegular);
         if (meal_details.get(section).subtitle_meal_details!=null&&meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name!=null) {
             holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name, section, relativePosition, absolutePosition));
         }
@@ -59,7 +64,7 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
             holder.title.setText("");
         }
         if (meal_details.get(section).subtitle_meal_details!=null&&meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price!=null) {
-            holder.titlePrice.setText("£"+String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price, section, relativePosition, absolutePosition));
+            holder.titlePrice.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price, section, relativePosition, absolutePosition));
         }
         else {
             holder.titlePrice.setText("");
@@ -96,43 +101,4 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
             titlePrice= (TextView) itemView.findViewById(R.id.titlePrice);
         }
     }
-
-
-
-
-   /* @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_items_menu_adapter, parent, false);
-        return new LunchMenuAdapter.MyViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        SubItemMenuAdapter subItemMenuAdapter = new SubItemMenuAdapter(context);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
-        holder.rvSubItemMenu.setLayoutManager(mLayoutManager);
-        holder.rvSubItemMenu.setAdapter(subItemMenuAdapter);
-
-
-    }
-
-
-
-    @Override
-    public int getItemCount() {
-        return 3 ;
-    }
-
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView tvItem;
-        private RecyclerView rvSubItemMenu;
-
-               public MyViewHolder(View itemView) {
-            super(itemView);
-            tvItem= (TextView) itemView.findViewById(R.id.tvItem);
-            rvSubItemMenu= (RecyclerView) itemView.findViewById(R.id.rvSubItemMenu);
-        }
-    }*/
 }
