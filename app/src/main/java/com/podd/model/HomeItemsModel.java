@@ -3,12 +3,11 @@ package com.podd.model;
 
 public class HomeItemsModel {
 
-    public String id;
+    private String id;
+    private String service_name;
+    private String service_image;
+    private boolean isSelected = false;
 
-
-
-    public String service_name;
-    public String service_image;
 
     public String getService_name() {
         return service_name;
@@ -26,6 +25,13 @@ public class HomeItemsModel {
         this.service_image = service_image;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
    /* public int getItemImage() {
         return ItemImage;

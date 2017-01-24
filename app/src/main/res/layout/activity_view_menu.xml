@@ -42,18 +42,14 @@
                 android:layout_marginTop="@dimen/dp_5"
                 android:background="@android:color/white" />
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <!--<View
-                    android:layout_width="@dimen/dp_1"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white" />
--->
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvRestaurants"
                     android:layout_width="wrap_content"
@@ -68,51 +64,28 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_2"
-                android:layout_marginBottom="@dimen/dp_4"
-                android:background="@android:color/white" />
+                android:layout_marginBottom="@dimen/dp_2"
+                android:background="@android:color/white" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center"
-                >
-
-                <!--   <android.support.design.widget.TabLayout
-                       android:tabStripEnabled="false"
-                       app:tabIndicatorHeight="2dp"
-                       android:id="@+id/tab_layout"
-                       android:scrollbars="none"
-                       app:tabPadding="@dimen/dp_2"
-                       android:layout_width="fill_parent"
-                       android:layout_height="match_parent"
-                       app:tabTextColor="@android:color/darker_gray"
-                       app:tabTextAppearance="@style/CustomTabWidgetText"
-                       app:tabIndicatorColor="@android:color/white"
-                       app:tabSelectedTextColor="@android:color/white"
-                       android:minHeight="?attr/actionBarSize"
-                       app:tabMaxWidth="@dimen/dp_240"
-                       android:orientation="vertical"
-                       app:tabMode="fixed"
-                      />-->
-
-
+                android:gravity="center" >
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp"
+                    android:layout_height="50dp"
                     app:tabMode="scrollable"
-                    app:tabMaxWidth="@dimen/dp_100"
                     android:layout_gravity="center_horizontal"
-                    app:tabTextColor="@android:color/darker_gray"
+                    app:tabTextColor="@color/grey"
                     app:tabTextAppearance="@style/CustomTabWidgetText"
                     app:tabIndicatorColor="@android:color/white"
-                    app:tabSelectedTextColor="@android:color/white"
+                    app:tabSelectedTextColor="#ffffff"
                     app:tabPadding="@dimen/dp_1"
-                    app:tabIndicatorHeight="2dp"
+                    app:tabIndicatorHeight="@dimen/dp_2"
                     app:tabGravity="center"/>
-
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"

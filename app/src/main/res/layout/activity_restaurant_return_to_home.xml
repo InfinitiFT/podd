@@ -8,7 +8,7 @@
     android:background="@color/black"
     tools:context="com.podd.activityTaxi.TaxiBookingSummaryActivity"
     tools:ignore="Overdraw">
-    <include layout="@layout/toolbar"/>
+    <!--<include layout="@layout/toolbar"/>-->
 
     <ScrollView
         android:id="@+id/scrollView"

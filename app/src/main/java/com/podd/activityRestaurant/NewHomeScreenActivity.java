@@ -10,8 +10,10 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,6 +51,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,11 +68,16 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
     private HomePagerAdapter pagerAdapter;
-    private InfiniteViewPager viewPager;
+    private ViewPager viewPager;
     private ArrayList<String> banner_image;
     private TextView tvTime,tvDayDate,tvWelcome;
-    private  int[] img = new int[]{R.mipmap.image4, R.mipmap.image3, R.mipmap.image2, R.mipmap.image1};
+//    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
     private  String[] itemName = new String[]{"Front Desk","Restaurants & Bars","Meal Delivery","Taxi","Leisure Attractions","Health & Spa"};
+    private List<Integer> imgList;
+    int currentPage = 0;
+    Timer timer;
+    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
 
 
     @Override
@@ -86,13 +95,32 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
         }
 
-        banner_image = new ArrayList<>();
-        viewPager = (InfiniteViewPager) findViewById(R.id.viewpager);
-        pagerAdapter = new HomePagerAdapter(context, img);
+       // banner_image = new ArrayList<>();
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        pagerAdapter = new HomePagerAdapter(context, imgList);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.startAutoScroll(4000);
+       // viewPager.startAutoScroll(4000);
         //setRecyclerData();
 
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == imgList.size()-1) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer .schedule(new TimerTask() { // task to be scheduled
+
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 500, 3000);
 
         /*if(CommonUtils.isNetworkConnected(this)){
             callHomeApi();
@@ -173,6 +201,13 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         SimpleDateFormat simpledateformat = new SimpleDateFormat("HH:mm");
         String date = simpledateformat.format(calander.getTime());
         tvTime.setText(date);*/
+
+        imgList = new ArrayList<>();
+        imgList.add(R.mipmap.image2);
+        imgList.add(R.mipmap.image3);
+        imgList.add(R.mipmap.image4);
+        imgList.add(R.mipmap.image1);
+        imgList.add(R.mipmap.image4);
 
         CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
 

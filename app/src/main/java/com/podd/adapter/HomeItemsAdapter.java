@@ -21,8 +21,9 @@ import java.util.List;
 @SuppressWarnings("ALL")
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
     private final Context context;
-   private List<HomeItemsModel>homeItemsModelList;
+    private List<HomeItemsModel>homeItemsModelList;
     private Intent intent;
+    private boolean isSelected=false;
 
     public HomeItemsAdapter(Context context, List<HomeItemsModel>homeItemsModelList) {
         this.context=context;
@@ -38,58 +39,66 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         final HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
 
         if(homeItemsModel.getService_name()!= null){
             holder.tvItemName.setText(homeItemsModel.getService_name());
         }
+
+        if(homeItemsModel.isSelected()){
+            holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+        }else{
+            holder.tvItemName.setBackground(null);
+        }
+
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
         holder.tvItemName.setTypeface(typeface);
+
 
         holder.tvItemName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (homeItemsModel.getService_name()){
-                    case "Front Desk":
-                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
-                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Restaurants & Bars":
-                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+                for (HomeItemsModel itemsModel : homeItemsModelList) {
+                    itemsModel.setSelected(false);
+                }
+                homeItemsModelList.get(position).setSelected(true);
 
+                switch (position){
+                    case 0:
+                       Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                       break;
+                    case 1:
                         intent=new Intent(context, BestRestaurantNearCity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
-                        break;
-                    case "Meal Delivery":
-                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
-
-                        intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
+                       break;
+                    case 2:
+                        Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                      /* intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        context.startActivity(intent);
+                       context.startActivity(intent);*/
                         break;
-                    case "Taxi":
-                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
-
+                    case 3:
                         Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
-                    case "Leisure Attractions":
-                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
+                    case 4:
 
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
-                    case "Health & Spa":
-                        holder.tvItemName.setBackground(context.getResources().getDrawable(R.drawable.button_white_stroke));
-
+                    case 5:
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
                         break;
                 }
-
+                notifyDataSetChanged();
 
             }
         });
+
 
 
         /*final String serviceName = homeItemsModel.service_name;

@@ -3,6 +3,7 @@ package com.podd.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.podd.R;
 import com.podd.activityRestaurant.ViewMenuActivity;
 import com.podd.model.Restaurant;
@@ -58,6 +60,14 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
         } else {
             holder.viewBottom.setVisibility(View.GONE);
         }
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+        holder.tvRestaurantName.setTypeface(typeface);
+
+        Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+        holder.tvLocation.setTypeface(typefaceRegular);
+        holder.tvDistance.setTypeface(typefaceRegular);
+        holder.tvPriceRange.setTypeface(typefaceRegular);
+        holder.tvtypeOfRestaurant.setTypeface(typefaceRegular);
         Restaurant restaurant = restaurantList.get(position);
         holder.tvRestaurantName.setText(restaurant.restaurant_name);
         holder.tvLocation.setText(restaurant.location);
@@ -72,7 +82,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
             String split_second = split[1];
             holder.tvPriceRange.setText("$ " + split_one + " - " + "$ " + split_second);
         } else {
-            holder.tvPriceRange.setText("$" + restaurantList.get(position).price_range);
+            holder.tvPriceRange.setText("");
         }
 
         if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
@@ -87,7 +97,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
 
         holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
         if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
-            Picasso.with(context)
+            Glide.with(context)
                     .load(restaurantList.get(position).restaurant_images.get(0))
                     .placeholder(R.mipmap.placeholder_icon) // optional
                     .error(R.mipmap.placeholder_icon)         // optional

@@ -1,6 +1,7 @@
 package com.podd.activityRestaurant;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
+import com.podd.utils.Logger;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -48,9 +50,9 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     private TextView tvMealType;
 
     private TextView tvCuisineType;
-    private TextView tvLocationType;
-    private TextView tvDietaryType;
-    private TextView tvCityName;
+    private TextView tvLocationType,tvCuisine,tvAmbience;
+    private TextView tvDietaryType,tvNoOfRestaurants,tvLocationName,tvMeal;
+    private TextView tvCityName,tvSearchBy,tvShowing,tvVenueBy,tvLocation,tvDietary;
     private TextView tvNearbyRestaurant;
     private LinearLayout llLocation;
     private LinearLayout llDietary;
@@ -77,6 +79,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     private String ambienceId;
     private GridLayoutManager gridLayoutManager;
     private EndlessScrollListener scrollListener;
+    private LinearLayout llCurrentloc;
+    private LinearLayout llVenues;
 
 
     @Override
@@ -128,8 +132,12 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         llLocation = (LinearLayout) findViewById(R.id.llLocation);
         tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
-       TextView tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
+        tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
+        tvVenueBy = (TextView) findViewById(R.id.tvVenueBy);
+        tvShowing = (TextView) findViewById(R.id.tvShowing);
+        tvCityName = (TextView) findViewById(R.id.tvCityName);
         tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
+        tvNoOfRestaurants = (TextView) findViewById(R.id.tvNoOfRestaurants);
        TextView tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvLocationType = (TextView) findViewById(R.id.tvLocationType);
        TextView tvDietary = (TextView) findViewById(R.id.tvDietary);
@@ -140,8 +148,10 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
        TextView tvAmbience = (TextView) findViewById(R.id.tvAmbience);
         tvBusiness = (TextView) findViewById(R.id.tvBusiness);
         TextView tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
-
-
+        tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
+        tvLocationName = (TextView) findViewById(R.id.tvLocationName);
+        llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
+        llVenues= (LinearLayout) findViewById(R.id.llVenues);
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -158,36 +168,70 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 */
     }
 
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvSearchBy.setTypeface(typeface);
+        tvShowing.setTypeface(typeface);
+        tvNoOfRestaurants.setTypeface(typeface);
+        tvVenueBy.setTypeface(typeface);
+        tvLocationName.setTypeface(typeface);
+        tvLocation.setTypeface(typeface);
+        tvLocationType.setTypeface(typeface);
+        tvDietary.setTypeface(typeface);
+        tvDietaryType.setTypeface(typeface);
+        tvMeal.setTypeface(typeface);
+        tvMealType.setTypeface(typeface);
+        tvCuisine.setTypeface(typeface);
+        tvCuisineType.setTypeface(typeface);
+        tvAmbience.setTypeface(typeface);
+        tvBusiness.setTypeface(typeface);
+        //  Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+
+    }
+
     private void fetchLocation() {
         new LocationTracker(context, new LocationResult() {
             @Override
             public void gotLocation(Location location) {
                 currentLat = location.getLatitude();
                 currentLong = location.getLongitude();
-                getAddressFromPlaceApi(String.valueOf(currentLat),String.valueOf(currentLong));
-                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LATITUDE,String.valueOf(currentLat));
-                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LONGITUDE,String.valueOf(currentLong));
+                /*currentLat = 51.4662;
+                currentLong = 0.1617;*/
+                if (CommonUtils.isNetworkConnected(BestRestaurantNearCityForDelivery.this)) {
+                    getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
+                } else {
+                    Toast.makeText(BestRestaurantNearCityForDelivery.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
+                }
+
+                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LATITUDE, String.valueOf(currentLat));
+                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this, AppConstant.LONGITUDE, String.valueOf(currentLong));
             }
         }).onUpdateLocation();
     }
 
-    private void getAddressFromPlaceApi(String currLat,String currLong) {
+    private void getAddressFromPlaceApi(String currLat, String currLong) {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
-        String latLong= currLat+","+ currLong;
+        String latLong = currLat + "," + currLong;
         Call<JsonResponse> call = apiServices.getPlaceApi(latLong);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 CommonUtils.disMissProgressDialog(context);
-                tvCityName.setText(response.body().results.get(0).formatted_address);
+                /*tvCityName.setText(response.body().results.get(0).formatted_address);*/
                 getRestaurantListApi(currentLat, currentLong, pageNo);
+                llVenues.setVisibility(View.VISIBLE);
+                tvLocationName.setText(response.body().results.get(0).formatted_address);
+
+                Logger.addRecordToLog("Response " + response);
             }
+
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 CommonUtils.disMissProgressDialog(context);
+                Logger.addRecordToLog("Exception :" + t.getMessage());
+                CommonUtils.disMissProgressDialog(context);
                 Log.e(TAG, t.toString());
-
             }
         });
     }

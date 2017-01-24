@@ -15,10 +15,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:padding="@dimen/dp_2"
+        android:padding="@dimen/dp_1"
         android:layout_weight="1"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_10" />
 
     <TextView
         android:id="@+id/titlePrice"
@@ -26,8 +26,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:padding="@dimen/dp_2"
-        android:textSize="@dimen/text_size_12"
+        android:padding="@dimen/dp_1"
+        android:textSize="@dimen/text_size_10"
         android:textColor="@android:color/white"
         />
 

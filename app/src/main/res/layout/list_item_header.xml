@@ -15,7 +15,7 @@
         android:textSize="@dimen/text_size_12"
         android:gravity="left"
         android:text=""
-        android:padding="@dimen/dp_2"
+        android:padding="@dimen/dp_1"
         android:textStyle="bold"
         tools:ignore="UnusedAttribute" />
 

@@ -225,8 +225,16 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_LONG).show();
             etName.requestFocus();
             return false;
+        }else if (etName.getText().toString().trim().length()<3) {
+            Toast.makeText(context, R.string.name_must_be_more_than, Toast.LENGTH_LONG).show();
+            etPhoneNumber.requestFocus();
+            return false;
         } else if (etPhoneNumber.getText().toString().trim().isEmpty()) {
             Toast.makeText(context, R.string.please_enter_phone_number, Toast.LENGTH_LONG).show();
+            etPhoneNumber.requestFocus();
+            return false;
+        }else if (etPhoneNumber.getText().toString().trim().equalsIgnoreCase("0000000000")||etPhoneNumber.getText().toString().trim().equalsIgnoreCase("00000000000")|| etPhoneNumber.getText().toString().trim().equalsIgnoreCase("000000000000")|| etPhoneNumber.getText().toString().trim().equalsIgnoreCase("0000000000000")|| etPhoneNumber.getText().toString().trim().equalsIgnoreCase("00000000000000")||etPhoneNumber.getText().toString().trim().equalsIgnoreCase("000000000000000")) {
+            Toast.makeText(context, R.string.enter_valid_phone_number, Toast.LENGTH_LONG).show();
             etPhoneNumber.requestFocus();
             return false;
         } else if (etEmail.getText().toString().trim().isEmpty()) {

@@ -1,6 +1,7 @@
 package com.podd.adapter;
 
 import android.content.Context;
+import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +16,49 @@ import com.zanlabs.widget.infiniteviewpager.InfinitePagerAdapter;
 
 import java.util.List;
 
-public class HomePagerAdapter extends InfinitePagerAdapter {
+public class HomePagerAdapter extends PagerAdapter {
     private Context context;
 
-    private int[] img;
+    private List<Integer> imgList;
 
-    public HomePagerAdapter(Context context, int[] img) {
+    public HomePagerAdapter(Context context, List<Integer> imgList) {
         this.context = context;
-        this.img = img;
+        this.imgList = imgList;
     }
 
     @Override
+    public Object instantiateItem(ViewGroup collection, int position) {
+      //  ModelObject modelObject = ModelObject.values()[position];
+        LayoutInflater inflater = LayoutInflater.from(context);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.row_home_pager, collection, false);
+        ImageView ivPager = (ImageView) layout.findViewById(R.id.ivPager);
+        ivPager.setImageResource(imgList.get(position));
+        collection.addView(layout);
+        return layout;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup collection, int position, Object view) {
+        collection.removeView((View) view);
+    }
+
+    @Override
+    public int getCount() {
+        return imgList.size();
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+       // ModelObject customPagerEnum = ModelObject.values()[position];
+        return "";
+    }
+
+    /*@Override
     public View getView(final int position, View view, ViewGroup container) {
         ViewHolder holder;
         if (view != null) {
@@ -34,10 +67,10 @@ public class HomePagerAdapter extends InfinitePagerAdapter {
             view = LayoutInflater.from(container.getContext()).inflate(R.layout.row_home_pager, container, false);
             holder = new ViewHolder(view);
             holder.ivPager.setImageResource(img[position]);
-            /*if(img.get(position) != null && arlThisWeek.get(position).length() > 0) {
+            *//*if(img.get(position) != null && arlThisWeek.get(position).length() > 0) {
                 Picasso.with(context).load(arlThisWeek.get(position)).resize(200, 200).memoryPolicy(MemoryPolicy.NO_CACHE)
                         .networkPolicy(NetworkPolicy.NO_CACHE).into(holder.ivPager);
-            }*/
+            }*//*
             view.setTag(holder);
         }
         return view;
@@ -56,7 +89,7 @@ public class HomePagerAdapter extends InfinitePagerAdapter {
         public ViewHolder(View view) {
             ivPager = (ImageView) view.findViewById(R.id.ivPager);
         }
-    }
+    }*/
 
 
 }

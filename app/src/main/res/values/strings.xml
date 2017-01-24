@@ -129,4 +129,6 @@
     <string name="no_menu_found_found_for_this_restaurant">No menu available for this restaurant.</string>
     <string name="showing">Showing </string>
     <string name="venues_by">venues by</string>
+    <string name="enter_valid_phone_number">Please enter valid phone number</string>
+    <string name="name_must_be_more_than">Name must be more than 2 characters.</string>
 </resources>

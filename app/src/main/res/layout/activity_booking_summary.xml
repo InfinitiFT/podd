@@ -248,7 +248,7 @@
                     android:gravity="center"
                     android:hint="@string/name"
                     android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:maxLines="1"
                     android:maxLength="30"
                     android:padding="@dimen/dp_6"

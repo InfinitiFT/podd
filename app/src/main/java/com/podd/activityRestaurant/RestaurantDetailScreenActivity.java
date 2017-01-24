@@ -80,7 +80,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
             restaurantId=getIntent().getStringExtra(AppConstant.RESTAURANTID);
             location=getIntent().getStringExtra(AppConstant.LOCATION);
             distance=getIntent().getStringExtra(AppConstant.DISTANCE);
-            tvDistance.setText(distance +"View Map");
+            tvDistance.setText(distance +" View Map");
         }
 
         lat = CommonUtils.getPreferences(this,AppConstant.LATITUDE);

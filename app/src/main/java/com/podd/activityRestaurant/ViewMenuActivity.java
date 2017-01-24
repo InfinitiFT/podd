@@ -62,13 +62,12 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         bundle = getIntent().getBundleExtra(AppConstant.RESTAURANTMENUBUNDLE);
         if (bundle != null) {
             restaurantMenu = (ArrayList<RestaurantMenu>) bundle.getSerializable(AppConstant.RESTAURANTMENU);
-
         }
         if(restaurantMenu.size()==0){
             CommonUtils.showAlertOk("Currently, no menu item is available.",ViewMenuActivity.this);
         }
 
-        setAdapter();
+       // setAdapter();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         // Iterate over all tabs and set the custom view
@@ -79,13 +78,11 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getIds() {
-
-        rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
+       rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
         tvRestaurantName = (TextView) findViewById(tvRestauarntName);
         tvBookNow = (TextView) findViewById(R.id.tvBookNow);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-
 
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,7 +101,6 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private void setFont() {
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
-        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         tvRestaurantName.setTypeface(typefaceBold);
         tvBookNow.setTypeface(typefaceBold);
     }
@@ -112,7 +108,6 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
     }
-
 
     private void setAdapter() {
         RestaurantsAdapter RestaurantsAdapter = new RestaurantsAdapter(context, restaurantImages);
@@ -139,7 +134,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < restaurantMenu.size(); i++) {
             adapter.addFragment(new BreakfastMenuFragment().newInstance(restaurantMenu.get(i).meal_details), restaurantMenu.get(i).meal_name);
         }
@@ -147,7 +142,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         viewPager.setAdapter(adapter);
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
+     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -175,7 +170,9 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         public View getTabView(int position) {
             View tab = LayoutInflater.from(ViewMenuActivity.this).inflate(R.layout.custom_tab_text, null);
             TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-            tv.setText(mFragmentList.size());
+            Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+            tv.setTypeface(typefaceRegular);
+            tv.setText(mFragmentTitleList.get(position).toString());
             return tab;
         }
 
