@@ -2,19 +2,23 @@
   include_once('header.php');
   $result = array();
   if($_SESSION['updateBooking'] == 1){
-		$msg = '<div class="alert alert-success">Booking updated successfully</div>';
-	    $_SESSION['updateBooking'] ='';
-	}
-  if($_SESSION['restaurant_id']!="")
-  {
-    $data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND brr.booking_date >= CURRENT_DATE() order by booking_id desc");
+    $msg = '<div class="alert alert-success">Booking updated successfully</div>';
+      $_SESSION['updateBooking'] ='';
   }
-  else
-  {
-	 
-     $data = mysqli_query($GLOBALS['conn'],"SELECT *,brr.email as booking_email,u.email as user_email FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id JOIN users u ON rd.user_id = u.user_id Where `booking_date` >= CURRENT_DATE()  order by booking_id desc");
-    
-  }
+  $time= time();
+  $time = date('H:i:s', strtotime('-1 hour'));
+  if($_SESSION['restaurant_id'] != "")
+    {
+         $data = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
+      
+    }
+    else
+    {
+      
+       $data = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
+
+      
+    }
   
   //Basic Validation  
   if(isset($_SESSION['msg']) == 'success'){
@@ -39,12 +43,12 @@
                   <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
                   <div class="count"><?php 
                   if($_SESSION['restaurant_id']!=""){
-                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` Where `delivery_status`= 1 AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));
+                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= 1 AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
                   }
                   
                   else
                     {
-                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` Where `delivery_status`= 1"));
+                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= 1 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
                       }
                       ?></div>
                   <h3>Pending Delivery</h3>
@@ -55,15 +59,15 @@
                   <div class="icon"><i class="fa fa-comments-o"></i></div>
                   <div class="count"><?php 
                   if($_SESSION['restaurant_id']!=""){
-                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` Where `delivery_status`= 1 AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));
+                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= 2 AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
                   }
                   
                   else
                     {
-                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` Where `delivery_status`= 1"));
+                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
                       }
                       ?></div>
-                  <h3>Pending Delivery</h3>
+                  <h3>Accepted Delivery</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -71,22 +75,33 @@
                   <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
                   <div class="count"><?php 
                   if($_SESSION['restaurant_id']!=""){
-                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` Where `delivery_status`= 1 AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));
+                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= 0 AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
                   }
                   
                   else
                     {
-                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` Where `delivery_status`= 1"));
+                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= 0 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
                       }
                       ?></div>
-                  <h3>Declined Bookings</h3>
+                  <h3>Declined Delivery</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                  <div class="count"><?php echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` Where `booking_date` < CURRENT_DATE() AND `restaurant_id`= '".$_SESSION['restaurant_id']."'"));?></div>
-                  <h3>Confirmed Bookings</h3>
+                  <div class="count"><?php if($_SESSION['restaurant_id'] != "")
+                                        {
+                                             echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_date` < CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
+                                          
+                                        }
+                                        else
+                                        {
+                                          
+                                           echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` < CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
+                                          
+                                        }
+                      ?></div>
+                  <h3>Confirmed Delivery</h3>
                 </div>
               </div>
             </div>
@@ -97,66 +112,70 @@
                   <div class="x_title">
                     <h2>Venue Booking List</h2>
                    <ul class="nav navbar-right panel_toolbox">
-					<li>
-						<select class="form-control" id="selectStatus">
-							<option value="">Select Status</option>
-							<option value="1">Pending</option>
-							<option value="2">Accept</option>
-							<option value="0">Decline</option>
-						</select>
-						<input type="hidden" value="<?php echo $_SESSION['restaurant_id'];?>" id="session">
+          <li>
+           <input type="hidden" id = "delete_type" value ="booked_restaurant_delivery">
+            <input type="hidden" value="<?php echo $_SESSION['restaurant_id'];?>" id="session">
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                     <?php echo $msg; ?>
                   <div class="x_content">
+<!--
+             <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+            <input type="text" style="width: 200px" name="bookingResDelivery" id="bookingResDelivery" class="form-control" />
+            </div>
+-->
+                  <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                 
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                    <input type="text" style="width: 200px" name="booking_deliverytable_cal" id="booking_deliverytable_cal" placeholder="Search" readonly class="form-control" />
+                  </div>
+                  
+                  <div class="col-md-2 col-sm-2 col-xs-2 form-group">
+                    <select name="booking_delivery_status" id="booking_delivery_status" class="form-control">
+                      <option value="1">Pending</option>
+                      <option value="2">Accepted</option>
+                      <option value="0">Declined</option>
+                    </select>
+                  </div>
+                </div>
+
                     <p class="text-muted font-13 m-b-30">
                     </p>
-                    <table id="datatable-responsive" class="table table-striped table-bordered">
+                    <table id="booking_deliverytable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                           <th>Name</th>
-                           <th>Mobile</th>
-                           <th>User Email</th>
-                           <th>Venue Email</th>
-                           <th>Date</th>
-                           <th>Time</th>
-                           <th>Number of people</th>
-                           <th>Booking Status</th>
-                           <th>Action</th>
+                           <th width="20%">Name</th>
+                           <th width="10%">Mobile</th>
+                           <th width="20%">User Email</th>
+                           <th width="10%">Date</th>
+                           <th width="10%">Time</th>
+                           <th width="10%">Delivery Status</th>
+                           <th width="20%">Action</th>
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="booked_restaurant">
                       <tbody id="statusContent">
                        <?php 
-                             $currentTime = date("H:i");
-                             $currentDate = date("Y-m-d");
                              if($data)
                              { 
-                               while($record = mysqli_fetch_assoc($data)){ 
-								   $recordShow = 0;
-							      if($currentDate == $record['booking_date']){
-									 if(strtotime($currentTime) <= strtotime(date('H:i', strtotime($record['booking_time'].'+1 hour'))))
-									   $recordShow =1;
-									}else{
-										$recordShow =1;
-									}	
-								if($recordShow){
+                               while($record = mysqli_fetch_assoc($data)){
                           ?>
                          <tr>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['contact_no'];?></td>
-                          <td><?php echo $record['booking_email'];?></td>
-                           <td><?php echo $record['user_email'];?></td>
-                          <td><?php $date = date_create ($record['booking_date']);
-								echo date_format($date,"d M Y");?>
-						  </td>
-                          <td><?php echo $record['booking_time'];?></td>
-                          <td><?php echo $record['number_of_people'];?></td>
-                           <td><?php if($record['booking_status']=="0"){ 
+                          <td><?php echo $record['delivery_email'];?></td>
+                          <td><?php $date = date_create ($record['delivery_date']);
+                                    echo date_format($date,"d M Y");?>
+                          </td>
+                          <td><?php echo $record['delivery_time'];?></td>
+                         
+                           <td><?php if($record['delivery_status']=="0"){ 
                                       echo "Declined";
                                     }
-                                    else if($record['booking_status']=="1"){
+                                    else if($record['delivery_status']=="1"){
                                       echo "Pending";
                                     }
                                     else{
@@ -164,30 +183,19 @@
                                     }
                             ?></td>
                           <td>
-                          <?php if($record['booking_status']=="1"){?>
-                             <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
-                             <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
-                              <?php }else if($record['booking_status']=="2"){?>
-            								   <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['booking_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
-                                <?php 
-                               $change = bookingTimeChange($record['booking_date'],$record['booking_time']);
-                               if($change==1){?>
-                               <button type="button" id="timeChange-<?php echo $record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'];?>" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>
-                               <?php } ?>
-                               
+                          <?php if($record['delivery_status']=="1"){?>
+                             <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
+                             <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                              <?php }else if($record['delivery_status']=="2"){?>
+                               <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
                               <?php }else{?>
-                               <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
-                               <?php 
-                               $change = bookingTimeChange($record['booking_date'],$record['booking_time']);
-                               if($change==1){?>
-                               <button type="button" id="timeChange-<?php echo $record['booking_id'].'-'.$record['opening_time'].'-'.$record['closing_time'];?>" class="btn btn-round btn-primary" data-toggle="modal" data-target="#myModal1">Modify</button>
-                               <?php } ?>
+                               <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
                               <?php } ?>
-                             <!-- <button type="button" id="deletepopup-<?php echo $record['booking_id'];?>" class="btn btn-round btn-danger">Delete</button> -->
-                            <a href="edit_booking.php?id=<?php echo $record['booking_id'];?>&list=list" class="btn btn-round btn-info">Edit</a>
-            			  </td>
+                            <a href="edit_delivery.php?id=<?php echo $record['delivery_id'];?>&list=list" class="btn btn-round btn-info">Edit</a>
+                            <a href="delivery_order.php?delivery_id=<?php echo $record['delivery_id'];?>" class="btn btn-round btn-info">View</a>
+                    </td>
                          </tr>
-                        <?php }}}?> 
+                        <?php }}?> 
                       </tbody>
                     </table>
                   </div>
@@ -197,7 +205,7 @@
           </div>
         </div>
         <!-- /page content -->
-	<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -207,29 +215,29 @@
           <h4 class="modal-title">Decline</h4>
         </div>
         <div class="modal-body">
-			<div class="row">
-				<div class="col-sm-6">
-				 <select class="form-control" id="declined" name="declined" value="">
-					 <option value="">Select Reason</option>
-					<option value="Venue closed">Venue closed</option>
-					<option value="No availability for selected date">No availability for selected date</option>
-					<option value="No availability for selected time">No availability for selected time</option>
-					<option value="Other">Other</option>
-				  </select>
-				  <input type="hidden" name="booking_res_id" id="booking_res_id">  
-				</div>
-				<div class="col-sm-6">
-				<ul class="nav  panel_toolbox">                            
-					<li><input type="text" class="form-control" placeholder="Enter custom reason"  id="reason" name="reason" style="display:none;" value=""/></li>
-				</ul>
-				</div>
-			</div>
+      <div class="row">
+        <div class="col-sm-6">
+         <select class="form-control" id="declinedDev" name="declinedDev" value="">
+           <option value="">Select Reason</option>
+          <option value="Venue closed">Venue closed</option>
+          <option value="No availability for selected date">No availability for selected date</option>
+          <option value="No availability for selected time">No availability for selected time</option>
+          <option value="Other">Other</option>
+          </select>
+          <input type="hidden" name="booking_res_idDev" id="booking_res_idDev">  
+        </div>
+        <div class="col-sm-6">
+        <ul class="nav  panel_toolbox">                            
+          <li><input type="text" class="form-control" placeholder="Enter custom reason"  id="reasonDev" name="reasonDev" style="display:none;" value=""/></li>
+        </ul>
+        </div>
+      </div>
                  
-			
+      
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-default btn-ok" id="yes">OK</button>
+          <button type="button" class="btn btn-default btn-ok" id="yesDev">OK</button>
         </div>
       </div>
       

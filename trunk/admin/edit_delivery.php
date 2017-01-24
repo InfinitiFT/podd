@@ -16,28 +16,28 @@ if ($_SESSION['msg'] == 'location'){
 	$mes = '<div class="alert alert-warning">Please enter valid location</div>';
 	$_SESSION['msg'] ='';
 }
+$bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` WHERE `delivery_id` ='".$_GET['id']."'"));
 
-$bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` WHERE `booking_id` ='".$_GET['id']."'"));
 $restaurant_opening_closing = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `booking_id` ='".$_GET['id']."'"));
 if(isset($_REQUEST['submit'])){
 	$booking_time = mysqli_real_escape_string($conn,trim($_POST['booking_time']));
-	$people = mysqli_real_escape_string($conn,trim($_POST['people']));
+	//$price = mysqli_real_escape_string($conn,trim($_POST['price']));
+	//$item = mysqli_real_escape_string($conn,trim($_POST['item']));
 	$name = mysqli_real_escape_string($conn,trim($_POST['name']));
 	$email = mysqli_real_escape_string($conn,trim($_POST['email']));
 	$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
 	$booking_date = mysqli_real_escape_string($conn,trim($_POST['booking_date']));
-	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET booking_time ='".$booking_time."',number_of_people ='".$people."',name='".$name."',email='".$email."',booking_date='".$booking_date."',contact_no='".$phone."' WHERE `booking_id` ='".mysqli_real_escape_string($conn,$_GET['id'])."'");
+	
+	$update = mysqli_query($GLOBALS['conn'],"UPDATE `delivery_bookings` SET delivery_time ='".$booking_time."',name='".$name."',email='".$email."',delivery_date='".$booking_date."',contact_no='".$phone."' WHERE `delivery_id` ='".mysqli_real_escape_string($conn,$_GET['id'])."'");
 	if($update){
 		$_SESSION['updateBooking'] = 1;
 		if($_GET['list'] == 'list')
-			header('Location: booking_list_restaurant.php');
+			header('Location: booking_list_restaurant_delivery.php');
 		else
-			header('Location: booking_list_restaurant.php');
-	}	
-
+			header('Location: booking_list_restaurant_delivery.php');
+	}
 }
 ?>
-
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
@@ -74,23 +74,23 @@ if(isset($_REQUEST['submit'])){
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="phone" name="phone" disabled value="<?php if($_POST['phone']){ echo $_POST['phone'];}else{ echo $bookingData['contact_no'];} ?>" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="phone" name="phone" disabled  value="<?php if($_POST['phone']){ echo $_POST['phone'];}else{ echo $bookingData['contact_no'];} ?>" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Booking Date </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Delivery Date </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="booking_date" name="booking_date" readonly value="<?php if($_POST['booking_date']){ echo $_POST['booking_date'];}else{ echo $bookingData['booking_date'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12" aria-describedby="inputSuccess2Status" >
+                          <input type="text" id="booking_date" name="booking_date" readonly  value="<?php if($_POST['booking_date']){ echo $_POST['booking_date'];}else{ echo $bookingData['delivery_date'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12" aria-describedby="inputSuccess2Status" >
                         </div>
                       </div>
                       <input type="hidden" name = "restaurant_id" id="restaurant_id" value="<?php echo $bookingData['restaurant_id'];  ?>">
                       <div class="item form-group">
-                        <label for="booking_time" class="control-label col-md-3">Booking Time</label>
+                        <label for="booking_time" class="control-label col-md-3">Delivery Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time">
 							<?php 
                $date_interval = "";
-    $day = date('D', strtotime($bookingData['booking_date']));
+		$day = date('D', strtotime($bookingData['delivery_date']));
    
     $restaurant_data = mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".mysqli_real_escape_string($conn,trim($bookingData['restaurant_id']))."' ");
         
@@ -197,24 +197,16 @@ if(isset($_REQUEST['submit'])){
                    
             }
         }
-                
-                if(!empty($date_interval))
+							  
+							  if(!empty($date_interval))
                 {
                  
-                foreach($date_interval as $record){
-                 
-                ?>
-                <option value= "<?php echo $record;?>"><?php echo $record;?></option>>
-                <?php }} else{ } ?>
-							</select>
-                          
-                        </div>
-                      </div>
-                     
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="people">Max number of people </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="people" name="people"  value="<?php if($_POST['people']){ echo $_POST['people'];}else{ echo $bookingData['number_of_people'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+								foreach($date_interval as $record){
+							   
+							  ?>
+							  <option value= "<?php echo $record;?>"><?php echo $record;?></option>>
+							  <?php }} else{ } ?>
+							</select>                          
                         </div>
                       </div>
                     <input type="hidden" value="<?php echo url();?>" id="urlData">
@@ -234,7 +226,6 @@ if(isset($_REQUEST['submit'])){
         <!-- /page content -->
 
     <?php include_once('footer.php'); ?>
-
 <script>
     $(document).ready(function() {
         $('#booking_date').daterangepicker({

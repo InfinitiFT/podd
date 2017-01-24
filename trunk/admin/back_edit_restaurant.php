@@ -359,7 +359,7 @@
 							</select>
 							</div>
 							 <div class="col-sm-4">
-							 <label for="password" class="control-label"> Time</label>
+							 <label for="password" class="control-label">CLosing Time</label>
 								<select class="form-control rday-7" name="closetimeSun" id="closetime-Sun" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -383,6 +383,7 @@
 							?>
 							</select>
 							</div>
+							 
 							
 						  </div>
 					</div>
@@ -429,7 +430,7 @@
 							?>
 							</select>
 							</div>
-							  <div class="col-sm-4">
+							 <div class="col-sm-4">
 							 <label for="password" class="control-label">CLosing Time</label>
 								<select class="form-control rday-1" name="closetimeMon" id="closetime-Mon" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
@@ -501,7 +502,7 @@
 							?>
 							</select>
 							</div>
-							<div class="col-sm-4">
+							 <div class="col-sm-4">
 							 <label for="password" class="control-label">CLosing Time</label>
 								<select class="form-control rday-2" name="closetimeTue" id="closetime-Tue" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
@@ -527,6 +528,7 @@
 							</select>
 							</div>
 							
+							  
 						</div>
 					</div>
                       
@@ -573,7 +575,7 @@
 							?>
 							</select>
 							</div>
-							<div class="col-sm-4">
+							 <div class="col-sm-4">
 							 <label for="password" class="control-label">CLosing Time</label>
 								<select class="form-control rday-3" name="closetimeWed" id="closetime-Wed" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
@@ -644,7 +646,7 @@
 							?>
 							</select>
 							</div>
-							  <div class="col-sm-4">
+							 <div class="col-sm-4">
 							 <label for="password" class="control-label">CLosing Time</label>
 								<select class="form-control rday-4" name="closetimeThu" id="closetime-Thu" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
@@ -788,7 +790,7 @@
 							</div>
 							   <div class="col-sm-4">
 							 <label for="password" class="control-label">CLosing Time</label>
-								<select class="form-control rday-6" name="closetimeSat" id="closetime-Sat" onchange="timeValidate(this)" <?php echo $disable; ?>>
+								<select class="form-control rday-5" name="closetimeSat" id="closetime-Sat" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
 								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'

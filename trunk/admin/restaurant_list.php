@@ -1,7 +1,7 @@
 <?php 
   include_once('header.php');
   $result = array();
-  $data = mysqli_query($GLOBALS['conn'],"SELECT *, restaurant_details.status as st FROM restaurant_details  JOIN users ON restaurant_details.user_id = users.user_id ");
+  $data = mysqli_query($GLOBALS['conn'],"SELECT *, restaurant_details.status as st FROM restaurant_details  JOIN users ON restaurant_details.user_id = users.user_id ORDER BY restaurant_id Desc");
   //Basic Validation  
   $msg ='';
   if(isset($_SESSION['msg']) == 'success'){
@@ -38,26 +38,39 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Location</th>
-                          <th>Contact No</th>
-                          <th>Action</th>
+                          <th width="10%">Name</th>
+                          <th width="10%">Email</th>
+                          <th width="10%">Location</th>
+						  <th width="10%">Address</th>
+                          <th width="5%">Contact No</th>
+                          <th width="55%">Action</th>
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="restaurant">
                       <tbody>
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
-                          <td><?php if(strlen($record['restaurant_name'])>300){
-                    echo $small = stripslashes(substr($record['restaurant_name'], 0, 30)).'.........';
+                          <td><?php if(strlen($record['restaurant_name'])>20){
+                    echo $small = stripslashes(substr($record['restaurant_name'], 0, 20)).'.........';
                     }
                     else{
                       echo $small = stripslashes($record['restaurant_name']);
                       } ?></td>
-                          <td><?php echo $record['email'];?></td>
+                          <td><?php if(strlen($record['email'])>20){
+                    echo $small = stripslashes(substr($record['email'], 0, 20)).'.........';
+                    }
+                    else{
+                      echo $small = stripslashes($record['email']);
+                      } ?></td>
                           <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_location` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
-                          <td><?php echo $record['country_code'].$record['mobile_no'];?></td>
+                          <td><?php if(strlen($record['restaurant_full_address'])>20){
+                    echo $small = stripslashes(substr($record['restaurant_full_address'], 0,20)).'.........';
+                    }
+                    else{
+                      echo $small = stripslashes($record['restaurant_full_address']);
+                      } ?></td>
+						  <td><?php echo $record['mobile_no'];?></td>
+						  
                           <td><?php if($record['status'] == 1){?>
                              <button type="button" id="activatedeactivate1-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-warning">Deactivate Venue</button>
                               <?php }else{?>
@@ -67,6 +80,7 @@
                              <button type="button" id="deletepopup-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-danger">Delete Venue</button>
                               <a href="booking_glance.php?restaurant_id=<?php echo $record['restaurant_id'];?>"><button type="button" id="" class="btn btn-round btn-success">Booking at Glance</button></a>
                               <a href="venue_meal.php?id=<?php echo $record['restaurant_id'];?>"><button type="button" id="" class="btn btn-round btn-success">Venue meal</button></a>
+                              <a href="restaurant_details.php?restaurant_id=<?php echo $record['restaurant_id'];?>"><button type="button" id="" class="btn btn-round btn-info">View venue</button></a>
                           </td>
                          </tr>
                         <?php }?> 

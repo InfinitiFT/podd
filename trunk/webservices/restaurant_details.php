@@ -18,8 +18,8 @@
 	{
 	  $res_image_array[] = url().$value;
 	}
-    $response['restaurant_images']    =  $res_image_array;
-    $response['location']             = $restaurant_data['location'];
+    $response['restaurant_images']    = $res_image_array;   
+    $response['location']             = $restaurant_data['restaurant_full_address'];
     $response['postcode']             = $restaurant_data['postcode'];
     $response['latitude']             = $restaurant_data['latitude'];
     $response['longitude']            = $restaurant_data['longitude'];
@@ -35,7 +35,7 @@
     foreach($restaurant_cuisine as $value)
     {
       $row_data['id'] = $value;
-      $row_data['name'] = $restaurantcuisine_name[$i];
+      $row_data['cuisine_name'] = $restaurantcuisine_name[$i];
       $restaurant_cuisine_array[]= $row_data;
       $i++;
     }
@@ -47,12 +47,12 @@
     foreach($restaurant_dietary as $value)
     {
       $row_data['id'] = $value;
-      $row_data['name'] = $restaurantdietary_name[$i];
+      $row_data['dietary_name'] = $restaurantdietary_name[$i];
       $restaurant_dietary_array[]= $row_data;
       $i++;
     }
     $response['dietary']              = $restaurant_dietary_array;
-    $response['distance']             = (string)$restaurant_data['distance'];
+    $response['distance']             = round($restaurant_data['distance'], 2).' '.Miles;
     $restaurant_ambience = explode(",",$restaurant_data['ambience']);
     $restaurantambience_name= explode(",",$restaurant_data['ambience_name']);
     $restaurant_ambience_array = array();
@@ -60,25 +60,68 @@
     foreach($restaurant_ambience as $value)
     {
       $row_data['id'] = $value;
-      $row_data['name'] = $restaurantambience_name[$i];
+      $row_data['ambience_name'] = $restaurantambience_name[$i];
       $restaurant_ambience_array[]= $row_data;
       $i++;
     }
     $response['ambience']              = $restaurant_ambience_array;
-    $response['price_range']          = (string)$restaurant_data['ranges'];
-    $restaurant_menu_data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_menu_details rdm Join restaurant_menu rm on rdm.meal = rm.id WHERE rdm.restaurant_id = '".mysqli_real_escape_string($GLOBALS['conn'],$restaurant_id)."'");
-    $restaurant_menu = array();
-    if($restaurant_menu_data)
+    $response['price_range']           = (string)$restaurant_data['ranges'];
+    $meal_data = array();
+    $meal_details = mysqli_query($GLOBALS['conn'],"SELECT rmd.id as rmd_id,rmd.*,m.* FROM `restaurant_meal_details` rmd join meals m on rmd.meal = m.id  WHERE rmd.restaurant_id = '".$restaurant_id."'");
+    
+    
+    if(mysqli_num_rows($meal_details) > 0)
     {
-        while($record = mysqli_fetch_assoc($restaurant_menu_data)){ 
-        $res_menu_data['menu_name']= $record['menu_name'];
-        $res_menu_data['menu_url']=  $record['menu_url'];
-        $restaurant_menu[] = $res_menu_data;
-        }
+       while($meal_record = mysqli_fetch_assoc($meal_details))
+       {
+         $meal_d['rmd_id'] = $meal_record['rmd_id'];
+         $meal_d['meal_id'] = $meal_record['id'];
+         $meal_d['meal_name'] = $meal_record['meal_name'];
+         $meal_d['deliver_food'] = $meal_record['deliver_food'];
+         $meal_subtitles = mysqli_query($GLOBALS['conn'],"SELECT rip.*,s.* FROM restaurant_item_price rip join subtitle s on rip.subtitle = s.subtitle_id WHERE restaurant_meal_id = '".$meal_record['rmd_id']."' GROUP BY s.subtitle_id");
+         $meal_subtitle = array();
+         if(mysqli_num_rows($meal_subtitles) > 0)
+         {
+
+            while($meal_subtitle1 = mysqli_fetch_assoc($meal_subtitles))
+            {
+                $subtitle_data['subtitle_id'] = $meal_subtitle1['subtitle_id'];
+                $subtitle_data['subtitle_name'] = $meal_subtitle1['subtitle'];
+                $meal_subtitless = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_item_price rip join items i on rip.item_id = i.id WHERE rip.subtitle = '".$meal_subtitle1['subtitle_id']."'");
+                $subtitle_meal = array();
+                if(mysqli_num_rows($meal_subtitless) > 0)
+                {  
+                    $subtitle_meals = array();
+                    while($meal_detail = mysqli_fetch_assoc($meal_subtitless))
+                   {
+                    //print_r($meal_detail);
+                      $subtitle_meal['item_id'] = $meal_detail['item_id'];
+                      $subtitle_meal['item_name'] = $meal_detail['name'];
+                      $subtitle_meal['item_price'] = $meal_detail['item_price'];
+                      $subtitle_meals[] = $subtitle_meal;
+                      
+                    }
+
+                }
+                
+                
+                $subtitle_data['subtitle_meal_details'] = $subtitle_meals;
+                $meal_subtitle[] = $subtitle_data;
+             }
+
+         }
+         else
+         {
+            $meal_subtitle[] = "";
+         }
+
+         $meal_d['meal_details'] = $meal_subtitle;
+         $meal_data[] = $meal_d;
+       }
 
     }
     
-    $response['restaurant_menu']              = $restaurant_menu;
+    $response['restaurant_menu']      = $meal_data;
     $response['responseCode']         = 200;
     $response['responseMessage']      = 'Your Restaurant List Fetched Successfully.';
 

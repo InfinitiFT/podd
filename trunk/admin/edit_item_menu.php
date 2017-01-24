@@ -9,19 +9,60 @@ ob_start();
 include_once('header.php');
 $error="";
 $sucess="";
-try {
-   
-    $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rip.*,rmd.meal as meal FROM `restaurant_item_price` rip join restaurant_meal_details rmd on rip.restaurant_meal_id = rmd.id  WHERE rip.id ='".$_GET['id']."'"));
+try {   
+    $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rip.*,rmd.meal as meal, st.subtitle as sname FROM `restaurant_item_price` rip join restaurant_meal_details rmd on rip.restaurant_meal_id = rmd.id join items i on rip.item_id = i.id join subtitle st on st.subtitle_id = rip.subtitle WHERE rip.id = '".$_GET['id']."'"));
 
-    
     $deliver_food_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_meal_details` WHERE `id` ='".$item_data['restaurant_meal_id']."'"));
     $item_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `items` WHERE `id` ='".$item_data['item_id']."'"));
+    
     if(isset($_POST["submit"]))
     {
+        $meal = mysqli_real_escape_string($conn,$_POST['meal_name']);
+        $deliver_food = isset($_POST['deliver_food']) ? $_POST['deliver_food'] : '0';
+        $deliver_food = mysqli_real_escape_string($conn,$deliver_food);
+        $meal_data = mysqli_query($GLOBALS['conn'],"SELECT `id` FROM `meals` WHERE `` = '".$meal."'");
+        if(mysqli_num_rows($meal_data))
+        {
+          $meal_id = $meal_data['id'];
+        }
+        else{
+            mysqli_query($GLOBALS['conn'],"INSERT INTO `meals`(`meal_name`) VALUES ('".$meal."')");
+            $meal_id = mysqli_insert_id($GLOBALS['conn']);
+        }
         $deliver_food = isset($_REQUEST['deliver_food']) ? $_REQUEST['deliver_food'] : '0';
-        $update_menu = mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `deliver_food`= '".$deliver_food."' WHERE id = '".$item_data['restaurant_meal_id']."'");
-        /*print_r("UPDATE `restaurant_item_price` SET `item_id`= '".$_POST['item1']."',`quantity`='".$_POST['quantity']."', `item_price`= '".$_POST['price']."' WHERE id = '".$_GET['id']."'");exit;*/
-        if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_item_price` SET `item_id`= '".$_POST['item1']."',`quantity`='".$_POST['quantity']."', `item_price`= '".$_POST['price']."' WHERE id = '".$_GET['id']."'")){
+        
+        // check subtitle name is exist or not 
+        $chk_subtitle = subtitle_name($_REQUEST['subtitle']);
+        
+        if($chk_subtitle != '')
+        {
+				$subtitle = $chk_subtitle;
+		}
+		else
+		{			
+			$name = mysqli_real_escape_string($conn,trim($_POST['subtitle']));			
+            $query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle`(`subtitle`) VALUES ('".$name."')");
+            $subtitle = mysqli_insert_id($GLOBALS['conn']);
+		}
+
+		// check item name is exist or not 
+        $chk_item = items_name($_REQUEST['item']);
+        
+        if($chk_item != '')
+        {
+			$item = $chk_item;
+		}
+		else
+		{
+			$name = mysqli_real_escape_string($conn,trim($_POST['item']));			
+            $query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`created_by`) VALUES ('".$name."','".$_SESSION['user_id']."')");
+            $item = mysqli_insert_id($GLOBALS['conn']);
+		}
+        
+        
+        $update_menu = mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `meal`= '".$meal_id."',`deliver_food`= '".$deliver_food."' WHERE id = '".$item_data['restaurant_meal_id']."'");
+        			
+        if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_item_price` SET `subtitle`= '".$subtitle."',`item_id`= '".$item."',`item_price`= '".$_POST['price']."' WHERE id = '".$_GET['id']."'")){
             $_SESSION["successmsg"] = "Item updated successfully.";
             header('Location:venue_meal.php?id='.$deliver_food_details['restaurant_id']);
         }
@@ -89,18 +130,11 @@ catch(Exception $e) {
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
-                                    <?php //$meal_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT meal_name FROM meals WHERE id = '".$item_data['meal']."'"));
-                                       //echo  $meal_name['meal_name']; ?>
-                                         <select class="select2_multiple form-control" name="meal" id="allMealling" disabled>
-                                            <option value="">Select Meal</option>
-                                            <?php
-                                            $meal = get_all_data('meals');
-                                            
-                                            while($mealData = mysqli_fetch_assoc($meal)){ ?>
-                                            <option value ="<?php echo $mealData['id']; ?>" <?php if($mealData['id'] == $item_data['meal']){echo "selected";} ?> ><?php echo $mealData['meal_name']; ?></option>
-                                            <?php }
-                                            ?>
-                                        </select> 
+                                    <?php $meal_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT `meal_name` FROM `meals` WHERE `id` = '".$item_data['meal']."'"));
+                                    
+                                    ?>
+                                    <input type="text" class="form-control" name="meal_name" id="meal_name" placeholder="Meal Name" value = "<?php echo $meal_name['meal_name']; ?>">
+                                  
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
                                         <label><input type="checkbox" name="deliver_food" class="form-control" id="inputSuccess3" value="1" <?php echo $deliver_food_details['deliver_food']=='1'?' checked="checked" ':''; ?>>Home delivery?</label>
@@ -109,17 +143,20 @@ catch(Exception $e) {
                                     </div>
 
                                 </div>
-
+                                 <div class="row">
+                                    <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
+                                     <input type="text" class="form-control" value="<?php echo isset($item_data['sname']) ? $item_data['sname'] : '';?>" name="subtitle" id="inputSuccess-1" placeholder="Subtitle">
+                                    </div>
+                                 
+                                </div>
                                 <div class="add_item row" id="itemID-1">
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
                                         <input type= "hidden" name="item1" value="<?php echo isset($item_details['id']) ? $item_details['id'] : '';?>" id="restaurant_id">
                                         <input type="text" class="form-control has-feedback-left auto" name="item" value="<?php echo isset($item_details['name']) ? $item_details['name'] : '';?>" id="inputSuccess-1" placeholder="Select Item">
-                                    </div>
-                                    <input type="hidden" id="txtAllowSearchID[]">
-                                    <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
-                                        <input type="text" name="quantity" value="<?php echo isset($item_data['quantity']) ? $item_data['quantity'] : '';?>" class="form-control" placeholder="Quantity">
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
                                         <input type="text" name="price" class="form-control"  value="<?php echo isset($item_data['item_price']) ? $item_data['item_price'] : '';?>" placeholder="Price">
@@ -128,7 +165,7 @@ catch(Exception $e) {
                                 </div>
                                 <div id="dataAdd"></div>
                                 <input type="hidden" name="selected_item[]" id="selected_item" value= "">
-                                <!--<button  name="add_more"  class="btn btn-success add_field_button">Add More</button>-->
+                                
                                 <input type= "hidden" name="restaurant_id" value="<?php echo $restaurant_id; ?>" id="restaurant_id">
 
                                 <div class="ln_solid"></div>

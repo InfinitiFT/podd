@@ -72,6 +72,7 @@
     $recordImg = explode(",",$restaurant_data['restaurant_images']);
     if($recordImg)
     {
+    	$res_image_array=array();
         foreach($recordImg as $value)
         {
           $res_image_array[] = url().$value;
@@ -79,7 +80,18 @@
     }
     
     $record['restaurant_images']    =  $res_image_array;  
-	$record['location']             = $restaurant_data['location'];
+     if(!empty($restaurant_data['location']))
+        {
+            $location_array = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT `location` FROM restaurant_location WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$restaurant_data['location'])."'"));
+            $location = $location_array['location'];
+
+        }
+        else
+        {
+           $location = "";
+        }
+        
+    $record['location']             = $location;
     $record['postcode']             = $restaurant_data['postcode'];
     $record['latitude']             = $restaurant_data['latitude'];
     $record['longitude']            = $restaurant_data['longitude'];
@@ -95,7 +107,7 @@
         {
 			$cuisineRecord = mysqli_fetch_assoc(get_all_data('restaurant_cuisine'));
 			$cuisineData['id'] = $cuisineRecord['id'];
-			$cuisineData['name'] = $cuisineRecord['cuisine_name'];
+			$cuisineData['cuisine_name'] = $cuisineRecord['cuisine_name'];
 			$recordCusine[] = $cuisineData;
 		}
 		$record['cusine']   = $recordCusine;
@@ -103,7 +115,7 @@
         {
 			$dietaryRecord = mysqli_fetch_assoc(get_all_data('restaurant_dietary'));
 			$dietaryData['id'] = $dietaryRecord['id'];
-			$dietaryData['name'] = $dietaryRecord['dietary_name'];
+			$dietaryData['dietary_name'] = $dietaryRecord['dietary_name'];
 			$recordDietary[] = $dietaryData;
 		}
 		$record['dietary']   = $recordDietary;
@@ -111,17 +123,18 @@
         {
 			$ambienceRecord = mysqli_fetch_assoc(get_all_data('restaurant_ambience'));
 			$ambienceData['id'] = $ambienceRecord['id'];
-			$ambienceData['name'] = $ambienceRecord['ambience_name'];
+			$ambienceData['ambience_name'] = $ambienceRecord['ambience_name'];
 			$recordAmbience[] = $ambienceData;
 		}
 		$record['ambience']   = $recordAmbience;
-		 $record['distance']             = $restaurant_data['distance'];
+		$record['distance']             = round($restaurant_data['distance'], 2).' '.Miles;
+		 
 		$price = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_price_range` WHERE `id`='".$restaurant_data['price_range']."'"));
 		$userDetail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `users` WHERE `user_id`='".$restaurant_data['user_id']."'"));
 		
 		//$priceData['id'] = $price['id'];
 		//$priceData['price_range'] = $price['price_range'];
-		$record['priceData']  = $price['price_range'];
+		$record['price_range']  = $price['price_range'];
 		$result[] =$record;
 		
   }

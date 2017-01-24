@@ -1,7 +1,7 @@
 <?php
 include('config.php');
 //Header Authntication
-error_reporting(0);
+//error_reporting(0);
 function basic_authentication($authname, $authpw) {
  if (!isset($_SERVER['PHP_AUTH_USER'])) {
   header('WWW-Authenticate: Basic realm="My Realm"');
@@ -158,6 +158,7 @@ function url(){
 }
 
 
+
 function bookingTimeChange($booking_date,$booking_time){
 	$timestamp = strtotime($booking_time) - 60*60;
 	$time = date('H:i', $timestamp);
@@ -264,7 +265,7 @@ function bookingTimeChanges($time,$bookingID){
 }
 
 function findResturantEmail($resturantID){
-	$record = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT u.email FROM `restaurant_details` as d join users as u on d.`user_id` = u.`user_id` WHERE `restaurant_id`='".$resturantID."'"));
+	$record = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT u.email,d.restaurant_name FROM `restaurant_details` as d join users as u on d.`user_id` = u.`user_id` WHERE `restaurant_id`='".$resturantID."'"));
 	return $record;
 
 }
@@ -349,11 +350,89 @@ function bookingRecordStatus($status,$session){
 		
 }
 
+//Get all items
+function get_all_items(){
+	$all_items = mysqli_query($GLOBALS['conn'],"SELECT * FROM items WHERE status = 1");
+	return $all_items;
+}
 	
+function items_name($items_name){
+	$id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT id FROM items WHERE name = '".$items_name."'"));
+	return $id['id'];
+}	
+function subtitle_name($subtitle_name){
+	$id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT subtitle_id FROM subtitle WHERE subtitle = '".$subtitle_name."'"));
+	return $id['subtitle_id'];
+}	
+function get_booking_details($id){
+	$get_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant WHERE booking_id = '".$id."'"));
+	return $get_details;
+}
+function getQueryByType($status)
+{	
+if($_SESSION['restaurant_id']!="")
+  {   	  
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` <= CURRENT_DATE() order by brr.booking_id desc");
+  return $data;
+  }
+  else
+  {	  
+    $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` <= CURRENT_DATE() order by brr.booking_id desc");
+    return $data;
+  }
 	
+}
+
+function getQueryByDate($Date)
+{	
+if($_SESSION['restaurant_id']!="")
+  {   	  
+  $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` <= CURRENT_DATE() order by brr.booking_id desc");
+  return $data;
+  }
+  else
+  {	  
+    $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` <= CURRENT_DATE() order by brr.booking_id desc");
+    return $data;
+  }
 	
+}
 
+function getQueryByBothDate($fromdate,$todate)
+{
+if($_SESSION['restaurant_id']!="")
+  {
+	$data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` <= CURRENT_DATE() order by brr.booking_id desc");
+	return $data;
+  }
+  else
+  {	  
+    $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` <= CURRENT_DATE() order by brr.booking_id desc");
+    return $data;
+  }
+	
+}
+//function to send encrpted id in url
+function encrypt($pure_string) {
+    $dirty = array("+", "/", "=");
+    $clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
+    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+    $_SESSION['iv'] = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, 'Native', utf8_encode($pure_string), MCRYPT_MODE_ECB, $_SESSION['iv']);
+    $encrypted_string = base64_encode($encrypted_string);
+    return str_replace($dirty, $clean, $encrypted_string);
+}
+//function to send decrypted id in url
+function decrypt($encrypted_string) { 
+    $dirty = array("+", "/", "=");
+    $clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
 
+    $string = base64_decode(str_replace($clean, $dirty, $encrypted_string));
 
+    $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, 'Native',$string, MCRYPT_MODE_ECB, $_SESSION['iv']);
+    return $decrypted_string;
+}
+	
+       
 
 ?>

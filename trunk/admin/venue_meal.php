@@ -3,11 +3,11 @@
   $result = array();
   if($_SESSION['restaurant_id']!="")
   {
-   $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id  where rmd.restaurant_id = '".$_SESSION['restaurant_id']."'");
+   $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id join subtitle s on rtp.subtitle = s.subtitle_id where rmd.restaurant_id = '".$_SESSION['restaurant_id']."'");
   }
   else
   {
-     $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id  where rmd.restaurant_id = '".$_GET['id']."'");
+     $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id join subtitle s on rtp.subtitle = s.subtitle_id where rmd.restaurant_id = '".$_GET['id']."'");
     
   }
  
@@ -23,11 +23,12 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Venue Item List</h2>
+                    <h2> Menu Management</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a href="add_menu_item.php?restaurant_id=<?php echo $_GET['id'];?>"><button type="button" class="btn btn-round btn-success">Add Item With Price</button></a>
+                      <li><a href="add_menu_item.php?restaurant_id=<?php echo $_GET['id'];?>"><button type="button" class="btn btn-round btn-success">Add Menu</button></a>
                       </li>
-                      
+                      <!-- <li><a href="item_list.php"><button type="button" class="btn btn-round btn-success">Item List</button></a> -->
+                      </li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -37,9 +38,9 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>Menu Name</th>
+                          <th>Menu Name</th>   
+                          <th>Subtitle Name</th>                       
                           <th>Item Name</th>
-                          <th>Quantity</th>
                           <th>Price</th>
                           <th>Action</th>
                         </tr>
@@ -50,8 +51,8 @@
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
                           <td><?php echo $record['meal_name'];?></td>
+                          <td><?php echo $record['subtitle'];?></td>
                           <td><?php echo $record['name'];?></td>
-                          <td><?php echo $record['quantity'];?></td>
                           <td><?php echo $record['item_price'];?> </td>
                           <td><?php if($record['sta']=="1"){?>
                              <button type="button" id="activatedeactivate-<?php echo $record['item_price_id'];?>" class="btn btn-round btn-warning">Deactivate</button>

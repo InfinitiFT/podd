@@ -19,7 +19,7 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a href="add_item.php"><button type="button" class="btn btn-round btn-success">Add Item</button></a>
                       </li>
-                      
+                    
                     </ul>
                     <div class="clearfix"></div>
                   </div>

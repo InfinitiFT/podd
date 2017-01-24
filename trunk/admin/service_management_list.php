@@ -45,7 +45,9 @@
                               <?php }else{?>
                               <button type="button" id="activatedeactivate-<?php echo $record['service_id'];?>" class="btn btn-round btn-success">Activate</button>
                               <?php }?>
+                             <a type="button" href="edit_service_management.php?id=<?php echo $record['service_id'];?>" id="edit" class="btn btn-round btn-primary">Edit</a>
                              <button type="button" id="deletepopup-<?php echo $record['service_id'];?>" class="btn btn-round btn-danger">Delete</button>
+                             
                           </td>
                          </tr>
                         <?php }?> 

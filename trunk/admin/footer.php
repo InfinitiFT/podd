@@ -52,15 +52,22 @@
     <script src="../assets/plugins/ckeditor/ckeditor.js"></script>
     <script src="../assets/js/admin-common-validation.js"></script>
     <script src="../assets/js/jquery.validate.min.js"></script>
+
     <script src="validation.js"></script>
     <script src="admin.js"></script>
+    <script src="filter.js"></script>
     <script src="../assets/plugins/select2/dist/js/select2.full.min.js"></script>
-    <script src="../assets/plugins/autocomplete/jquery.auto-complete.js"></script>
+    <!--<script src="../assets/plugins/autocomplete/jquery.auto-complete.js"></script>-->
+    
     <script>
         $('#datatable-responsive').DataTable({
-            "ordering": false
-        });  
+            "ordering": false,
+             stateSave: true
+        });
+         
     </script>
+
+    
     <script type="text/javascript">
      Lobibox.alert(
       'error|success|warning|info', // Any of the following
@@ -68,24 +75,9 @@
   
        });
 
-            </script>
-  <script>
-        $(function(){
-            $('#test').autoComplete({
-                minChars: 1,
-                source: function(term, suggest){
-                    term = term.toLowerCase();
-                    var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
-                    var suggestions = [];
-                    for (i=0;i<choices.length;i++)
-                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-                    suggest(suggestions);
-                }
-            });
-    });
-           
-       
     </script>
+  
+          
     <!-- <script src="script.js"></script> -->
     <!-- Flot -->
     

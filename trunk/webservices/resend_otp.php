@@ -14,7 +14,7 @@
     if($status_varification->num_rows!= 0)
     {
        if(mysqli_query($GLOBALS['conn'],"DELETE FROM `number_verification` WHERE `contact_no`='" .mysqli_real_escape_string($conn,trim($contact_no)) . "'")){
-            if(mysqli_query($GLOBALS['conn'],"UPDATE `number_verification` SET `otp`='".mysqli_real_escape_string($conn,trim($random_number))."' WHERE `contact_no`='".mysqli_real_escape_string($conn,trim($contact_no))."'"))
+            if(mysqli_query($GLOBALS['conn'],"INSERT INTO `number_verification`(`contact_no`, `otp`) VALUES ('".mysqli_real_escape_string($conn,trim($contact_no))."','".mysqli_real_escape_string($conn,trim($random_number))."')"))
              {
                 $resend_message = send_sms($contact_no,$random_number);
                 if($resend_message == "1"){

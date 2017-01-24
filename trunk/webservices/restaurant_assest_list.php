@@ -38,11 +38,11 @@
 		
 	else if($type == 'meal')
 		 if(empty($search_content)){
-           $data = get_all_data(' restaurant_menu');
+           $data = get_all_data(' meals');
 	     }
 	     else
 	     {
-	    	$data = mysqli_query($GLOBALS['conn'],"SELECT * FROM  restaurant_menu WHERE menu_name LIKE '%".mysqli_real_escape_string($conn,trim($search_content))."%'");      
+	    	$data = mysqli_query($GLOBALS['conn'],"SELECT * FROM  meals WHERE meal_name LIKE '%".mysqli_real_escape_string($conn,trim($search_content))."%'");      
 	     }	
 	else if($type == 'location')
 		if(empty($search_content))
@@ -75,7 +75,7 @@
 		else if($type == 'ambience')
 			$allData['name'] = $record['ambience_name'];
 		else if($type == 'meal')
-			$allData['name'] = $record['menu_name'];
+			$allData['name'] = $record['meal_name'];
 		else if($type == 'location')
 			$allData['name'] = $record['location'];
 		else

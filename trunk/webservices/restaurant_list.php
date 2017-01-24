@@ -7,22 +7,56 @@
  $data       = json_decode(file_get_contents('php://input'));
  $lat   = $data->{"latitude"};
  $long = $data->{"longitude"};
+ $deliver_food = $data->{"deliver_food"};
  $pageSize   = $data->{"page_size"};
  $pageNumber = $data->{"page_number"};
- $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details LEFT JOIN restaurant_menu_details ON restaurant_details.restaurant_id = restaurant_menu_details.restaurant_id");
-
- if ($restaurant_data) {
+ if($deliver_food)
+ {
+    $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food = 1 group by rd.restaurant_id");
+ }
+ else
+ {
+     $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1  group by rd.restaurant_id");
+ }
+ 
+ 
+ if (mysqli_num_rows($restaurant_data)>0) {
+    
     $restaurant_rows    = mysqli_num_rows($restaurant_data);
     $maxPageNumber = ceil($restaurant_rows / $pageSize);
     $minLimit      = ($pageNumber - 1) * $pageSize;
-    $restaurant_list = mysqli_query($GLOBALS['conn'],"SELECT *, ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance,restaurant_details.restaurant_id as id FROM restaurant_details LEFT JOIN restaurant_menu_details ON restaurant_details.restaurant_id = restaurant_menu_details.restaurant_id Group By restaurant_details.restaurant_id ORDER BY distance   Limit $minLimit, $pageSize");
+    if($deliver_food)
+    {
+        $restaurant_list   = mysqli_query($GLOBALS['conn'],"SELECT *,rd.restaurant_id as restaurant_id,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food = 1 group by rd.restaurant_id ORDER BY distance  Limit $minLimit, $pageSize");
+
+          
+    }
+    else
+    {
+         $restaurant_list   = mysqli_query($GLOBALS['conn'],"SELECT *,rd.restaurant_id as restaurant_id,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 group by rd.restaurant_id ORDER BY distance  Limit $minLimit, $pageSize");
+         
+    }
+    
     $rows=array();
    
     while ($restaurant_data = mysqli_fetch_array($restaurant_list)) {
+
         
-        $row['restaurant_id']        = $restaurant_data['id'];
+        $row['restaurant_id']        = $restaurant_data['restaurant_id'];
         $row['restaurant_name']      = $restaurant_data['restaurant_name'];
-        $row['location']             = $restaurant_data['location'];
+
+        if(!empty($restaurant_data['location']))
+        {
+            $location_array = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT `location` FROM restaurant_location WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$restaurant_data['location'])."'"));
+            $location = $location_array['location'];
+
+        }
+        else
+        {
+           $location = "";
+        }
+        
+        $row['location']             = $location;
         $row['postcode']             = $restaurant_data['postcode'];
         $row['latitude']             = $restaurant_data['latitude'];
         $row['longitude']            = $restaurant_data['longitude'];
@@ -78,14 +112,15 @@
             foreach($price_range_data as $value)
             {
                $price_range_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_price_range WHERE id = '".mysqli_real_escape_string($GLOBALS['conn'],$value)."'"));
-                $price_range_rows = $price_range_name['price_range'];
+               $price_range_rows = $price_range_name['price_range'];
             }
         }
-        $row['price_range']              = $price_range_rows;
-        $row['distance']             = $restaurant_data['distance'];
+        $row['distance']             = round($restaurant_data['distance'], 2).' '.Miles;
+        
+
         $rows[]                 = $row;
      }
-
+    //print_r($rows);exit;
     $pagination['page_number']        = $pageNumber;
     $pagination['page_size']          = $pageSize;
     $pagination['max_page_number']    = $maxPageNumber;
@@ -99,9 +134,10 @@
     $response['responseMessage'] = 'No Records.';
 }
 
-
-//Sending response after json encoding
-$responseJson = json_encode($response);
-print $responseJson;
+//print_r($rows);exit;
+ 
+ //Sending response after json encoding
+  $responseJson = json_encode($response);
+  print $responseJson;exit;
 
 ?>

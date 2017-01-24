@@ -28,7 +28,7 @@
 		else if($type == 'ambience')
 			$allData['name'] = $record['ambience_name'];
 		else if($type == 'meal')
-			$allData['name'] = $record['menu_name'];
+			$allData['name'] = $record['meal_name'];
 		else if($type == 'location')
 			$allData['name'] = $record['location'];
 		else

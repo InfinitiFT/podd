@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset=iso-8859-1">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,6 +17,7 @@
 
     <!-- Bootstrap -->
       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="/resources/demos/style.css">
     <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -42,7 +43,8 @@
     <link rel="stylesheet" href="../assets/lobibox-master/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="../assets/lobibox-master/demo/demo.css"/>
     <link rel="stylesheet" href="../assets/lobibox-master/dist/css/lobibox.min.css"/>
-     <link href="../assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../assets/vendors/nprogress/nprogress.css" rel="stylesheet">    
+    
     <!-- Custom Theme Style -->
   </head>
 
@@ -66,7 +68,7 @@
             <!-- sidebar menu -->
           
                 <ul class="nav side-menu ">
-                   <li><a href = "service_management_list.php"><i class="fa fa-home"></i>Service</a></li>
+                   <li><a href = "service_management_list.php"><i class="fa fa-windows"></i>Service</a></li>
                    <li><a href = "#"><i class="fa fa-home"></i>Restaurant & Bars</a>
                        <ul class="nav child_menu">
                           <li><a href="restaurant_list.php">Manage Venue</a></li>
@@ -74,26 +76,33 @@
                           <li><a href="booking_history.php">History</a></li> 
                       </ul>
                   </li>
-                   
-                   <li><a href = "restaurant_list.php"><i class="fa fa-home"></i>Taxi</a></li>
-                   <li><a href = "admin_message.php"><i class="fa fa-home"></i>Admin Message</a></li>
-                   <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li>
+                 </ul>
+                 <ul class="nav side-menu">
+                   <li><a href = "#"><i class="fa fa-car"></i>Taxi<span class="label label-success pull-right">Coming Soon</span></a></li>
+                   <li><a href = "admin_message.php"><i class="fa fa-envelope"></i>Admin Message</a></li>
                    <li><a href = "#"><i class="fa fa-home"></i>Delivery</a>
                    <ul class="nav child_menu">
-                      <li><a href="restaurant_list_delivery.php">Manage Venue</a></li>
+                     
                       <li><a href="booking_list_restaurant_delivery.php">Manage bookings</a></li>
                       <li><a href="booking_history_delivery.php">History</a></li> 
                   </ul>
-                </ul>
+                  </ul>
+                 
               
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
-					 <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
+					       <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
-                   <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu</a></li>
-                   <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table</a></li>
+                   <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu Management</a></li>
+                   <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table Management</a></li>
                    <li><a href = "booking_history.php"><i class="fa fa-home"></i>History</a></li>
-                   <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li>
+                    <li><a href = "#"><i class="fa fa-home"></i>Delivery</a>
+                   <ul class="nav child_menu">
+                     
+                      <li><a href="booking_list_restaurant_delivery.php">Manage bookings</a></li>
+                      <li><a href="booking_history_delivery.php">History</a></li> 
+                  </ul>
+                   <!-- <li><a href = "item_list.php"><i class="fa fa-home"></i>Item</a></li> -->
                 </ul>
              <?php }else{ ?>
                   <ul class="nav side-menu">

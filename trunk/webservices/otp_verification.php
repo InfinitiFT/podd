@@ -18,240 +18,114 @@ if (empty($otp) || empty($contact_no)) {
     $otp1 = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `number_verification` WHERE `contact_no`='" . mysqli_real_escape_string($conn, trim($contact_no)) . "'"));
     
     if ($otp1['otp'] == $otp) {
-        $booking = mysqli_query($GLOBALS['conn'], "INSERT INTO `booked_records_restaurant`(`restaurant_id`, `booking_date`, `booking_time`, `number_of_people`, `name`, `email`, `contact_no`,`verification`) VALUES('" . mysqli_real_escape_string($GLOBALS['conn'], $restaurant_id) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $booking_date) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $booking_time) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $number_of_people) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $name) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $email) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $contact_no) . "','1')");
+      $date_for_database = date ("Y-m-d", strtotime($booking_date));
+        $booking = mysqli_query($GLOBALS['conn'], "INSERT INTO `booked_records_restaurant`(`restaurant_id`, `booking_date`, `booking_time`, `number_of_people`, `name`, `email`, `contact_no`,`verification`) VALUES('" . mysqli_real_escape_string($GLOBALS['conn'], $restaurant_id) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $date_for_database) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $booking_time) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $number_of_people) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $name) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $email) . "','" . mysqli_real_escape_string($GLOBALS['conn'], $contact_no) . "','1')");
+        
         if (mysqli_query($GLOBALS['conn'], "DELETE FROM `number_verification` WHERE `contact_no`='" . $contact_no . "'")) {
             if ($booking) {
                 
                 $resturantEmail = findResturantEmail($restaurant_id);
                 $adminEmail     = findAdminEmail();
-                // Mail Function with HTML template
-                $to             = $resturantEmail['email'];
-                $subject        = "Resturant Booking";
-                $message        = '<!DOCTYPE html>
-                      <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-                      <title>Reservation Confirmation Navajo White</title>
-                      <style type="text/css"><!--
-                      body,td,th {
-                      font-size: medium;
-                      color: #000000;
-                      }
-                      body {
-                            background-color: #ffdead;
-                           }
-                      .style3 {
-                            font-size: 18px;
-                            font-weight: bold;
-                            }
-                      .style4 {
-                            font-size: small;
-                            font-weight: bold;
-                          }
-                      .style5 {font-size: small}
-                      -->
-                      </style></head>
-                      <body style="        background-color: #FFDEAD;">
-                      <div align="center">
-                      <table width="600" border="1" bordercolor="99CCFF">
-                      <tbody>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="99CCFF">
-                            <div align="center">
-                              <p class="style3"><a href="http://setupmyhotel.com/formats/fo/266-reservation-template.html" target="_parent">Booking Request</a></p>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="99CCFF">
-                          <div align="left"><strong>Hello , </strong><br>
-                          </div></td>
-                        </tr>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="#FFC977"><div align="left"><strong>Booking Details:</strong></div></td>
-                        </tr>
-                        <tr>
-                          <td width="121" bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">User Name</span></div></td>
-                          <td width="473" colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $name . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Contact No</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $contact_no . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Booking Date</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $booking_date . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Booking Time</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $booking_time . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Number Of people</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $number_of_people . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Email</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $email . '</td>
-                        </tr>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="#FFC977"><div align="left"><strong>Booking Status:</strong></div></td>
-                       </tr>
-                       <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left" class="style4">Status</div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style5">Pending</span></div></td>
-                       </tr>
-                   
-                       </div></td>
-                    </tr>
-                  </tbody></table>
-                </div>
-
-
-              </body></html>';
-                
-                
-                // Always set content-type when sending HTML email
-                $headers = "MIME-Version: 1.0" . "\r\n";
-                $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                
-                // More headers
-                $headers .= 'From: ippodDevlopment@gmail.com' . "\r\n";
-                
-                if (mail($to, $subject, $message, $headers)) {
-                    // Always set content-type when sending HTML email
-                    $to      = $adminEmail;
-                    $subject = "Resturant Booking";
-                    $message = '<!DOCTYPE html>
-                      <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-                      <title>Reservation Confirmation Navajo White</title>
-                      <style type="text/css"><!--
-                      body,td,th {
-                      font-size: medium;
-                      color: #000000;
-                      }
-                      body {
-                            background-color: #ffdead;
-                           }
-                      .style3 {
-                            font-size: 18px;
-                            font-weight: bold;
-                            }
-                      .style4 {
-                            font-size: small;
-                            font-weight: bold;
-                          }
-                      .style5 {font-size: small}
-                      -->
-                      </style></head>
-                      <body style="        background-color: #FFDEAD;">
-                      <div align="center">
-                      <table width="600" border="1" bordercolor="99CCFF">
-                      <tbody>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="99CCFF">
-                            <div align="center">
-                              <p class="style3"><a href="http://setupmyhotel.com/formats/fo/266-reservation-template.html" target="_parent">Booking Request</a></p>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="99CCFF">
-                          <div align="left"><strong>Hello , </strong><br>
-                           <br>
-                           New Booking <br>
-                          </div></td>
-                        </tr>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="#FFC977"><div align="left"><strong>Booking Details:</strong></div></td>
-                        </tr>
-                        <tr>
-                          <td width="121" bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">User Name</span></div></td>
-                          <td width="473" colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $name . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Contact No</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $contact_no . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Booking Date</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $booking_date . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Booking Time</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $booking_time . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Number Of people</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $number_of_people . '</td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Email</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF">&nbsp;' . $email . '</td>
-                        </tr>
-                
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="#FFC977"><div align="left"><strong>Restaurant Details:</strong></div></td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Restaurant Name </span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF"><span class="style5">' . $resturantEmail['restaurant_name'] . '</span></td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Restaurant Email</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF"><span class="style5">' . $resturantEmail['email'] . '</span></td>
-                        </tr>
-                        <tr>
-                          <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style4">Restaurant Contact</span></div></td>
-                          <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF"><span class="style5">' . $resturantEmail['mobile_no'] . '</span></td>
-                        </tr>
-                        <tr>
-                          <td colspan="5" bordercolor="99CCFF" bgcolor="#FFC977"><div align="left"><strong>Booking Status:</strong></div></td>
-                       </tr>
-                       <tr>
-                         <td bordercolor="99CCFF" bgcolor="99CCFF"><div align="left" class="style4">Status</div></td>
-                         <td colspan="4" bordercolor="99CCFF" bgcolor="99CCFF"><div align="left"><span class="style5">Pending</span></div></td>
-                        </tr>
-               
-                        </div></td>
-                       </tr>
-                    </tbody>
-                  </table>
-               </div>
-
-
-              </body></html>';
-                    $headers = "MIME-Version: 1.0" . "\r\n";
-                    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                    // More headers
-                    $headers .= 'From: ippodDevlopment@gmail.com' . "\r\n";
-                    
-                    if (mail($to, $subject, $message, $headers)) {
-                        $response['responseCode']    = 200;
-                        $response['responseMessage'] = 'Restaurant booking successfully.'; //response for success case
-                    } else {
-                        $response['responseCode']    = 400;
-                        $response['responseMessage'] = 'Email Sending Errors.';
-                    }
-                } else {
-                    $response['responseCode']    = 400;
-                    $response['responseMessage'] = 'Email Sending Errors.';
-                    
-                }
-            }
-            
-            else {
-                $response['responseCode']    = 400;
-                $response['responseMessage'] = 'Booking Errors.';
-            }
-            
-            
-        } else {
-            $response['responseCode']    = 400;
-            $response['responseMessage'] = 'Database Errors.';
-            
-            
-        }
+                $to = $resturantEmail['email'];
+                $subject = "podd - new customer booking request";
+                $message = '
+                  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                  <html xmlns="http://www.w3.org/1999/xhtml">
+                  <head>
+                  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      
+                  </head>
+                  <body style="padding:0;margin:0;">
+                  <tbody>
+                     <tr>
+                       <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
+                       <div style="line-height:1.3em">
+                       <div>Hello <b>'.$resturantEmail['restaurant_name'].'</b>,</div>
+                       <div class="m_-7807612712962067148paragraph_break"><br></div>
+                       <div>You have received a new booking. Please accept by clicking on ‘Accept’ below:</div>
+                       <div class="m_-7807612712962067148paragraph_break"><br></div>
+                       <div>
+                       <table style="border:1px solid #000000;max-width:600px;margin:0 auto;" cellpadding="5">
+                           <thead>
+                               <tr>
+                                <th colspan="2">Booking details</th>
+                               
+                               </tr>
+                            </thead>
+                           <tbody>
+                               <tr>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Name:</td>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $name . '</td>
+                              </tr>
+                              <tr>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Date</td>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $booking_date . '</td>
+                             </tr>
+                              <tr>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Time</td>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $booking_time . '</td>
+                             </tr>
+                             <tr>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Number of covers</td>
+                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $number_of_people . '</td>
+                             </tr>
+                              <tr>
+                                   <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Telephone</td>
+                                    <td style="width:50%;border:1px solid #ccc;padding:8px">' . $contact_no . '</td>
+                              </tr>
+                               <tr>
+                                   <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Email</td>
+                                    <td style="width:50%;border:1px solid #ccc;padding:8px">' . $email . '</td>
+                              </tr>
+                          </tbody>
+                        </table></div>
+                       <div class="m_-7807612712962067148paragraph_break"><br></div>
+                      <div>Best regards,</div>
+                      <div>The podd Team</div>
+                     </div>
+                   </td>
+                 </tr>
+             </tbody>
+      
         
-    } else {
+              
+      </body>
+    </html>';
+
+    
+    
+      // Always set content-type when sending HTML email
+      
+      $headers = "MIME-Version: 1.0" . "\r\n";
+      $headers .= 'Cc: hello@poddapp.com' . "\r\n";
+      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+      // More headers
+      $headers .= 'From: podd' . "\r\n"; 
+      if(mail($to,$subject,$message,$headers)){ 
+        $response['responseCode']    = 200;
+        $response['responseMessage'] = 'Restaurant booking successfully.'; 
+      } else {
+        $response['responseCode']    = 400;
+       $response['responseMessage'] = 'Email Sending Errors.';
+                    
+      }
+    }
+            
+    else {
+        $response['responseCode']    = 400;
+        $response['responseMessage'] = 'Booking Errors.';
+    }
+            
+            
+  } else {
+    $response['responseCode']    = 400;
+    $response['responseMessage'] = 'Database Errors.';
+            
+            
+ }
+        
+ } else {
         $response['responseCode']    = 400;
         $response['responseMessage'] = 'Wrong otp.';
         

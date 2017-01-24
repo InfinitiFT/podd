@@ -1,5 +1,5 @@
 // Popup for delete functionality
-var a = [];
+ var a = [];
 
 $("[id ^='deletepopup-']").click(function () {
   var pagetype =  $("#delete_type").val();
@@ -121,6 +121,7 @@ $("[id ^='activatedeactivate-']").click(function () {
           success: function(data, status) {
             location.reload();  
             Lobibox.notify('success', {
+
               msg: 'Entity Accept Successfully.'
              });
           },
@@ -137,7 +138,7 @@ $("[id ^='decline-']").click(function () {
   var serviceID  = $(this).attr('id');
   var serviceArr = serviceID.split('-');
   Lobibox.confirm({
-      msg: "Are you sure you want to decline?",
+      msg: "Are you sure you want to decline11?",
       callback: function ($this, type) {
       if (type === 'yes') {
            $.ajax({
@@ -145,6 +146,7 @@ $("[id ^='decline-']").click(function () {
             type: 'post',
             data: {pagetype:pagetype,id:serviceArr[1],status:'0'},
             success: function(data, status) { 
+              
              location.reload();  
              Lobibox.notify('success', {
               msg: 'Entity decline Successfully.'
@@ -164,13 +166,13 @@ $("[id ^='decline-']").click(function () {
 });
 
 // Add item functionality
-   var max_fields      = 10;
+   var max_fields      = 30;
     var additem      = $(".add_item"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
-     
+    var add_field_button_subtitle      = $(".add_field_button_subtitle"); //Add button ID 
     
      //initlal text box count
-    var count = 2;
+   /* var count = 2;
     $(add_button).click(function(e){ //on add input button click
         e.preventDefault();
        //text box increment
@@ -181,32 +183,100 @@ $("[id ^='decline-']").click(function () {
                                    '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
                                    '</div>'+
                                    '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
-                                      '<input type="text" class="form-control has-feedback-left ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="inputSuccess-'+count+'">'+
+                                      '<input type="text" class="form-control ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="inputSuccess-'+count+'">'+
                                    '</div>'+
-                                   '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
-                                    '<input type="text" name="quantity[]" class="form-control" placeholder="Quantity" id="inputquan-'+count+'">'+
-                                    '</div>'+
                                    '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
                                       '<input type="text" class="form-control" name="price[]" placeholder="Price" id="inputprice-'+count+'">'+
                                   '</div>'+
                                '<button type="button" id ="remove_field-'+count+'" class="btn btn-danger remove_field">✖</button></div>'); //add input box
         
-  
+           
      
   }
    count++; 
 });
+   */
+  // Add subtitle functionality
+   
+    var additem_subtitle     = $(".add_subtitle"); //Fields wrapper
+    var add_button_subtitle      = $(".add_field_button_subtitle"); //Add button ID
+    var add_field_button_subtitle      = $(".add_field_button_subtitle"); //Add button ID 
+    
+     //initlal text box count
+    var count_subtitle = 2;
+    $(add_button_subtitle).click(function(e){ //on add input button click
+      e.preventDefault();
+     // alert($('input[name="item[]"]').val());
+      var i=1;
+      $('input[name^="item[]"]').each(function() {
+       // alert($(this).val());
+      if($(this).val()==""){   
+         i++;
+      }
+      
+      });
+       if(i >=2)
+       {
+        //text box increment
+        Lobibox.notify('warning', {
+                              size: 'normal',
+                              rounded: true,
+                              //delay: false,
+                              position: 'center top', //or 'center bottom'
+                              msg: 'Please enter item name'
+                             });
+              
 
+       }
+       else
+       {
+           $("#dataAddsubtitle").append(  '<div id="subMeal-'+count_subtitle+'">'+
+                                           '<div class="row">'+
+                                           '<div class="col-md-1 col-sm-1 col-xs-2 form-group">'+
+                                           '</div>'+
+                                           '<div class="col-md-4 col-sm-4 col-xs-8 form-group ">'+
+                                              '<input type="text" class="form-control" name="subtitle[]" id="inputSuccess-'+count_subtitle+'" placeholder="Subtitles">'+
+                                           '</div>'+
+
+                                           '</div>'+
+                                           '<div class="add_item row" id="itemID-'+count_subtitle+'">'+
+                                           '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
+                                           '</div>'+
+                                           '<div class="col-md-4 col-sm-4 col-xs-8 form-group">'+
+                                             '<input type="text" class="form-control" name="item[]" id="item_added-'+count_subtitle+'" placeholder="Select Item">'+
+                                           '</div>'+
+                                   
+                                           '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
+                                           '<input type="text" name="price[]" class="form-control"  placeholder="Price">'+
+                                            '</div>'+
+                                           '</div>'+
+                                           '<div id="dataAdd-'+count_subtitle+'"></div>'+
+                                              '<input type="hidden" name="selected_item[]" id="selected_item" value= "">'+
+                                               '<button type="button" name="add_more"  class="btn btn-success"  id="item-'+count_subtitle+'" onclick="addItem(this)">Add Item</button>'+
+                                           '</div>'); //add input box 
+          count_subtitle++;   
+         
+
+       }
+           
+});
+$(document).on("click", "[id ^='remove_field_subtitle-']", function(event){
+        var serviceID  = $(this).attr('id');
+        var serviceArr =serviceID.split('-');
+      $('#remove_del_subtitle-'+serviceArr[1]+'').remove();count--;
+    });
 $(document).on("click", "[id ^='remove_field-']", function(event){
         var serviceID  = $(this).attr('id');
         var serviceArr =serviceID.split('-');
-      $('#remove_del-'+serviceArr[1]+'').remove();count--;
+      $('#itemID-'+serviceArr[1]+'').remove();count--;
     });
+
 $(document).on("change", "[id ^='inputSuccess-']", function(event){
     a.push($(this).val());
 });  
+/*//for subtitle auto complete//==============================================================================
     $("#inputSuccess-1").autocomplete({
-        source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
+        source: "select_items.php?selected_item="+a+"&type="+'subtitle'+"&",
         select: function (event, ui) {
             $("#txtAllowSearch").val(ui.item.label); // display the selected text
             $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
@@ -219,7 +289,7 @@ $(document).on("change", "[id ^='inputSuccess-']", function(event){
       
       $(document).bind('DOMNodeInserted', function(e) {
             $("[id ^='inputSuccess-']").autocomplete({
-                source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
+                source: "select_items.php?selected_item="+a+"&type="+'subtitle'+"&",
                 select: function (event, ui) {
                     $(".ui-menu-item").val(ui.item.label); // display the selected text
                     $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
@@ -229,9 +299,108 @@ $(document).on("change", "[id ^='inputSuccess-']", function(event){
            
       });
    });
+//for item auto complete//==============================================================================
+    $("#item_added-1").autocomplete({
+        source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
+        select: function (event, ui) {
+            $("#txtAllowSearch").val(ui.item.label); // display the selected text
+            $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
+        }
+
+            });
+   
+       
+    $(function() {
+      
+      $(document).bind('DOMNodeInserted', function(e) {
+            $("[id ^='item_added-']").autocomplete({
+                source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
+                select: function (event, ui) {
+                    $(".ui-menu-item").val(ui.item.label); // display the selected text
+                }
+
+            });
+           
+      });
+   });
+    //for meal auto complete//==============================================================================
+    $("#meal_name").autocomplete({
+        source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&type="+"meal"+"&",
+        select: function (event, ui) {
+        }
+
+            });*/
+var count = 2;
+function addItem(id){
+  var item_val = new Array();
+  var flag = 0;
+  var str = [];
+
+ $( "[id ^='item_added-']" ).each(function() { 
+
+    if($(this).val().length ==0)
+    {
+      flag = 0;
+       Lobibox.notify('warning', {
+                              size: 'normal',
+                              rounded: true,
+                              //delay: false,
+                              position: 'center top', //or 'center bottom'
+                              msg: 'Please enter item name'
+                             });
+     // alert('Please enter item name');
+    }
+    else
+    {
+            
+        if((jQuery.inArray($(this).val(),str)) != -1) {
+          flag = 0;
+          Lobibox.notify('warning', {
+                              size: 'normal',
+                              rounded: true,
+                              //delay: false,
+                              position: 'center top', //or 'center bottom'
+                              msg: 'Please enter another one..'
+                             });
+           // alert('Please enter another one.');
+         } else {
+            flag = 1;
+            str.push($(this).val());   
+         }
+        
+      }   
+  });
+
+  if(flag == 1){
+    var serviceID  = $(id).attr('id');
+  var serviceArr =serviceID.split('-');
+   //max input box allowed
+        
+           
+            $("#dataAdd-"+serviceArr[1]).append(  '<div class="add_item row" id= "itemID-'+count+'">'+
+                                   '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
+                                   '</div>'+
+                                   '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
+                                      '<input type="text" class="form-control ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="item_added-'+count+'">'+
+                                   '</div>'+
+                                   '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
+                                      '<input type="text" class="form-control" name="price[]" placeholder="Price" id="inputprice-'+count+'">'+
+                                  '</div>'+
+                               '<button type="button" id ="remove_field-'+count+'" class="btn btn-danger remove_field">✖</button></div>'); //add input box
+        
+           
+     
+ 
+ count++;
+    }
+   
+
+ 
+
+}
+
 
 
    
-
 
       

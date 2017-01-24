@@ -33,12 +33,15 @@
                   </div>
                     <?php echo $msg; ?>
                   <div class="x_content">
+					  
+					
+					  
                     <p class="text-muted font-13 m-b-30">
                     </p>
                     <table id="datatable-responsive" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>Name</th>
+                        <th>Name</th>
                           <th>Email</th>
                           <th>Location</th>
                           <th>Contact No</th>
@@ -49,14 +52,14 @@
                       <tbody>
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
-                          <td><?php if(strlen($record['restaurant_name'])>20){
-                    echo $small = stripslashes(substr($record['restaurant_name'], 0, 20)).'.........';
+                          <td><?php if(strlen($record['restaurant_name'])>300){
+                    echo $small = stripslashes(substr($record['restaurant_name'], 0, 30)).'.........';
                     }
                     else{
                       echo $small = stripslashes($record['restaurant_name']);
                       } ?></td>
                           <td><?php echo $record['email'];?></td>
-                          <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_location` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
+                          <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
                           <td><?php echo $record['country_code'].$record['mobile_no'];?></td>
                           <td><?php if($record['status'] == 1){?>
                              <button type="button" id="activatedeactivate1-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-warning">Deactivate Venue</button>

@@ -1,20 +1,31 @@
 $(document).ready(function() {
   //Login form validation
+  $.validator.addMethod("email1", function(value, element) 
+  { 
+    return this.optional(element) || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i.test(value); 
+   }, "Please enter a valid email address.");
+  $.validator.addMethod("phone_no", function(value, element) 
+  { 
+    return this.optional(element) || /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/i.test(value); 
+   }, "Please enter a valid phone number.");
   $("#login_form").validate({
     rules: {
      email: {
         required: true,
-        email: true
+        email: true,
+        email1 : true
             },
       password: "required"
+     
     },
     messages: {
       email: {
-            required:"Please enter email",
-            email: "Please enter valid email"
+            required:"Please enter email.",
+            email: "Please enter a valid email address."
           },
       password: {
-            required:"Please enter your password" 
+            required:"Please enter your password."
+           
           }
     }
   });
@@ -32,11 +43,12 @@ $(document).ready(function() {
     rules: {
       email: {
         required: true,
-        email: true
+        email: true,
+        email1 : true
             },
           },
           messages: {
-            required:"Please enter email",
+            required:"Please enter email.",
             email: "Please enter a valid email address."
           },      
         });
@@ -54,11 +66,17 @@ $(document).ready(function() {
  //Add Category Validation
   $("#add_category").validate({
     rules: {
-      name: "required",
-      image: "required"
+      name: {
+        required: true,
+        maxlength : 30
+      },
+      image: "required",
     },
     messages: {
-      name: "Please enter your name.",
+      name: {
+            required:"Please enter name",
+            maxlength: "Name maximum 30 charecters"
+          },
       image: "Please select your image."
     }
   });
@@ -97,6 +115,27 @@ $.validator.methods.alreadyEmail = function(value, element) {
             return ab;
 };
 
+  /*Custom validation for space is not allowed*/
+$.validator.methods.locationValid = function(value, element) {
+   $.ajax({
+                method: "post",
+                url: "admin_ajax.php",
+                data: { type:"locationValid",location:value},
+                async: false,
+                success: function(data) {
+                    if(data == 1) {
+                        ab = false;             
+                    }
+                    else {
+                        ab = true;
+                    }
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            });
+            return ab;
+};
 
 
 
@@ -113,15 +152,27 @@ $.validator.methods.alreadyEmail = function(value, element) {
 		email: {
 				required: true,
 				email: true,
+        email1 : true,
 				alreadyEmail:true
 			},
 		phone: {
 				required: true,
-				number: true,
-				minlength: 10,
-				maxlength: 15
-				
+				phone_no:true		
 		},
+    about: {
+        maxlength: 500 
+    },
+    people: {
+        maxlength: 6
+        
+    },
+    location: {
+        required: true
+    },
+    locationTest: {
+        required: true,
+        locationValid: true   
+    },
 		"resturant_images[]":{
 			 required: true
 		
@@ -141,18 +192,27 @@ $.validator.methods.alreadyEmail = function(value, element) {
             required:"Please enter name",
             maxlength: "Name maximum 256 charecters"
           },
-		email: {
-                  required:"Please enter email",
-                   email: "Please enter valid email",
-                   alreadyEmail: "Email already exits"
-                },
-        phone: {
-				required: "Please enter phone number",
-				number: "Phone number should be number",
-				minlength: "Phone number atleast 10 digits",
-				maxlength: "Phone number maximum 15 digits"
-				
+		email:{
+            required:"Please enter email",
+            email: "Please enter a valid email address.",
+            alreadyEmail: "email already exits."
+          },
+    phone: {
+				required: "Please enter phone number"	
 		},
+    about: {
+        maxlength: "Discription should not be more than 500 characters."   
+    },
+    people: {
+        maxlength: "Discription should not be more than 6 digits."    
+    },
+    location: {
+        required: "Please enter location."
+    },
+    locationTest: {
+        required: "Please enter location.",
+        locationValid: "Location is not valid please enter correct location."   
+    },
 		"resturant_images[]" :{
 			required: "Venue images required"
 		},
@@ -162,9 +222,7 @@ $.validator.methods.alreadyEmail = function(value, element) {
 		countTime: {
 				max: "Close time should be greater than open time"
 				
-		}
-		
-      
+		}  
     }
   });
   
@@ -181,15 +239,21 @@ $.validator.methods.alreadyEmail = function(value, element) {
 		email: {
 				required: true,
 				email: true,
+        email1 : true,
 				alreadyEmail:true
 			},
 		phone: {
-				required: true,
-				number: true,
-				minlength: 10,
-				maxlength: 15
+				required: true,				
+				phone_no: true
 				
 		},
+    location: {
+        required: true
+    },
+    locationTest: {
+        required: true,
+        locationValid: true   
+    },
 		countImgs: {
 				min: 1
 				
@@ -213,20 +277,23 @@ $.validator.methods.alreadyEmail = function(value, element) {
           },
 		email: {
                   required:"Please enter email",
-                   email: "Please enter valid email",
-                   alreadyEmail: "Email already exits"
+                   email: "Please enter a valid email address.",
+                   alreadyEmail: "email already exits."
                 },
-        phone: {
-				required: "Please enter phone number",
-				number: "Phone number should be number",
-				minlength: "Phone number atleast 10 digits",
-				maxlength: "Phone number maximum 15 digits"
-				
+    phone: {
+				required: "Please enter phone number"				
 		},
 		countImgs: {
 				min: "Venue images required"
 				
 		},
+    location: {
+        required: "Please enter location."
+    },
+    locationTest: {
+        required: "Please enter location.",
+        locationValid: "Location is not valid please enter correct location."   
+    },
 		countTime: {
 				max: "Close time should be greater than open time"
 				
@@ -284,15 +351,11 @@ $("#edit_booking").validate({
         email: {
 			required:true,
 			email: true,
+      email1 : true,
 			maxlength: 256
 			},
-        phone: {
-			required:true,
-			digits: true,
-			minlength: 10,
-			maxlength: 15
-			},
-        booking_date: {
+     
+     booking_date: {
 			required:true,
 			},
         booking_time: {
@@ -316,12 +379,7 @@ $("#edit_booking").validate({
 			minlength:"Please enter atleast 2 characters",
 			maxlength:"Please enter only 256 characters"
 			},
-        phone: {
-			required:"Please enter the phone",
-			digits:"Please enter only digits",
-			minlength:"Please enter atleast 10 digits",
-			maxlength:"Please enter only 15 digits"
-			},
+       
         booking_date: {required:"Please enter the booking date"},
         booking_time: {required:"Please enter the booking time"},
         people: {
@@ -461,63 +519,54 @@ $.validator.methods.alreadyadd_item_price = function(value, element) {
 };
 
 $.validator.methods.alreadyadd_exists_or_not = function(value, element) {
-  
-   $.ajax({
-                method: "post",
-                url: "admin_ajax.php",
-                data: { type: "alreadyadd_exists_or_not",item:value},
-                async: false,
-                success: function(data) {
-        
-                    if(data == 1) {
-                        ab = false;             
-                    }
-                    else {
-                        ab = true;
-                    }
-                },
-                error: function(err){
-                    console.log(err)
-                }
-            });
-            return ab;
+      $('#selectedvalue').val($("input[name='item[]']")
+              .map(function(){return $(this).val();}).get());
+      var str = $('#selectedvalue').val();
+      console.log(str);
+      //var str = 'a,2,c';
+
+      var temp = new Array();
+      temp = str.split(",");
+      alert(temp);
 };
+
 
   //Add Category Validation
   $("#add_item_price").validate({
 	 ignore: [],
     rules: {
-    meal: {
+    meal_name: {
+      required:true
+      },
+    "subtitle[]": {
       required:true
       },
     "item[]": {
       required:true,
-      alreadyadd_exists_or_not:true,
-      alreadyadd_item_price:true
+      //alreadyadd_exists_or_not:true,
+      //alreadyadd_item_price:true
       },
      "quantity[]": {
       required:true
-      },
-     "price[]": {
-      required:true
       }
+     
     },
     messages: {
    
-    meal: {
-      required: "Please select meal."
+    meal_name: {
+      required: "Please enter meal name."
+      
+      },
+    "subtitle[]": {
+      required: "Please enter subtitle."
       
       },
       "item[]": {
       required: "Please enter your item.",
-      alreadyadd_item_price: "Item already added for this restaurant.",
-      alreadyadd_exists_or_not:"Item name doesnot exists in database."
+   
       },
       "quantity[]": {
       required: "Please enter quantity."
-      },
-      "price[]": {
-      required: "Please enter price."
       }
      
     }
@@ -527,7 +576,10 @@ $.validator.methods.alreadyadd_exists_or_not = function(value, element) {
   $("#edit_item_price").validate({
    ignore: [],
     rules: {
-    meal: {
+    meal_name: {
+      required:true
+      },
+    subtitle: {
       required:true
       },
     item: {
@@ -537,15 +589,16 @@ $.validator.methods.alreadyadd_exists_or_not = function(value, element) {
       },
      quantity: {
       required:true
-      },
-     price: {
-      required:true
       }
     },
     messages: {
    
-    meal: {
-      required: "Please select meal."
+    meal_name: {
+      required: "Please select meal name."
+      
+      },
+    subtitle: {
+      required: "Please enter subtitle."
       
       },
       item: {
@@ -555,9 +608,6 @@ $.validator.methods.alreadyadd_exists_or_not = function(value, element) {
       },
       quantity: {
       required: "Please enter quantity."
-      },
-      price: {
-      required: "Please enter price."
       }
      
     }
