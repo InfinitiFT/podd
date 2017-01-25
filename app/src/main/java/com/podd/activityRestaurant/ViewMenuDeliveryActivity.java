@@ -18,8 +18,6 @@ import android.widget.TextView;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.fragment.BreakfastMenuFragment;
-import com.podd.fragment.DinnerMenuFragment;
-import com.podd.fragment.LunchMenuFragment;
 import com.podd.utils.AppConstant;
 
 import java.util.ArrayList;

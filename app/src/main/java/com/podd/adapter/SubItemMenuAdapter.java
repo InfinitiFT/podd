@@ -1,7 +1,6 @@
 package com.podd.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,7 @@ import android.view.ViewGroup;
 
 import com.podd.R;
 
-/**
- * Created by Shalini Bishnoi on 17-01-2017.
- */
+
 public class SubItemMenuAdapter extends RecyclerView.Adapter <SubItemMenuAdapter.MyViewHolder>{
     private final Context context;
     public SubItemMenuAdapter(Context context) {

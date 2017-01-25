@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:background="@color/colorPrimaryDark"
-        android:text="Hie"
+        android:text=""
         android:gravity="center"
         android:textSize="@dimen/text_size_10"
         android:padding="@dimen/dp_4"/>

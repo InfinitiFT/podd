@@ -3,9 +3,7 @@ package com.podd.model;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Shalini Bishnoi on 17-01-2017.
- */
+
 public class MealDetails implements Serializable{
 
 

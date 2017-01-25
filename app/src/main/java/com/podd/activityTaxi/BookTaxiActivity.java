@@ -107,22 +107,22 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void selectAirportAdapter() {
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,airportArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,airportArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectAirport.setAdapter(adapter);
     }
     private void selectTimeAdapter() {
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,timeArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,timeArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectTime.setAdapter(adapter);
     }
     private void selectNumberOfPeopleAdapter() {
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,numberOfPeopleArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,numberOfPeopleArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectPeople.setAdapter(adapter);
     }
     private void selectAdditionalRequirementsAdapter() {
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,requirementsArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,requirementsArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spSelectAdditionalRequirement.setAdapter(adapter);
     }

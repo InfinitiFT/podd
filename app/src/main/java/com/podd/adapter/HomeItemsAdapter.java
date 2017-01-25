@@ -9,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.podd.R;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
-import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
 import com.podd.model.HomeItemsModel;
-
 import java.util.List;
 
 

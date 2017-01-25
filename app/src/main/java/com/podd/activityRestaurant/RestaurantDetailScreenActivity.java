@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +36,7 @@ import retrofit2.Response;
 /**
  * The type Restaurant detail screen activity.
  */
+@SuppressWarnings("ALL")
 public class RestaurantDetailScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvRestauarntName;
@@ -109,9 +108,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         tvAmbience= (TextView) findViewById(R.id.tvAmbience);
         tvAmbienceLeft= (TextView) findViewById(R.id.tvAmbienceLeft);
         tvPriceRangeLeft= (TextView) findViewById(R.id.tvPriceRangeLeft);
-        LinearLayout llInner = (LinearLayout) findViewById(R.id.llInner);
-        LinearLayout llButtons = (LinearLayout) findViewById(R.id.llButtons);
-       /* LinearLayout llDistance = (LinearLayout) findViewById(R.id.llDistance);*/
         LinearLayout llLocation = (LinearLayout) findViewById(R.id.llLocation);
         LinearLayout llPriceRange = (LinearLayout) findViewById(R.id.llPriceRange);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
@@ -300,7 +296,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         if(response.body().dietary!=null&&response.body().dietary.size()>0) {
                             for (int i = 0; i <response.body().dietary.size() ; i++) {
                                 if(response.body().dietary.get(i).dietary_name!=null && !response.body().dietary.get(i).dietary_name.equalsIgnoreCase("") )
-                                    categories.clear();;
+                                    categories.clear();
 
                                 categories.add(response.body().dietary.get(i).dietary_name);
                             }

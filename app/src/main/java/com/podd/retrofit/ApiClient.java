@@ -28,7 +28,7 @@ public class ApiClient {
      * The constant BASE_URL.
      */
     // public static final String BASE_URL = "http:172.16.0.9/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
-    public static final String BASE_URL = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
+    private static final String BASE_URL = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
 
     private static Retrofit retrofit = null;
 
@@ -74,29 +74,6 @@ public class ApiClient {
         return retrofit;
     }
 
-   /* public static ApiInterface getApiService() {
-        String credentials = "admin"+":"+"1234";
-        final String basic = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient.newBuilder().connectTimeout(2 * 60 * 1000, TimeUnit.SECONDS).readTimeout(2 * 60 * 1000, TimeUnit.SECONDS).writeTimeout(2 * 60 * 1000, TimeUnit.SECONDS)
-                        .addInterceptor(new Interceptor() {
-                            @Override
-                            public Response intercept(Chain chain) throws IOException {
-                                Request original = chain.request();
-                                Request.Builder requestBuilder = original.newBuilder()
-                                        .header("Authorization", basic)
-                                        .method(original.method(), original.body());
-
-                                Request request = requestBuilder.build();
-                                return chain.proceed(request);
-                            }
-                        }).build()).build();
-
-        return retrofit.create(ApiInterface.class);
-    }*/
 
 }
 

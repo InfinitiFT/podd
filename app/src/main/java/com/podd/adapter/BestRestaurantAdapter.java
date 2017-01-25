@@ -1,6 +1,6 @@
 package com.podd.adapter;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -19,9 +19,6 @@ import com.podd.R;
 import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
-import com.podd.utils.CommonUtils;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -108,7 +108,8 @@
                     android:freezesText="true"
                     android:focusable="true"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textSize="@dimen/text_size_14"
+                    tools:ignore="Deprecated" />
             </LinearLayout>
             <!--<View
                 android:layout_width="match_parent"

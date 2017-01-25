@@ -8,18 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.podd.R;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
-import com.zanlabs.widget.infiniteviewpager.InfinitePagerAdapter;
 
 import java.util.List;
 
 public class HomePagerAdapter extends PagerAdapter {
-    private Context context;
+    private final Context context;
 
-    private List<Integer> imgList;
+    private final List<Integer> imgList;
 
     public HomePagerAdapter(Context context, List<Integer> imgList) {
         this.context = context;

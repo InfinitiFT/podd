@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -89,7 +88,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     }
 
     private void setSpinner() {
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,R.layout.row_textview_spinner_type,countryCodeArray);
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,countryCodeArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spCountryCode.setAdapter(adapter);
 
@@ -102,7 +101,6 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
-       TextView tvBookingSummary = (TextView) findViewById(R.id.tvBookingSummary);
         tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);

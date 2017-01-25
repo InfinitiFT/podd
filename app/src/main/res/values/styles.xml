@@ -24,6 +24,7 @@
     <style name="CustomTabWidgetText"
         parent="@android:style/TextAppearance.Widget.TabWidget">
     <item name="android:textSize">40sp</item>
+    <item name="android:textColor">@color/grey</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

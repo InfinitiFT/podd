@@ -18,8 +18,6 @@ import com.podd.activityRestaurant.ViewMenuActivity;
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 

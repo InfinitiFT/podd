@@ -33,7 +33,7 @@ public class LocationTracker implements LocationListener, GoogleApiClient.Connec
 	private GoogleApiClient mLocationClient;
 	private final Context context;
 	private final LocationResult locationResult;
-	public static final int REQUEST_CHECK_SETTINGS = 100;
+	private static final int REQUEST_CHECK_SETTINGS = 100;
 
 	public LocationTracker(Context context, LocationResult locationResult) {
 		super();
