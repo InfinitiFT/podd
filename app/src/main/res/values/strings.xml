@@ -102,7 +102,7 @@
     <string name="Please_connect_to_internet_first">Please connect to internet.</string>
     <string name="server_not_responding">Server not responding.</string>
     <string name="data_not_found">Data not found.</string>
-    <string name="please_enter_otp_to_confirm_booking">Please enter otp to confirm booking.</string>
+    <string name="please_enter_otp_to_confirm_booking">Please enter verification code. This was sent to your mobile.</string>
     <string name="otp">Otp</string>
     <string name="submit">Submit</string>
     <string name="please_enter_otp">Please enter otp</string>

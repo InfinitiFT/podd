@@ -85,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginBottom="@dimen/dp_4" />
             <TextView
                 android:id="@+id/tvBookNow"
@@ -100,12 +101,8 @@
                 android:text="@string/book_now"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12" />
-
         </LinearLayout>
-
-
     </LinearLayout>
-
 </LinearLayout>
 
 

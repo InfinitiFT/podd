@@ -1,11 +1,10 @@
 package com.podd.adapter;
 
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,8 @@ import com.podd.R;
 import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
+import com.podd.utils.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +85,6 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         }
         if(restaurant.distance!= null){
             holder.tvDistance.setText(restaurant.distance);
-            Log.e("Distance", "Distance Set"+restaurant.distance);
         }else{
             holder.tvDistance.setText("");
         }
@@ -112,8 +112,8 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
                 holder.tvtypeOfRestaurant.setText(R.string.cuisine);
             }
 
-            /*holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
-            holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);*/
+            holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
+            holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
             if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
                 Glide.with(context).load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivRestaurant);
                 /*Picasso.with(context)

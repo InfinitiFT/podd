@@ -11,6 +11,8 @@
         android:gravity="center"
         android:textSize="@dimen/text_size_12"
         android:text=""
+        android:paddingStart="@dimen/dp_4"
+        android:paddingEnd="@dimen/dp_4"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:singleLine="true"

@@ -66,7 +66,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
             CommonUtils.showAlertOk("Currently, no menu item is available.",ViewMenuActivity.this);
         }
 
-       // setAdapter();
+        // setAdapter();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -78,25 +78,12 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getIds() {
-       rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
+        rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
         tvRestaurantName = (TextView) findViewById(tvRestauarntName);
         tvBookNow = (TextView) findViewById(R.id.tvBookNow);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });*/
     }
 
     private void setFont() {
@@ -134,7 +121,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void setupViewPager(ViewPager viewPager) {
-         adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < restaurantMenu.size(); i++) {
             adapter.addFragment(new BreakfastMenuFragment().newInstance(restaurantMenu.get(i).meal_details), restaurantMenu.get(i).meal_name);
         }
@@ -142,7 +129,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         viewPager.setAdapter(adapter);
     }
 
-     class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 

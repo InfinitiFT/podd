@@ -193,20 +193,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
         llVenues= (LinearLayout) findViewById(R.id.llVenues);
 
-/*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });*/
 
     }
 
@@ -216,8 +202,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             public void gotLocation(Location location) {
                 currentLat = location.getLatitude();
                 currentLong = location.getLongitude();
-                /*currentLat = 51.4662;
-                currentLong = 0.1617;*/
                 if (CommonUtils.isNetworkConnected(BestRestaurantNearCity.this)) {
                     getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
                 } else {
@@ -262,46 +246,27 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.llAmbience:
 
-                /*tvNearbyRestaurant.setText(R.string.restaurant_by_ambience);*/
                 getAmbienceRestaurantListApi();
                 llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llLocation:
                 llVenues.setVisibility(View.VISIBLE);
-/*
-                tvNearbyRestaurant.setText(R.string.restaurant_by_location);
-*/
                 getLocationRestaurantListApi();
                 llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llDietary:
-
-/*
-                tvNearbyRestaurant.setText(R.string.restaurant_by_dietary);
-*/
                 getDietaryRestaurantListApi();
                 llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llCuisine:
-/*
-                tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
-*/
-
                 getCuisineRestaurantListApi();
                 llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llMeal:
-/*
-                tvNearbyRestaurant.setText(R.string.restaurant_by_meal);
-*/
-
                 getMealRestaurantListApi();
                 llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llDeliveredToYou:
-/*
-                tvNearbyRestaurant.setText(R.string.delivered_to_you);
-*/
                 llVenues.setVisibility(View.VISIBLE);
                 break;
 

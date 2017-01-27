@@ -157,6 +157,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvCompleteBooking:
+                CommonUtils.hideKeyboard(BookingSummaryActivity.this);
                 if (isValid()) {
                     sendOtpApi();
                     /*name=etName.getText().toString().trim();
