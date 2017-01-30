@@ -91,53 +91,51 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
         String location = holder.tvLocation.getText().toString().trim();
 
 
-            if (restaurant.price_range != null) {
-                String priceRange = restaurant.price_range;
-                String[] split = priceRange.split("-");
+        if (restaurant.price_range != null) {
+            String priceRange = restaurant.price_range;
+            String[] split = priceRange.split("-");
 
-                String split_one = split[0];
-                String split_second = split[1];
-                holder.tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
-            } else {
-                holder.tvPriceRange.setText("");
-            }
+            String split_one = split[0];
+            String split_second = split[1];
+            holder.tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
+        } else {
+            holder.tvPriceRange.setText("");
+        }
 
-            if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
-                holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
-            } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
-                holder.tvtypeOfRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
-            } else if (restaurantList.get(position).ambience != null && restaurantList.get(position).ambience.size() > 0) {
-                holder.tvtypeOfRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name);
-            } else {
-                holder.tvtypeOfRestaurant.setText(R.string.cuisine);
-            }
+        if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
+        } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
+        } else if (restaurantList.get(position).ambience != null && restaurantList.get(position).ambience.size() > 0) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name);
+        } else {
+            holder.tvtypeOfRestaurant.setText(R.string.cuisine);
+        }
 
-            holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
-            holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
-            if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
-                Glide.with(context).load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivRestaurant);
-                /*Picasso.with(context)
-                        .load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon)
-                        .into(holder.ivRestaurant);*/
-            } else {
-                holder.ivRestaurant.setImageResource(R.mipmap.placeholder_icon);
-            }
+        holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
+        holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);
 
-            holder.llMain.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    if (restaurantList.get(position).restaurant_id!=null ){
-                        intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
-                    }
-                    intent.putExtra(AppConstant.DISTANCE,restaurantList.get(position).distance);
-                    intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
-                    intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
-                    intent.putExtra(AppConstant.LOCATION, restaurantList.get(position).location);
-                    context.startActivity(intent);
+        if (restaurantList.get(position).restaurant_images.get(0) != null && restaurantList.get(position).restaurant_images.size() > 0) {
+            Glide.with(context).load(restaurantList.get(position).restaurant_images.get(0)).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivRestaurant);
+        } else {
+            holder.ivRestaurant.setImageResource(R.mipmap.placeholder_icon);
+        }
+
+        holder.llMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RestaurantDetailScreenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if (restaurantList.get(position).restaurant_id!=null ){
+                    intent.putExtra(AppConstant.RESTAURANTID, restaurantList.get(position).restaurant_id);
                 }
-            });
+                intent.putExtra(AppConstant.DISTANCE,restaurantList.get(position).distance);
+                intent.putExtra(AppConstant.LATITUDE, restaurantList.get(position).latitude);
+                intent.putExtra(AppConstant.LONGITUDE, restaurantList.get(position).longitude);
+                intent.putExtra(AppConstant.LOCATION, restaurantList.get(position).location);
+                context.startActivity(intent);
+            }
+        });
     }
 
 

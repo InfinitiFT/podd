@@ -109,6 +109,7 @@
                     android:focusable="true"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_14"
+                    android:layout_marginLeft="@dimen/dp_0.5"
                     tools:ignore="Deprecated" />
             </LinearLayout>
             <!--<View

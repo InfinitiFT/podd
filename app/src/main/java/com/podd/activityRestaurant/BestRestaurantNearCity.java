@@ -693,10 +693,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 callsearchedTextApi(pageNo);
                 isRestaurant = true;
                 break;
-
         }
-
-
     }
 
     private void callsearchedTextApi(int pageNumber) {
