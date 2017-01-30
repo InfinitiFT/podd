@@ -58,6 +58,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
         } else {
             holder.viewBottom.setVisibility(View.GONE);
         }
+
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
         holder.tvRestaurantName.setTypeface(typeface);
 

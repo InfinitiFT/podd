@@ -45,19 +45,10 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private RecyclerView rvRestaurants;
     private Context context;
     private BestRestaurantAdapter bestRestaurantAdapter;
-    private TextView tvBusiness;
-    private TextView tvMealType;
-    private TextView tvCuisineType;
-    private TextView tvLocationType;
-    private TextView tvDietaryType;
-    private TextView tvCityName;
-    private TextView tvNearbyRestaurant;
-    private LinearLayout llLocation;
-    private LinearLayout llDietary;
-    private LinearLayout llCuisine;
-    private LinearLayout llMeal;
-    private LinearLayout llAmbience;
-    private LinearLayout llDeliveredToYou;
+    private TextView tvBusiness,tvMealType, tvCuisineType,tvLocationType,tvDietaryType,tvCityName,tvNearbyRestaurant;
+    private TextView tvLocationName,tvSearchBy,tvLocation,tvDietary,tvShowing,tvVenueBy;
+    private TextView tvNoOfRestaurants,tvCuisine,tvMeal,tvAmbience, tvDeliveredtoYou;
+    private LinearLayout llLocation,llDietary, llCuisine, llMeal,llAmbience,llDeliveredToYou,llCurrentloc,llVenues;
     private double currentLat;
     private double currentLong;
     private List<Cuisine> cuisineList = new ArrayList<>();
@@ -69,21 +60,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private ArrayAdapter adapterLocation;
     private SearchableListDialog _searchableListDialog;
     private List<String> categories;
-    private String selectedItem = "";
-    private String cuisineId;
-    private String locationId;
-    private String mealId;
-    private String dietaryId;
-    private String ambienceId;
+    private String selectedItem = "",cuisineId,locationId,mealId,dietaryId,ambienceId,restaurantlistSize;
     private GridLayoutManager gridLayoutManager;
     private EndlessScrollListener scrollListener;
     private boolean isRestaurant = false;
     private int pageSize = 10;
-    private TextView tvLocationName,tvSearchBy,tvLocation,tvDietary,tvShowing,tvVenueBy;
-    private TextView tvNoOfRestaurants,tvCuisine,tvMeal,tvAmbience, tvDeliveredtoYou;
-    private LinearLayout llCurrentloc;
-    private LinearLayout llVenues;
-    private String restaurantlistSize;
 
 
     @Override
