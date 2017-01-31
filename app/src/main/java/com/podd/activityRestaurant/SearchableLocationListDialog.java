@@ -21,7 +21,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.podd.R;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -30,7 +29,7 @@ import java.util.List;
  */
 @SuppressWarnings("ALL")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class SearchableListDialog extends DialogFragment implements
+public class SearchableLocationListDialog extends DialogFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private static final String ITEMS = "items";
@@ -39,7 +38,7 @@ public class SearchableListDialog extends DialogFragment implements
 
     private ListView _listViewItems;
 
-    private SearchableItem _searchableItem;
+    private SearchableItem searchableItem;
 
     private OnSearchTextChanged _onSearchTextChanged;
 
@@ -54,7 +53,7 @@ public class SearchableListDialog extends DialogFragment implements
     /**
      * Instantiates a new Searchable list dialog.
      */
-    public SearchableListDialog() {
+    public SearchableLocationListDialog() {
 
     }
 
@@ -64,9 +63,9 @@ public class SearchableListDialog extends DialogFragment implements
      * @param items the items
      * @return the searchable list dialog
      */
-    public static SearchableListDialog newInstance(List items) {
-        SearchableListDialog multiSelectExpandableFragment = new
-                SearchableListDialog();
+    public static SearchableLocationListDialog newInstance(List items) {
+        SearchableLocationListDialog multiSelectExpandableFragment = new
+                SearchableLocationListDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(ITEMS, (Serializable) items);
@@ -101,7 +100,7 @@ public class SearchableListDialog extends DialogFragment implements
         // Description: As the instance was re initializing to null on rotating the device,
         // getting the instance from the saved instance
         if (null != savedInstanceState) {
-            _searchableItem = (SearchableItem) savedInstanceState.getSerializable("item");
+            searchableItem = (SearchableItem) savedInstanceState.getSerializable("item");
         }
         // Change End
         ViewGroup nullPass = null;
@@ -128,7 +127,7 @@ public class SearchableListDialog extends DialogFragment implements
     // Description: Saving the instance of searchable item instance.
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("item", _searchableItem);
+        outState.putSerializable("item", searchableItem);
         super.onSaveInstanceState(outState);
     }
     // Change End
@@ -168,7 +167,7 @@ public class SearchableListDialog extends DialogFragment implements
      * @param searchableItem the searchable item
      */
     public void setOnSearchableItemClickListener(SearchableItem searchableItem) {
-        this._searchableItem = searchableItem;
+        this.searchableItem = searchableItem;
     }
 
     /**
@@ -201,7 +200,7 @@ public class SearchableListDialog extends DialogFragment implements
         _listViewItems = (ListView) rootView.findViewById(R.id.listItems);
 
         //create the adapter by passing your ArrayList data
-        listAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,
+        listAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_2,
                 items);
         //attach the adapter to the list
         _listViewItems.setAdapter(listAdapter);
@@ -211,7 +210,7 @@ public class SearchableListDialog extends DialogFragment implements
         _listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                _searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
+                searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
                 getDialog().dismiss();
             }
         });

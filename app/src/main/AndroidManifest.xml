@@ -29,10 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activityRestaurant.MainHomeScreenSecondActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
         <activity
             android:name=".activityTaxi.MainHomeScreenThreeActivity"
             android:screenOrientation="landscape"

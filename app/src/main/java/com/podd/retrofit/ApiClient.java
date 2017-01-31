@@ -54,7 +54,7 @@ public class ApiClient {
 
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = null;
+            OkHttpClient client;
 
             client = new OkHttpClient.Builder()
                     .addInterceptor(httpLoggingInterceptor)

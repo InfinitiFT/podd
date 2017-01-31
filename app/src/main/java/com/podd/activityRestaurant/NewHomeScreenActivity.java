@@ -211,7 +211,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             public void onTick(long millisUntilFinished) {
                 Calendar c = Calendar.getInstance();
                 Date now = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm a");
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm ");
                 String formattedTime = sdf.format(now);
              //   tvTime.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
                 tvTime.setText(formattedTime);

@@ -15,15 +15,15 @@
 
         <ImageView
             android:id="@+id/ivRestaurantImage"
-            android:layout_width="500dp"
-            android:layout_height="300dp"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
             android:scaleType="fitXY"
             android:contentDescription="@null"
             android:src="@mipmap/placeholder_icon" />
-       <!-- <View
+        <View
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
-            android:background="@android:color/white"/>-->
+            android:background="@android:color/white"/>
 
 
 

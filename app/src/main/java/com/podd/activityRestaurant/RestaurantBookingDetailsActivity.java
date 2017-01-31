@@ -197,7 +197,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
                  /*  getting tomorrow date  */
 
-                date = new SimpleDateFormat("dd-MM-yyyy").format(System.currentTimeMillis() + (24 * 3600000));
+                date = new SimpleDateFormat("dd-MMM-yyyy").format(System.currentTimeMillis() + (24 * 3600000));
               /*  date = DateFormat.getDateInstance().format(System.currentTimeMillis() + (24 * 3600000));*/
                 tvTomorrow.setText(date);
                 tvDateBooked.setText(date);
@@ -212,7 +212,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
                 /*  getting current date  */
 
-                date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                date = new SimpleDateFormat("dd-MMM-yyyy").format(new Date());
                 tvToday.setText(date);
                 tvDateBooked.setText(date);
                 getRestauranttimeIntervalApi(date);

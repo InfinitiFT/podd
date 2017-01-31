@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 
 @SuppressWarnings("ALL")
-public class BestRestaurantNearCity extends AppCompatActivity implements View.OnClickListener, SearchableListDialog.SearchableItem {
+public class BestRestaurantNearCity extends AppCompatActivity implements View.OnClickListener, SearchableListDialog.SearchableItem ,SearchableLocationListDialog.SearchableItem{
 
     private RecyclerView rvRestaurants;
     private Context context;
@@ -59,6 +59,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
     private ArrayAdapter adapterLocation;
     private SearchableListDialog _searchableListDialog;
+    private SearchableLocationListDialog searchableListDialog;
     private List<String> categories;
     private String selectedItem = "",cuisineId,locationId,mealId,dietaryId,ambienceId,restaurantlistSize;
     private GridLayoutManager gridLayoutManager;
@@ -495,6 +496,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "location";
+        jsonRequest.latitude = String.valueOf(currentLat);
+        jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.search_content = "";
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
@@ -514,19 +517,14 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             cuisineList.clear();
                             cuisineList.addAll(response.body().allList);
 
-                            _searchableListDialog = SearchableListDialog.newInstance
+                            searchableListDialog = SearchableLocationListDialog.newInstance
                                     (cuisineList);
                             selectedItem = "location";
-                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
-                            _searchableListDialog.show(getFragmentManager(), TAG);
-                            _searchableListDialog.setTitle(getString(R.string.select));
+                            searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            searchableListDialog.show(getFragmentManager(), TAG);
+                            searchableListDialog.setTitle(getString(R.string.select));
 
-                            /*GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
-                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
-                            rvRestaurants.setNestedScrollingEnabled(false);
-                            Log.d(TAG, "Number of data received: " + cuisineList.size());*/
+
                         } else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
@@ -546,7 +544,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
             }
         });
-
     }
 
 
@@ -696,6 +693,10 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         }
     }
 
+    /************************
+     * Search  Api
+     ***********************/
+
     private void callsearchedTextApi(int pageNumber) {
 
         CommonUtils.showProgressDialog(context);
@@ -726,9 +727,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_list);
                             tvNoOfRestaurants.setText(String.valueOf(response.body().pagination.total_record_count));
-                            /*GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantAdapter(context, restaurantList);*/
                             bestRestaurantAdapter.notifyDataSetChanged();
                             rvRestaurants.setNestedScrollingEnabled(false);
                             pageNo++;

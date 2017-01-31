@@ -111,19 +111,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         LinearLayout llLocation = (LinearLayout) findViewById(R.id.llLocation);
         LinearLayout llPriceRange = (LinearLayout) findViewById(R.id.llPriceRange);
         rvRestaurants= (RecyclerView) findViewById(R.id.rvRestaurants);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });*/
     }
 
     private void setListeners() {
