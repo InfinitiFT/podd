@@ -93,7 +93,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                         if (restaurantList.size() % pageSize == 0)
                             getRestaurantListApi(currentLat, currentLong, pageNo);
                     } else {
-                        pageNo=1;
+                       // pageNo=1;
                         if (restaurantList.size() % pageSize == 0)
                             callsearchedTextApi(pageNo);
                     }

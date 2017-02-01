@@ -61,7 +61,4 @@ public class JsonResponse implements Serializable{
     public List<PlaceApiAddress> results;
 
 
-
-
-
 }

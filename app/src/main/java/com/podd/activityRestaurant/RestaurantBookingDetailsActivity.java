@@ -308,7 +308,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                             spSelectTime.setAdapter(adapter);
 
                         } else {
-                            CommonUtils.showAlertOk("Restaurant is closed for the selected date. Please select another date",RestaurantBookingDetailsActivity.this);
+                            CommonUtils.showAlertOk("Not available. Please select a different date",RestaurantBookingDetailsActivity.this);
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();

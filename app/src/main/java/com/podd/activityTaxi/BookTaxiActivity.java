@@ -40,9 +40,9 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvToday;
     private EditText etLeavingAddress;
     private EditText etGoingAddress;
-    private final String[]airportArray={"Select Airport","Newyork","Others"};
+    private final String[]airportArray={"Select Airport","NewYork","Others"};
     private final String[]timeArray={"Select Time","10 AM","10:30 AM"};
-    private final String[]numberOfPeopleArray={"Select Nember of People","1","2","3"};
+    private final String[]numberOfPeopleArray={"Select Number of People","1","2","3"};
     private final String[]requirementsArray={"Select Additional Requirements","AC","Others"};
     private TextView tvBack;
     private String date;

@@ -30,7 +30,7 @@
             android:gravity="center"
             android:padding="@dimen/dp_6"
             android:textStyle="bold"
-            android:text="@string/michelin_star_restaurants"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_8"/>
 

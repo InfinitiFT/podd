@@ -1,8 +1,12 @@
 package com.podd.retrofit;
 
 
+import com.podd.model.CountryCodeModel;
+import com.podd.model.HomeItemsModel;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,6 +26,10 @@ public interface ApiInterface {
 
     @GET("https://maps.googleapis.com/maps/api/geocode/json?")
     Call<JsonResponse>getPlaceApi(@Query("address") String request);
+
+    @GET("https://restcountries.eu/rest/v1/all")
+    Call<List<CountryCodeModel>>getCountryCodeApi();
+
     @POST("restaurant_list.php")
     Call<JsonResponse>getRestaurantsList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 

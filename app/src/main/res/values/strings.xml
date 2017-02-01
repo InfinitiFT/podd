@@ -2,14 +2,6 @@
     <string name="app_name">Podd</string>
     <string name="loading">Loading…</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-
-    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
     <string name="podd">podd</string>
     <string name="discover_london">Discover expertly curated experiences in London</string>
     <string name="serviced_apartment">From the most desirable fine dining Restaurants in London to unique experiences, family outings and taxi bookings, you can now plan and book a range of experiences directly from comfort of your hotel or serviced apartment.</string>
@@ -19,12 +11,7 @@
     <string name="health"><![CDATA[Health, Fitness & Wellbeing]]></string>
     <string name="happening">Happening in London</string>
     <string name="food"><![CDATA[Food & Drinks]]></string>
-    <string name="discover_Restaurants">Discover our curated selection of London\'s best restaurants and bars</string>
-    <string name="michelin_star_restaurants">MECHELIN STAR RESTAURANTS</string>
-    <string name="casualEats">CASUAL EATS</string>
-    <string name="lateNightVenues">LATE NIGHT VENUES</string>
-    <string name="mealsDeliveredToYou">MEALS DELIVERED TO YOU</string>
-    <string name="viewAndBookrestaurants"><![CDATA[View and book Restaurants & Bars]]></string>
+
     <string name="going_somewhere">Going Somewhere? Book a secure taxi or limousine</string>
     <string name="book_a_taxi">Book a taxi</string>
     <string name="restaraunt_name">RESTAURANT NAME</string>
@@ -57,7 +44,6 @@
     <string name="additional_information">Additional Information</string>
     <string name="confirmation_text">We will send you booking confirmation by text or email.</string>
     <string name="name">Name</string>
-    <string name="code">+91</string>
     <string name="Mobile">Mobile</string>
     <string name="email">Email</string>
     <string name="complete_booking">COMPLETE BOOKING</string>
@@ -70,29 +56,27 @@
     <string name="thanks_for_using_podd">Thank you for using podd.</string>
     <string name="return_to_home">RETURN TO HOME</string>
     <string name="our_curated_selection_of_best_Restaurants">Our curated selection of best restaurants near you </string>
-    <string name="mayfair"> Mayfair</string>
-    <string name="dietary">DIETARY, CUISINE,</string>
+
+
     <string name="search_by">Search venues by</string>
-    <string name="city">(Chelsea, City)</string>
+
     <string name="Dietary">Dietary</string>
-    <string name="gluten">(Gluten free,Halal)</string>
+
     <string name="cuisine">Cuisine</string>
-    <string name="italian">(Italian, French)</string>
+
     <string name="meal">Meal</string>
-    <string name="lunch">(Lunch, Dinner)</string>
+
     <string name="ambience">Ambience</string>
-    <string name="bussiness">(Business,Family friendly)</string>
+
     <string name="delivered">Delivered to you</string>
-    <string name="work_in_progress">Work in progress.</string>
+
     <string name="Booking_summary">Booking Summary</string>
     <string name="date_booked">DATE BOOKED</string>
     <string name="time_booked">TIME BOOKED</string>
     <string name="number_of_persons">Number of people</string>
     <string name="date_Booked">Date Booked</string>
     <string name="time_Booked">Time Booked</string>
-    <string name="breakfast">Breakfast Menu</string>
-    <string name="lunch_menu">Lunch Menu</string>
-    <string name="dinner">Dinner Menu</string>
+
     <string name="restaurant_by_cuisine">Search our curated selection of best restaurants by cuisine</string>
     <string name="restaurant_by_dietary">Search our curated selection of best restaurants by dietary</string>
     <string name="restaurant_by_meal">Search our curated selection of best restaurants by meal</string>
@@ -117,7 +101,6 @@
     <string name="message_added_from_admin">PERSONALIZED MESSAGE ADDED FROM ADMIN</string>
     <string name="personal_concierge">YOUR PERSONAL CONCIERGE</string>
     <string name="image">image</string>
-    <string name="logo">logo</string>
     <string name="location_">Location</string>
     <string name="date_booked_">Date Booked</string>
     <string name="time_booked_">Time Booked</string>
@@ -126,9 +109,10 @@
     <string name="welcome_to">Welcome to</string>
     <string name="explore_and_book_curated_local_experiences">Explore and book curated local experiences</string>
     <string name="the_armitage">THE ARMITAGE</string>
-    <string name="no_menu_found_found_for_this_restaurant">No menu available for this restaurant.</string>
+
     <string name="showing">Showing </string>
     <string name="venues_by">venues by</string>
     <string name="enter_valid_phone_number">Please enter valid phone number</string>
     <string name="name_must_be_more_than">Name must be more than 2 characters.</string>
+    <string name="country_code">Code</string>
 </resources>
