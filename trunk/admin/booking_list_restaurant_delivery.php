@@ -37,80 +37,58 @@
         <div class="right_col" role="main">
           <div class="">
             <div class="clearfix"></div>
-             <div class="row top_tiles">
+            
+              <div class="row top_tiles">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
-                  <div class="count"><?php 
-                  if($_SESSION['restaurant_id']!=""){
-                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= 1 AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                  }
+                <div class="tile-stats">                 
+                  <div class="count pull-left">
                   
-                  else
-                    {
-                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= 1 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                      }
-                      ?></div>
-                  <h3>Pending Delivery</h3>
+                  <?php echo count_number_of_records_delivery(1);
+                   ?></div>
+                   <div class="pull-right blk-padding"><h4 class="blk-padding-s">Pending</h4></div>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-comments-o"></i></div>
-                  <div class="count"><?php 
-                  if($_SESSION['restaurant_id']!=""){
-                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= 2 AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                  }
+                  <div class="count pull-left"><?php echo count_number_of_records_delivery(2);
+                   ?></div>
+                   <div class="pull-right blk-padding"><h4 class="blk-padding-s">Accepted</h4></div>
                   
-                  else
-                    {
-                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                      }
-                      ?></div>
-                  <h3>Accepted Delivery</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
-                  <div class="count"><?php 
-                  if($_SESSION['restaurant_id']!=""){
-                     echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= 0 AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                  }
+                 
+                  <div class="count pull-left"><?php 
+                  echo count_number_of_records_delivery(0); ?></div>
+                   <div class="pull-right blk-padding"><h4 class="blk-padding-s">Declined</h4></div>
                   
-                  else
-                    {
-                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= 0 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                      }
-                      ?></div>
-                  <h3>Declined Delivery</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                  <div class="count"><?php if($_SESSION['restaurant_id'] != "")
-                                        {
-                                             echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_date` < CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                                          
-                                        }
-                                        else
-                                        {
-                                          
-                                           echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` < CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
-                                          
-                                        }
-                      ?></div>
-                  <h3>Confirmed Delivery</h3>
+                     <div class="count pull-left"><?php 
+                  if($_SESSION['restaurant_id'] != "")
+                    {
+                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_date` < CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
+                    }
+                  else
+                    {
+                      echo mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` < CURRENT_DATE() AND `delivery_status`= 2 OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"));
+                    }
+                      ?>
+                  
+                 </div>
+                  <div class="pull-right blk-padding"><h4 class="blk-padding-s">Confirmed</h4></div>
+                
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Venue Booking List</h2>
+                    <h2>Venue Delivery List</h2>
                    <ul class="nav navbar-right panel_toolbox">
           <li>
            <input type="hidden" id = "delete_type" value ="booked_restaurant_delivery">
@@ -147,13 +125,13 @@
                     <table id="booking_deliverytable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                           <th width="20%">Name</th>
-                           <th width="10%">Mobile</th>
-                           <th width="20%">User Email</th>
-                           <th width="10%">Date</th>
-                           <th width="10%">Time</th>
-                           <th width="10%">Delivery Status</th>
-                           <th width="20%">Action</th>
+                           <th width="12%">Name</th>
+                           <th width="12%">Mobile</th>
+                           <th width="12%">User Email</th>
+                           <th width="12%">Date</th>
+                           <th width="12%">Time</th>
+                           <th width="12%">Delivery Status</th>
+                           <th width="16%">Action</th>
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="booked_restaurant">
@@ -191,8 +169,8 @@
                               <?php }else{?>
                                <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
                               <?php } ?>
-                            <a href="edit_delivery.php?id=<?php echo $record['delivery_id'];?>&list=list" class="btn btn-round btn-info">Edit</a>
-                            <a href="delivery_order.php?delivery_id=<?php echo $record['delivery_id'];?>" class="btn btn-round btn-info">View</a>
+                            <a href="edit_delivery.php?id=<?php echo encrypt_var($record['delivery_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
+                            <a href="delivery_order.php?delivery_id=<?php echo encrypt_var($record['delivery_id']);?>" class="btn btn-round btn-info">View</a>
                     </td>
                          </tr>
                         <?php }}?> 

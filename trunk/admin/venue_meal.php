@@ -1,4 +1,4 @@
-<?php 
+<?php  
   include_once('header.php');
   $result = array();
   if($_SESSION['restaurant_id']!="")
@@ -54,11 +54,7 @@
                           <td><?php echo $record['subtitle'];?></td>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['item_price'];?> </td>
-                          <td><?php if($record['sta']=="1"){?>
-                             <button type="button" id="activatedeactivate-<?php echo $record['item_price_id'];?>" class="btn btn-round btn-warning">Deactivate</button>
-                              <?php }else{?>
-                              <button type="button" id="activatedeactivate-<?php echo $record['item_price_id'];?>" class="btn btn-round btn-success">Activate</button>
-                              <?php }?>
+                          <td>
                              <button type="button" id="deletepopup-<?php echo $record['item_price_id'];?>" class="btn btn-round btn-danger">Delete</button>
                               <a  href="edit_item_menu.php?id=<?php echo $record['item_price_id'];?>" class="btn btn-round btn-primary">Edit</a></td>
                          </tr>

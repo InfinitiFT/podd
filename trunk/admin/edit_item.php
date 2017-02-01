@@ -1,29 +1,23 @@
-<?php 
+<?php
 ob_start();
-include_once('header.php'); 
-$error="";
-$sucess="";
+include_once('header.php');
+$error  = "";
+$sucess = "";
 try {
-      $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `items` WHERE `id` ='".$_GET['id']."'"));
-      if(isset($_POST["submit"]))
-      { 
-             $name = mysqli_real_escape_string($conn,trim($_POST['name']));
-            if(mysqli_query($GLOBALS['conn'],"UPDATE `items` SET `name`= '".$name."',`created_by`='".$_SESSION['user_id']."' WHERE id = '".$_GET['id']."'")){
-              $_SESSION["successmsg"] = "Service added successfully.";
-              header('Location:item_list.php');
-             }
-            else
-            {
-               $_SESSION["errormsg"] = "insertion error.";
-            }
-          
-        
-      }
+    $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `items` WHERE `id` ='" . $_GET['id'] . "'"));
+    if (isset($_POST["submit"])) {
+        $name = mysqli_real_escape_string($conn, trim($_POST['name']));
+        if (mysqli_query($GLOBALS['conn'], "UPDATE `items` SET `name`= '" . $name . "',`created_by`='" . $_SESSION['user_id'] . "' WHERE id = '" . $_GET['id'] . "'")) {
+            $_SESSION["successmsg"] = "Service added successfully.";
+            header('Location:item_list.php');
+        } else {
+            $_SESSION["errormsg"] = "insertion error.";
+        }
     }
-
+}
 //catch exception
-catch(Exception $e) {
-  echo 'Message: ' .$e->getMessage();
+catch (Exception $e) {
+    echo 'Message: ' . $e->getMessage();
 }
 
 ?>

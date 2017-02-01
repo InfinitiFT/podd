@@ -20,30 +20,31 @@ try {
         $meal = mysqli_real_escape_string($conn,$_POST['meal_name']);
         $deliver_food = isset($_POST['deliver_food']) ? $_POST['deliver_food'] : '0';
         $deliver_food = mysqli_real_escape_string($conn,$deliver_food);
-        $meal_data = mysqli_query($GLOBALS['conn'],"SELECT `id` FROM `meals` WHERE `` = '".$meal."'");
+        $meal_data = mysqli_query($GLOBALS['conn'],"SELECT `id` FROM `meals` WHERE `meal_name` = '".trim($meal)."'");
         if(mysqli_num_rows($meal_data))
         {
-          $meal_id = $meal_data['id'];
+          $meal_dataa = mysqli_fetch_assoc($meal_data);
+          $meal_id = $meal_dataa['id'];
         }
         else{
             mysqli_query($GLOBALS['conn'],"INSERT INTO `meals`(`meal_name`) VALUES ('".$meal."')");
             $meal_id = mysqli_insert_id($GLOBALS['conn']);
         }
         $deliver_food = isset($_REQUEST['deliver_food']) ? $_REQUEST['deliver_food'] : '0';
+		// check subtitle name is exist or not 
+        $subtitle_data = mysqli_query($GLOBALS['conn'],"SELECT `subtitle_id` FROM `subtitle` WHERE `subtitle` = '".trim($_POST['subtitle'])."'");
+        if(mysqli_num_rows($subtitle_data))
+            {
+                $subtitle_dataa = mysqli_fetch_assoc($subtitle_data);
+                $subtitle = $subtitle_dataa['subtitle_id'];
+            }
+        else
+           {
+                mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle` (`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$_POST['subtitle'])."')");
+                $subtitle = mysqli_insert_id($GLOBALS['conn']);
+           }
         
-        // check subtitle name is exist or not 
-        $chk_subtitle = subtitle_name($_REQUEST['subtitle']);
         
-        if($chk_subtitle != '')
-        {
-				$subtitle = $chk_subtitle;
-		}
-		else
-		{			
-			$name = mysqli_real_escape_string($conn,trim($_POST['subtitle']));			
-            $query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle`(`subtitle`) VALUES ('".$name."')");
-            $subtitle = mysqli_insert_id($GLOBALS['conn']);
-		}
 
 		// check item name is exist or not 
         $chk_item = items_name($_REQUEST['item']);
@@ -93,7 +94,7 @@ catch(Exception $e) {
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Edit Item</h2>
+                            <h2>Edit Menu</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -156,7 +157,7 @@ catch(Exception $e) {
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
                                         <input type= "hidden" name="item1" value="<?php echo isset($item_details['id']) ? $item_details['id'] : '';?>" id="restaurant_id">
-                                        <input type="text" class="form-control has-feedback-left auto" name="item" value="<?php echo isset($item_details['name']) ? $item_details['name'] : '';?>" id="inputSuccess-1" placeholder="Select Item">
+                                        <input type="text" class="form-control  auto" name="item" value="<?php echo isset($item_details['name']) ? $item_details['name'] : '';?>" id="inputSuccess-1" placeholder="Select Item">
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
                                         <input type="text" name="price" class="form-control"  value="<?php echo isset($item_data['item_price']) ? $item_data['item_price'] : '';?>" placeholder="Price">

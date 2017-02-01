@@ -1,40 +1,39 @@
-<?php 
+<?php
 ob_start();
-include_once('header.php'); 
-error_reporting(0);
-
-$mes ='';
-if($_SESSION['msg'] == 'maxLimit'){
-	$mes = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
-	$_SESSION['msg'] ='';
+include_once('header.php');
+$mes = '';
+if ($_SESSION['msg'] == 'maxLimit') {
+    $mes             = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
+    $_SESSION['msg'] = '';
 }
-if ($_SESSION['msg'] == 'image'){
-	$mes = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
-	$_SESSION['msg'] ='';
+if ($_SESSION['msg'] == 'image') {
+    $mes             = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
+    $_SESSION['msg'] = '';
 }
-if ($_SESSION['msg'] == 'location'){
-	$mes = '<div class="alert alert-warning">Please enter valid location</div>';
-	$_SESSION['msg'] ='';
+if ($_SESSION['msg'] == 'location') {
+    $mes             = '<div class="alert alert-warning">Please enter valid location</div>';
+    $_SESSION['msg'] = '';
 }
+$booking_id = decrypt_var($_GET['id']);
 
-$bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `booked_records_restaurant` WHERE `booking_id` ='".$_GET['id']."'"));
-$restaurant_opening_closing = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `booking_id` ='".$_GET['id']."'"));
-if(isset($_REQUEST['submit'])){
-	$booking_time = mysqli_real_escape_string($conn,trim($_POST['booking_time']));
-	$people = mysqli_real_escape_string($conn,trim($_POST['people']));
-	$name = mysqli_real_escape_string($conn,trim($_POST['name']));
-	$email = mysqli_real_escape_string($conn,trim($_POST['email']));
-	$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
-	$booking_date = mysqli_real_escape_string($conn,trim($_POST['booking_date']));
-	$update = mysqli_query($GLOBALS['conn'],"UPDATE `booked_records_restaurant` SET booking_time ='".$booking_time."',number_of_people ='".$people."',name='".$name."',email='".$email."',booking_date='".$booking_date."',contact_no='".$phone."' WHERE `booking_id` ='".mysqli_real_escape_string($conn,$_GET['id'])."'");
-	if($update){
-		$_SESSION['updateBooking'] = 1;
-		if($_GET['list'] == 'list')
-			header('Location: booking_list_restaurant.php');
-		else
-			header('Location: booking_list_restaurant.php');
-	}	
-
+$bookingData                = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `booked_records_restaurant` WHERE `booking_id` ='" . $booking_id . "'"));
+$restaurant_opening_closing = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `restaurant_details` WHERE `booking_id` ='" . $booking_id . "'"));
+if (isset($_REQUEST['submit'])) {
+    $booking_time = mysqli_real_escape_string($conn, trim($_POST['booking_time']));
+    $people       = mysqli_real_escape_string($conn, trim($_POST['people']));
+    $name         = mysqli_real_escape_string($conn, trim($_POST['name']));
+    $email        = mysqli_real_escape_string($conn, trim($_POST['email']));
+    $phone        = mysqli_real_escape_string($conn, trim($_POST['phone']));
+    $booking_date = mysqli_real_escape_string($conn, trim($_POST['booking_date']));
+    $update       = mysqli_query($GLOBALS['conn'], "UPDATE `booked_records_restaurant` SET booking_time ='" . $booking_time . "',number_of_people ='" . $people . "',name='" . $name . "',email='" . $email . "',booking_date='" . $booking_date . "',contact_no='" . $phone . "' WHERE `booking_id` ='" . mysqli_real_escape_string($conn, $booking_id) . "'");
+    if ($update) {
+        $_SESSION['updateBooking'] = 1;
+        if ($_GET['list'] == 'list')
+            header('Location: booking_list_restaurant.php');
+        else
+            header('Location: booking_list_restaurant.php');
+    }
+    
 }
 ?>
 
@@ -90,100 +89,152 @@ if(isset($_REQUEST['submit'])){
 							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time">
 							<?php 
                $date_interval = "";
-    $day = date('D', strtotime($bookingData['booking_date']));
+               $day = date('D', strtotime($bookingData['booking_date']));
    
-    $restaurant_data = mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".mysqli_real_escape_string($conn,trim($bookingData['restaurant_id']))."' ");
-        
-        if(mysqli_num_rows($restaurant_data)>0)
-        {
-            
-             $find_interval = mysqli_fetch_assoc($restaurant_data);
-            
-            if($day == 'Sun'){
-             
-               if($find_interval['is_sun'] == '1')
-               {
-                  $date_interval = findtimeIntervalweb($find_interval['sun_open_time'],$find_interval['sun_close_time']);
-                  
+               $restaurant_data = mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".mysqli_real_escape_string($conn,trim($bookingData['restaurant_id']))."' ");
 
-               }
-               else
-               {
-                  
-                 
-               }
+        
+               if(mysqli_num_rows($restaurant_data)>0)
+                {
+                 $find_interval = mysqli_fetch_assoc($restaurant_data);
+                 if($day == 'Sun'){
+             
+                 if($find_interval['is_sun'] != 0)
+                 {
+                   $time_first = strtotime($find_interval['sun_open_time']);
+                   $time_second = strtotime($find_interval['sun_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                  }
+                  else
+                 {
+                    $date_interval="";
+                 }
                
 
-            }
-            else if($day == 'Mon'){
-               if($find_interval['is_mon'] == '1')
+               }
+              else if($day == 'Mon'){
+               if($find_interval['is_mon'] != 0)
                {
-                  $date_interval = findtimeIntervalweb($find_interval['mon_open_time'],$find_interval['mon_close_time']);
+                  $time_first = strtotime($find_interval['mon_open_time']);
+                   $time_second = strtotime($find_interval['mon_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
 
                }
                else
                {
-                  
+                  $date_interval="";
 
                }
 
             }
             else if($day == 'Tue'){
-              if($find_interval['is_tue'] == '1')
+              if($find_interval['is_tue'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['tue_open_time'],$find_interval['tue_close_time']);
+                   $time_first = strtotime($find_interval['tue_open_time']);
+                   $time_second = strtotime($find_interval['tue_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
                  
 
                }
                else
                {
-                  
+                  $date_interval="";
 
                }
             }
             else if($day == 'Wed'){
-              if($find_interval['is_wed'] == '1')
+              if($find_interval['is_wed'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['wed_open_time'],$find_interval['wed_close_time']);
+                 $time_first = strtotime($find_interval['wed_open_time']);
+                   $time_second = strtotime($find_interval['wed_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
                  
                }
                else
                {
-                 
+                    $date_interval="";
                }
             }
             else if($day == 'Thu'){
-               if($find_interval['is_thu'] == '1')
+               if($find_interval['is_thu'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['thu_open_time'],$find_interval['thu_close_time']);
+                 $time_first = strtotime($find_interval['thu_open_time']);
+                   $time_second = strtotime($find_interval['thu_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
                 
 
                }
                else
                {
-                  
+                   $date_interval="";
 
                }
             }
             else if($day == 'Fri'){
 
-               if($find_interval['is_fri'] == '1')
+               if($find_interval['is_fri'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['fri_open_time'],$find_interval['fri_close_time']);
+                 $time_first = strtotime($find_interval['fri_open_time']);
+                   $time_second = strtotime($find_interval['fri_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
                 
 
                }
                else
                {
-                 
+                   $date_interval="";
 
                }
             }
             else if($day == 'Sat'){
               
-               if($find_interval['is_sat'] == '1')
+               if($find_interval['is_sat'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['sat_open_time'],$find_interval['sat_close_time']);
+                 $time_first = strtotime($find_interval['sat_open_time']);
+                   $time_second = strtotime($find_interval['sat_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
                 
 
                }
@@ -197,14 +248,13 @@ if(isset($_REQUEST['submit'])){
                    
             }
         }
-                
                 if(!empty($date_interval))
                 {
                  
                 foreach($date_interval as $record){
                  
                 ?>
-                <option value= "<?php echo $record;?>"><?php echo $record;?></option>>
+                <option value= "<?php echo $record;?>" <?php if($record == $bookingData['booking_time']){echo "selected";} ?>><?php echo $record;?></option>>
                 <?php }} else{ } ?>
 							</select>
                           
@@ -241,7 +291,8 @@ if(isset($_REQUEST['submit'])){
             format: 'YYYY-MM-DD',
             singleDatePicker: true,
             calender_style: "picker_1",
-        }, function (start, end, label) {
+        },
+        function (start, end, label) {
             $.ajax
                 ({
                   type: "POST",

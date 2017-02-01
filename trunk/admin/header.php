@@ -32,6 +32,7 @@
 
     <!-- Custom Theme Style -->
     <link href="../assets/build/css/custom.min.css" rel="stylesheet">
+	<link href="../assets/build/css/custom.css" rel="stylesheet">
     <link href="../assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="../assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="../assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
@@ -43,7 +44,8 @@
     <link rel="stylesheet" href="../assets/lobibox-master/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="../assets/lobibox-master/demo/demo.css"/>
     <link rel="stylesheet" href="../assets/lobibox-master/dist/css/lobibox.min.css"/>
-    <link href="../assets/vendors/nprogress/nprogress.css" rel="stylesheet">    
+    <link href="../assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">    
     
     <!-- Custom Theme Style -->
   </head>
@@ -91,7 +93,7 @@
               
              <?php } elseif($_SESSION['role']=="2"){?>
                  <ul class="nav side-menu">
-					       <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue </a></li>
+					       <li><a href = "restaurant_details.php"><i class="fa fa-home"></i>Venue Management</a></li>
                   <li><a href = "booking_list_restaurant.php"><i class="fa fa-user"></i>Booking Management</a></li>
                    <li><a href = "venue_meal.php"><i class="fa fa-home"></i>Menu Management</a></li>
                    <li><a href = "booking_glance.php"><i class="fa fa-home"></i>Table Management</a></li>

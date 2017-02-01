@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ankitsing
+ * Created by Rahul Kumar Choudhary.
  * Date: 30/12/16
  * Time: 5:16 PM
  */
@@ -11,39 +10,50 @@ $restaurant_id = isset($_SESSION['restaurant_id']) ? $_SESSION['restaurant_id'] 
 $error="";
 $sucess="";
 try {
-	 //print_r($_POST);exit;
+	 
      if(isset($_POST["submit"]))
       {
+		
         $meal = mysqli_real_escape_string($conn,$_POST['meal_name']);
         $deliver_food = isset($_POST['deliver_food']) ? $_POST['deliver_food'] : '0';
         $deliver_food = mysqli_real_escape_string($conn,$deliver_food);
-        $meal_data = mysqli_query($GLOBALS['conn'],"SELECT `id` FROM `meals` WHERE `` = '".$meal."'");
+        $meal_data = mysqli_query($GLOBALS['conn'],"SELECT `id` FROM `meals` WHERE `meal_name` = '".trim($meal)."'");
+        
         if(mysqli_num_rows($meal_data))
         {
-          $meal_id = $meal_data['id'];
+          $meal_dataa = mysqli_fetch_assoc($meal_data);
+          $meal_id = $meal_dataa['id'];
         }
         else{
             mysqli_query($GLOBALS['conn'],"INSERT INTO `meals`(`meal_name`) VALUES ('".$meal."')");
             $meal_id = mysqli_insert_id($GLOBALS['conn']);
         }
-        if(mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_meal_details`(`restaurant_id`,`meal`,`deliver_food`) VALUES ('".$restaurant_id."','".$meal_id."','".$deliver_food."')")){
-        	$restaurant_menu_id = mysqli_insert_id($GLOBALS['conn']);
+        	$restaurant_menu_id = restaurant_meal_insertion($restaurant_id,$meal_id,$deliver_food);
             $i = 0;
             foreach ($_POST['item'] as $value){
+                
             	if(!empty($_POST['subtitle'][$i]))
             	{
-                  $subtitle_id = subtitle_name($subtitle_name);
-                  if(empty($subtitle_id))
-                  {
-                    mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle`(`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$_POST['subtitle'][$i])."')");
-                    $subtitle_id = mysqli_insert_id($GLOBALS['conn']);
-                  }
-            	}
-            	else
-            	{
-            		$subtitle_id = $subtitle_id;
+                  $subtitle_data = mysqli_query($GLOBALS['conn'],"SELECT `subtitle_id` FROM `subtitle` WHERE `subtitle` = '".trim($_POST['subtitle'][$i])."'");
+                 
+                  if(mysqli_num_rows($subtitle_data))
+                    {
+                       $subtitle_dataa = mysqli_fetch_assoc($subtitle_data);
+                       $subtitle_id = $subtitle_dataa['subtitle_id'];
+                    }
+            	  else
+            	    {
+                       mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle`(`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$_POST['subtitle'][$i])."')");
+                       $subtitle_id = mysqli_insert_id($GLOBALS['conn']);
+                     }
+                }
+                 
+                else
+                {
+                   $subtitleid = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT `subtitle` FROM `restaurant_item_price` ORDER BY id DESC LIMIT 1"));
+                   $subtitle_id = $subtitleid['subtitle'];
 
-            	}
+                }
                 $item_id = items_name($value);
                 $price = mysqli_real_escape_string($conn,$_POST['price'][$i]);
                 $user_id = mysqli_real_escape_string($conn,$_SESSION['user_id']);
@@ -65,13 +75,9 @@ try {
 
             $_SESSION["successmsg"] = "Service added successfully.";
             header('Location:venue_meal.php?id='.$restaurant_id);
-        }
-        else
-        {
-            $_SESSION["errormsg"] = "insertion error.";
-        }
+        
 
-
+       
     }
 }
 
@@ -129,7 +135,7 @@ catch(Exception $e) {
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
-                                    <input type="text" class="form-control" name="meal_name" id="meal_name" placeholder="Meal Name">
+                                    <input type="text" class="form-control" name="meal_name" id="meal_name" placeholder="Menu">
                                       
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
@@ -143,7 +149,7 @@ catch(Exception $e) {
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group ">
-                                      <input type="text" class="form-control" name="subtitle[]" id="inputSuccess-1" placeholder="Subtitles">
+                                      <input type="text" class="form-control" name="subtitle[]" id="inputSuccess-1" placeholder="Sub Menu">
                                     </div>
 
                                  </div>
@@ -164,7 +170,7 @@ catch(Exception $e) {
                                 <button type="button" name="add_more"  id="item-1" class="btn btn-success" onclick="addItem(this)">Add Item</button>
                              </div>
                               <div id="dataAddsubtitle"></div>
-                                <button  name="add_more"  class="btn btn-success add_field_button_subtitle">Add Subtitle</button>
+                                <button  name="add_more"  class="btn btn-success add_field_button_subtitle">Add Sub Menu</button>
                    
                                 <input type= "hidden" name="restaurant_id" value="<?php echo $restaurant_id; ?>" id="restaurant_id">
                                 <input type="hidden" id="selectedvalue" value=""> 

@@ -1,16 +1,14 @@
 <?php 
   include_once('header.php');
   $result = array();
-  if($restaurant_id !="")
+  if(@$_SESSION['restaurant_id'] !="")
   {
   $restaurant_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rd.*,GROUP_CONCAT(DISTINCT(rc.cuisine_name)) as cuisine_name,GROUP_CONCAT(DISTINCT(rdd.dietary_name)) as dietary_name,GROUP_CONCAT(DISTINCT(ra.ambience_name)) as ambience_name,GROUP_CONCAT(DISTINCT(rp.price_range)) as price_range1 FROM restaurant_details rd LEFT JOIN restaurant_cuisine as rc ON find_in_set(rc.id, rd.cuisine) LEFT JOIN restaurant_dietary as rdd ON find_in_set(rdd.id, rd.dietary) LEFT JOIN restaurant_ambience as ra ON find_in_set(ra.id, rd.ambience) LEFT JOIN restaurant_price_range as rp ON find_in_set(rp.id, rd.price_range) where rd.restaurant_id= '".mysqli_real_escape_string($GLOBALS['conn'],$_SESSION['restaurant_id'])."'"));
  }
  else
  {
-   $restaurant_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rd.*,GROUP_CONCAT(DISTINCT(rc.cuisine_name)) as cuisine_name,GROUP_CONCAT(DISTINCT(rdd.dietary_name)) as dietary_name,GROUP_CONCAT(DISTINCT(ra.ambience_name)) as ambience_name,GROUP_CONCAT(DISTINCT(rp.price_range)) as price_range1 FROM restaurant_details rd LEFT JOIN restaurant_cuisine as rc ON find_in_set(rc.id, rd.cuisine) LEFT JOIN restaurant_dietary as rdd ON find_in_set(rdd.id, rd.dietary) LEFT JOIN restaurant_ambience as ra ON find_in_set(ra.id, rd.ambience) LEFT JOIN restaurant_price_range as rp ON find_in_set(rp.id, rd.price_range) where rd.restaurant_id= '".mysqli_real_escape_string($GLOBALS['conn'],$_GET['restaurant_id'])."'"));
+   $restaurant_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rd.*,GROUP_CONCAT(DISTINCT(rc.cuisine_name)) as cuisine_name,GROUP_CONCAT(DISTINCT(rdd.dietary_name)) as dietary_name,GROUP_CONCAT(DISTINCT(ra.ambience_name)) as ambience_name,GROUP_CONCAT(DISTINCT(rp.price_range)) as price_range1 FROM restaurant_details rd LEFT JOIN restaurant_cuisine as rc ON find_in_set(rc.id, rd.cuisine) LEFT JOIN restaurant_dietary as rdd ON find_in_set(rdd.id, rd.dietary) LEFT JOIN restaurant_ambience as ra ON find_in_set(ra.id, rd.ambience) LEFT JOIN restaurant_price_range as rp ON find_in_set(rp.id, rd.price_range) where rd.restaurant_id= '".mysqli_real_escape_string($GLOBALS['conn'],decrypt_var($_GET['restaurant_id']))."'"));
  }
-  //Basic Validation  
-  //print_r($restaurant_data);exit;
   
  ?> 
      <!-- page content -->
@@ -21,7 +19,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Venue Details</h2>
+                    <h2>Venue Management</h2>
                      <ul class="nav navbar-right panel_toolbox">
                       
                       </li>
@@ -246,7 +244,7 @@
                           <?php if($restaurant_id !=""){ ?>
                           <a href="edit_resturant.php" class="btn btn-success">Edit</a>
                           <?php } else {?>
-                           <a href="edit_resturant.php?id=<?php echo $restaurant_data['user_id']?>" class="btn btn-success">Edit</a>
+                           <a href="edit_resturant.php?id=<?php echo encrypt_var($restaurant_data['user_id'])?>" class="btn btn-success">Edit</a>
                           <?php }?>
                         </div>
                       </div>

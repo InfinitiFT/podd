@@ -1,56 +1,43 @@
-<?php 
+<?php
 ob_start();
-include_once('header.php'); 
-$error="";
-$sucess="";
+include_once('header.php');
+$error  = "";
+$sucess = "";
 try {
- 
-      if(isset($_POST["submit"]))
-      { 
-       print_r($_FILES);
-		if(!empty($_FILES["image"]['tmp_name']))
-		{
-			if((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg")|| ($_FILES["image"]["type"] == "image/pjpeg")|| ($_FILES["image"]["type"] == "image/png")|| ($_FILES["image"]["type"] == "image/jpg"))){ 
-          $profile_image = $_FILES["image"]['name'];
-          $profile_image1= time().$_FILES['image']['name'];
-          $target_path = $_SERVER['DOCUMENT_ROOT']."/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/service_image/";
-          $target_path = $target_path . $profile_image1; 
-          if(move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) 
-          {        
-            if(mysqli_query($GLOBALS['conn'],"update `service_management` set `service_image` = '".'uploads/service_image/'.$profile_image1."' where service_id = '".$_GET['id']."' "))
-            {
-              $_SESSION["successmsg"] = "Service edited successfully.";
-              header('Location:service_management_list.php');
-             }
-            else
-            {
-               $_SESSION["errormsg"] = "insertion error.";
+    if (isset($_POST["submit"])) {
+        print_r($_FILES);
+        if (!empty($_FILES["image"]['tmp_name'])) {
+            if ((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg") || ($_FILES["image"]["type"] == "image/pjpeg") || ($_FILES["image"]["type"] == "image/png") || ($_FILES["image"]["type"] == "image/jpg"))) {
+                $profile_image  = $_FILES["image"]['name'];
+                $profile_image1 = time() . $_FILES['image']['name'];
+                $target_path    = $_SERVER['DOCUMENT_ROOT'] . "/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/service_image/";
+                $target_path    = $target_path . $profile_image1;
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
+                    if (mysqli_query($GLOBALS['conn'], "update `service_management` set `service_image` = '" . 'uploads/service_image/' . $profile_image1 . "' where service_id = '" . decrypt_var($_GET['id']) . "' ")) {
+                        $_SESSION["successmsg"] = "Service edited successfully.";
+                        header('Location:service_management_list.php');
+                    } else {
+                        $_SESSION["errormsg"] = "insertion error.";
+                    }
+                } else {
+                    $_SESSION["errormsg"] = "File uploading error.";
+                }
+                
+            } else {
+                $_SESSION["errormsg"] = "Only Image are allowed.";
             }
-          }
-          else
-          {
-            $_SESSION["errormsg"] = "File uploading error.";
-          }
-          
-          }
-          else
-          {
-          $_SESSION["errormsg"] = "Only Image are allowed.";
-          }
-			
-		}
-		else
-		{
-			 header('Location:service_management_list.php');
-		}
-		
+            
+        } else {
+            header('Location:service_management_list.php');
+        }
         
-      }
+        
     }
+}
 
 //catch exception
-catch(Exception $e) {
-  echo 'Message: ' .$e->getMessage();
+catch (Exception $e) {
+    echo 'Message: ' . $e->getMessage();
 }
 
 ?>
@@ -99,8 +86,8 @@ catch(Exception $e) {
                   <?php }else{}?>
                       
                       <?php                      
-                       $data = mysqli_query($GLOBALS['conn'],"select * from `service_management` where service_id = '".$_GET['id']."'");
-						$row = mysqli_fetch_assoc($data);						
+                       $data = mysqli_query($GLOBALS['conn'],"select * from `service_management` where service_id = '".decrypt_var($_GET['id'])."'");
+					            	$row = mysqli_fetch_assoc($data);						
                       ?>
                       <div class="item form-group">
                        

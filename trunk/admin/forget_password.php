@@ -119,7 +119,8 @@ if(isset($_POST["submit"]))
     <link href="../assets/vendors/animate.css/animate.min.css" rel="stylesheet">
      <link href="../assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="../assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="../assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <link href="../assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">\
+    <link href="../assets/css/style.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../assets/build/css/custom.min.css" rel="stylesheet">
@@ -134,7 +135,7 @@ if(isset($_POST["submit"]))
         <div class="animate form login_form">
           <section class="login_content">
          
-            <form action="" method="post" id="forgot-form">
+            <form action="" method="post" id="forgot-form"  class="form-horizontal" role="form">
               <h1>Forgot Password</h1>
               <?php
                 if(isset($_SESSION["successmsg"])) {
@@ -163,12 +164,12 @@ if(isset($_POST["submit"]))
                 <?php if($error){?>
                      <font color="red"><?php echo $error;?></font>
                 <?php  } ?>
-              <div>
+              <div class="input-group forgotpass-s">
                 <input type="text" class="form-control" type="email" placeholder="Email" id="email" name="email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>"/>
               </div>
               <div>
                 <button class="btn btn-default submit" type="submit" value="submit" name="submit">Submit</button>
-               <a href="index.php" class="to_register"><h2>Login</h2></a>   
+               <a href="index.php" class="btn btn-default nomar-btn">Login</a>   
               </div>
 
               <div class="clearfix"></div>

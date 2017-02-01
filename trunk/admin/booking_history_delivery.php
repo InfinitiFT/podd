@@ -86,7 +86,7 @@
                           echo "Declined";
                         } ?></td>
                   <td>
-                     <a href="edit_delivery.php?id=<?php echo $record['delivery_id'];?>" class="btn btn-round btn-primary">Edit</a>
+                     <a href="edit_delivery.php?id=<?php echo encrypt_var($record['delivery_id']);?>" class="btn btn-round btn-primary">Edit</a>
                   
                     </td>
                   </td>

@@ -63,8 +63,16 @@
         $('#datatable-responsive').DataTable({
             "ordering": false,
              stateSave: true
-        });
-         
+             
+        })
+        .on( 'stateSaveParams.dt', function (e, settings, data) {
+        data.search.search = "";
+    } );
+     /* $('#example')
+    .dataTable()
+    .on( 'stateSaveParams.dt', function (e, settings, data) {
+        data.search.search = "";
+    } );  */ 
     </script>
 
     

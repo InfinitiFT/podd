@@ -1,4 +1,9 @@
 <?php 
+/**
+ * Created by Rahul Kumar Choudhary.
+ * Date: 30/12/16
+ * Time: 5:16 PM
+ */
 ob_start();
 include_once('header.php'); 
 $error="";
@@ -23,7 +28,7 @@ try {
              }
             else
              {
-               $_SESSION["errormsg"] = "insertion error.";
+               $_SESSION["errormsg"] = "Insertion error.";
              }
           }
           else

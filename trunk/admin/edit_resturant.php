@@ -11,7 +11,7 @@
 		$_SESSION['msg'] ='';
 	}
 	if($_GET['id']){
-		$_SESSION['user_id'] = $_GET['id'];
+		$_SESSION['user_id'] = decrypt_var($_GET['id']);
 		
 	}
 	// function to get restaurant details through user_id
@@ -110,7 +110,55 @@
 				
 			}
 
-			$_SESSION['msg']= 'successEdit';
+		   $_SESSION['msg']= 'successEdit';
+		   if($detail['email'] != $email)
+		   {
+		   	  $to = $email;
+			  $subject = "Welcome to podd";
+				   $message = '
+					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+					  <html xmlns="http://www.w3.org/1999/xhtml">
+					 <head>
+					 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					
+				     </head>
+				      <body>
+				        <tbody>
+					      <tr>
+					        <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
+					          <div style="line-height:1.3em">
+					            <div>Hello <b>'.$_POST['name'].'</b>,</div>
+					              <div class="m_-7807612712962067148paragraph_break"><br></div>
+					              <div>Welcome to podd. Your account has been created successfully.</div>
+					              <div class="m_-7807612712962067148paragraph_break"><br></div>
+					              <div>Please click on this link to login using the credentials below:<b> <a href = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></b>
+					              </div>
+					              <div class="m_-7807612712962067148paragraph_break"><br></div>
+					              <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
+					              <div class="m_-7807612712962067148paragraph_break"><br></div>
+					              <div><strong>Password:</strong>               <b><strong>'.$passwordRandom.'</strong></b></div>
+					              <div class="m_-7807612712962067148paragraph_break"><br></div>
+					              <div>When you login for the first time, you may be required to change your password</div>
+					              <div class="m_-7807612712962067148paragraph_break"><br></div>
+					              <div>Best regards,</div>
+					              <div>The podd Team</div>
+					         </div>
+					      </td>
+					    </tr>
+					  </tbody>				
+				    </body>
+				 </html>';
+		         // Always set content-type when sending HTML email
+		         $headers = "MIME-Version: 1.0" . "\r\n";
+		         $headers .= 'Cc: hello@poddapp.com' . "\r\n";
+		         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		         // More headers
+		         $headers .= 'From: podd' . "\r\n"; 
+		         mail($to,$subject,$message,$headers);
+
+		   }
+		   
+         
 			if($_GET['id'])
 				header('Location: restaurant_list.php');
 			else
@@ -156,11 +204,25 @@
 							<ul>
 							<?php $i = 1;
 							if($allImages[0]){
-								foreach($allImages as $allImg){
+								if($_SESSION['restaurant_id'] != "")
+								{
+									foreach($allImages as $allImg){
+									echo '
+									<img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
+									$i =$i +1;
+								    }
+
+								}
+								else
+								{
+									foreach($allImages as $allImg){
 									echo '<li id="removeImg-'.$i.'"><i class="glyphicon glyphicon-remove"  id="removeImgs-'.$i.'" onclick ="removeImg(this)" ></i>
 									<img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
 									$i =$i +1;
+								   }
+
 								}
+								
 							}
 							$p = $i -1;
 							
@@ -170,7 +232,7 @@
 						</div>
 						<div id="allRemoveImg"></div>
 					 <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Images <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file" onchange="fileCountEdit(this)" multiple>
@@ -203,7 +265,7 @@
                         </div>
                       </div>
                        <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Dietary</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Dietary</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" multiple="multiple" name="dietary[]">
 							  <?php 
@@ -220,7 +282,7 @@
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Cuisine</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Cuisine</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" multiple="multiple" name="cuisine[]">
                             <?php 
@@ -242,7 +304,7 @@
                       
                       
                         <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Ambience</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Ambience</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" multiple="multiple" name="ambience[]">
 							<?php 
@@ -299,7 +361,7 @@
                           </div>
                         
                        <div class="item form-group" id="location">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Enter Full Address</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="website" placeholder="Enter Full Address" name="locationTest" value="<?php if($_POST['locationTest']){ echo $_POST['locationTest'];}else{ echo $detail['restaurant_full_address'];} ?>" class="form-control col-md-7 col-xs-12">
                         </div>
@@ -309,12 +371,20 @@
                         Venue Description 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
+                        
                           <textarea id="about"  class="form-control" name="about" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
-                            data-parsley-validation-threshold="10"><?php if($_POST['about']){ echo $_POST['about'];}else{ echo $detail['about_text']; }?></textarea>
+                            data-parsley-validation-threshold="10" <?php if(@$_SESSION['restaurant_id']!="")
+                               { echo "disabled"; }?>><?php if($_POST['about']){ echo $_POST['about'];}else{ echo $detail['about_text']; }?></textarea>
                         </div>
                       </div>
+                       <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">
+                        Time available for booking on podd 
+                        </label>
+                       
+                      </div>
                       <div class="item form-group">
-						    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Restaurant Time</label>
+						    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation"></label>
 						   <div class="col-md-6">
 							  <div class="col-sm-2">
 								  <?php 
@@ -334,7 +404,7 @@
 								<input type="checkbox" value="7" class="check_day form-control" id="check_day7" name="is_Sun" <?php echo $checked;?> >
 							</div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-7" name="opentimeSun" id="opentime-Sun" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -359,7 +429,7 @@
 							</select>
 							</div>
 							 <div class="col-sm-4">
-							 <label for="password" class="control-label"> Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-7" name="closetimeSun" id="closetime-Sun" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -405,7 +475,7 @@
 								  <input type="checkbox" class="check_day form-control" id="check_day1" value="1"  <?php echo $checked;?> name="is_Mon">
 							</div>
 							 <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control  day-1" name="opentimeMon" id="opentime-Mon" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
 							<?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -430,7 +500,7 @@
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">CLosing Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-1" name="closetimeMon" id="closetime-Mon" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -477,7 +547,7 @@
 								<input type="checkbox" class="check_day form-control" id="check_day2" value="2" name="is_Tue" <?php echo $checked;?>>
 							</div>>  
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control col-sm-1 day-2" name="opentimeTue" id="opentime-Tue" onchange="timeValidateClose(this)" <?php echo $disable;?>>
 							<?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -502,7 +572,7 @@
 							</select>
 							</div>
 							<div class="col-sm-4">
-							 <label for="password" class="control-label">CLosing Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-2" name="closetimeTue" id="closetime-Tue" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -549,7 +619,7 @@
 								<input type="checkbox" class="check_day form-control" id="check_day3" value="3" <?php echo $checked;?> name="is_Wed">
 							 </div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-3" name="opentimeWed" id="opentime-Wed" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
 							<?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -574,7 +644,7 @@
 							</select>
 							</div>
 							<div class="col-sm-4">
-							 <label for="password" class="control-label">CLosing Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-3" name="closetimeWed" id="closetime-Wed" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -620,7 +690,7 @@
 							</div>  
 							  <div class="col-sm-4">
 								  
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-4" name="opentimeThu" id="opentime-Thu" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
 							<?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -645,7 +715,7 @@
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">CLosing Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-4" name="closetimeThu" id="closetime-Thu" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -691,7 +761,7 @@
 								<input type="checkbox" class="check_day form-control" id="check_day5" value="5"  <?php echo $checked;?> name="is_Fri">
 						    </div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-5" name="opentimeFri" id="opentime-Fri" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
 							<?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -716,7 +786,7 @@
 							</select>
 							</div>
 							 <div class="col-sm-4">
-							 <label for="password" class="control-label">CLosing Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-5" name="closetimeFri" id="closetime-Fri" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
@@ -761,7 +831,7 @@
 								<input type="checkbox" class="check_day form-control" id="check_day6" value="6"  name="is_Sat"  <?php echo $checked;?> name="is_Sat">
 							</div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-6" name="opentimeSat" id="opentime-Sat" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
 							<?php $i =0;
 							//echo $detail['sat_open_time'];exit;
@@ -787,7 +857,7 @@
 							</select>
 							</div>
 							   <div class="col-sm-4">
-							 <label for="password" class="control-label">CLosing Time</label>
+							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-6" name="closetimeSat" id="closetime-Sat" onchange="timeValidate(this)" <?php echo $disable; ?>>
 							  <?php $i =0;
 							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'

@@ -112,6 +112,7 @@ if(isset($_POST["submit"]))
      <link href="../assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="../assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="../assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+	 <link href="../assets/css/style.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="../assets/build/css/custom.min.css" rel="stylesheet">
@@ -126,7 +127,7 @@ if(isset($_POST["submit"]))
         <div class="animate form login_form">
           <section class="login_content">
          
-            <form action="" method="post" id="login_form">
+            <form action="" method="post" id="login_form"  class="form-horizontal" role="form">
               <h1>Login Form</h1>
               <?php
                 if(isset($_SESSION["successmsg"])) {
@@ -155,10 +156,10 @@ if(isset($_POST["submit"]))
                 <?php if($error){?>
             <font color="red"><?php echo $error;?></font>
             <?php  } ?>
-              <div>
+              <div class="input-group forgotpass-s">
                 <input type="text" class="form-control" placeholder="Email"  id="email" name="email"  value="<?php if(isset($_COOKIE['email'])) echo $_COOKIE['email']; else '';?>"/>
               </div>
-              <div>
+              <div class="input-group forgotpass-s">
                 <input type="password" class="form-control" placeholder="Password" id="password" name="password"  value="<?php if(isset($_COOKIE['password'])) echo $_COOKIE['password']; else echo '';?>"/>
               </div>
               <div>
@@ -170,11 +171,11 @@ if(isset($_POST["submit"]))
 
               <div class="separator">
 				 <div class="row">
-					<div class="col-xs-6" style="text-align: left;">
+					<div class="col-xs-6" style="text-align: left;color:#111;">
 						<a href="forget_password.php" class="to_register">Forgot Password ?</a>
 					  </div>
 					<div class="col-xs-6" style="text-align: right;">
-						<input style="margin:0;vertical-align: middle;" type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?>class="flat"> Remember Me
+						<input style="margin:0;vertical-align: middle; " type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?> class="flat"> Remember Me
 					</div>
 			 	</div>
                 <div class="clearfix"></div>
@@ -182,7 +183,7 @@ if(isset($_POST["submit"]))
 
                 <div>
                    <h1><i class="fa fa-paw"></i>PODD</h1>
-                  <p>©2016 All Rights Reserved.</p>
+                  <p>©2017 All Rights Reserved.</p>
                 </div>
               </div>
              

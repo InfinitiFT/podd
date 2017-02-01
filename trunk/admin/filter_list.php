@@ -86,11 +86,11 @@ if((isset($_POST['fromdate']) || isset($_POST['todate'])) && $_POST['type'] == '
             $booking_status = "Declined";
         } 
          if($record['booking_status']=="1"){
-            $action_data = "<button type='button' id='confirm-''".$record['booking_id']."' class='btn btn-round btn-success'>Accept</button><button type='button' class='btn btn-round btn-warning'  id='declines-''".$record['booking_id']."' data-toggle='modal' data-target='#myModal'>Decline</button><a href='".'edit_booking.php?id= '.$record['booking_id']."' class='btn btn-round btn-primary'>Edit</a>";
+            $action_data = "<button type='button' id='confirm-''".$record['booking_id']."' class='btn btn-round btn-success'>Accept</button><button type='button' class='btn btn-round btn-warning'  id='declines-''".$record['booking_id']."' data-toggle='modal' data-target='#myModal'>Decline</button><a href='".'edit_booking.php?id= '.$record['booking_id']."' class='btn btn-round btn-info'>Edit</a>";
                        }else if($record['booking_status']=="2"){
-                         $action_data =  "<button type='button' class='btn btn-round btn-warning'  id='declines-''".$record['booking_id']."' data-toggle='modal' data-target='#myModal'>Decline</button><a href='".'edit_booking.php?id= '.$record['booking_id']."' class='btn btn-round btn-primary'>Edit</a>";
+                         $action_data =  "<a href='".'edit_booking.php?id= '.$record['booking_id']."' class='btn btn-round btn-info'>Edit</a>";
                        }else{
-                          $action_data = "<button type='button' id='confirm-''".$record['booking_id']."' class='btn btn-round btn-success'>Accept</button><a href='".'edit_booking.php?id= '.$record['booking_id']."' class='btn btn-round btn-primary'>Edit</a>";
+                          $action_data = "<button type='button' id='confirm-''".$record['booking_id']."' class='btn btn-round btn-success'>Accept</button><a href='".'edit_booking.php?id= '.$record['booking_id']."' class='btn btn-round btn-info'>Edit</a>";
                         } ;
         $part[0]   = $record['name'];
         $part[1]   = $record['contact_no'];
@@ -223,12 +223,21 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
         {
             
              $find_interval = mysqli_fetch_assoc($restaurant_data);
+
             
             if($day == 'Sun'){
              
-               if($find_interval['is_sun'] == '1')
+               if($find_interval['is_sun'] != 0)
                {
-                  $date_interval = findtimeIntervalweb($find_interval['sun_open_time'],$find_interval['sun_close_time']);
+                  $time_first = strtotime($find_interval['sun_open_time']);
+                   $time_second = strtotime($find_interval['sun_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
                }
                else
                {
@@ -239,9 +248,18 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
 
             }
             else if($day == 'Mon'){
-               if($find_interval['is_mon'] == '1')
+               if($find_interval['is_mon'] != 0)
                {
-                  $date_interval = findtimeIntervalweb($find_interval['mon_open_time'],$find_interval['mon_close_time']);
+                  $time_first = strtotime($find_interval['mon_open_time']);
+                   $time_second = strtotime($find_interval['mon_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
+                  
 
                }
                else
@@ -252,9 +270,18 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
 
             }
             else if($day == 'Tue'){
-              if($find_interval['is_tue'] == '1')
+              if($find_interval['is_tue'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['tue_open_time'],$find_interval['tue_close_time']);
+                 $time_first = strtotime($find_interval['tue_open_time']);
+                   $time_second = strtotime($find_interval['tue_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
+                
                  
 
                }
@@ -265,9 +292,18 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
                }
             }
             else if($day == 'Wed'){
-              if($find_interval['is_wed'] == '1')
+              if($find_interval['is_wed'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['wed_open_time'],$find_interval['wed_close_time']);
+                 $time_first = strtotime($find_interval['wed_open_time']);
+                   $time_second = strtotime($find_interval['wed_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
+                
                  
                }
                else
@@ -276,9 +312,18 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
                }
             }
             else if($day == 'Thu'){
-               if($find_interval['is_thu'] == '1')
+               if($find_interval['is_thu'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['thu_open_time'],$find_interval['thu_close_time']);
+                 $time_first = strtotime($find_interval['thu_open_time']);
+                   $time_second = strtotime($find_interval['thu_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
+                 
                 
 
                }
@@ -290,9 +335,18 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
             }
             else if($day == 'Fri'){
 
-               if($find_interval['is_fri'] == '1')
+               if($find_interval['is_fri'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['fri_open_time'],$find_interval['fri_close_time']);
+                 $time_first = strtotime($find_interval['fri_open_time']);
+                   $time_second = strtotime($find_interval['fri_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
+                 
                 
 
                }
@@ -304,11 +358,18 @@ if((isset($_POST['date']) && isset($_POST['restaurant_id'])) && $_POST['type'] =
             }
             else if($day == 'Sat'){
               
-               if($find_interval['is_sat'] == '1')
+               if($find_interval['is_sat'] != 0)
                {
-                 $date_interval = findtimeIntervalweb($find_interval['sat_open_time'],$find_interval['sat_close_time']);
-                
-
+                  $time_first = strtotime($find_interval['sat_open_time']);
+                   $time_second = strtotime($find_interval['sat_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                  $date_interval = $array;
+                 
                }
                else
                {

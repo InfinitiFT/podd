@@ -54,15 +54,14 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                     </style>
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
-                            <ul class="nav navbar-nav">
-                                <li class="active">
-                                        <a href="#" class="btn btn-round btn-success" id="day_first">Day</a></li>
-                                <li><a href="#" class="btn btn-round btn-success" id="day_second">Day</a></li>
-                                <li><a href="#" class="btn btn-round btn-success" id="day_third">Day</a></li>
-                                <li><a href="#" class="btn btn-round btn-success" id="day_fourth">Day</a></li>
-                                <li><a href="#" class="btn btn-round btn-success" id="day_fifth">Day</a></li>
-                                <li><a href="#" class="btn btn-round btn-success" id="day_sixth">Day</a></li>
-                                <li><a href="#" class="btn btn-round btn-success" id="day_seventh">Day</a></li>
+                            <ul class="nav navbar-nav nav-color-btn">
+                                <li class="active"><a href="#" class="btn btn-round" id="day_first">Day</a></li>
+                                <li><a href="#" class="btn btn-round" id="day_second">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="day_third">Day</a></li>
+                                <li ><a href="#" class="btn btn-round btn-green" id="day_fourth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="day_fifth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="day_sixth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="day_seventh">Day</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -157,7 +156,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         for (var i = 0; i <= daysToAdd; i++) {
             var currentDate = new Date();
             currentDate.setDate(startDate.getDate() + i);
-            aryDates.push(get_day_name(currentDate.getDay()) + ", " + currentDate.getFullYear() + "-" + pad((currentDate.getMonth() + 1), 2) + "-" + currentDate.getDate());
+            aryDates.push(get_day_name(currentDate.getDay()) + ", " + currentDate.getFullYear() + "-" + pad((currentDate.getMonth() + 1), 2) + "-" + pad(currentDate.getDate(),2));
         }
 
         return aryDates;
@@ -165,7 +164,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
 
 </script>
 <script>
-    var restaurant_id = "<?php echo $_REQUEST['restaurant_id'];?>";
+    var restaurant_id = "<?php echo decrypt_var($_REQUEST['restaurant_id']);?>";
     $("[id ^='day_']").click(function(e) {
         var dayID  = $(this).html();
         var abc = dayID.split(",");

@@ -66,7 +66,7 @@
                         <tr>
                           <th>Date</th>
                           <th>Time</th>
-                          <th>Number of People</th>
+                          <th>No. of Covers</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -87,7 +87,7 @@
                           echo "Declined";
                         } ?></td>
                   <td>
-                     <a href="edit_booking.php?id=<?php echo $record['booking_id'];?>" class="btn btn-round btn-primary">Edit</a>
+                     <a href="edit_booking.php?id=<?php echo encrypt_var($record['booking_id']);?>" class="btn btn-round btn-primary">Edit</a>
                   </td>
                   </td>
 								</tr>

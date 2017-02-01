@@ -170,32 +170,6 @@ $("[id ^='decline-']").click(function () {
     var additem      = $(".add_item"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
     var add_field_button_subtitle      = $(".add_field_button_subtitle"); //Add button ID 
-    
-     //initlal text box count
-   /* var count = 2;
-    $(add_button).click(function(e){ //on add input button click
-        e.preventDefault();
-       //text box increment
-        if(count < max_fields){ //max input box allowed
-        
-           
-            $("#dataAdd").append(  '<div class="add_item row" id= "remove_del-'+count+'">'+
-                                   '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
-                                   '</div>'+
-                                   '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
-                                      '<input type="text" class="form-control ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="inputSuccess-'+count+'">'+
-                                   '</div>'+
-                                   '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
-                                      '<input type="text" class="form-control" name="price[]" placeholder="Price" id="inputprice-'+count+'">'+
-                                  '</div>'+
-                               '<button type="button" id ="remove_field-'+count+'" class="btn btn-danger remove_field">✖</button></div>'); //add input box
-        
-           
-     
-  }
-   count++; 
-});
-   */
   // Add subtitle functionality
    
     var additem_subtitle     = $(".add_subtitle"); //Fields wrapper
@@ -206,7 +180,6 @@ $("[id ^='decline-']").click(function () {
     var count_subtitle = 2;
     $(add_button_subtitle).click(function(e){ //on add input button click
       e.preventDefault();
-     // alert($('input[name="item[]"]').val());
       var i=1;
       $('input[name^="item[]"]').each(function() {
        // alert($(this).val());
@@ -235,7 +208,7 @@ $("[id ^='decline-']").click(function () {
                                            '<div class="col-md-1 col-sm-1 col-xs-2 form-group">'+
                                            '</div>'+
                                            '<div class="col-md-4 col-sm-4 col-xs-8 form-group ">'+
-                                              '<input type="text" class="form-control" name="subtitle[]" id="inputSuccess-'+count_subtitle+'" placeholder="Subtitles">'+
+                                              '<input type="text" class="form-control" name="subtitle[]" id="inputSuccess-'+count_subtitle+'" placeholder="Sub Menu">'+
                                            '</div>'+
 
                                            '</div>'+
@@ -243,7 +216,7 @@ $("[id ^='decline-']").click(function () {
                                            '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
                                            '</div>'+
                                            '<div class="col-md-4 col-sm-4 col-xs-8 form-group">'+
-                                             '<input type="text" class="form-control" name="item[]" id="item_added-'+count_subtitle+'" placeholder="Select Item">'+
+                                             '<input type="text" class="form-control" name="item[]" id="item_added-'+count_subtitle+'" placeholder="Item">'+
                                            '</div>'+
                                    
                                            '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
@@ -274,62 +247,6 @@ $(document).on("click", "[id ^='remove_field-']", function(event){
 $(document).on("change", "[id ^='inputSuccess-']", function(event){
     a.push($(this).val());
 });  
-/*//for subtitle auto complete//==============================================================================
-    $("#inputSuccess-1").autocomplete({
-        source: "select_items.php?selected_item="+a+"&type="+'subtitle'+"&",
-        select: function (event, ui) {
-            $("#txtAllowSearch").val(ui.item.label); // display the selected text
-            $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-        }
-
-            });
-   
-       
-    $(function() {
-      
-      $(document).bind('DOMNodeInserted', function(e) {
-            $("[id ^='inputSuccess-']").autocomplete({
-                source: "select_items.php?selected_item="+a+"&type="+'subtitle'+"&",
-                select: function (event, ui) {
-                    $(".ui-menu-item").val(ui.item.label); // display the selected text
-                    $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-                }
-
-            });
-           
-      });
-   });
-//for item auto complete//==============================================================================
-    $("#item_added-1").autocomplete({
-        source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
-        select: function (event, ui) {
-            $("#txtAllowSearch").val(ui.item.label); // display the selected text
-            $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-        }
-
-            });
-   
-       
-    $(function() {
-      
-      $(document).bind('DOMNodeInserted', function(e) {
-            $("[id ^='item_added-']").autocomplete({
-                source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&meal_id="+$("#allMealling option:selected").val()+"&",
-                select: function (event, ui) {
-                    $(".ui-menu-item").val(ui.item.label); // display the selected text
-                }
-
-            });
-           
-      });
-   });
-    //for meal auto complete//==============================================================================
-    $("#meal_name").autocomplete({
-        source: "select_items.php?selected_item="+a+"&restaurant_id="+$('#restaurant_id').val()+"&type="+"meal"+"&",
-        select: function (event, ui) {
-        }
-
-            });*/
 var count = 2;
 function addItem(id){
   var item_val = new Array();
@@ -360,7 +277,7 @@ function addItem(id){
                               rounded: true,
                               //delay: false,
                               position: 'center top', //or 'center bottom'
-                              msg: 'Please enter another one..'
+                              msg: 'This item may already exist.'
                              });
            // alert('Please enter another one.');
          } else {
@@ -378,11 +295,13 @@ function addItem(id){
         
            
             $("#dataAdd-"+serviceArr[1]).append(  '<div class="add_item row" id= "itemID-'+count+'">'+
+                                   '<input type="hidden" name="subtitle[]" value="">'+
                                    '<div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">'+
                                    '</div>'+
                                    '<div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">'+
-                                      '<input type="text" class="form-control ui-autocomplete-input auto" placeholder="Select Item" name="item[]" id="item_added-'+count+'">'+
+                                      '<input type="text" class="form-control ui-autocomplete-input auto" placeholder="Item" name="item[]" id="item_added-'+count+'">'+
                                    '</div>'+
+
                                    '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
                                       '<input type="text" class="form-control" name="price[]" placeholder="Price" id="inputprice-'+count+'">'+
                                   '</div>'+

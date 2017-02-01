@@ -1,12 +1,16 @@
 <?php 
+/**
+ * Created by Rahul Kumar Choudhary.
+ * Date: 30/12/16
+ * Time: 5:16 PM
+ */
 ob_start();
 include_once('header.php'); 
-error_reporting(0);
 $mes ='';
-/*if($_SESSION['msg'] == 'maxLimit'){
+if($_SESSION['msg'] == 'maxLimit'){
 	$mes = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
 	$_SESSION['msg'] ='';
-}*/
+}
 if ($_SESSION['msg'] == 'image'){
 	$mes = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
 	$_SESSION['msg'] ='';
@@ -84,9 +88,7 @@ if(isset($_REQUEST['submit'])){
 				 $closetimeSat = mysqli_real_escape_string($conn,$_POST['closetimeSat']);
 				
 
-			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`,`latitude`,`longitude`,`restaurant_full_address`,`deliver_food`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`,`sun_open_time`, `sun_close_time`, `is_sun`, `mon_open_time`, `mon_close_time`, `is_mon`, `tue_open_time`, `tue_close_time`, `is_tue`, `wed_open_time`, `wed_close_time`, `is_wed`, `thu_open_time`, `thu_close_time`,`is_thu`, `fri_open_time`, `fri_close_time`, `is_fri`, `sat_open_time`, `sat_close_time`, `is_sat`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$latitude."','".$longitude."','".$location_data."','".$deliver."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$opentimeSun."','".$closetimeSun."','".$is_Sun."','".$opentimeMon."','".$closetimeMon."','".$is_Mon."','".$opentimeTue."','".$closetimeTue."','".$is_Tue."','".$opentimeWed."','".$closetimeWed."','".$is_Wed."','".$opentimeThu."','".$closetimeThu."','".$is_Thu."','".$opentimeFri."','".$closetimeFri."','".$is_Fri."','".$opentimeSat."','".$closetimeSat."','".$is_Sat."','".$id."')");
-			
-			
+			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`,`latitude`,`longitude`,`restaurant_full_address`,`deliver_food`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`,`sun_open_time`, `sun_close_time`, `is_sun`, `mon_open_time`, `mon_close_time`, `is_mon`, `tue_open_time`, `tue_close_time`, `is_tue`, `wed_open_time`, `wed_close_time`, `is_wed`, `thu_open_time`, `thu_close_time`,`is_thu`, `fri_open_time`, `fri_close_time`, `is_fri`, `sat_open_time`, `sat_close_time`, `is_sat`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$latitude."','".$longitude."','".$location_data."','".$deliver."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$opentimeSun."','".$closetimeSun."','".$is_Sun."','".$opentimeMon."','".$closetimeMon."','".$is_Mon."','".$opentimeTue."','".$closetimeTue."','".$is_Tue."','".$opentimeWed."','".$closetimeWed."','".$is_Wed."','".$opentimeThu."','".$closetimeThu."','".$is_Thu."','".$opentimeFri."','".$closetimeFri."','".$is_Fri."','".$opentimeSat."','".$closetimeSat."','".$is_Sat."','".$id."')");	
 		}
 
 		   $to = $email;
@@ -97,62 +99,51 @@ if(isset($_REQUEST['submit'])){
 			 <head>
 			 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			
-		   </head>
-		   <body>
-		     <tbody>
-			   <tr>
-			      
-			      <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
-			      
-			         <div style="line-height:1.3em">
+		     </head>
+		      <body>
+		        <tbody>
+			      <tr>
+			        <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
+			          <div style="line-height:1.3em">
 			            <div>Hello <b>'.$_POST['name'].'</b>,</div>
-			            <div class="m_-7807612712962067148paragraph_break"><br></div>
-			            <div>Welcome to podd. Your account has been created successfully.</div>
-			            <div class="m_-7807612712962067148paragraph_break"><br></div>
-			            <div>Please click on this link to login using the credentials below:<b> <a href = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></b></div>
-			            <div class="m_-7807612712962067148paragraph_break"><br></div>
-			            <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
-			            <div class="m_-7807612712962067148paragraph_break"><br></div>
-			            <div><strong>Password:</strong>               <b><strong>'.$passwordRandom.'</strong></b></div>
-			            <div class="m_-7807612712962067148paragraph_break"><br></div>
-			            <div>When you login for the first time, you may be required to change your password</div>
-			           
-			            <div class="m_-7807612712962067148paragraph_break"><br></div>
-			            <div>Best regards,</div>
-			            <div>The podd Team</div>
+			              <div class="m_-7807612712962067148paragraph_break"><br></div>
+			              <div>Welcome to podd. Your account has been created successfully.</div>
+			              <div class="m_-7807612712962067148paragraph_break"><br></div>
+			              <div>Please click on this link to login using the credentials below:<b> <a href = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></b>
+			              </div>
+			              <div class="m_-7807612712962067148paragraph_break"><br></div>
+			              <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
+			              <div class="m_-7807612712962067148paragraph_break"><br></div>
+			              <div><strong>Password:</strong>               <b><strong>'.$passwordRandom.'</strong></b></div>
+			              <div class="m_-7807612712962067148paragraph_break"><br></div>
+			              <div>When you login for the first time, you may be required to change your password</div>
+			              <div class="m_-7807612712962067148paragraph_break"><br></div>
+			              <div>Best regards,</div>
+			              <div>The podd Team</div>
 			         </div>
 			      </td>
-			   </tr>
-			</tbody>
-			
-				
-							
-		  </body>
-		</html>';
-
-		
-		
-      // Always set content-type when sending HTML email
-      
-      $headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= 'Cc: hello@poddapp.com' . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-      // More headers
-      $headers .= 'From: podd' . "\r\n"; 
-      if(mail($to,$subject,$message,$headers)){  
+			    </tr>
+			  </tbody>				
+		    </body>
+		 </html>';
+         // Always set content-type when sending HTML email
+         $headers = "MIME-Version: 1.0" . "\r\n";
+         $headers .= 'Cc: hello@poddapp.com' . "\r\n";
+         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+         // More headers
+         $headers .= 'From: podd' . "\r\n"; 
+         if(mail($to,$subject,$message,$headers)){  
 			$_SESSION["successmsg"] = "Venue add successfully.";
-		} else{ 
+		 } else{ 
 			$_SESSION["errormsg"] = "Error in sending email.";
-		} 
-		$_SESSION['msg']= 'success';
-		header('Location: restaurant_list.php');
-	}
-	else{
-		
+		 } 
+		 $_SESSION['msg']= 'success';
+		 header('Location: restaurant_list.php');
+	    }
+	   else{
 		header('Location: add_resturant.php');
-	}
-}
+	  }
+     }
 ?>
 
         <div class="right_col" role="main">
@@ -179,7 +170,7 @@ if(isset($_REQUEST['submit'])){
                   <div class="x_content">
 					<form class="form-horizontal form-label-left" method="post" id="addResturant" enctype = "multipart/form-data" novalidate>
 					 <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Venue Images <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Images <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input  class="form-control col-md-7 col-xs-12"  name="resturant_images[]" type="file"  onchange ="fileCount(this)" multiple>
@@ -209,7 +200,7 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                        <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Dietary</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Dietary</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" multiple="multiple" name="dietary[]">
 							  <option value="">Select Dietary</option>
@@ -222,7 +213,7 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Cuisine</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Cuisine</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" multiple="multiple" name="cuisine[]">
 							  <option value="">Select Cuisine</option>
@@ -237,7 +228,7 @@ if(isset($_REQUEST['submit'])){
                   
 
                         <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Ambience</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Ambience</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <select class="select2_multiple form-control" multiple="multiple" name="ambience[]">
 							   <option value="">Select Ambience</option>
@@ -265,7 +256,7 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                       <div class="item form-group" id="locationSelect">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website"> Location
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Location
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="select2_multiple form-control" name="location" id="">
@@ -282,7 +273,7 @@ if(isset($_REQUEST['submit'])){
                         </div>
                         
                        <div class="item form-group" id="location">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Enter Full Address</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="website" name="locationTest" placeholder ="Enter Full Address" value="<?php if($_POST['location']){ echo $_POST['location'];}else{ echo '';} ?>" class="form-control col-md-7 col-xs-12">
                         </div>
@@ -290,7 +281,7 @@ if(isset($_REQUEST['submit'])){
                       
                       
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Venue Description 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Description 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <textarea id="about"  class="form-control" name="about" data-parsley-trigger="keyup" maxlength="500" 
@@ -298,8 +289,14 @@ if(isset($_REQUEST['submit'])){
                         </div>
                       </div>
                       <input type="hidden"  id ="countTime" name="countTime" value="1">
+                       <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Time available for booking on podd 
+                        </label>
+                        
+                      </div>
+                      
                       <div class="item form-group">
-						     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Restaurant Time
+						     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">
                         </label>
 
 						   <div class="col-md-6">
@@ -310,42 +307,15 @@ if(isset($_REQUEST['submit'])){
 								 <input type="checkbox" class="check_day form-control" value="7" id="check_day7" name="is_Sun">
 							  </div>
 							  <div class="col-sm-4">
-								<label for="password" class="control-label">Opening Time</label>
+								<label for="password" class="control-label">From</label>
 								<select class="form-control col-sm-1 day-7" name="opentimeSun" id="opentime-Sun" onchange="timeValidateClose(this)" disabled>
-								<?php $i =0;
-									for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-										for($mins=0; $mins<60; $mins+=30){
-											 // the interval for mins is '30'
-										if($i == 0)
-												echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-															   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-											else
-												echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-															   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-															   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-											$i =$i+1;
-									 }
-								?>
+								<?php echo get_select_option();?>
 								</select>
 							  </div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control rday-7" name="closetimeSun" id="closetime-Sun" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 							
@@ -365,42 +335,17 @@ if(isset($_REQUEST['submit'])){
 						   </div>
 							 
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control col-sm-1 day-1" name="opentimeMon" id="opentime-Mon" onchange="timeValidateClose(this)" disabled>
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-									if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								 }
+							<?php echo get_select_option();
+
 							?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control rday-1" name="closetimeMon" id="closetime-Mon" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 						</div>
@@ -418,42 +363,15 @@ if(isset($_REQUEST['submit'])){
 						   </div>
 							  
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label ">Opening Time</label>
+							 <label for="password" class="control-label ">From</label>
 								<select class="form-control col-sm-1 day-2" name="opentimeTue" id="opentime-Tue" onchange="timeValidateClose(this)" disabled>
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-									if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								 }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control rday-2" name="closetimeTue" id="closetime-Tue" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 						</div>
@@ -470,42 +388,15 @@ if(isset($_REQUEST['submit'])){
 						      </div>
 							 
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-3" name="opentimeWed" id="opentime-Wed" onchange="timeValidateClose(this)" disabled>
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-									if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								 }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control rday-3" name="closetimeWed" id="closetime-Wed" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 						</div>
@@ -520,42 +411,15 @@ if(isset($_REQUEST['submit'])){
 								 <input type="checkbox" class="check_day form-control" id="check_day4" value="4"  name="is_Thu">
 						      </div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-4" name="opentimeThu" id="opentime-Thu" onchange="timeValidateClose(this)" disabled>
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-									if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								 }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control day-4" name="closetimeThu" id="closetime-Thu" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 						</div>
@@ -571,42 +435,15 @@ if(isset($_REQUEST['submit'])){
 						      </div>
 							  
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-5" name="opentimeFri" id="opentime-Fri" onchange="timeValidateClose(this)" disabled>
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-									if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								 }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control rday-5" name="closetimeFri" id="closetime-Fri" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 						</div>
@@ -621,42 +458,15 @@ if(isset($_REQUEST['submit'])){
 								 <input type="checkbox"  class="check_day form-control" id="check_day6" value="6"  name="is_Sat">
 						      </div>
 							  <div class="col-sm-4">
-							 <label for="password" class="control-label">Opening Time</label>
+							 <label for="password" class="control-label">From</label>
 								<select class="form-control col-sm-1 day-6" name="opentimeSat" id="opentime-Sat" disabled>
-							<?php $i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){
-										 // the interval for mins is '30'
-									if($i == 0)
-										echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									else
-										echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								}
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
-							<label for="password2" class="control-label" >Closing Time</label>
+							<label for="password2" class="control-label" >To</label>
 							<select class="form-control rday-6" name="closetimeSat" id="closetime-Sat" onchange="timeValidate(this)" disabled>
-							<?php 
-								$i =0;
-								for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
-									for($mins=0; $mins<60; $mins+=30){ // the interval for mins is '30'
-										if($i == 0)
-											echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										else
-											echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-														   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										$i =$i+1;
-								
-						       }
-							?>
+							<?php echo get_select_option();?>
 							</select>
 							</div>
 						</div>

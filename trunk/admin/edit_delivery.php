@@ -1,41 +1,37 @@
-<?php 
+<?php
 ob_start();
-include_once('header.php'); 
-error_reporting(0);
-
-$mes ='';
-if($_SESSION['msg'] == 'maxLimit'){
-	$mes = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
-	$_SESSION['msg'] ='';
+include_once('header.php');
+$mes = '';
+if ($_SESSION['msg'] == 'maxLimit') {
+    $mes             = '<div class="alert alert-warning">Venue images maximum 6 uploaded</div>';
+    $_SESSION['msg'] = '';
 }
-if ($_SESSION['msg'] == 'image'){
-	$mes = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
-	$_SESSION['msg'] ='';
+if ($_SESSION['msg'] == 'image') {
+    $mes             = '<div class="alert alert-warning">Venue images not uploaded. Please try again</div>';
+    $_SESSION['msg'] = '';
 }
-if ($_SESSION['msg'] == 'location'){
-	$mes = '<div class="alert alert-warning">Please enter valid location</div>';
-	$_SESSION['msg'] ='';
+if ($_SESSION['msg'] == 'location') {
+    $mes             = '<div class="alert alert-warning">Please enter valid location</div>';
+    $_SESSION['msg'] = '';
 }
-$bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` WHERE `delivery_id` ='".$_GET['id']."'"));
-
-$restaurant_opening_closing = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_details` WHERE `booking_id` ='".$_GET['id']."'"));
-if(isset($_REQUEST['submit'])){
-	$booking_time = mysqli_real_escape_string($conn,trim($_POST['booking_time']));
-	//$price = mysqli_real_escape_string($conn,trim($_POST['price']));
-	//$item = mysqli_real_escape_string($conn,trim($_POST['item']));
-	$name = mysqli_real_escape_string($conn,trim($_POST['name']));
-	$email = mysqli_real_escape_string($conn,trim($_POST['email']));
-	$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
-	$booking_date = mysqli_real_escape_string($conn,trim($_POST['booking_date']));
-	
-	$update = mysqli_query($GLOBALS['conn'],"UPDATE `delivery_bookings` SET delivery_time ='".$booking_time."',name='".$name."',email='".$email."',delivery_date='".$booking_date."',contact_no='".$phone."' WHERE `delivery_id` ='".mysqli_real_escape_string($conn,$_GET['id'])."'");
-	if($update){
-		$_SESSION['updateBooking'] = 1;
-		if($_GET['list'] == 'list')
-			header('Location: booking_list_restaurant_delivery.php');
-		else
-			header('Location: booking_list_restaurant_delivery.php');
-	}
+$bookingData = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `delivery_bookings` WHERE `delivery_id` ='" . $_GET['id'] . "'"));
+$restaurant_opening_closing = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `restaurant_details` WHERE `booking_id` ='" . $_GET['id'] . "'"));
+if (isset($_REQUEST['submit'])) {
+    $booking_time = mysqli_real_escape_string($conn, trim($_POST['booking_time']));
+    
+    $name         = mysqli_real_escape_string($conn, trim($_POST['name']));
+    $email        = mysqli_real_escape_string($conn, trim($_POST['email']));
+    $phone        = mysqli_real_escape_string($conn, trim($_POST['phone']));
+    $booking_date = mysqli_real_escape_string($conn, trim($_POST['booking_date']));
+    
+    $update = mysqli_query($GLOBALS['conn'], "UPDATE `delivery_bookings` SET delivery_time ='" . $booking_time . "',name='" . $name . "',email='" . $email . "',delivery_date='" . $booking_date . "',contact_no='" . $phone . "' WHERE `delivery_id` ='" . mysqli_real_escape_string($conn, $_GET['id']) . "'");
+    if ($update) {
+        $_SESSION['updateBooking'] = 1;
+        if ($_GET['list'] == 'list')
+            header('Location: booking_list_restaurant_delivery.php');
+        else
+            header('Location: booking_list_restaurant_delivery.php');
+    }
 }
 ?>
         <div class="right_col" role="main">
