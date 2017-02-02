@@ -200,11 +200,11 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         tvTime.setText(date);*/
 
         imgList = new ArrayList<>();
+        imgList.add(R.mipmap.image1);
         imgList.add(R.mipmap.image2);
         imgList.add(R.mipmap.image3);
         imgList.add(R.mipmap.image4);
-        imgList.add(R.mipmap.image1);
-        imgList.add(R.mipmap.image4);
+        imgList.add(R.mipmap.image3);
 
         CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
 

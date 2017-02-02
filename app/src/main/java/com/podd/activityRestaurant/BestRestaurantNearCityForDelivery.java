@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.podd.R;
+import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.BestRestaurantForDeliveryAdapter;
 import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
@@ -45,41 +46,27 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     private RecyclerView rvRestaurants;
     private Context context;
     private BestRestaurantForDeliveryAdapter bestRestaurantAdapter;
-    private TextView tvBusiness;
-    private TextView tvMealType;
-
-    private TextView tvCuisineType;
-    private TextView tvLocationType,tvCuisine,tvAmbience;
-    private TextView tvDietaryType,tvNoOfRestaurants,tvLocationName,tvMeal;
-    private TextView tvCityName,tvSearchBy,tvShowing,tvVenueBy,tvLocation,tvDietary;
-    private TextView tvNearbyRestaurant;
-    private LinearLayout llLocation;
-    private LinearLayout llDietary;
-    private LinearLayout llCuisine;
-    private LinearLayout llMeal;
-    private LinearLayout llAmbience;
-    private LinearLayout llDeliveredToYou;
-    private double currentLat = 0.0d;
-    private double currentLong = 0.0d;
+    private TextView tvBusiness,tvMealType, tvCuisineType,tvLocationType,tvDietaryType,tvCityName,tvNearbyRestaurant;
+    private TextView tvLocationName,tvSearchBy,tvLocation,tvDietary,tvShowing,tvVenueBy;
+    private TextView tvNoOfRestaurants,tvCuisine,tvMeal,tvAmbience, tvDeliveredtoYou;
+    private LinearLayout llLocation,llDietary, llCuisine, llMeal,llAmbience,llDeliveredToYou,llCurrentloc,llVenues;
+    private double currentLat;
+    private double currentLong;
     private List<Cuisine> cuisineList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
-    private List<String> location=new ArrayList<>();
-    private String TAG = BestRestaurantNearCityForDelivery.class.getSimpleName();
+    private List<String> location = new ArrayList<>();
+    private String TAG = BestRestaurantNearCity.class.getSimpleName();
     private int pageNo = 1;
     private CuisineTypeRestaurantAdapter cuisineTypeRestaurantAdapter;
-    private  ArrayAdapter adapterLocation;
+    private ArrayAdapter adapterLocation;
     private SearchableListDialog _searchableListDialog;
+    private SearchableLocationListDialog searchableListDialog;
     private List<String> categories;
-    private String selectedItem="";
-    private String cuisineId;
-    private String locationId;
-    private String mealId;
-    private String dietaryId;
-    private String ambienceId;
+    private String selectedItem = "",cuisineId,locationId,mealId,dietaryId,ambienceId,restaurantlistSize;
     private GridLayoutManager gridLayoutManager;
     private EndlessScrollListener scrollListener;
-    private LinearLayout llCurrentloc;
-    private LinearLayout llVenues;
+    private boolean isRestaurant = false;
+    private int pageSize = 10;
 
 
     @Override
@@ -90,26 +77,35 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         getIds();
         setListeners();
         fetchLocation();
-    }
+        setFont();
+        tvLocationName.setSelected(true);
 
 
-        /*try {
+        try {
             scrollListener = new EndlessScrollListener(gridLayoutManager) {
                 @Override
-           public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-               // Triggered only when new data needs to be appended to the list
-               // Add whatever code is needed to append new items to the bottom of the list
-               getRestaurantListApi(currentLat,currentLong,pageNo);
-           }
-      };
-      // Adds the scroll listener to RecyclerView
-      rvRestaurants.addOnScrollListener(scrollListener);
-  }catch (Exception exc){
+                public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    // Triggered only when new data needs to be appended to the list
+                    // Add whatever code is needed to append new items to the bottom of the list
+
+                    if (!isRestaurant) {
+                        if (restaurantList.size() % pageSize == 0)
+                            getRestaurantListApi(currentLat, currentLong, pageNo);
+                    } else {
+                        // pageNo=1;
+                        if (restaurantList.size() % pageSize == 0)
+                            callsearchedTextApi(pageNo);
+                    }
+                }
+            };
+            // Adds the scroll listener to RecyclerView
+            rvRestaurants.addOnScrollListener(scrollListener);
+        } catch (Exception exc) {
             exc.printStackTrace();
         }
-        rvRestaurants.addOnScrollListener(scrollListener);
 
-    }*/
+    }
+
 
     private void setListeners() {
         llDeliveredToYou.setOnClickListener(this);
@@ -118,7 +114,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         llCuisine.setOnClickListener(this);
         llDietary.setOnClickListener(this);
         llLocation.setOnClickListener(this);
-
     }
 
     private void getIds() {
@@ -130,41 +125,25 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         llDietary = (LinearLayout) findViewById(R.id.llDietary);
         llLocation = (LinearLayout) findViewById(R.id.llLocation);
         tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
-        tvCityName = (TextView) findViewById(R.id.tvCityName);
-        tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
         tvVenueBy = (TextView) findViewById(R.id.tvVenueBy);
         tvShowing = (TextView) findViewById(R.id.tvShowing);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
-        tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
-        tvNoOfRestaurants = (TextView) findViewById(R.id.tvNoOfRestaurants);
-       TextView tvLocation = (TextView) findViewById(R.id.tvLocation);
-        tvLocationType = (TextView) findViewById(R.id.tvLocationType);
-       TextView tvDietary = (TextView) findViewById(R.id.tvDietary);
-        TextView tvCuisine = (TextView) findViewById(R.id.tvCuisine);
-        tvCuisineType = (TextView) findViewById(R.id.tvCuisineType);
-       TextView tvMeal = (TextView) findViewById(R.id.tvMeal);
-        tvMealType = (TextView) findViewById(R.id.tvMealType);
-       TextView tvAmbience = (TextView) findViewById(R.id.tvAmbience);
-        tvBusiness = (TextView) findViewById(R.id.tvBusiness);
-        TextView tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
         tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
-        tvLocationName = (TextView) findViewById(R.id.tvLocationName);
+        tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
+        tvLocation = (TextView) findViewById(R.id.tvLocation);
+        tvLocationType = (TextView) findViewById(R.id.tvLocationType);
+        tvDietary = (TextView) findViewById(R.id.tvDietary);
+        tvCuisine = (TextView) findViewById(R.id.tvCuisine);
+        tvCuisineType = (TextView) findViewById(R.id.tvCuisineType);
+        tvMeal = (TextView) findViewById(R.id.tvMeal);
+        tvMealType = (TextView) findViewById(R.id.tvMealType);
+        tvAmbience = (TextView) findViewById(R.id.tvAmbience);
+        tvBusiness = (TextView) findViewById(R.id.tvBusiness);
+        tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
+        tvLocationName= (TextView) findViewById(R.id.tvLocationName);
+        tvNoOfRestaurants= (TextView) findViewById(R.id.tvNoOfRestaurants);
         llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
         llVenues= (LinearLayout) findViewById(R.id.llVenues);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-*/
     }
 
     private void setFont() {
@@ -283,7 +262,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         jsonRequest.page_size = "10";
         jsonRequest.deliver_food = "1";
         jsonRequest.page_number = pageNumber;
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.getRestaurantsList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -295,6 +273,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
                             restaurantList.clear();
                             restaurantList.addAll(response.body().restaurant_list);
+                            tvNoOfRestaurants.setText(String.valueOf(response.body().pagination.total_record_count));
                             gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
                             rvRestaurants.setLayoutManager(gridLayoutManager);
                             bestRestaurantAdapter = new BestRestaurantForDeliveryAdapter(context, restaurantList);

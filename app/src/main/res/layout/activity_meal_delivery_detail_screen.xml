@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_restaurant_detail_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context="com.podd.activityRestaurant.RestaurantDetailScreenActivity"
+    tools:ignore="Overdraw">
+
+
+   <!-- <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">-->
+
+        <!--<LinearLayout
+            android:id="@+id/llInner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">-->
+
+
+            <TextView
+                android:id="@+id/tvRestauarntName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/restaraunt_name"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <!--<View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"/>-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRestaurants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fadingEdge="none"
+                    android:orientation="horizontal"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:background="@android:color/white" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvNameRestaraunt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:ellipsize="marquee"
+                            android:singleLine="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10"
+                            tools:ignore="Deprecated" />
+
+
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+
+
+                        <LinearLayout
+                            android:id="@+id/llDietary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvDietaryLeft"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.8"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Dietary"
+                                android:paddingLeft="@dimen/dp_1"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <TextView
+                                android:id="@+id/tvDietary"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llCuisine"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvCuisineLeft"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.8"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cuisine"
+                                android:paddingLeft="@dimen/dp_1"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:id="@+id/tvCuisine"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llAmbience"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvAmbienceLeft"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.8"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ambience"
+                                android:paddingLeft="@dimen/dp_1"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:id="@+id/tvAmbience"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llPriceRange"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvPriceRangeLeft"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.8"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/dp_1"
+                                android:text="@string/price_range"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:id="@+id/tvPriceRange"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llButtons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_20"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvDistance"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="@dimen/dp_2"
+                                android:gravity="left|center"
+                                android:drawableLeft="@mipmap/map"
+                                android:drawablePadding="@dimen/dp_5"
+                                android:scrollHorizontally="true"
+                                android:focusableInTouchMode="true"
+                                android:freezesText="true"
+                                android:focusable="true"
+                                android:text=""
+                                android:maxLines="2"
+                                android:maxLength="50"
+                                android:ellipsize="end"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/dp_1"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvAboutRestaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            android:text="@string/text_about_restauarnt"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvDescriptionRestaraunt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_2"
+                            android:text=""
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/text_size_10" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/tvBookNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@drawable/button_background_pink"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:textStyle="bold"
+                android:text="@string/view_menu"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12" />
+
+        <!--</LinearLayout>-->
+
+    <!--</android.support.v4.widget.NestedScrollView>-->
+
+</LinearLayout>

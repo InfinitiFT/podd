@@ -37,7 +37,7 @@ import retrofit2.Response;
  * The type Restaurant detail screen activity.
  */
 @SuppressWarnings("ALL")
-public class RestaurantDetailScreenActivity extends AppCompatActivity implements View.OnClickListener {
+public class MealDeliveryDetailScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvRestauarntName;
     private TextView tvNameRestaraunt;
@@ -51,7 +51,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private TextView tvViewInMap;
     private RecyclerView rvRestaurants;
     private Context context;
-    private final String TAG=RestaurantDetailScreenActivity.class.getSimpleName();
+    private final String TAG=MealDeliveryDetailScreenActivity.class.getSimpleName();
     private final List<String>restaurantList=new ArrayList<>();
     private final List<RestaurantMenu>restaurantMenu=new ArrayList<>();
 
@@ -64,12 +64,13 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private TextView tvCuisine,tvCuisineLeft;
     private TextView tvDietary,tvDietaryLeft;
     private TextView tvAmbience,tvAmbienceLeft,tvPriceRangeLeft;
+    Intent intent ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_detail_screen);
-        context=RestaurantDetailScreenActivity.this;
+        setContentView(R.layout.activity_meal_delivery_detail_screen);
+        context=MealDeliveryDetailScreenActivity.this;
         getIds();
         setListeners();
         setFont();
@@ -98,7 +99,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         tvBookNow= (TextView) findViewById(R.id.tvBookNow);
         TextView tvAboutRestaurant = (TextView) findViewById(R.id.tvAboutRestaurant);
         tvDescriptionRestaraunt= (TextView) findViewById(R.id.tvDescriptionRestaraunt);
-        tvViewMenu= (TextView) findViewById(R.id.tvViewMenu);
+       // tvViewMenu= (TextView) findViewById(R.id.tvViewMenu);
         tvDietaryLeft= (TextView) findViewById(R.id.tvDietaryLeft);
         //  tvViewInMap= (TextView) findViewById(R.id.tvViewInMap);
         tvCuisine= (TextView) findViewById(R.id.tvCuisine);
@@ -113,7 +114,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
-        tvViewMenu.setOnClickListener(this);
+      //  tvViewMenu.setOnClickListener(this);
         tvDistance.setOnClickListener(this);
         //  tvViewInMap.setOnClickListener(this);
 
@@ -133,7 +134,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         tvAmbience.setTypeface(typeface);
         tvPriceRangeLeft.setTypeface(typeface);
         tvPriceRange.setTypeface(typeface);
-        tvViewMenu.setTypeface(typeface);
+     //   tvViewMenu.setTypeface(typeface);
         tvDistance.setTypeface(typeface);
         tvDescriptionRestaraunt.setTypeface(typeface);
 
@@ -142,7 +143,8 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tvBookNow:
+
+            /*case R.id.tvBookNow:
                 Intent intent1 = new Intent(context, RestaurantBookingDetailsActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent1.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
@@ -150,24 +152,24 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 intent1.putExtra(AppConstant.RESTAURANTID,restaurantId);
                 intent1.putExtra(AppConstant.LOCATION,location);
                 startActivity(intent1);
-                break;
-            case R.id.tvViewMenu:
-                intent1 =new Intent(context,ViewMenuActivity.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent1.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
-                intent1.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
-                intent1.putExtra(AppConstant.RESTAURANTID,restaurantId);
-                intent1.putExtra(AppConstant.LOCATION,location);
+                break;*/
+            case R.id.tvBookNow:
+                intent =new Intent(context,ViewMenuDeliveryActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(AppConstant.RESTAURANTIMAGES, (Serializable) restaurantList);
+                intent.putExtra(AppConstant.RESTAURANTNAME,restaurantname);
+                intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
+                intent.putExtra(AppConstant.LOCATION,location);
                 Bundle bundle=new Bundle();
                 bundle.putSerializable(AppConstant.RESTAURANTMENU,(ArrayList<RestaurantMenu>) restaurantMenu);
-                intent1.putExtra(AppConstant.RESTAURANTMENUBUNDLE,bundle);
-                startActivity(intent1);
+                intent.putExtra(AppConstant.RESTAURANTMENUBUNDLE,bundle);
+                startActivity(intent);
                 break;
 
             case R.id.tvDistance:
 
                 String uriString = "http://maps.google.com/maps?saddr="+lat+","+longi+"&daddr="+latitude+","+longitude;
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(uriString));
                 startActivity(intent);
 
@@ -223,12 +225,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             tvLocation.setText("");
                         }
-                       /* if (response.body().distance!=null) {
-                            tvDistance.setText(response.body().distance);
-                        }
-                        else {
-                            tvDistance.setText("");
-                        }*/
 
                         if(response.body().restaurant_menu!=null&&response.body().restaurant_menu.size()>0){
                             restaurantMenu.clear();

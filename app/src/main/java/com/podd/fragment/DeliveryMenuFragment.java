@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.podd.R;
-import com.podd.adapter.DeliveryMenuAdapter;
 import com.podd.adapter.LunchMenuAdapter;
 import com.podd.model.MealDetails;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class BreakfastMenuFragment extends Fragment{
+public class DeliveryMenuFragment extends Fragment{
     private Context context;
     private View view;
     private RecyclerView rvBreakfastMenu;
@@ -42,15 +42,15 @@ public class BreakfastMenuFragment extends Fragment{
     }
 
     private void setBreakfastMenu() {
-        DeliveryMenuAdapter deliveryMenuAdapter = new DeliveryMenuAdapter(context,meal_details);
+        LunchMenuAdapter lunchMenuAdapter = new LunchMenuAdapter(context,meal_details);
         GridLayoutManager manager = new GridLayoutManager(context, getResources().getInteger(R.integer.grid_span));
         rvBreakfastMenu.setLayoutManager(manager);
-        rvBreakfastMenu.setAdapter(deliveryMenuAdapter);
+        rvBreakfastMenu.setAdapter(lunchMenuAdapter);
     }
 
 
     public Fragment newInstance(List<MealDetails> meal_details) {
-        BreakfastMenuFragment fragment=new BreakfastMenuFragment();
+        DeliveryMenuFragment fragment=new DeliveryMenuFragment();
         fragment.meal_details=meal_details;
         return fragment;
     }

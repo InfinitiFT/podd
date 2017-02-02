@@ -15,12 +15,12 @@ import com.podd.model.MealDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdapter.MainVH> {
+public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMenuAdapter.MainVH> {
     private final Context context;
     private List<MealDetails> meal_details=new ArrayList<>();
 
 
-    public LunchMenuAdapter(Context context, List<MealDetails> meal_details) {
+    public DeliveryMenuAdapter(Context context, List<MealDetails> meal_details) {
         this.context=context;
         this.meal_details=meal_details;
     }
@@ -37,7 +37,7 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
     }
 
     @Override
-    public void onBindHeaderViewHolder(LunchMenuAdapter.MainVH holder, int section) {
+    public void onBindHeaderViewHolder(DeliveryMenuAdapter.MainVH holder, int section) {
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.title.setTypeface(typefaceRegular);
         holder.title.setText(meal_details.get(section).subtitle_name);
@@ -52,7 +52,7 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
     }
 
     @Override
-    public void onBindViewHolder(LunchMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
+    public void onBindViewHolder(DeliveryMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
     {
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.title.setTypeface(typefaceRegular);
@@ -72,7 +72,7 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
     }
 
     @Override
-    public LunchMenuAdapter.MainVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DeliveryMenuAdapter.MainVH onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout;
         switch (viewType) {
             case VIEW_TYPE_HEADER:

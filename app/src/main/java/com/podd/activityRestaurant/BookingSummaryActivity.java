@@ -297,7 +297,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.number_of_people="";
         jsonRequest.name="";
         jsonRequest.email=etEmail.getText().toString().trim();
-        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.contact_no="+"+countryCode+""+etPhoneNumber.getText().toString().trim();
 
         Call<JsonResponse> call = apiServices.sendOtp(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -339,7 +339,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.number_of_people=noOfPersons;
         jsonRequest.name=etName.getText().toString().trim();
         jsonRequest.email=etEmail.getText().toString().trim();
-        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.contact_no="+"+countryCode+""+etPhoneNumber.getText().toString().trim();
         jsonRequest.otp=etEnterOtp.getText().toString().trim();
         Call<JsonResponse> call = apiServices.otpVerification(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -388,7 +388,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.contact_no="+"+countryCode+""+etPhoneNumber.getText().toString().trim();
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.resendOtp(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);

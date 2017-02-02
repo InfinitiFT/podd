@@ -86,7 +86,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginBottom="@dimen/dp_4" />
+                android:layout_marginBottom="@dimen/dp_8" />
             <TextView
                 android:id="@+id/tvBookNow"
                 android:layout_width="match_parent"

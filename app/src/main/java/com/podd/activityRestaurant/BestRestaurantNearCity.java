@@ -125,7 +125,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         tvCuisineType.setTypeface(typeface);
         tvAmbience.setTypeface(typeface);
         tvBusiness.setTypeface(typeface);
-      //  Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
     }
 
@@ -143,7 +142,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         llCuisine.setOnClickListener(this);
         llDietary.setOnClickListener(this);
         llLocation.setOnClickListener(this);
-
     }
 
     private void getIds() {
@@ -174,8 +172,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         tvNoOfRestaurants= (TextView) findViewById(R.id.tvNoOfRestaurants);
         llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
         llVenues= (LinearLayout) findViewById(R.id.llVenues);
-
-
     }
 
     private void fetchLocation() {
@@ -209,7 +205,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 getRestaurantListApi(currentLat, currentLong, pageNo);
                 llVenues.setVisibility(View.VISIBLE);
                 tvLocationName.setText(response.body().results.get(0).formatted_address);
-
                 Logger.addRecordToLog("Response " + response);
             }
 
@@ -227,7 +222,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llAmbience:
-
                 getAmbienceRestaurantListApi();
                 llVenues.setVisibility(View.VISIBLE);
                 break;

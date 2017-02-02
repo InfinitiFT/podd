@@ -32,6 +32,8 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         getIds();
         setListeners();
         setFont();
+
+        /*this condition get the data from booking summary screen*/
         if(getIntent()!=null) {
             String restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
             String restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
@@ -45,9 +47,13 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
             tvTimeBooked.setText(timeBooked);
             tvDateBooked.setText(dateBooked);
             tvNumberofPeople.setText(noOfPersons);
+        }else{
+            tvRestauarntName.setText("");
+            tvLocation.setText("");
+            tvTimeBooked.setText("");
+            tvDateBooked.setText("");
+            tvNumberofPeople.setText("");
         }
-
-
     }
 
     private void getIds() {
@@ -63,20 +69,6 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvNumberofPeopleLeft = (TextView) findViewById(R.id.tvNumberofPeopleLeft);
         tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
         tvThanks = (TextView) findViewById(R.id.tvThanks);
-
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });*/
 
     }
 
@@ -95,7 +87,6 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvNumberofPeople.setTypeface(typefaceRegular);
         tvConfirmation.setTypeface(typefaceRegular);
         tvThanks.setTypeface(typefaceRegular);
-
     }
 
     private void setListeners() {
