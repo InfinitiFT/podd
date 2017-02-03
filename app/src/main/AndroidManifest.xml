@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".utils.SetTimerClass"
         android:icon="@mipmap/app_h"
         android:label="@string/app_name"
         android:supportsRtl="true"

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
@@ -18,6 +19,7 @@ import java.util.List;
 public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMenuAdapter.MainVH> {
     private final Context context;
     private List<MealDetails> meal_details=new ArrayList<>();
+    int count =0;
 
 
     public DeliveryMenuAdapter(Context context, List<MealDetails> meal_details) {
@@ -52,12 +54,12 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
     }
 
     @Override
-    public void onBindViewHolder(DeliveryMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
+    public void onBindViewHolder(final DeliveryMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
     {
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.title.setTypeface(typefaceRegular);
         holder.titlePrice.setTypeface(typefaceRegular);
-        if (meal_details.get(section).subtitle_meal_details!=null&&meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name!=null) {
+        if (meal_details.get(section).subtitle_meal_details!=null && meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name!=null) {
             holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name, section, relativePosition, absolutePosition));
         }
         else {
@@ -69,6 +71,30 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         else {
             holder.titlePrice.setText("");
         }
+
+
+        holder.ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count = count+1;
+                holder.tvNumber.setText(""+count);
+
+            }
+        });
+
+        holder.ivMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count = count-1;
+                if (count>=0){
+                    holder.tvNumber.setText(""+count);
+                }
+                else{
+                    count=0;
+                    holder.tvNumber.setText(""+count);
+                }
+            }
+        });
     }
 
     @Override
@@ -79,7 +105,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
                 layout = R.layout.list_item_header;
                 break;
             case VIEW_TYPE_ITEM:
-                layout = R.layout.list_item_main;
+                layout = R.layout.list_item_delivery;
                 break;
             default:
                 layout = R.layout.list_item_main_bold;
@@ -93,12 +119,16 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
 
     public class MainVH extends RecyclerView.ViewHolder {
         final TextView title;
-        final TextView titlePrice;
+        final TextView titlePrice,tvNumber;
+        final ImageView ivMinus,ivAdd;
 
         public MainVH(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             titlePrice= (TextView) itemView.findViewById(R.id.titlePrice);
+            ivMinus=(ImageView)itemView.findViewById(R.id.ivMinusFragment);
+            ivAdd=(ImageView)itemView.findViewById(R.id.ivAddFragment);
+            tvNumber=(TextView)itemView.findViewById(R.id.tvNumber);
         }
     }
 }

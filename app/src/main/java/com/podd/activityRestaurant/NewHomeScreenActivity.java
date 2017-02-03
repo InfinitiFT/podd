@@ -19,6 +19,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,7 +120,20 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             public void run() {
                 handler.post(Update);
             }
-        }, 500, 3000);
+        },500, 3000);
+      //  ImageView ivLogo=(ImageView)findViewById(R.id.ivLogo);
+        try {
+            Animation  animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+            animation.setDuration(3000); // duration - half a second
+            animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+            animation.setRepeatCount(3000); // Repeat animation infinitely
+            animation.setRepeatMode(3000);
+            viewPager.startAnimation(animation);
+
+        }catch (Exception e2)
+        {
+            e2.printStackTrace();
+        }
 
         /*if(CommonUtils.isNetworkConnected(this)){
             callHomeApi();

@@ -28,6 +28,7 @@ import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.Logger;
+import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -66,6 +67,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private EndlessScrollListener scrollListener;
     private boolean isRestaurant = false;
     private int pageSize = 10;
+    private SetTimerClass setTimerClass;
 
 
     @Override
@@ -80,7 +82,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         fetchLocation();
         setFont();
         tvLocationName.setSelected(true);
-
+        setTimerClass = (SetTimerClass)getApplication();
 
         try {
             scrollListener = new EndlessScrollListener(gridLayoutManager) {
@@ -741,5 +743,25 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 CommonUtils.disMissProgressDialog(context);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
     }
 }

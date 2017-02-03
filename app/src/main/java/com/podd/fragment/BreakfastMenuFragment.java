@@ -42,10 +42,10 @@ public class BreakfastMenuFragment extends Fragment{
     }
 
     private void setBreakfastMenu() {
-        DeliveryMenuAdapter deliveryMenuAdapter = new DeliveryMenuAdapter(context,meal_details);
+        LunchMenuAdapter lunchMenuAdapter = new LunchMenuAdapter(context,meal_details);
         GridLayoutManager manager = new GridLayoutManager(context, getResources().getInteger(R.integer.grid_span));
         rvBreakfastMenu.setLayoutManager(manager);
-        rvBreakfastMenu.setAdapter(deliveryMenuAdapter);
+        rvBreakfastMenu.setAdapter(lunchMenuAdapter);
     }
 
 

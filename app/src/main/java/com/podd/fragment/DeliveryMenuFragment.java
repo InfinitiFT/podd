@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.podd.R;
+import com.podd.adapter.DeliveryMenuAdapter;
 import com.podd.adapter.LunchMenuAdapter;
 import com.podd.model.MealDetails;
 
@@ -42,10 +43,10 @@ public class DeliveryMenuFragment extends Fragment{
     }
 
     private void setBreakfastMenu() {
-        LunchMenuAdapter lunchMenuAdapter = new LunchMenuAdapter(context,meal_details);
+        DeliveryMenuAdapter deliveryMenuAdapter = new DeliveryMenuAdapter(context,meal_details);
         GridLayoutManager manager = new GridLayoutManager(context, getResources().getInteger(R.integer.grid_span));
         rvBreakfastMenu.setLayoutManager(manager);
-        rvBreakfastMenu.setAdapter(lunchMenuAdapter);
+        rvBreakfastMenu.setAdapter(deliveryMenuAdapter);
     }
 
 
