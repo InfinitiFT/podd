@@ -662,7 +662,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 ambienceId = "";
                 cuisineId = "";
                 locationId = "";
-                mealId = "";
                 tvBusiness.setText("");
                 tvCuisineType.setText("");
                 tvLocationType.setText("");
@@ -749,8 +748,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     protected void onResume() {
         super.onResume();
         setTimerClass.setTimer(this, true);
-
-
     }
 
     @Override

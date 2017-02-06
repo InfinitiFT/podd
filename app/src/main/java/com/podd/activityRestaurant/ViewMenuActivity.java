@@ -22,6 +22,7 @@ import com.podd.fragment.BreakfastMenuFragment;
 import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
+import com.podd.utils.SetTimerClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
+    private SetTimerClass setTimerClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
         getIds();
         setListeners();
         setFont();
+        setTimerClass = (SetTimerClass)getApplication();
         restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
         restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
@@ -168,6 +171,24 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
             return mFragmentTitleList.get(position);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
     }
 }
 

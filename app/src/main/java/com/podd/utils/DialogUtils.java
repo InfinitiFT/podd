@@ -2,6 +2,7 @@ package com.podd.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,11 +17,11 @@ public class DialogUtils {
 
         Dialog dialog = new Dialog(context, R.style.AppTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         dialog.setCancelable(true);
         dialog.setContentView(layoutResourceId);
         WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
-        layoutParams.dimAmount = .7f;
+        //layoutParams.dimAmount = .5f;
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);

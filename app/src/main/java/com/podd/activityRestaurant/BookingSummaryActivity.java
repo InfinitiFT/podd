@@ -23,6 +23,7 @@ import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.DialogUtils;
+import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -34,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener {
+public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private Intent intent;
     private Context context;
     private EditText etName;
@@ -49,7 +50,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private TextView tvNumberofPeople,tvNoOfPeopleLeft,tvBookTaxi,tvConfirmation;
 
     private Dialog dialogConfirmBooking;
-    private EditText etEnterOtp;
+    private EditText etEnterOtp1,etEnterOtp2,etEnterOtp3,etEnterOtp4;
     private String location;
     private String dateBooked;
     private String timeBooked;
@@ -60,10 +61,10 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String email;
     private String phone;
     private String otp;
-    private List<String> countryCodeList;
-   // private final String[]countryCodeArray={"+93","+91","+358","+355","+213","+1684","+376","+244","+1264","+1268","+54","+374","+297","+61","+43","+994","+1242","+973","+880","+1246","+375","+32","+501","+229","+1441","+975","+591","+5997","+387","+267","+55","+246","+1284","+1 340","+673","+359","+226","+257","+855","+237","+1","+238","+1345","+236","+235","+56","+86","+61","+57","+269","+242","+243","+682","+506","+385","+53","+599","+357","+420","+45","+253","+1767","+1809","+1849","+1829","+593","+503","+240","+291","+372","+251","+500","+298","+679","+358","+33","+594","+689","+241","+220","+995","+49","+233","+350","+299","+1473","+590","+1671","+502","+44","+224","+245","+592","+509","+379","+504"};
+  //  private List<String> countryCodeList;
+    private final String[]countryCodeArray={"+44","+1","+353","+33","+49","+39","+34","+351","+31","+30","+41","+380","+48","+43","+46","+47","+356","+420","+32","+358","+385","+357","+40","+36","+359","+45","+352","+386","+381","+421","+372","+355","+7","+90","+61","+64","+81","+86","+852","+91","+92","+62","+972","+66","+84","+82","+65","+63","+98","+966","+60","+974","+971","+961","+962","+965","+673","+52","+55","+54","+51","+58","+56","+591","+593","+598","+595","+1876","+1809","+1829","+1849","+27","+234","+20","+218","+212","+213","+216","+233","+244","+251","+254"};
     private String countryCode;
-    private boolean isnativecountryselected;
+    private SetTimerClass setTimerClass;
 
 
     @Override
@@ -75,7 +76,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         getIds();
         setListeners();
         setFont();
-        //setSpinner();
+        setSpinner();
+        setTimerClass = (SetTimerClass)getApplication();
         etName.requestFocus();
         if(getIntent()!=null) {
             restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
@@ -92,13 +94,13 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             tvNumberofPeople.setText(noOfPersons);
         }
 
-        if(CommonUtils.isNetworkConnected(this)){
+        /*if(CommonUtils.isNetworkConnected(this)){
             callCountryCode();
         }else {
             CommonUtils.showAlertOk(getString(R.string.Please_connect_to_internet_first),BookingSummaryActivity.this);
-        }
+        }*/
 
-        spCountryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      /*  spCountryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -110,11 +112,11 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
     }
 
-    private void callCountryCode() {
+   /* private void callCountryCode() {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
 
@@ -142,14 +144,14 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             }
         });
 
-    }
+    }*/
 
-    /*private void setSpinner() {
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,countryCodeList);
+    private void setSpinner() {
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,R.layout.row_textview_spinner_type,countryCodeArray);
         adapter.setDropDownViewResource(R.layout.row_report_type_dropdown);
         spCountryCode.setAdapter(adapter);
 
-    }*/
+    }
 
     private void getIds() {
         tvCompleteBooking = (TextView) findViewById(R.id.tvCompleteBooking);
@@ -192,7 +194,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void setListeners() {
         tvCompleteBooking.setOnClickListener(this);
-       // spCountryCode.setOnItemSelectedListener(this);
+        spCountryCode.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -218,19 +220,25 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
         TextView tvEnterYourEmailId = (TextView) dialogConfirmBooking.findViewById(R.id.tvEnterYourEmailId);
         TextView tvResendOtp = (TextView) dialogConfirmBooking.findViewById(R.id.tvResendOtp);
-        etEnterOtp = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp);
+        etEnterOtp1 = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp1);
+        etEnterOtp2 = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp2);
+        etEnterOtp3 = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp3);
+        etEnterOtp4 = (EditText) dialogConfirmBooking.findViewById(R.id.etEnterOtp4);
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         tvEnterYourEmailId.setTypeface(typefaceBold);
         tvSubmit.setTypeface(typefaceBold);
         tvResendOtp.setTypeface(typefaceBold);
         Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
-        etEnterOtp.setTypeface(typefaceRegular);
+        etEnterOtp1.setTypeface(typefaceRegular);
+        etEnterOtp2.setTypeface(typefaceRegular);
+        etEnterOtp3.setTypeface(typefaceRegular);
+        etEnterOtp4.setTypeface(typefaceRegular);
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isValidOtp()) {
-                    otp=etEnterOtp.getText().toString().trim();
+                    otp=etEnterOtp1.getText().toString().trim()+etEnterOtp2.getText().toString().trim()+etEnterOtp3.getText().toString().trim()+etEnterOtp4.getText().toString().trim();
                     otpVerificationApi();
 
                 }
@@ -249,10 +257,10 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     }
 
     private boolean isValidOtp() {
-        if (etEnterOtp.getText().toString().trim().isEmpty()) {
+        if (etEnterOtp1.getText().toString().trim().isEmpty() && etEnterOtp2.getText().toString().trim().isEmpty() && etEnterOtp3.getText().toString().trim().isEmpty() && etEnterOtp4.getText().toString().trim().isEmpty()) {
             Toast.makeText(context, R.string.please_enter_otp, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (etEnterOtp.getText().toString().trim().length() <= 3) {
+        } else if (etEnterOtp1.getText().toString().trim().length()<1 && etEnterOtp2.getText().toString().trim().length()<1 && etEnterOtp3.getText().toString().trim().length()<1 && etEnterOtp4.getText().toString().trim().length()<1) {
             Toast.makeText(context, R.string.please_enter_valid_otp, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -297,7 +305,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.number_of_people="";
         jsonRequest.name="";
         jsonRequest.email=etEmail.getText().toString().trim();
-        jsonRequest.contact_no="+"+countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
 
         Call<JsonResponse> call = apiServices.sendOtp(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -339,8 +347,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.number_of_people=noOfPersons;
         jsonRequest.name=etName.getText().toString().trim();
         jsonRequest.email=etEmail.getText().toString().trim();
-        jsonRequest.contact_no="+"+countryCode+""+etPhoneNumber.getText().toString().trim();
-        jsonRequest.otp=etEnterOtp.getText().toString().trim();
+        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.otp=etEnterOtp1.getText().toString().trim()+etEnterOtp2.getText().toString().trim()+etEnterOtp3.getText().toString().trim()+etEnterOtp4.getText().toString().trim();
         Call<JsonResponse> call = apiServices.otpVerification(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -388,7 +396,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
-        jsonRequest.contact_no="+"+countryCode+""+etPhoneNumber.getText().toString().trim();
+        jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
 
         Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.resendOtp(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
@@ -426,7 +434,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     }
 
 
-    /*@Override
+    @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
          countryCode=spCountryCode.getSelectedItem().toString().trim();
         //isCountryCodeSelected = true;
@@ -436,5 +444,23 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         //  isCountryCodeSelected = true;
-    }*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
+    }
 }

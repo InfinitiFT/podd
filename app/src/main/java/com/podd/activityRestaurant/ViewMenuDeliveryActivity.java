@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.podd.R;
@@ -35,8 +36,9 @@ import static com.podd.R.id.tvRestauarntName;
 public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private RecyclerView rvRestaurants;
-    private TextView tvRestaurantName;
+    private TextView tvRestaurantName,tvTotal,tvTotalPrice;
     private TextView tvBookNow;
+    private LinearLayout llViewTotalPrice;
     private ArrayList<String> restaurantImages;
     private ArrayList<RestaurantMenu> restaurantMenu;
     private String restaurantName;
@@ -82,9 +84,14 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     }
 
     private void getIds() {
+        llViewTotalPrice = (LinearLayout) findViewById(R.id.llViewTotalPrice);
+        llViewTotalPrice.setVisibility(View.VISIBLE);
         rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
         tvRestaurantName = (TextView) findViewById(tvRestauarntName);
         tvBookNow = (TextView) findViewById(R.id.tvBookNow);
+        tvTotal = (TextView) findViewById(R.id.tvTotal);
+        tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
+        tvTotalPrice.setText("£ 50");
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -94,6 +101,8 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         tvRestaurantName.setTypeface(typefaceBold);
         tvBookNow.setTypeface(typefaceBold);
+        tvTotal.setTypeface(typefaceBold);
+        tvTotalPrice.setTypeface(typefaceBold);
     }
 
     private void setListeners() {

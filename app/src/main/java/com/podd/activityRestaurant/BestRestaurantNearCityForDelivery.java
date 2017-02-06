@@ -29,6 +29,7 @@ import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.Logger;
+import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -67,6 +68,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     private EndlessScrollListener scrollListener;
     private boolean isRestaurant = false;
     private int pageSize = 10;
+    private SetTimerClass setTimerClass;
 
 
     @Override
@@ -79,6 +81,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         fetchLocation();
         setFont();
         tvLocationName.setSelected(true);
+        setTimerClass = (SetTimerClass)getApplication();
 
 
         try {
@@ -163,7 +166,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         tvCuisineType.setTypeface(typeface);
         tvAmbience.setTypeface(typeface);
         tvBusiness.setTypeface(typeface);
-        //  Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
     }
 
@@ -173,8 +175,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
             public void gotLocation(Location location) {
                 currentLat = location.getLatitude();
                 currentLong = location.getLongitude();
-                /*currentLat = 51.4662;
-                currentLong = 0.1617;*/
                 if (CommonUtils.isNetworkConnected(BestRestaurantNearCityForDelivery.this)) {
                     getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
                 } else {
@@ -196,11 +196,9 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 CommonUtils.disMissProgressDialog(context);
-                /*tvCityName.setText(response.body().results.get(0).formatted_address);*/
                 getRestaurantListApi(currentLat, currentLong, pageNo);
                 llVenues.setVisibility(View.VISIBLE);
                 tvLocationName.setText(response.body().results.get(0).formatted_address);
-
                 Logger.addRecordToLog("Response " + response);
             }
 
@@ -298,8 +296,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
             }
         });
-
-
     }
 
     /******************************Cuisine Restaurant List Api******************************/
@@ -333,7 +329,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                             _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCityForDelivery.this);
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
-                            Log.d(TAG, "Number of data received: " + cuisineList.size());
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -514,12 +509,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                             _searchableListDialog.show(getFragmentManager(),TAG);
                             _searchableListDialog.setTitle(getString(R.string.select));
 
-                            /*GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
-                            rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
-                            rvRestaurants.setNestedScrollingEnabled(false);
-                            Log.d(TAG, "Number of data received: " + cuisineList.size());*/
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -544,8 +533,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         });
 
     }
-
-
 
     /************************Meal Type Restaurant Api*****************/
 
@@ -657,7 +644,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 ambienceId="";
                 cuisineId="";
                 locationId="";
-                mealId="";
                 tvBusiness.setText("");
                 tvCuisineType.setText("");
                 tvLocationType.setText("");
@@ -699,6 +685,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         jsonRequest.cusine = cuisineId;
         jsonRequest.dietary = dietaryId;
         jsonRequest.meal = mealId;
+        jsonRequest.deliver_food="1";
         jsonRequest.ambience = ambienceId;
         jsonRequest.location=locationId;
         jsonRequest.latitude="";
@@ -742,5 +729,23 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 CommonUtils.disMissProgressDialog(context);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
     }
 }

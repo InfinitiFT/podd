@@ -60,7 +60,7 @@ import retrofit2.Response;
 
 @SuppressWarnings("ALL")
 public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
-    private TextView tvAdminMessage;
+    private TextView tvAdminMessage,tvAppName;
     private RecyclerView rvHomeItems;
     private HomeItemsAdapter homeItemsAdapter;
     private Context context;
@@ -155,6 +155,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         tvTime.setTypeface(typefaceBold);
         tvAdminMessage.setTypeface(typefaceBold);
         tvWelcome.setTypeface(typefaceBold);
+        tvAppName.setTypeface(typefaceBold);
     }
 
     private void callHomeApi() {
@@ -207,6 +208,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         tvDayDate = (TextView) findViewById(R.id.tvDayDate);
         tvWelcome = (TextView) findViewById(R.id.tvWelcome);
         tvAdminMessage = (TextView) findViewById(R.id.tvAdminMessage);
+        tvAppName = (TextView) findViewById(R.id.tvAppName);
         tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
        // tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
 

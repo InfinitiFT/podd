@@ -21,6 +21,7 @@ import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
+import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -65,6 +66,7 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
     private TextView tvDietary,tvDietaryLeft;
     private TextView tvAmbience,tvAmbienceLeft,tvPriceRangeLeft;
     Intent intent ;
+    private SetTimerClass setTimerClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
         getIds();
         setListeners();
         setFont();
+        setTimerClass = (SetTimerClass)getApplication();
         if(getIntent()!=null){
             latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
             longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
@@ -339,5 +342,23 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
     }
 }

@@ -21,6 +21,7 @@ import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
+import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
@@ -64,6 +65,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
     private TextView tvCuisine,tvCuisineLeft;
     private TextView tvDietary,tvDietaryLeft;
     private TextView tvAmbience,tvAmbienceLeft,tvPriceRangeLeft;
+    private SetTimerClass setTimerClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         getIds();
         setListeners();
         setFont();
+        setTimerClass = (SetTimerClass)getApplication();
         if(getIntent()!=null){
             latitude=getIntent().getStringExtra(AppConstant.LATITUDE);
             longitude=getIntent().getStringExtra(AppConstant.LONGITUDE);
@@ -165,7 +168,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                 break;
 
             case R.id.tvDistance:
-
                 String uriString = "http://maps.google.com/maps?saddr="+lat+","+longi+"&daddr="+latitude+","+longitude;
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse(uriString));
@@ -343,5 +345,23 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
     }
 }

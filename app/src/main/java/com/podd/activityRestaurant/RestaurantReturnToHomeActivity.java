@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.podd.R;
 import com.podd.utils.AppConstant;
+import com.podd.utils.SetTimerClass;
 
 /**
  * The type Restaurant return to home activity.
@@ -22,7 +23,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvDateBooked,tvConfirmation,tvThanks;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
-
+    private SetTimerClass setTimerClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         getIds();
         setListeners();
         setFont();
+        setTimerClass = (SetTimerClass)getApplication();
 
         /*this condition get the data from booking summary screen*/
         if(getIntent()!=null) {
@@ -110,6 +112,24 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         intent = new Intent(context, NewHomeScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
     }
 
 

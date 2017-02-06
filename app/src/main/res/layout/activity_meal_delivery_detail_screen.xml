@@ -112,7 +112,7 @@
                             android:id="@+id/llDietary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:orientation="horizontal">
 
                             <TextView
@@ -278,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
                             android:text=""
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/grey"
                             android:textSize="@dimen/text_size_10" />
                     </LinearLayout>
                 </LinearLayout>

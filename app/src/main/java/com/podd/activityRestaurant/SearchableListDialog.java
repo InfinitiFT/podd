@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.podd.R;
+import com.podd.utils.SetTimerClass;
 
 import java.io.Serializable;
 import java.util.List;
@@ -87,6 +88,7 @@ public class SearchableListDialog extends DialogFragment implements
                              Bundle savedInstanceState) {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams
                 .SOFT_INPUT_STATE_HIDDEN);
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

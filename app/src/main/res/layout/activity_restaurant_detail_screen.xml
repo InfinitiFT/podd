@@ -105,7 +105,7 @@
                             android:padding="@dimen/dp_2"
                             android:text=""
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                            android:textSize="@dimen/text_size_8" />
 
 
 
@@ -113,7 +113,7 @@
                             android:id="@+id/llDietary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginTop="@dimen/dp_6"
                             android:orientation="horizontal">
 
                             <TextView
@@ -259,7 +259,7 @@
                             android:id="@+id/llButtons"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_18"
                             android:orientation="vertical">
 
                             <TextView
@@ -337,8 +337,9 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_2"
                             android:text=""
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_10" />
+                            android:layout_marginLeft="@dimen/dp_4"
+                            android:textColor="@color/text_color_grey"
+                            android:textSize="@dimen/text_size_8" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -350,7 +351,7 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@drawable/button_background_pink"
                 android:gravity="center"
-                android:padding="@dimen/dp_5"
+                android:padding="@dimen/dp_8"
                 android:textStyle="bold"
                 android:text="@string/book_now"
                 android:textColor="@android:color/white"

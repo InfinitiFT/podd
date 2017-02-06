@@ -83,12 +83,13 @@
                         android:textColor="@android:color/white"/>
 
                     <TextView
+                        android:id="@+id/tvAppName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="@string/the_armitage"
+                        android:text="THE PODD"
                         android:textStyle="bold"
-                        android:textSize="@dimen/text_size_18"
+                        android:textSize="@dimen/text_size_20"
                         android:gravity="center"
                         android:textColor="@android:color/white"/>
 

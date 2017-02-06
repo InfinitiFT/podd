@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_marginLeft="@dimen/dp_30"
-    android:layout_marginRight="@dimen/dp_30"
+    android:layout_marginLeft="@dimen/dp_60"
+    android:layout_marginRight="@dimen/dp_60"
     android:background="@drawable/rounded_corners_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/tvEnterYourEmailId"
@@ -19,30 +20,84 @@
         android:text="@string/please_enter_otp_to_confirm_booking"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_12" />
-    <EditText
-        android:id="@+id/etEnterOtp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:padding="@dimen/dp_8"
-        android:hint="@string/verification_code"
-        android:maxLength="6"
-        android:maxLines="1"
-        android:background="@null"
-        android:imeOptions="actionDone"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:padding="@dimen/dp_8">
+    <EditText
+        android:id="@+id/etEnterOtp1"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLength="1"
+        android:clickable="false"
+        android:background="@mipmap/circle"
+        android:imeOptions="actionNext"
         android:inputType="number"
-        android:textColorHint="@color/text_color_grey"
-        android:textColor="@android:color/white"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/text_size_12" />
 
+    <EditText
+        android:id="@+id/etEnterOtp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLength="1"
+        android:clickable="false"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@mipmap/circle"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_12" />
+
+    <EditText
+        android:id="@+id/etEnterOtp3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLength="1"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:clickable="false"
+        android:background="@mipmap/circle"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_12" />
+
+    <EditText
+        android:id="@+id/etEnterOtp4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLength="1"
+        android:clickable="false"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@mipmap/circle"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_12" />
+
+    </LinearLayout>
 
 
-
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="0.4dp"
         android:layout_marginTop="@dimen/dp_4"
-        android:background="@color/text_color_grey"/>
+        android:background="@color/text_color_grey"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
