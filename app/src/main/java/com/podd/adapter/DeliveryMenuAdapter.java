@@ -7,11 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.podd.R;
+import com.podd.activityRestaurant.ViewMenuDeliveryActivity;
+import com.podd.eventInterface.AddValueEvent;
+import com.podd.eventInterface.MinusValueEvent;
 import com.podd.model.MealDetails;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +60,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
     }
 
     @Override
-    public void onBindViewHolder(final DeliveryMenuAdapter.MainVH holder, int section, int relativePosition, int absolutePosition)
+    public void onBindViewHolder(final DeliveryMenuAdapter.MainVH holder, final int section, final int relativePosition, int absolutePosition)
     {
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.title.setTypeface(typefaceRegular);
@@ -70,14 +76,33 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         }
         else {
             holder.titlePrice.setText("");
+
+
+        }
+        if(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price.equalsIgnoreCase("")){
+            holder.llPriceEvent.setVisibility(View.GONE);
         }
 
 
         holder.ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count = count+1;
-                holder.tvNumber.setText(""+count);
+
+                meal_details.get(section).subtitle_meal_details.get(relativePosition).count=  meal_details.get(section).subtitle_meal_details.get(relativePosition).count+1;
+                holder.tvNumber.setText(""+meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
+                /*if (ApplicationTongueling.savedList!=null&&ApplicationTongueling.savedList.get(mPage) != null){
+                    ApplicationTongueling.savedList.get(mPage).count = data.get(mPage).count;
+                }*/
+                String price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                price = price.replace("£", "").trim();
+                if (Double.parseDouble(price) > 0.0) {
+                    EventBus.getDefault().post(new AddValueEvent(Double.valueOf(price)));
+                }
+               /* try {
+                    EventBus.getDefault().post(new AddValueEvent( Integer.valueOf(ApplicationTongueling.savedList.get(mPage).price)));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }*/
 
             }
         });
@@ -85,13 +110,33 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         holder.ivMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count = count-1;
+                /*count = count-1;
                 if (count>=0){
                     holder.tvNumber.setText(""+count);
                 }
                 else{
                     count=0;
                     holder.tvNumber.setText(""+count);
+
+
+                }*/
+
+                if (meal_details.get(section).subtitle_meal_details.get(relativePosition).count == 0) {
+
+                } else {
+
+                    String price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                    price = price.replace("£", "").trim();
+
+
+                    meal_details.get(section).subtitle_meal_details.get(relativePosition).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count - 1;
+                    holder.tvNumber.setText("" + meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
+                    if (Double.parseDouble(price) > 0.0) {
+                        EventBus.getDefault().post(new MinusValueEvent(Double.valueOf(price)));
+                    }
+                    /*if(ApplicationTongueling.savedList!=null&&ApplicationTongueling.savedList.get(mPage) != null){
+                        ApplicationTongueling.savedList.get(mPage).count = data.get(mPage).count;
+                    }*/
                 }
             }
         });
@@ -121,6 +166,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         final TextView title;
         final TextView titlePrice,tvNumber;
         final ImageView ivMinus,ivAdd;
+         LinearLayout llPriceEvent;
 
         public MainVH(View itemView) {
             super(itemView);
@@ -129,6 +175,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
             ivMinus=(ImageView)itemView.findViewById(R.id.ivMinusFragment);
             ivAdd=(ImageView)itemView.findViewById(R.id.ivAddFragment);
             tvNumber=(TextView)itemView.findViewById(R.id.tvNumber);
+            llPriceEvent=(LinearLayout) itemView.findViewById(R.id.llPriceEvent);
         }
     }
 }

@@ -16,15 +16,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
+import com.podd.eventInterface.AddValueEvent;
+import com.podd.eventInterface.MinusValueEvent;
 import com.podd.fragment.BreakfastMenuFragment;
 import com.podd.fragment.DeliveryMenuFragment;
 import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +54,14 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private SetTimerClass setTimerClass;
+    public  double price=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_menu);
         context = ViewMenuDeliveryActivity.this;
+        EventBus.getDefault().register(this);
         getIds();
         setListeners();
         setFont();
@@ -91,7 +99,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         tvBookNow = (TextView) findViewById(R.id.tvBookNow);
         tvTotal = (TextView) findViewById(R.id.tvTotal);
         tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
-        tvTotalPrice.setText("£ 50");
+        tvTotalPrice.setText("£ "+price);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -120,14 +128,26 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBookNow:
-                Intent intent = new Intent(context, RestaurantBookingDetailsActivity.class);
-                intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
-                intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
-                intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
-                intent.putExtra(AppConstant.LOCATION, location);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if(validationPrice()){
+                    Intent intent = new Intent(context, RestaurantBookingDetailsActivity.class);
+                    intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
+                    intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
+                    intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
+                    intent.putExtra(AppConstant.LOCATION, location);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
                 break;
+        }
+    }
+
+    private boolean validationPrice() {
+        if (!tvTotalPrice.getText().toString().trim().equalsIgnoreCase("£ 0.0")) {
+            return true;
+        } else {
+            Toast.makeText(this, "Please select an item.", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
@@ -182,6 +202,22 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
 
     }
 
+    @Subscribe
+    public void onEventMainThread(AddValueEvent addValueEvent) {
+        price = price + addValueEvent.value;
+        tvTotalPrice.setText("£ " + price);
+
+    }
+
+    @Subscribe
+    public void onEventMainThread(MinusValueEvent minusValueEvent) {
+        price = price - minusValueEvent.value;
+
+        tvTotalPrice.setText("£ " + price);
+
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -201,5 +237,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         super.onUserInteraction();
         setTimerClass.setTimer(this, false);
     }
+
+
 }
 

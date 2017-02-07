@@ -279,7 +279,7 @@
                             android:padding="@dimen/dp_2"
                             android:text=""
                             android:textColor="@color/grey"
-                            android:textSize="@dimen/text_size_10" />
+                            android:textSize="@dimen/text_size_8" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

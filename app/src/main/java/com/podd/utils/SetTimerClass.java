@@ -9,6 +9,9 @@ import android.os.CountDownTimer;
 
 import com.podd.activityRestaurant.NewHomeScreenActivity;
 
+
+import java.util.ArrayList;
+
 public class SetTimerClass extends Application {
 
     private Context context;
@@ -16,6 +19,7 @@ public class SetTimerClass extends Application {
     private boolean isRunning;
     private CountDownTimer countDownTimer;
     private Activity activity;
+
 
 
     @Override
@@ -65,5 +69,8 @@ public class SetTimerClass extends Application {
     /*public void setTimer(Context context){
         activity = (Activity) context;
     }*/
+
+
+
 
 }

@@ -170,12 +170,10 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                 break;
 
             case R.id.tvDistance:
-
                 String uriString = "http://maps.google.com/maps?saddr="+lat+","+longi+"&daddr="+latitude+","+longitude;
                 intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(uriString));
                 startActivity(intent);
-
                 break;
         }
     }
