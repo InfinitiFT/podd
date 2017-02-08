@@ -72,7 +72,12 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activityRestaurant.ViewInMapActivity"
+            android:name=".activityRestaurant.DeliveryBookingDetailsActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+        <activity
+            android:name=".activityRestaurant.DeliveryBookingSummaryActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 

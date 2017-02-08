@@ -30,6 +30,7 @@ import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ import retrofit2.Response;
  * The type Restraunt booking details activity.
  */
 @SuppressWarnings("ALL")
-public class RestaurantBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener,Serializable {
+public class DeliveryBookingDetailsActivity extends AppCompatActivity implements View.OnClickListener,Serializable {
     private Context context;
     private RecyclerView rvRestaurants;
     private TextView tvBookNow;
@@ -63,7 +64,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String restaurantName;
     private final String[] numberOfPeopleArray = {"Number of people", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private String date;
-    private final String TAG = RestaurantBookingDetailsActivity.class.getSimpleName();
+    private final String TAG = DeliveryBookingDetailsActivity.class.getSimpleName();
     private String restaurantantId;
     private String location;
     private String dateBooked;
@@ -79,7 +80,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restraunt_booking_details);
-        context = RestaurantBookingDetailsActivity.this;
+        context = DeliveryBookingDetailsActivity.this;
         getIds();
         setFont();
         setTimerClass = (SetTimerClass)getApplication();
@@ -106,7 +107,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                         if(Float.parseFloat((spSelectTime.getSelectedItem().toString().replace(":","")).trim())<=Float.parseFloat(String.valueOf(current.get(Calendar.HOUR_OF_DAY))+String.valueOf(current.get(Calendar.MINUTE))))
                         {
                             spSelectTime.setSelection(0);
-                            Toast.makeText(RestaurantBookingDetailsActivity.this,getString(R.string.please_select_a_valid_time),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DeliveryBookingDetailsActivity.this,getString(R.string.please_select_a_valid_time),Toast.LENGTH_SHORT).show();
 
                         }else {
 
@@ -215,7 +216,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 timeBooked = tvTimeBooked.getText().toString().trim();
                 noOfPersons = tvNoOfPersons.getText().toString().trim();*/
                 if (isValid()) {
-                    Intent intent = new Intent(context, BookingSummaryActivity.class);
+                    Intent intent = new Intent(context, DeliveryBookingSummaryActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(AppConstant.DATEBOOKED, tvDateBooked.getText().toString().trim());
                     intent.putExtra(AppConstant.TIMEBOOKED, tvTimeBooked.getText().toString().trim());
@@ -251,7 +252,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 tvDateBooked.setText(date);
                 // if(!tvDateBooked.getText().toString().equalsIgnoreCase(getString(R.string.date_Booked))){
                 getRestauranttimeIntervalApi(date);
-                arrayAdapterTime = new ArrayAdapter<String>(RestaurantBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
+                arrayAdapterTime = new ArrayAdapter<String>(DeliveryBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
                     @Override
                     public boolean isEnabled(int position) {
                         return position != 0;
@@ -285,7 +286,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 tvToday.setText(date);
                 tvDateBooked.setText(date);
                 getRestauranttimeIntervalApi(date);
-                arrayAdapterTime = new ArrayAdapter<String>(RestaurantBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
+                arrayAdapterTime = new ArrayAdapter<String>(DeliveryBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
                     @Override
                     public boolean isEnabled(int position) {
                         return position != 0;
@@ -392,7 +393,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                                 timeItems.add(restaurantTimeInterval.get(i));
                             }
 
-                            ArrayAdapter<String> arrayAdapterTime = new ArrayAdapter<String>(RestaurantBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
+                            ArrayAdapter<String> arrayAdapterTime = new ArrayAdapter<String>(DeliveryBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
                                 @Override
                                 public boolean isEnabled(int position) {
                                     return position != 0;
@@ -443,7 +444,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                             spSelectTime.setAdapter(adapter);*/
 
                         } else {
-                            CommonUtils.showAlertOk("Not available. Please select a different date",RestaurantBookingDetailsActivity.this);
+                            CommonUtils.showAlertOk("Not available. Please select a different date",DeliveryBookingDetailsActivity.this);
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();

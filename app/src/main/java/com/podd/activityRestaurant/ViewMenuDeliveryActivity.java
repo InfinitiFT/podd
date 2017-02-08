@@ -129,7 +129,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         switch (view.getId()) {
             case R.id.tvBookNow:
                 if(validationPrice()){
-                    Intent intent = new Intent(context, RestaurantBookingDetailsActivity.class);
+                    Intent intent = new Intent(context, DeliveryBookingDetailsActivity.class);
                     intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
                     intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
@@ -155,7 +155,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         for (int i = 0; i < restaurantMenu.size(); i++) {
-            adapter.addFragment(new DeliveryMenuFragment().newInstance(restaurantMenu.get(i).meal_details), restaurantMenu.get(i).meal_name);
+            adapter.addFragment(new DeliveryMenuFragment().newInstance(restaurantMenu,restaurantMenu.get(i).meal_details), restaurantMenu.get(i).meal_name);
         }
 
         viewPager.setAdapter(adapter);
@@ -205,7 +205,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     @Subscribe
     public void onEventMainThread(AddValueEvent addValueEvent) {
         price = price + addValueEvent.value;
-        tvTotalPrice.setText("£ " + price);
+        tvTotalPrice.setText("£ " + price/*SetTimerClass.getTotalPrice()*/);
 
     }
 
@@ -213,7 +213,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     public void onEventMainThread(MinusValueEvent minusValueEvent) {
         price = price - minusValueEvent.value;
 
-        tvTotalPrice.setText("£ " + price);
+        tvTotalPrice.setText("£ " + price/*SetTimerClass.getTotalPrice()*/);
 
     }
 

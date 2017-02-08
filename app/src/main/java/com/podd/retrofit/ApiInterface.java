@@ -54,12 +54,15 @@ public interface ApiInterface {
     @POST("time_interval.php")
     Call<JsonResponse>getRestaurantTimeInterval(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
-    @POST("restaurant_booking.php")
+    @POST("otp_verification.php")
     Call<JsonResponse>sendOtp(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
 
-    @POST("otp_verification.php")
+    @POST("restaurant_booking.php")
     Call<JsonResponse>otpVerification(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+
+    @POST("delivery_booking.php")
+    Call<JsonResponse>deliveryBooking(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
     @POST("resend_otp.php")
     Call<JsonResponse>resendOtp(@Header("Authorization") String token,@Body JsonRequest jsonRequest);

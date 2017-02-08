@@ -15,9 +15,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.model.CountryCodeModel;
+import com.podd.model.OrderDetail;
+import com.podd.model.SavedItem;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
@@ -27,7 +29,6 @@ import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,7 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BookingSummaryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class DeliveryBookingSummaryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private Intent intent;
     private Context context;
     private EditText etName;
@@ -57,8 +58,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private String noOfPersons;
     private String restaurantName;
     private String restaurantId;
-    private String condition;
-    private final String TAG=BookingSummaryActivity.class.getSimpleName();
+    private final String TAG=DeliveryBookingSummaryActivity.class.getSimpleName();
     private String email;
     private String phone;
     private String otp;
@@ -72,7 +72,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_summary);
-        context = BookingSummaryActivity.this;
+        context = DeliveryBookingSummaryActivity.this;
 
         getIds();
         setListeners();
@@ -202,7 +202,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvCompleteBooking:
-                CommonUtils.hideKeyboard(BookingSummaryActivity.this);
+                CommonUtils.hideKeyboard(DeliveryBookingSummaryActivity.this);
                 if (isValid()) {
                     sendOtpApi();
                     /*name=etName.getText().toString().trim();
@@ -345,13 +345,14 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         jsonRequest.restaurant_id=restaurantId;
         jsonRequest.booking_date=dateBooked;
         jsonRequest.booking_time=timeBooked;
-        jsonRequest.number_of_people=noOfPersons;
+       // jsonRequest.number_of_people=noOfPersons;
+        List<SavedItem> orderDetailList = SetTimerClass.savedList;
+        jsonRequest.order_details = orderDetailList;
         jsonRequest.name=etName.getText().toString().trim();
         jsonRequest.email=etEmail.getText().toString().trim();
         jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
         jsonRequest.otp=etEnterOtp1.getText().toString().trim()+etEnterOtp2.getText().toString().trim()+etEnterOtp3.getText().toString().trim()+etEnterOtp4.getText().toString().trim();
-
-        Call<JsonResponse> call = apiServices.otpVerification(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
+        Call<JsonResponse> call = apiServices.deliveryBooking(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
@@ -371,6 +372,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                         intent.putExtra(AppConstant.NOOFPEOPLE,noOfPersons);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        SetTimerClass.savedList.clear();
 
 
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))

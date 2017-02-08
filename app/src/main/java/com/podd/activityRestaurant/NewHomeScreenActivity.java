@@ -72,7 +72,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private ArrayList<String> banner_image;
     private TextView tvTime,tvDayDate,tvWelcome;
 //    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
-    private  String[] itemName = new String[]{"Front Desk","Restaurants & Bars","Meal Delivery","Taxi","Leisure Attractions","Health & Spa"};
+    private  String[] itemName = new String[]{"Front Desk","Restaurants & Bars","Delivery","Taxi","Leisure Attractions","Health & Spa"};
     private List<Integer> imgList;
     int currentPage = 0;
     Timer timer;

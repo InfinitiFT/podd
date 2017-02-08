@@ -1,7 +1,11 @@
 package com.podd.webservices;
 
 
+import com.podd.model.OrderDetail;
+import com.podd.model.SavedItem;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class JsonRequest implements Serializable {
  public  String   type;
@@ -26,6 +30,8 @@ public class JsonRequest implements Serializable {
  public String meal;
  public String otp;
  public String date;
+ public String total_price;
+ public List<SavedItem> order_details;
 
 
 }

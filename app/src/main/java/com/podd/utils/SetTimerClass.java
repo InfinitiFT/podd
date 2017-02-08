@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 
 import com.podd.activityRestaurant.NewHomeScreenActivity;
+import com.podd.model.MealDetails;
+import com.podd.model.SavedItem;
+import com.podd.model.SubItemMealDetails;
 
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class SetTimerClass extends Application {
     private boolean isRunning;
     private CountDownTimer countDownTimer;
     private Activity activity;
-
+    public static ArrayList<SavedItem> savedList = new ArrayList<>();
 
 
     @Override
@@ -69,7 +72,23 @@ public class SetTimerClass extends Application {
     /*public void setTimer(Context context){
         activity = (Activity) context;
     }*/
+    public static  double getTotalPrice() {
+        double price = 0.0;
 
+        if (savedList != null) {
+            for (int i = 0; i < savedList.size(); i++) {
+                try {
+                    if (savedList.get(i).count > 0) {
+                        price = price + (savedList.get(i).count * Double.parseDouble(savedList.get(i).price));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return price;
+    }
 
 
 

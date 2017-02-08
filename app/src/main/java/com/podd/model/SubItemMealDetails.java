@@ -8,7 +8,7 @@ public class SubItemMealDetails implements Serializable{
     public String item_id;
     public String item_name;
     public String item_price;
-    public int count;
+    public int count = 0;
 
 
 }
