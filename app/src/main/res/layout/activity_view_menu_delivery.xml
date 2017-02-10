@@ -112,7 +112,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dp_8"
                 android:textStyle="bold"
-                android:text="@string/book_now"
+                android:text="@string/order_now"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12" />
         </LinearLayout>

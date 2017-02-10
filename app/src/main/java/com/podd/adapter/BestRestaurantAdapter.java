@@ -99,7 +99,23 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.tvPriceRange.setText("");
         }
 
-        if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
+        if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() >= 2) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name+", "+restaurantList.get(position).cuisine.get(1).cuisine_name);
+        }else if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size()>=1) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
+        } /*else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
+        } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 1) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name+","+restaurantList.get(position).dietary.get(1).dietary_name);
+        } else if (restaurantList.get(position).ambience != null && restaurantList.get(position).ambience.size() > 0) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name);
+        } else if (restaurantList.get(position).ambience != null && restaurantList.get(position).ambience.size() > 1) {
+            holder.tvtypeOfRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name+","+restaurantList.get(position).ambience.get(1).ambience_name);
+        } */else {
+            holder.tvtypeOfRestaurant.setText("");
+        }
+
+       /* if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() > 0) {
             holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name);
         } else if (restaurantList.get(position).dietary != null && restaurantList.get(position).dietary.size() > 0) {
             holder.tvtypeOfRestaurant.setText(restaurantList.get(position).dietary.get(0).dietary_name);
@@ -107,7 +123,7 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
             holder.tvtypeOfRestaurant.setText(restaurantList.get(position).ambience.get(0).ambience_name);
         } else {
             holder.tvtypeOfRestaurant.setText(R.string.cuisine);
-        }
+        }*/
 
         /*holder.ivRestaurant.getLayoutParams().height = (CommonUtils.getDeviceWidth((Activity) context) / 2);
         holder.ivRestaurant.getLayoutParams().width = (CommonUtils.getDeviceWidth((Activity) context) / 2);

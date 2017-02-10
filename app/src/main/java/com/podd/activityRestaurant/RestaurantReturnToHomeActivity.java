@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.podd.R;
 import com.podd.utils.AppConstant;
@@ -23,6 +24,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvDateBooked,tvConfirmation,tvThanks;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
+    private LinearLayout llNumberPeople;
     private SetTimerClass setTimerClass;
 
     @Override
@@ -37,18 +39,31 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
 
         /*this condition get the data from booking summary screen*/
         if(getIntent()!=null) {
-            String restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
+            /*String restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
             String restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
             String dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
             String timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
             String location = getIntent().getStringExtra(AppConstant.LOCATION);
-            String noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);
+            String noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);*/
 
-            tvRestauarntName.setText(restaurantName);
-            tvLocation.setText(location);
-            tvTimeBooked.setText(timeBooked);
-            tvDateBooked.setText(dateBooked);
-            tvNumberofPeople.setText(noOfPersons);
+           /* tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
+            tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
+            tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
+            tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));*/
+
+            if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("1")){
+                tvNumberofPeople.setVisibility(View.GONE);
+                tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
+                tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
+                tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
+                tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));
+            }else if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("0")){
+                tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
+                tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
+                tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
+                tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));
+                tvNumberofPeople.setText(getIntent().getStringExtra(AppConstant.NOOFPEOPLE));
+            }
         }else{
             tvRestauarntName.setText("");
             tvLocation.setText("");
@@ -71,6 +86,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvNumberofPeopleLeft = (TextView) findViewById(R.id.tvNumberofPeopleLeft);
         tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
         tvThanks = (TextView) findViewById(R.id.tvThanks);
+        llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
 
     }
 

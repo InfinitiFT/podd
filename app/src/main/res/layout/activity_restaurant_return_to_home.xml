@@ -13,13 +13,16 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/llInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -122,6 +125,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/llNumberPeople"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -176,24 +180,24 @@
                 android:textStyle="bold" />
 
 
-            <TextView
-                android:id="@+id/tvReturnToHome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_4"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/button_background_pink"
-                android:gravity="center"
-                android:padding="@dimen/dp_8"
-                android:text="@string/return_to_home"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12" />
+
 
 
         </LinearLayout>
     </ScrollView>
-
+    <TextView
+        android:id="@+id/tvReturnToHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/button_background_pink"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:text="@string/return_to_home"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_12" />
 
 
 </LinearLayout>

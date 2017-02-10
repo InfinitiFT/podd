@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.podd.R.id.tvRestauarntName;
+import static com.podd.R.id.tvTotalPrice;
 
 
 @SuppressWarnings("ALL")
@@ -97,6 +98,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
         tvRestaurantName = (TextView) findViewById(tvRestauarntName);
         tvBookNow = (TextView) findViewById(R.id.tvBookNow);
+        tvBookNow.setText(getString(R.string.order_now));
         tvTotal = (TextView) findViewById(R.id.tvTotal);
         tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
         tvTotalPrice.setText("£ "+price);
@@ -134,6 +136,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
                     intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
                     intent.putExtra(AppConstant.LOCATION, location);
+                    intent.putExtra(AppConstant.TOTAL_PRICE, tvTotalPrice.getText().toString().trim());
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,7 +44,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
     private EditText etName;
     private Spinner spCountryCode;
     private EditText etPhoneNumber;
-    private EditText etEmail;
+    private EditText etEmail,etAddress;
     private TextView tvCompleteBooking;
     private TextView tvRestaurantName;
     private TextView tvLocation,tvLocationLeft;
@@ -158,6 +160,9 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         tvCompleteBooking = (TextView) findViewById(R.id.tvCompleteBooking);
         tvBookTaxi = (TextView) findViewById(R.id.tvBookTaxi);
         etName = (EditText) findViewById(R.id.etName);
+        etAddress = (EditText) findViewById(R.id.etAddress);
+        etAddress .setVisibility(View.VISIBLE);
+        etAddress.setText(CommonUtils.getPreferences(this,AppConstant.Address));
         spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -217,7 +222,6 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
 
     private void showOtpDialog() {
         dialogConfirmBooking = DialogUtils.createCustomDialog(context, R.layout.dialog_booking_confirmation);
-
         TextView tvSubmit = (TextView) dialogConfirmBooking.findViewById(R.id.tvSubmit);
         TextView tvEnterYourEmailId = (TextView) dialogConfirmBooking.findViewById(R.id.tvEnterYourEmailId);
         TextView tvResendOtp = (TextView) dialogConfirmBooking.findViewById(R.id.tvResendOtp);
@@ -234,6 +238,82 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         etEnterOtp2.setTypeface(typefaceRegular);
         etEnterOtp3.setTypeface(typefaceRegular);
         etEnterOtp4.setTypeface(typefaceRegular);
+
+        etEnterOtp1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp1.getText().toString().trim().length()==1){
+                    etEnterOtp2.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEnterOtp2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp2.getText().toString().trim().length()==1){
+                    etEnterOtp3.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEnterOtp3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp3.getText().toString().trim().length()==1){
+                    etEnterOtp4.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEnterOtp4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp4.getText().toString().trim().length()==1){
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,8 +428,10 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
        // jsonRequest.number_of_people=noOfPersons;
         List<SavedItem> orderDetailList = SetTimerClass.savedList;
         jsonRequest.order_details = orderDetailList;
+        jsonRequest.total_price = getIntent().getStringExtra(AppConstant.TOTAL_PRICE);
         jsonRequest.name=etName.getText().toString().trim();
         jsonRequest.email=etEmail.getText().toString().trim();
+        jsonRequest.address=etAddress.getText().toString().trim();
         jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
         jsonRequest.otp=etEnterOtp1.getText().toString().trim()+etEnterOtp2.getText().toString().trim()+etEnterOtp3.getText().toString().trim()+etEnterOtp4.getText().toString().trim();
         Call<JsonResponse> call = apiServices.deliveryBooking(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
@@ -370,9 +452,11 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                         intent.putExtra(AppConstant.DATEBOOKED,dateBooked);
                         intent.putExtra(AppConstant.TIMEBOOKED,timeBooked);
                         intent.putExtra(AppConstant.NOOFPEOPLE,noOfPersons);
+                        intent.putExtra(AppConstant.Delivery,"1");
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         SetTimerClass.savedList.clear();
+                        CommonUtils.savePreferencesString(DeliveryBookingSummaryActivity.this,AppConstant.Address,"");
 
 
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))

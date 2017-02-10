@@ -25,6 +25,7 @@
     <string name="location">Location</string>
     <string name="distance">Distance</string>
     <string name="book_now">BOOK NOW</string>
+    <string name="order_now">ORDER NOW</string>
     <string name="book_a_taxi_or_limousine">BOOK A TAXI OR LIMOUSINE</string>
     <string name="leaving_from">Leaving from</string>
     <string name="enter_address_or_postcode">Enter address or postcode</string>
@@ -118,4 +119,5 @@
     <string name="country_code">Code</string>
     <string name="verification_code">Verification code</string>
     <string name="total">Total:</string>
+    <string name="address">Address</string>
 </resources>

@@ -263,7 +263,18 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
 
                                     categories.add(response.body().cuisine.get(i).cuisine_name);
                             }
-                            String s1="";
+
+                            String[] stockArr = new String[categories.size()];
+                            stockArr = categories.toArray(stockArr);
+                            if(stockArr.length > 0) {
+                                String s = stockArr[0];
+                                for (int i = 1; i < stockArr.length; i++) {
+                                    s = s + "," + stockArr[i];
+                                }
+                                tvCuisine.setText(s);
+                            }
+//                            }
+                            /*String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
 
                                 if (i==categories.size()-1){
@@ -274,11 +285,14 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-                            tvCuisine.setText(s1);
+                            tvCuisine.setText(s1);*/
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
+
+
+
 
                         if(response.body().dietary!=null&&response.body().dietary.size()>0) {
                             for (int i = 0; i <response.body().dietary.size() ; i++) {
@@ -288,7 +302,18 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                                 categories.add(response.body().dietary.get(i).dietary_name);
                             }
 
-                            String s1="";
+                            String[] stockArr = new String[categories.size()];
+                            stockArr = categories.toArray(stockArr);
+                            if(stockArr.length > 0) {
+                                String s = stockArr[0];
+                                for (int i = 1; i < stockArr.length; i++) {
+                                    s = s + "," + stockArr[i];
+                                }
+                                tvDietary.setText(s);
+                            }
+
+
+                            /*String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
                                 if (i==categories.size()-1){
                                     s1=categories.get(i)+s1;
@@ -298,7 +323,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-                            tvDietary.setText(s1);
+                            tvDietary.setText(s1);*/
 
                         }
                         else {
@@ -312,7 +337,17 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                                 categories.add(response.body().ambience.get(i).ambience_name);
                             }
 
-                            String s1="";
+                            String[] stockArr = new String[categories.size()];
+                            stockArr = categories.toArray(stockArr);
+
+                            if(stockArr.length > 0) {
+                                String s = stockArr[0];
+                                for (int i = 1; i < stockArr.length; i++) {
+                                    s = s + "," + stockArr[i];
+                                }
+                                tvAmbience.setText(s);
+                            }
+                            /*String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
 
                                 if (categories.size()==1){
@@ -324,7 +359,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-                            tvAmbience.setText(s1);
+                            tvAmbience.setText(s1);*/
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();

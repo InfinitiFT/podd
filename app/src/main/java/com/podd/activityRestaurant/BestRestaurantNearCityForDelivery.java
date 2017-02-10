@@ -199,6 +199,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 getRestaurantListApi(currentLat, currentLong, pageNo);
                 llVenues.setVisibility(View.VISIBLE);
                 tvLocationName.setText(response.body().results.get(0).formatted_address);
+                CommonUtils.savePreferencesString(BestRestaurantNearCityForDelivery.this,AppConstant.Address,response.body().results.get(0).formatted_address);
                 Logger.addRecordToLog("Response " + response);
             }
 
@@ -485,7 +486,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "location";
         jsonRequest.search_content="";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
+        jsonRequest.latitude = String.valueOf(currentLat);
+        jsonRequest.longitude = String.valueOf(currentLong);
 
         Call<JsonResponse> call = apiServices.getLocationRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -494,8 +496,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -511,11 +511,11 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
                         }
                         else {
-                            Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
-                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
@@ -663,18 +663,10 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvDietaryType.setText("");
                 tvMealType.setText("");
                 callsearchedTextApi(pageNo);
-
                 break;
 
         }
 
-
-       /* GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-        rvRestaurants.setLayoutManager(gridLayoutManager);
-        cuisineTypeRestaurantAdapter = new CuisineTypeRestaurantAdapter(context, cuisineList);
-        rvRestaurants.setAdapter(cuisineTypeRestaurantAdapter);
-        rvRestaurants.setNestedScrollingEnabled(false);
-        Log.d(TAG, "Number of data received: " + cuisineList.size());*/
 
     }
 
@@ -712,7 +704,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                             rvRestaurants.setAdapter(bestRestaurantAdapter);
                             rvRestaurants.setNestedScrollingEnabled(false);
                         } else {
-                            Toast.makeText(context, "There is no restaurant list.", Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(context, "There is no restaurant list.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();

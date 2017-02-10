@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,11 +76,12 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
     private ArrayList<String> timeItems = new ArrayList<>();
     ArrayAdapter<String> arrayAdapterTime;
     private SetTimerClass setTimerClass;
+    private LinearLayout llNumberPeople;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restraunt_booking_details);
+        setContentView(R.layout.activity_delivery_restraunt_booking_details);
         context = DeliveryBookingDetailsActivity.this;
         getIds();
         setFont();
@@ -90,7 +92,6 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
             tvRestauarntName.setText(restaurantName);
             restaurantantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
             location = getIntent().getStringExtra(AppConstant.LOCATION);
-
         }
 
         selectNumberOfPeopleAdapter();
@@ -162,7 +163,9 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNoOfPersons = (TextView) findViewById(R.id.tvNoOfPersons);
-
+        llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
+        llNumberPeople.setVisibility(View.GONE);
+        tvNoOfPersons.setVisibility(View.GONE);
     }
 
     private void setFont() {
@@ -224,6 +227,7 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
                     intent.putExtra(AppConstant.LOCATION, location);
                     intent.putExtra(AppConstant.RESTAURANTNAME, restaurantName);
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantantId);
+                    intent.putExtra(AppConstant.TOTAL_PRICE, getIntent().getStringExtra(AppConstant.TOTAL_PRICE));
                     startActivity(intent);
                 }
                 break;
@@ -465,7 +469,6 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
 
     }
 
-
     private boolean isValid() {
         if (tvDateBooked.getText().toString().trim().matches(getString(R.string.date_booked))) {
             Toast.makeText(context, R.string.please_select_a_valid_date, Toast.LENGTH_LONG).show();
@@ -473,10 +476,10 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
         } else if (tvTimeBooked.getText().toString().trim().matches(getString(R.string.time_booked)) || tvTimeBooked.getText().toString().trim().matches(getString(R.string.select_time))) {
             Toast.makeText(context, R.string.please_select_a_valid_time, Toast.LENGTH_LONG).show();
             return false;
-        } else if (tvNoOfPersons.getText().toString().trim().matches(getString(R.string.number_of_persons))) {
+        } /*else if (tvNoOfPersons.getText().toString().trim().matches(getString(R.string.number_of_persons))) {
             Toast.makeText(context, R.string.please_select_number_of_people, Toast.LENGTH_LONG).show();
             return false;
-        }
+        }*/
         return true;
 
     }

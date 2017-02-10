@@ -5,10 +5,6 @@
     android:layout_height="wrap_content"
     android:gravity="start"
     android:textColor="@color/black"
-    android:paddingLeft="@dimen/dp_4"
-    android:paddingRight="@dimen/dp_4"
-    android:paddingTop="@dimen/dp_2"
-    android:paddingBottom="@dimen/dp_2"
+    android:padding="@dimen/dp_2"
     android:text=""
-    android:background="@drawable/button_background"
     android:textSize="@dimen/text_size_10" />

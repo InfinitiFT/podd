@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -235,6 +237,82 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         etEnterOtp3.setTypeface(typefaceRegular);
         etEnterOtp4.setTypeface(typefaceRegular);
 
+        etEnterOtp1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp1.getText().toString().trim().length()==1){
+                    etEnterOtp2.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEnterOtp2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp2.getText().toString().trim().length()==1){
+                    etEnterOtp3.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEnterOtp3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp3.getText().toString().trim().length()==1){
+                    etEnterOtp4.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEnterOtp4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(etEnterOtp4.getText().toString().trim().length()==1){
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -369,6 +447,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                         intent.putExtra(AppConstant.DATEBOOKED,dateBooked);
                         intent.putExtra(AppConstant.TIMEBOOKED,timeBooked);
                         intent.putExtra(AppConstant.NOOFPEOPLE,noOfPersons);
+                        intent.putExtra(AppConstant.Delivery,"0");
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 

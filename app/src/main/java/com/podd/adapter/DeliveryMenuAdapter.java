@@ -29,7 +29,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
     private final Context context;
     private List<MealDetails> meal_details=new ArrayList<>();
     private List<RestaurantMenu> restaurantMenus=new ArrayList<>();
-    int count =0;
+//    int count =0;
     private SavedItem savedItem;
 
 
@@ -37,6 +37,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         this.context=context;
         this.meal_details=meal_details;
         this.restaurantMenus=restaurantMenus;
+        SetTimerClass.savedList.clear();
     }
 
     @Override
@@ -93,7 +94,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
 
                 meal_details.get(section).subtitle_meal_details.get(relativePosition).count=  meal_details.get(section).subtitle_meal_details.get(relativePosition).count+1;
                 holder.tvNumber.setText(""+meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
-                if (SetTimerClass.savedList!=null && SetTimerClass.savedList.get(relativePosition) != null){
+                if (SetTimerClass.savedList!=null && SetTimerClass.savedList.get(section) != null){
                     SetTimerClass.savedList.get(section).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
                 }
                 SetTimerClass.savedList.get(section).price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
@@ -101,6 +102,15 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
                 price = price.replace("£", "").trim();
                 if (Double.parseDouble(price) > 0.0) {
                     EventBus.getDefault().post(new AddValueEvent(Double.valueOf(price)));
+                }
+                if(meal_details.get(section).subtitle_meal_details.get(relativePosition).count == 1){
+                   savedItem = new SavedItem();
+                    savedItem.meal_id = restaurantMenus.get(section).meal_id;
+                    savedItem.subtitle_id = meal_details.get(section).subtitle_id;
+                    savedItem.item_id = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_id;
+                    savedItem.count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+                    savedItem.price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                    SetTimerClass.savedList.add(savedItem);
                 }
             }
         });
@@ -117,9 +127,13 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
                     price = price.replace("£", "").trim();
                     meal_details.get(section).subtitle_meal_details.get(relativePosition).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count - 1;
                     holder.tvNumber.setText("" + meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
+
+                    SetTimerClass.savedList.get(section).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
                     if (Double.parseDouble(price) > 0.0) {
-                       // SetTimerClass.savedList.get(section).price = price;
                         EventBus.getDefault().post(new MinusValueEvent(Double.valueOf(price)));
+                    }
+                    if(meal_details.get(section).subtitle_meal_details.get(relativePosition).count == 0){
+                        SetTimerClass.savedList.remove(section);
                     }
                 }
             }
@@ -131,6 +145,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
             savedItem.subtitle_id = meal_details.get(section).subtitle_id;
             savedItem.item_id = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_id;
             savedItem.count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+            savedItem.price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
             SetTimerClass.savedList.add(savedItem);
         }
     }

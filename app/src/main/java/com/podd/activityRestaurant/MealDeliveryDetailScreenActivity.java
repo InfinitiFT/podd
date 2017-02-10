@@ -186,13 +186,13 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
         jsonRequest.latitude = latitude;
         jsonRequest.longitude = longitude;
         jsonRequest.restaurant_id = restaurantId;
+        jsonRequest.deliver_food = "1";
         Call<JsonResponse> call = apiServices.getRestaurantDetails(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         restaurantList.clear();
                         if(response.body().restaurant_images!=null) {
@@ -230,13 +230,11 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                         if(response.body().restaurant_menu!=null&&response.body().restaurant_menu.size()>0){
                             restaurantMenu.clear();
                             restaurantMenu.addAll(response.body().restaurant_menu);
-
                         }
 
                         if(response.body().price_range!=null&&response.body().price_range.length()>0) {
                             String priceRange = response.body().price_range;
                             String[] splited = priceRange.split("-");
-
                             String split_one = splited[0];
                             String split_second = splited[1];
                             tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
@@ -258,7 +256,17 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
 
                                     categories.add(response.body().cuisine.get(i).cuisine_name);
                             }
-                            String s1="";
+
+                            String[] stockArr = new String[categories.size()];
+                            stockArr = categories.toArray(stockArr);
+                            if(stockArr.length > 0) {
+                                String s = stockArr[0];
+                                for (int i = 1; i < stockArr.length; i++) {
+                                    s = s + "," + stockArr[i];
+                                }
+                                tvCuisine.setText(s);
+                            }
+                            /*String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
 
                                 if (i==categories.size()-1){
@@ -269,7 +277,7 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-                            tvCuisine.setText(s1);
+                            tvCuisine.setText(s1);*/
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
@@ -282,8 +290,16 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
 
                                 categories.add(response.body().dietary.get(i).dietary_name);
                             }
-
-                            String s1="";
+                            String[] stockArr = new String[categories.size()];
+                            stockArr = categories.toArray(stockArr);
+                            if(stockArr.length > 0) {
+                                String s = stockArr[0];
+                                for (int i = 1; i < stockArr.length; i++) {
+                                    s = s + "," + stockArr[i];
+                                }
+                                tvDietary.setText(s);
+                            }
+                            /*String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
                                 if (i==categories.size()-1){
                                     s1=categories.get(i)+s1;
@@ -293,7 +309,7 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-                            tvDietary.setText(s1);
+                            tvDietary.setText(s1);*/
 
                         }
                         else {
@@ -306,8 +322,17 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                                     categories.clear();
                                 categories.add(response.body().ambience.get(i).ambience_name);
                             }
+                            String[] stockArr = new String[categories.size()];
+                            stockArr = categories.toArray(stockArr);
+                            if(stockArr.length > 0) {
+                                String s = stockArr[0];
+                                for (int i = 1; i < stockArr.length; i++) {
+                                    s = s + "," + stockArr[i];
+                                }
+                                tvAmbience.setText(s);
+                            }
 
-                            String s1="";
+                            /*String s1="";
                             for (int i = 0; i <categories.size() ; i++) {
 
                                 if (categories.size()==1){
@@ -319,7 +344,7 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                                     s1 = categories.get(i) + ", " + s1;
                                 }
                             }
-                            tvAmbience.setText(s1);
+                            tvAmbience.setText(s1);*/
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();

@@ -266,7 +266,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.deliver_food = "";
         jsonRequest.page_number = pageNumber;
 
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
         Call<JsonResponse> call = apiServices.getRestaurantsList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -317,7 +316,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "cuisine";
         jsonRequest.search_content = "";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getCuisineRestaurantList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -326,8 +324,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -373,7 +369,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "dietary";
         jsonRequest.search_content = "";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getDietaryRestaurantList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -382,8 +377,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -432,7 +425,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "ambience";
         jsonRequest.search_content = "";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getAmbienceRestaurantList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -441,8 +433,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -495,7 +485,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.latitude = String.valueOf(currentLat);
         jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.search_content = "";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getLocationRestaurantList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -505,20 +494,18 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
 
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
-
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
                         if (response.body().allList != null && response.body().allList.size() > 0) {
                             cuisineList.clear();
                             cuisineList.addAll(response.body().allList);
 
-                            searchableListDialog = SearchableLocationListDialog.newInstance
+                            _searchableListDialog = SearchableListDialog.newInstance
                                     (cuisineList);
                             selectedItem = "location";
-                            searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
-                            searchableListDialog.show(getFragmentManager(), TAG);
-                            searchableListDialog.setTitle(getString(R.string.select));
+                            _searchableListDialog.setOnSearchableItemClickListener(BestRestaurantNearCity.this);
+                            _searchableListDialog.show(getFragmentManager(), TAG);
+                            _searchableListDialog.setTitle(getString(R.string.select));
 
 
                         } else {
@@ -554,7 +541,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "meal";
         jsonRequest.search_content = tvMealType.getText().toString().trim();
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getMealRestaurantList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -563,8 +549,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -706,7 +690,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.page_number = pageNumber;
         jsonRequest.page_size = String.valueOf(pageSize);
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getSearchRestaurantApi(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
