@@ -5,6 +5,8 @@
   basic_authentication($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
   $data = json_decode(file_get_contents('php://input'));
   $type = $data->{"type"};
+  $lat = $data->{"latitude"};
+  $long = $data->{"longitude"};
   $search_content = $data->{"search_content"};
   $result = array();
   //Basic Validation  
@@ -47,11 +49,11 @@
 	else if($type == 'location')
 		if(empty($search_content))
 		{
-			$data = get_all_data('restaurant_location');
+			 $data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_location Order By distance"); 
 		}
 		else
 		{
-            $data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_location WHERE location LIKE '%".mysqli_real_escape_string($conn,$search_content)."%'");    
+            $data = mysqli_query($GLOBALS['conn'],"SELECT * ( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_location WHERE location LIKE '%".mysqli_real_escape_string($conn,$search_content)."%' Order By distance");    
 		}
     else if($type == 'price') 
     	if(empty($search_content))
@@ -69,17 +71,31 @@
     	while($record = mysqli_fetch_assoc($data)){
 		$allData['id'] = $record['id'];
 		if($type == 'cuisine')
+		{
 			$allData['name'] = $record['cuisine_name'];
+		}
 		else if($type == 'dietary')
+		{
 			$allData['name'] = $record['dietary_name'];
+		}
 		else if($type == 'ambience')
+		{
 			$allData['name'] = $record['ambience_name'];
+		}
 		else if($type == 'meal')
+		{
 			$allData['name'] = $record['meal_name'];
+		}
 		else if($type == 'location')
+		{
 			$allData['name'] = $record['location'];
+		    $allData['distance'] = round($record['distance'], 2).' '.Miles;
+
+		}	
 		else
+		{
 			$allData['name'] = $record['price_range'];	
+		}
 		$result[] = $allData;
 	   }
    

@@ -1,10 +1,12 @@
  <?php
   header('Content-type: application/json');
   include('../functions/functions.php');
+
   //Receiveing Input in Json and decoding
    basic_authentication($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
   $data = json_decode(file_get_contents('php://input'));
-  $cusine = $data->{"cusine"};
+  $cuisine = $data->{"cusine"};
   $dietary = $data->{"dietary"};
   $meal = $data->{"meal"};
   $ambience = $data->{"ambience"};
@@ -17,38 +19,38 @@
   $join ='';
   $result=array();
   
-    if(!empty($cusine)){
-	  $where .="d.cuisine IN(".mysqli_real_escape_string($GLOBALS['conn'],$cusine).")";
+    if(!empty($cuisine)){
+	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$cuisine);
+	  $column="cuisine";
 	}  
-	if(!empty($dietary)){
-		if(!empty($where))
-			$where .= ' and';
-	    $where .= " d.dietary IN(".mysqli_real_escape_string($GLOBALS['conn'],$dietary).")";
-	}	
-  
+    if(!empty($dietary)){
+	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$dietary);
+	  $column="dietary";
+	}  
 	if(!empty($ambience)){
-		if(!empty($where))
-			$where .= ' and';
-	    $where .= " d.ambience IN(".mysqli_real_escape_string($GLOBALS['conn'],$ambience).")";
-	}	
-  
-	if(!empty($location)){
-		if(!empty($where))
-			$where .= ' and';
-	    $where .= " d.location =".mysqli_real_escape_string($GLOBALS['conn'],$location)."";
-	}
+	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$ambience);
+	  $column="ambience";
+	}  
+	 if(!empty($location)){
+	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$location);
+	  $column="location";
+	}  
 	if(!empty($meal)){
-	    $join = " join restaurant_menu_details as m on m.restaurant_id = d.restaurant_id";
+	    $join = " join restaurant_meal_details as m on m.restaurant_id = d.restaurant_id";
 	    if(!empty($where))
-			$where .= ' and';
+		$where .= ' and';
 	    $where .= " m.meal =".$meal."";
 	}
+
 	if(!empty($join)){
 	
-		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,m.meal,( 3959 * acos( cos( radians($lat) ) * cos( radians( l.latitude ) ) * cos( radians( l.longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( l.latitude ) ) ) ) AS distance FROM `restaurant_details` as d join restaurant_location as l on l.id = d.location ".$join." WHERE ".$where."");
+		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d ".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5");
+		
+
 	}else{
 		
-		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians( l.latitude ) ) * cos( radians( l.longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( l.latitude ) ) ) ) AS distance  FROM `restaurant_details` as d join restaurant_location as l on l.id = d.location WHERE ".$where."");
+		$data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0 HAVING distance <= 5");
+		
 	}
    if ($data) {
 		$restaurant_rows    = mysqli_num_rows($data);
@@ -56,17 +58,15 @@
 		$minLimit      = ($pageNumber - 1) * $pageSize;
 	  if(!empty($join)){
 		
-			$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,m.meal,( 3959 * acos( cos( radians($lat) ) * cos( radians( l.latitude ) ) * cos( radians( l.longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( l.latitude ) ) ) ) AS distance FROM `restaurant_details` as d join restaurant_location as l on l.id = d.location ".$join." WHERE ".$where." ORDER BY distance Limit $minLimit, $pageSize");
+			$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin  (radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
 		}else{
 			
-			$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians( l.latitude ) ) * cos( radians( l.longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( l.latitude ) ) ) ) AS distance FROM `restaurant_details` as d join restaurant_location as l on l.id = d.location WHERE ".$where." ORDER BY distance Limit $minLimit, $pageSize");
+			$query = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos(cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0  HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
 
 		}
 	}
   
   while($restaurant_data = mysqli_fetch_assoc($query)){
-	  
-	 
 	$record['restaurant_id']        = $restaurant_data['restaurant_id'];
     $record['restaurant_name']      = $restaurant_data['restaurant_name'];
     $recordImg = explode(",",$restaurant_data['restaurant_images']);
@@ -101,39 +101,39 @@
     $record['about_text']           = $restaurant_data['about_text'];
     $record['max_people_allowed']   = $restaurant_data['max_people_allowed'];
     $restaurant_cuisine = explode(",",$restaurant_data['cuisine']);
+    
     $restaurant_dietary = explode(",",$restaurant_data['dietary']);
     $restaurant_ambience = explode(",",$restaurant_data['ambience']);
+    $recordCusine = array();
       foreach($restaurant_cuisine as $cuisine)
         {
-			$cuisineRecord = mysqli_fetch_assoc(get_all_data('restaurant_cuisine'));
+			$cuisineRecord = mysqli_fetch_assoc(get_name_asset('restaurant_cuisine',$cuisine));
 			$cuisineData['id'] = $cuisineRecord['id'];
 			$cuisineData['cuisine_name'] = $cuisineRecord['cuisine_name'];
 			$recordCusine[] = $cuisineData;
 		}
-		$record['cusine']   = $recordCusine;
+		$record['cuisine']   = $recordCusine;
+		$recordDietary = array();
 	  foreach($restaurant_dietary as $dietary)
         {
-			$dietaryRecord = mysqli_fetch_assoc(get_all_data('restaurant_dietary'));
+        	$dietaryRecord = mysqli_fetch_assoc(get_name_asset('restaurant_dietary',$dietary));
 			$dietaryData['id'] = $dietaryRecord['id'];
 			$dietaryData['dietary_name'] = $dietaryRecord['dietary_name'];
 			$recordDietary[] = $dietaryData;
 		}
 		$record['dietary']   = $recordDietary;
+		$recordAmbience = array();
 	  foreach($restaurant_ambience as $ambience)
         {
-			$ambienceRecord = mysqli_fetch_assoc(get_all_data('restaurant_ambience'));
+        	$ambienceRecord = mysqli_fetch_assoc(get_name_asset('restaurant_ambience',$ambience));
 			$ambienceData['id'] = $ambienceRecord['id'];
 			$ambienceData['ambience_name'] = $ambienceRecord['ambience_name'];
 			$recordAmbience[] = $ambienceData;
 		}
 		$record['ambience']   = $recordAmbience;
 		$record['distance']             = round($restaurant_data['distance'], 2).' '.Miles;
-		 
 		$price = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_price_range` WHERE `id`='".$restaurant_data['price_range']."'"));
 		$userDetail = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `users` WHERE `user_id`='".$restaurant_data['user_id']."'"));
-		
-		//$priceData['id'] = $price['id'];
-		//$priceData['price_range'] = $price['price_range'];
 		$record['price_range']  = $price['price_range'];
 		$result[] =$record;
 		

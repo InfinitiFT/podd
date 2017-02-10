@@ -22,7 +22,15 @@
             if($day == 'Sun'){
                if($find_interval['is_sun'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['sun_open_time'],$find_interval['sun_close_time']);
+                 $time_first = strtotime($find_interval['sun_open_time']);
+                 $time_second = strtotime($find_interval['sun_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
@@ -38,7 +46,15 @@
             else if($day == 'Mon'){
                if($find_interval['is_mon'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['mon_open_time'],$find_interval['mon_close_time']);
+                 $time_first = strtotime($find_interval['mon_open_time']);
+                 $time_second = strtotime($find_interval['mon_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
@@ -53,7 +69,15 @@
             else if($day == 'Tue'){
               if($find_interval['is_tue'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['tue_open_time'],$find_interval['tue_close_time']);
+                 $time_first = strtotime($find_interval['tue_open_time']);
+                 $time_second = strtotime($find_interval['tue_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
@@ -67,7 +91,15 @@
             else if($day == 'Wed'){
               if($find_interval['is_wed'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['wed_open_time'],$find_interval['wed_close_time']);
+                 $time_first = strtotime($find_interval['wed_open_time']);
+                 $time_second = strtotime($find_interval['wed_open_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
@@ -81,7 +113,15 @@
             else if($day == 'Thu'){
                if($find_interval['is_thu'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['thu_open_time'],$find_interval['thu_close_time']);
+                 $time_first = strtotime($find_interval['thu_open_time']);
+                 $time_second = strtotime($find_interval['thu_open_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
@@ -96,7 +136,15 @@
 
                if($find_interval['is_fri'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['fri_open_time'],$find_interval['fri_close_time']);
+                 $time_first = strtotime($find_interval['fri_open_time']);
+                 $time_second = strtotime($find_interval['fri_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
@@ -111,7 +159,15 @@
               
                if($find_interval['is_sat'] != 0)
                {
-                 $response['restaurant_time_interval'] = findtimeIntervalweb($find_interval['sat_open_time'],$find_interval['sat_close_time']);
+                 $time_first = strtotime($find_interval['sat_open_time']);
+                 $time_second = strtotime($find_interval['sat_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
                  $response['responseCode'] = 200;
 
                }
