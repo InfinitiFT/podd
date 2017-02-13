@@ -10,7 +10,7 @@ if(!empty($_SESSION['password']) && !empty($_SESSION['email']))
   }
   else
   {
-    header("Location:user_list.php");
+    header("Location:service_management_list.php");
   }
 
 }
@@ -182,7 +182,8 @@ if(isset($_POST["submit"]))
                
 
                 <div>
-                   <h1><i class="fa fa-paw"></i>PODD</h1>
+                   <!-- <h1><i class="fa fa-paw"></i>PODD</h1> -->
+                   <h1 class="logo"><img src="logo.png" alt="logo" /></h1>
                   <p>©2017 All Rights Reserved.</p>
                 </div>
               </div>

@@ -82,11 +82,27 @@
                          echo "Pending";
                         }else if($record['delivery_status']=="2"){
                           echo "Confirmed";
-                        }else{
+                        }else if($record['delivery_status']=="3"){
+                          echo "Cancelled";
+                        }
+						else{
                           echo "Declined";
                         } ?></td>
                   <td>
-                     <a href="edit_delivery.php?id=<?php echo encrypt_var($record['delivery_id']);?>" class="btn btn-round btn-primary">Edit</a>
+				  
+				  <?php $newdate = date('Y-m-d', strtotime('-1 day', time()));
+                         $booking_date = date('Y-m-d', strtotime($record['delivery_date']));
+                         $currettime = date('H:i',time());
+                         $booking_time = date('H:i',strtotime($record['delivery_time']));
+                        if($booking_date > $newdate)
+                        {  ?>
+                         <a href="edit_delivery.php?id=<?php echo encrypt_var($record['delivery_id']);?>" class="btn btn-round btn-primary">Edit</a>
+                       <?php } else if($booking_date == $newdate && $booking_time > $currettime){ ?>
+                         <a href="edit_delivery.php?id=<?php echo encrypt_var($record['delivery_id']);?>" class="btn btn-round btn-primary">Edit</a>
+                       <?php }else{?>
+                        <a href="" class="btn btn-round btn-primary" disabled>Edit</a>
+                       <?php } ?>
+                    
                   
                     </td>
                   </td>

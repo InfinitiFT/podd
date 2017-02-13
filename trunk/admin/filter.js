@@ -32,7 +32,8 @@ var booking_managementable =  $('#booking_management_table').DataTable({
                             rowData[i][4],
                             rowData[i][5],
                             rowData[i][6],
-                            rowData[i][7]
+                            rowData[i][7],
+                            rowData[i][8]
                           ]).draw( false ); 
                       }
 
@@ -76,7 +77,8 @@ var booking_managementable =  $('#booking_management_table').DataTable({
                             rowData[i][4],
                             rowData[i][5],
                             rowData[i][6],
-                            rowData[i][7]
+                            rowData[i][7],
+                            rowData[i][8]
                           ]).draw( false ); 
                       }
 

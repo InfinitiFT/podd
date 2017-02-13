@@ -63,8 +63,43 @@ switch ($_REQUEST['type']) {
         $update = mysqli_query($conn, "UPDATE `booked_records_restaurant` SET `booking_status`='0',`decline_region`='" . $declined . "' WHERE `booking_id`='" . $bookingID . "'");
         $booking_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `booked_records_restaurant`brr join restaurant_details rd on brr.restaurant_id = rd.restaurant_id  WHERE `booking_id`='" . mysqli_real_escape_string($conn, trim($bookingID)) . "'"));
       
-        $message = "We are unable to confirm your booking with this venue, please try a different time or select another venue";
-       send_sms($booking_details['contact_no'],$message);
+        $message1 = "We are unable to confirm your booking with this venue, please try a different time or select another venue";
+         if($booking_details['email']){
+                $to = $booking_details['email'];
+                $subject = "Booking declined on podd";
+                $email_message = '
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                      <html xmlns="http://www.w3.org/1999/xhtml">
+                     <head>
+                     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                    
+                     </head>
+                      <body>
+                        <tbody>
+                          <tr>
+                            <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
+                              <div style="line-height:1.3em">
+                                <div>Hello <b>'.$booking_details['name'].'</b>,</div>
+                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
+                                  <div>We are unable to confirm your booking with this venue, please try a different time or select another venue. 
+                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
+                                  <div>Best regards,</div>
+                                  <div>The podd Team</div>
+                             </div>
+                          </td>
+                        </tr>
+                      </tbody>              
+                    </body>
+                 </html>';
+                 // Always set content-type when sending HTML email
+                 $headers = "MIME-Version: 1.0" . "\r\n";
+                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                 // More headers
+                 $headers .= 'From: podd' . "\r\n"; 
+                 mail($to,$subject,$email_message,$headers);
+
+            }
+       send_sms($booking_details['contact_no'],$message1);
         if ($update)
             print 1;
         else
@@ -72,13 +107,55 @@ switch ($_REQUEST['type']) {
         break;
         
     case 'declineDev':
-        $bookingID = $_GET['bookingIDDev'];
+        $id = $_GET['bookingIDDev'];
         $declined = $_GET['declinedDev'];        
-        $update = mysqli_query($conn, "UPDATE `delivery_bookings` SET `delivery_status`='0',`dcline_region`='" . $declined . "' WHERE `delivery_id`='" . $bookingID . "'");
-        if ($update)
-            print 1;
+        if(mysqli_query($conn, "UPDATE `delivery_bookings` SET `delivery_status`='0',`dcline_region`='" . $declined . "' WHERE `delivery_id`='" . $id . "'"))
+        {
+            $booking_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `delivery_bookings` db join restaurant_details rd on db.restaurant_id = rd.restaurant_id WHERE `db.delivery_id`='" . mysqli_real_escape_string($conn, trim($id)) . "'"));
+            $message         = "Hi ".$booking_details['name'].", unfortunately your order cannot be fulfilled at this time. Please select another option.";
+            send_sms($booking_details['contact_no'], preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $message));
+            if($booking_details['email']){
+              $to = $booking_details['email'];
+              $subject = "Order declined on podd";
+                   $message = '
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                      <html xmlns="http://www.w3.org/1999/xhtml">
+                     <head>
+                     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                     </head>
+                      <body>
+                        <tbody>
+                          <tr>
+                            <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
+                              <div style="line-height:1.3em">
+                                <div>Hello <b>'.$booking_details['name'].'</b>,</div>
+                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
+                                  <div>unfortunately your order cannot be fulfilled at this time. Please select another option. 
+                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
+                                  </div>
+                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
+                                  <div>Best regards,</div>
+                                  <div>The podd Team</div>
+                             </div>
+                          </td>
+                        </tr>
+                      </tbody>              
+                    </body>
+                 </html>';
+                 // Always set content-type when sending HTML email
+                 $headers = "MIME-Version: 1.0" . "\r\n";
+                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                 // More headers
+                 $headers .= 'From: podd' . "\r\n"; 
+                 mail($to,$subject,$message,$headers);
+                 print 1;
+
+        }
         else
-            print 0;
+        {
+           print 0; 
+        }
+      }
         break;
     case 'alreadyadd_item_price':
         $restaurant_id = $_REQUEST['restaurant_id'];
@@ -139,8 +216,19 @@ switch ($_REQUEST['type']) {
            echo "1";
         }
         break;
-       
-
+     case 'booking_details_data':
+        $restaurant_id = $_POST['restaurant_id'];
+        $day_data = array();
+        $day_data[0] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1']))."' "));
+        $day_data[1] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +1 days"))."' "));
+        $day_data[2] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +2 days"))."' "));
+        $day_data[3] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +3 days"))."' "));
+        $day_data[4] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +4 days"))."' "));
+        $day_data[5] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +5 days"))."' "));
+        $day_data[6] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +6 days"))."' "));
+        
+        print_r(json_encode($day_data));
+        break;
 
 }
 ?>

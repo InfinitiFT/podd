@@ -1,14 +1,13 @@
-<?php  
+<?php 
   include_once('header.php');
   $result = array();
   if($_SESSION['restaurant_id']!="")
   {
-   $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id join subtitle s on rtp.subtitle = s.subtitle_id where rmd.restaurant_id = '".$_SESSION['restaurant_id']."'");
+   $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id join subtitle s on rtp.subtitle = s.subtitle_id where rmd.restaurant_id = '".$_SESSION['restaurant_id']."' order by rtp.id desc");
   }
   else
   {
-     $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id join subtitle s on rtp.subtitle = s.subtitle_id where rmd.restaurant_id = '".$_GET['id']."'");
-    
+     $data = mysqli_query($GLOBALS['conn'],"SELECT *,rtp.id as item_price_id,rtp.status as sta FROM restaurant_item_price as rtp join restaurant_meal_details rmd on rtp.restaurant_meal_id = rmd.id join items i on rtp.item_id = i.id join meals m on  rmd .meal = m.id join subtitle s on rtp.subtitle = s.subtitle_id where rmd.restaurant_id = '".decrypt_var($_GET['id'])."'order by rtp.id desc"); 
   }
  
   //Basic Validation  

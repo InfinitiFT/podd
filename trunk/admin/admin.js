@@ -119,9 +119,9 @@ $("[id ^='activatedeactivate-']").click(function () {
     type: 'post',
     data: {pagetype:pagetype,id:serviceArr[1],status:'2'},
           success: function(data, status) {
+           
             location.reload();  
             Lobibox.notify('success', {
-
               msg: 'Entity Accept Successfully.'
              });
           },
@@ -130,8 +130,7 @@ $("[id ^='activatedeactivate-']").click(function () {
           }
           }); 
      });
-  
-
+ 
 // Popup for Decline functionality
 $("[id ^='decline-']").click(function () {
   var pagetype =  $("#delete_type").val();
@@ -182,7 +181,6 @@ $("[id ^='decline-']").click(function () {
       e.preventDefault();
       var i=1;
       $('input[name^="item[]"]').each(function() {
-       // alert($(this).val());
       if($(this).val()==""){   
          i++;
       }

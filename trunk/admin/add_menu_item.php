@@ -6,7 +6,7 @@
  */
 ob_start();
 include_once('header.php');
-$restaurant_id = isset($_SESSION['restaurant_id']) ? $_SESSION['restaurant_id'] : $_GET['restaurant_id'];
+$restaurant_id = isset($_SESSION['restaurant_id']) ? $_SESSION['restaurant_id'] : decrypt_var($_GET['restaurant_id']);
 $error="";
 $sucess="";
 try {
@@ -63,18 +63,19 @@ try {
                     mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`created_by`) VALUES ('".$name."','".$user_id."')");
                     $item_id = mysqli_insert_id($GLOBALS['conn']);
                 	$add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`subtitle`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$subtitle_id."','".$item_id."','".$price."','".$user_id."')");
-                	
+                    
                 }
                 else
                 {
                 	$add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`subtitle`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$subtitle_id."','".$item_id."','".$price."','".$user_id."')");
+                  
                 }
                 
                 $i++;
             }
 
             $_SESSION["successmsg"] = "Service added successfully.";
-            header('Location:venue_meal.php?id='.$restaurant_id);
+            header('Location:venue_meal.php?id='.encrypt_var($restaurant_id));
         
 
        

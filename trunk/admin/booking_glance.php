@@ -6,18 +6,14 @@
  * Time: 4:27 PM
  */
 include_once('header.php');
-/*$find_interval = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".$_SESSION['restaurant_id']."' "));
-$a = explode(':',$find_interval['opening_time']);
-$b = explode(':',$find_interval['closing_time']);
-$array = array();
-for($hours=$a[0]; $hours<$b[0]; $hours++) { 
-	// the interval for hours is '1'
-    for ($mins = $a[1]; $mins < 60; $mins += 30) {
-        // the interval for mins is '30'
-        $array[] = str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($mins, 2, '0', STR_PAD_LEFT);
-        $i = $i + 1;
-    }
-}*/
+if($_SESSION['restaurant_id'] != "")
+{
+  $restaurant_id = $_SESSION['restaurant_id'];
+}
+else
+{
+    $restaurant_id = decrypt_var($_REQUEST['restaurant_id']);
+}
 
 ?>
 <!-- page content -->
@@ -58,7 +54,7 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                                 <li class="active"><a href="#" class="btn btn-round" id="day_first">Day</a></li>
                                 <li><a href="#" class="btn btn-round" id="day_second">Day</a></li>
                                 <li ><a href="#" class="btn btn-round" id="day_third">Day</a></li>
-                                <li ><a href="#" class="btn btn-round btn-green" id="day_fourth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="day_fourth">Day</a></li>
                                 <li ><a href="#" class="btn btn-round" id="day_fifth">Day</a></li>
                                 <li ><a href="#" class="btn btn-round" id="day_sixth">Day</a></li>
                                 <li ><a href="#" class="btn btn-round" id="day_seventh">Day</a></li>
@@ -136,6 +132,43 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
         }
     }
 
+    //getDay from day name
+    function get_day_number(day_name) {
+        switch (day_name) {
+            case "Sunday":
+                day = 0;
+                return day;
+                break;
+            case "Monday":
+                day = 1;
+                return day;
+                break;
+            case "Tuesday":
+                day = 2;
+                return day;
+                break;
+            case "Wednesday":
+                day = 3;
+                return day;
+                break;
+            case "Thursday":
+                day = 4;
+                return day;
+                break;
+            case "Friday":
+                day = 5;
+                return day;
+                break;
+            case "Saturday":
+                day = 6;
+                return day;
+                break;
+        }
+    }
+//get day name by date
+    function getDayName(dateString) {
+        return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(dateString).getDay()];
+    }
     //get Leap year
     function isLeapYear(year) {
         return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
@@ -150,13 +183,16 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
     function pad(num, size) {
         return ( Math.pow(10, size) + ~~num ).toString().substring(1);
     }
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
     function GetDates(startDate, daysToAdd) {
         var aryDates = [];
 
         for (var i = 0; i <= daysToAdd; i++) {
             var currentDate = new Date();
             currentDate.setDate(startDate.getDate() + i);
-            aryDates.push(get_day_name(currentDate.getDay()) + ", " + currentDate.getFullYear() + "-" + pad((currentDate.getMonth() + 1), 2) + "-" + pad(currentDate.getDate(),2));
+            aryDates.push(get_day_name(currentDate.getDay()) + ", " + pad(currentDate.getDate(),2) + " " + monthNames[currentDate.getMonth()] + " " + currentDate.getFullYear());
         }
 
         return aryDates;
@@ -164,12 +200,18 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
 
 </script>
 <script>
-    var restaurant_id = "<?php echo decrypt_var($_REQUEST['restaurant_id']);?>";
+    var restaurant_id = "<?php echo $restaurant_id;?>";
     $("[id ^='day_']").click(function(e) {
         var dayID  = $(this).html();
         var abc = dayID.split(",");
-        var xyz = abc[1].split(" ");
-        console.log(xyz[1]);
+        var xyz = abc[1].split("<");
+        var dayName = abc[0].split(">");
+
+        $("#cur_date").val(get_day_number(getDayName(xyz[0])));
+        var qwerty = $("#cur_date1").val();
+
+        console.log(xyz[0]);
+        $("#day_name").html("<b><strong>" + abc[0] + ", </strong>"+ xyz[0] +"</b>");
         $.ajax({
             type: 'POST',
             url: 'booking_glance_details.php',
@@ -178,14 +220,12 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                 $(".x_content").html(response);
             }
         });
-
-        //$("#adminRemovestudent").attr("id","adminRemovestudent-"+studentArr[1]);
     });
 
     $('document').ready(function () {
         var d = new Date();
-        var strDate = d.getFullYear() + "-" + pad((d.getMonth() + 1), 2) + "-" + pad(d.getDate(), 2);
-        $("#day_name").html("<b><strong>" + strDate + ":- </strong> Today</b>");
+        var strDate =  pad(d.getDate(), 2)+ " " + monthNames[d.getMonth()] + " " + d.getFullYear();
+        $("#day_name").html("<b><strong>Today, " + strDate + "</strong></b>");
 
        var allDates = GetDates(d,6);
         console.log(allDates);
@@ -195,30 +235,68 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
             temparray = allDates.slice(i,i+chunk);
             myArray.push(temparray);
         }
-
-
-        $("#day_first").html("<b><strong>" + myArray[0] + " </strong></b>");
-        $("#day_second").html("<b><strong>" + myArray[1] + " </strong></b>");
+       
+        var stringtoday = myArray[0].toString().split(',');
+        var stringtommorow = myArray[1].toString().split(',');
+        $("#day_first").html("<b><strong>" + 'Today' + ',' + stringtoday[1]+" </strong></b>");
+        $("#day_second").html("<b><strong>" + 'Tomorrow'+ ',' + stringtommorow[1]+  " </strong></b>");
         $("#day_third").html("<b><strong>" + myArray[2] + " </strong></b>");
         $("#day_fourth").html("<b><strong>" + myArray[3] + " </strong></b>");
         $("#day_fifth").html("<b><strong>" + myArray[4] + " </strong></b>");
         $("#day_sixth").html("<b><strong>" + myArray[5] + " </strong></b>");
         $("#day_seventh").html("<b><strong>" + myArray[6] + " </strong></b>");
-
         $("#cur_date").val(d.getDay());
-        $("#cur_date1").val(strDate);
-
+        $("#cur_date1").val(d.getFullYear()+ "-" + pad(d.getMonth()+1,2) + "-" + pad(d.getDate(), 2));
         $.ajax({
             type: 'POST',
             url: 'booking_glance_details.php',
             data: {"date1": strDate, "restaurant_id": restaurant_id},
             success: function (response) {
-               
                 $(".x_content").html(response);
             }
         });
-        /*alert(month+'hello'+day+d.getDay());*/
+       // for booking data shows green
+       $.ajax({
+            type: 'POST',
+            url: 'admin_ajax.php',
+            data: {"date1": strDate, "restaurant_id": restaurant_id,"type":"booking_details_data"},
+            success: function (response) {
+                 
+                 $data=JSON.parse(response).toString().split(',');
+
+				 if($data[0] != 0)
+                 {
+                   $('#day_first').addClass('btn-green');
+                 }
+                 if($data[1] != 0)
+                 {
+                   $('#day_second').addClass('btn-green');
+                 }
+                 if($data[2] != 0)
+                 {
+                   $('#day_third').addClass('btn-green');
+                 }
+                 if($data[3] != 0)
+                 {
+                   $('#day_fourth').addClass('btn-green');
+                 }
+                 if($data[4] != 0)
+                 {
+                   $('#day_fifth').addClass('btn-green');
+                 }
+                 if($data[5] != 0)
+                 {
+                   $('#day_sixth').addClass('btn-green');
+                 }
+                 if($data[6] != 0)
+                 {
+                   $('#day_seventh').addClass('btn-green');
+                 }
+            }
+        });
+
     });
+   
     var count = 1;
     $('.glyphicon-chevron-right').click(function () {
         var cur_date = $('#cur_date').val();
@@ -250,7 +328,6 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
             }
             var strDate = splitArr[0] + "-" + pad(splitArr[1], 2) + "-" + pad(increase_dayDate, 2);
         }
-        console.log(strDate);
         /*var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;*/
         var increase_day = parseInt(cur_date) + 1;
         var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -296,8 +373,6 @@ for($hours=$a[0]; $hours<$b[0]; $hours++) {
                 $(".x_content").html(response);
             }
         });
-
-
     });
 
     $('.glyphicon-chevron-left').click(function () {

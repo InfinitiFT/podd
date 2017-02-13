@@ -7,17 +7,16 @@
   }
   $time= time();
   $time = date('H:i:s', strtotime('-1 hour'));
+
   if($_SESSION['restaurant_id'] != "")
     {
-         $data = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
+         $data = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.*,rd.restaurant_name FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
       
     }
     else
     {
       
-       $data = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
-
-      
+       $data = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.*,rd.restaurant_name FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc"); 
     }
   
   //Basic Validation  
@@ -107,9 +106,9 @@
                 <div class="col-md-3 col-sm-3 col-xs-3 form-group">
                  
                   </div>
-                  <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                  <!--<div class="col-md-3 col-sm-3 col-xs-3 form-group">
                     <input type="text" style="width: 200px" name="booking_deliverytable_cal" id="booking_deliverytable_cal" placeholder="Search" readonly class="form-control" />
-                  </div>
+                  </div>-->
                   
                   <div class="col-md-2 col-sm-2 col-xs-2 form-group">
                     <select name="booking_delivery_status" id="booking_delivery_status" class="form-control">
@@ -134,7 +133,7 @@
                            <th width="16%">Action</th>
                         </tr>
                       </thead>
-                      <input type="hidden" id = "delete_type" value ="booked_restaurant">
+                      <input type="hidden" id = "delete_type" value ="delivery_restaurant">
                       <tbody id="statusContent">
                        <?php 
                              if($data)
@@ -144,7 +143,7 @@
                          <tr>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['contact_no'];?></td>
-                          <td><?php echo $record['delivery_email'];?></td>
+                          <td><?php echo $record['email'];?></td>
                           <td><?php $date = date_create ($record['delivery_date']);
                                     echo date_format($date,"d M Y");?>
                           </td>
@@ -156,6 +155,9 @@
                                     else if($record['delivery_status']=="1"){
                                       echo "Pending";
                                     }
+									else if($record['delivery_status']=="3"){
+                                      echo "Cancelled";
+                                    }
                                     else{
                                       echo "Accepted";             
                                     }
@@ -163,9 +165,8 @@
                           <td>
                           <?php if($record['delivery_status']=="1"){?>
                              <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
-                             <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                             <button type="button" class="btn btn-round btn-warning"  id="declineDev-<?php echo $record['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
                               <?php }else if($record['delivery_status']=="2"){?>
-                               <button type="button" class="btn btn-round btn-warning"  id="declines-<?php echo $record['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
                               <?php }else{?>
                                <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
                               <?php } ?>

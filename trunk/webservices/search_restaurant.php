@@ -44,12 +44,14 @@
 
 	if(!empty($join)){
 	
-		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d ".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5");
+		//$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d ".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5");
+		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d ".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where."");
 		
 
 	}else{
 		
-		$data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0 HAVING distance <= 5");
+		//$data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0 HAVING distance <= 5");
+		$data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0");
 		
 	}
    if ($data) {
@@ -58,10 +60,12 @@
 		$minLimit      = ($pageNumber - 1) * $pageSize;
 	  if(!empty($join)){
 		
-			$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin  (radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
+			//$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin  (radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
+			$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin  (radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." ORDER BY distance Limit $minLimit, $pageSize");
 		}else{
 			
-			$query = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos(cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0  HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
+			//$query = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos(cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0  HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
+			$query = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos(cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0 ORDER BY distance Limit $minLimit, $pageSize");
 
 		}
 	}
@@ -113,7 +117,7 @@
 			$recordCusine[] = $cuisineData;
 		}
 		$record['cuisine']   = $recordCusine;
-		$recordDietary = array();
+	  $recordDietary = array();
 	  foreach($restaurant_dietary as $dietary)
         {
         	$dietaryRecord = mysqli_fetch_assoc(get_name_asset('restaurant_dietary',$dietary));
@@ -122,7 +126,7 @@
 			$recordDietary[] = $dietaryData;
 		}
 		$record['dietary']   = $recordDietary;
-		$recordAmbience = array();
+	  $recordAmbience = array();
 	  foreach($restaurant_ambience as $ambience)
         {
         	$ambienceRecord = mysqli_fetch_assoc(get_name_asset('restaurant_ambience',$ambience));

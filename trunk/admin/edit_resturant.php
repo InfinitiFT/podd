@@ -66,6 +66,7 @@
 		$cuisine = implode(',',$_POST['cuisine']);
 		$ambience = implode(',',$_POST['ambience']);
 		$location = getLatLong($_POST['location']);
+		$passwordRandom = randomPassword();
 	
 		if(empty($_SESSION['msg']))
 		{			
@@ -103,7 +104,7 @@
 			$opentimeSat = mysqli_real_escape_string($conn,$_POST['opentimeSat']);
 			$closetimeSat = mysqli_real_escape_string($conn,$_POST['closetimeSat']);
 
-			$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',mobile_no ='".$phone."' where user_id ='".$user_id."'");
+			$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',password ='".md5($passwordRandom)."',first_time_login = '0' ,mobile_no ='".$phone."' where user_id ='".$user_id."'");
 			if($updateUser){
 				$name = mysqli_real_escape_string($conn,trim($_POST['name']));
 				mysqli_query($conn," UPDATE `restaurant_details` SET restaurant_name = '".$name."',location='".$loction."',latitude='".$latitude."',longitude='".$longitude."',restaurant_full_address='".$location_data."',about_text='".$about."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',`sun_open_time`='".$opentimeSun."',`sun_close_time`='".$closetimeSun."',`is_sun`='".$is_Sun."',`mon_open_time`='".$opentimeMon."',`mon_close_time`='".$closetimeMon."',`is_mon`='".$is_Mon."',`tue_open_time`='".$opentimeTue."',`tue_close_time`='".$closetimeTue."',`is_tue`='".$is_Tue."',`wed_open_time`='".$opentimeWed."',`wed_close_time`='".$closetimeWed."',`is_wed`='".$is_Wed."',`thu_open_time`='".$opentimeThu."',`thu_close_time`='".$closetimeThu."',`is_thu`='".$is_Thu."',`fri_open_time`='".$opentimeFri."',`fri_close_time`='".$closetimeFri."',`is_fri`='".$is_Fri."',`sat_open_time`='".$opentimeSat."',`sat_close_time`='".$closetimeSat."',`is_sat`='".$is_Sat."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$resturantID."'");	
@@ -368,12 +369,12 @@
                       </div>
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">
-                        Venue Description 
+                        Description 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         
-                          <textarea id="about"  class="form-control" name="about" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
-                            data-parsley-validation-threshold="10" <?php if(@$_SESSION['restaurant_id']!="")
+                          <textarea id="about"  class="form-control" rows="5" name="about" 
+                             <?php if(@$_SESSION['restaurant_id']!="")
                                { echo "disabled"; }?>><?php if($_POST['about']){ echo $_POST['about'];}else{ echo $detail['about_text']; }?></textarea>
                         </div>
                       </div>
@@ -406,51 +407,13 @@
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-7" name="opentimeSun" id="opentime-Sun" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['sun_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							  <?php echo get_select_option_open_edit($detail['sun_open_time']);?>
 							</select>
 							</div>
 							 <div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-7" name="closetimeSun" id="closetime-Sun" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['sun_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							  <?php echo get_select_option_close_edit($detail['sun_close_time']);?>
 							</select>
 							</div>
 							
@@ -477,51 +440,13 @@
 							 <div class="col-sm-4">
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control  day-1" name="opentimeMon" id="opentime-Mon" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
-							<?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['mon_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							 <?php echo get_select_option_open_edit($detail['mon_open_time']);?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-1" name="closetimeMon" id="closetime-Mon" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['mon_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							  <?php echo get_select_option_close_edit($detail['mon_close_time']);?>
 							</select>
 							</div>
 							
@@ -549,51 +474,13 @@
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control col-sm-1 day-2" name="opentimeTue" id="opentime-Tue" onchange="timeValidateClose(this)" <?php echo $disable;?>>
-							<?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['tue_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							 <?php echo get_select_option_open_edit($detail['tue_open_time']);?>
 							</select>
 							</div>
 							<div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-2" name="closetimeTue" id="closetime-Tue" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['tue_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							  <?php echo get_select_option_close_edit($detail['tue_close_time']);?>
 							</select>
 							</div>
 							
@@ -621,51 +508,13 @@
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-3" name="opentimeWed" id="opentime-Wed" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
-							<?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['wed_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							<?php echo get_select_option_open_edit($detail['wed_open_time']);?>
 							</select>
 							</div>
 							<div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-3" name="closetimeWed" id="closetime-Wed" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['wed_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							 <?php echo get_select_option_close_edit($detail['wed_close_time']);?>
 							</select>
 							</div>
 						</div>
@@ -692,51 +541,13 @@
 								  
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-4" name="opentimeThu" id="opentime-Thu" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
-							<?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['thu_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							<?php echo get_select_option_open_edit($detail['thu_open_time']);?>
 							</select>
 							</div>
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-4" name="closetimeThu" id="closetime-Thu" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['thu_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							  <?php echo get_select_option_close_edit($detail['thu_close_time']);?>
 							</select>
 							</div>
 						</div>
@@ -763,51 +574,13 @@
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-5" name="opentimeFri" id="opentime-Fri" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
-							<?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['fri_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							<?php echo get_select_option_open_edit($detail['fri_open_time']);?>
 							</select>
 							</div>
 							 <div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-5" name="closetimeFri" id="closetime-Fri" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['fri_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							 <?php echo get_select_option_close_edit($detail['fri_close_time']);?>
 							</select>
 							</div>
 						</div>
@@ -833,52 +606,13 @@
 							  <div class="col-sm-4">
 							 <label for="password" class="control-label">From</label>
 								<select class="form-control day-6" name="opentimeSat" id="opentime-Sat" onchange="timeValidateClose(this)" <?php echo $disable; ?>>
-							<?php $i =0;
-							//echo $detail['sat_open_time'];exit;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['sat_open_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							<?php echo get_select_option_open_edit($detail['sat_open_time']);?>
 							</select>
 							</div>
 							   <div class="col-sm-4">
 							 <label for="password" class="control-label">To</label>
 								<select class="form-control rday-6" name="closetimeSat" id="closetime-Sat" onchange="timeValidate(this)" <?php echo $disable; ?>>
-							  <?php $i =0;
-							for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
-								for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
-									{
-									   if($i == 0){
-										 echo '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-									    }    
-									    else{ 		
-											$selected ='';
-											if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $detail['sat_close_time'] )
-												$selected ='selected';
-											 echo '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
-													   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
-										}
-										$i =$i+1;
-									}
-								}
-							
-							?>
+							  <?php echo get_select_option_close_edit($detail['sat_close_time']);?>
 							</select>
 							</div>
 						</div>

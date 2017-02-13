@@ -25,7 +25,16 @@ if (isset($_REQUEST['submit'])) {
     $email        = mysqli_real_escape_string($conn, trim($_POST['email']));
     $phone        = mysqli_real_escape_string($conn, trim($_POST['phone']));
     $booking_date = mysqli_real_escape_string($conn, trim($_POST['booking_date']));
-    $update       = mysqli_query($GLOBALS['conn'], "UPDATE `booked_records_restaurant` SET booking_time ='" . $booking_time . "',number_of_people ='" . $people . "',name='" . $name . "',email='" . $email . "',booking_date='" . $booking_date . "',contact_no='" . $phone . "' WHERE `booking_id` ='" . mysqli_real_escape_string($conn, $booking_id) . "'");
+    if($_POST['booking_status'])
+    {
+      $booking_status = mysqli_real_escape_string($conn, trim($_POST['booking_status']));
+    }
+    else
+    {
+      $booking_status ="";
+    }
+    $booking_status = mysqli_real_escape_string($conn, trim($_POST['booking_status']));
+    $update       = mysqli_query($GLOBALS['conn'], "UPDATE `booked_records_restaurant` SET booking_time ='" . $booking_time . "',number_of_people ='" . $people . "',name='" . $name . "',email='" . $email . "',booking_date='" . $booking_date . "',booking_status='" . $booking_status . "',contact_no='" . $phone . "' WHERE `booking_id` ='" . mysqli_real_escape_string($conn, $booking_id) . "'");
     if ($update) {
         $_SESSION['updateBooking'] = 1;
         if ($_GET['list'] == 'list')
@@ -76,6 +85,8 @@ if (isset($_REQUEST['submit'])) {
                           <input type="text" id="phone" name="phone" disabled value="<?php if($_POST['phone']){ echo $_POST['phone'];}else{ echo $bookingData['contact_no'];} ?>" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                    
+                     
                      <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Booking Date </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -88,169 +99,10 @@ if (isset($_REQUEST['submit'])) {
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time">
 							<?php 
-               $date_interval = "";
-               $day = date('D', strtotime($bookingData['booking_date']));
-   
-               $restaurant_data = mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".mysqli_real_escape_string($conn,trim($bookingData['restaurant_id']))."' ");
-
-        
-               if(mysqli_num_rows($restaurant_data)>0)
-                {
-                 $find_interval = mysqli_fetch_assoc($restaurant_data);
-                 if($day == 'Sun'){
-             
-                 if($find_interval['is_sun'] != 0)
-                 {
-                   $time_first = strtotime($find_interval['sun_open_time']);
-                   $time_second = strtotime($find_interval['sun_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-                  }
-                  else
-                 {
-                    $date_interval="";
-                 }
-               
-
-               }
-              else if($day == 'Mon'){
-               if($find_interval['is_mon'] != 0)
-               {
-                  $time_first = strtotime($find_interval['mon_open_time']);
-                   $time_second = strtotime($find_interval['mon_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-
-               }
-               else
-               {
-                  $date_interval="";
-
-               }
-
-            }
-            else if($day == 'Tue'){
-              if($find_interval['is_tue'] != 0)
-               {
-                   $time_first = strtotime($find_interval['tue_open_time']);
-                   $time_second = strtotime($find_interval['tue_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-                 
-
-               }
-               else
-               {
-                  $date_interval="";
-
-               }
-            }
-            else if($day == 'Wed'){
-              if($find_interval['is_wed'] != 0)
-               {
-                 $time_first = strtotime($find_interval['wed_open_time']);
-                   $time_second = strtotime($find_interval['wed_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-                 
-               }
-               else
-               {
-                    $date_interval="";
-               }
-            }
-            else if($day == 'Thu'){
-               if($find_interval['is_thu'] != 0)
-               {
-                 $time_first = strtotime($find_interval['thu_open_time']);
-                   $time_second = strtotime($find_interval['thu_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-                
-
-               }
-               else
-               {
-                   $date_interval="";
-
-               }
-            }
-            else if($day == 'Fri'){
-
-               if($find_interval['is_fri'] != 0)
-               {
-                 $time_first = strtotime($find_interval['fri_open_time']);
-                   $time_second = strtotime($find_interval['fri_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-                
-
-               }
-               else
-               {
-                   $date_interval="";
-
-               }
-            }
-            else if($day == 'Sat'){
-              
-               if($find_interval['is_sat'] != 0)
-               {
-                 $time_first = strtotime($find_interval['sat_open_time']);
-                   $time_second = strtotime($find_interval['sat_close_time']);
-                   $interval = 1800; // Interval in seconds
-                   $array = array();
-                   for ($i = $time_first; $i <= $time_second;){
-                     $array[] =  date('H:i', $i);
-                     $i += $interval;
-                   }
-                   $date_interval = $array;
-                
-
-               }
-               else
-               {
-                  
-               }
-            }
-            else{
-                
-                   
-            }
-        }
+               $date_interval= edit_booking_delivery_option($bookingData['restaurant_id'],$bookingData['booking_date']);
+			   
                 if(!empty($date_interval))
-                {
-                 
+                {  
                 foreach($date_interval as $record){
                  
                 ?>
@@ -267,6 +119,18 @@ if (isset($_REQUEST['submit'])) {
                           <input type="text" id="people" name="people"  value="<?php if($_POST['people']){ echo $_POST['people'];}else{ echo $bookingData['number_of_people'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                      <?php if($_GET['edit_type']!=""){ ?>
+                        <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Status
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="form-control col-md-7 col-xs-12" name="booking_status">
+                              <option value="3">Cancelled</option>
+                              <option value="4">No-show</option>
+                            </select>
+                        </div>
+                      </div>
+                      <?php } ?>
                     <input type="hidden" value="<?php echo url();?>" id="urlData">
                       <div class="ln_solid"></div>
                       <div class="form-group">

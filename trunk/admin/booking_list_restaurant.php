@@ -1,3 +1,4 @@
+
 <?php 
   include_once('header.php');
   $result = array();
@@ -9,13 +10,13 @@
   $time = date('H:i:s', strtotime('-1 hour'));
   if(@$_SESSION['restaurant_id']!="")
   {
-    $data = mysqli_query($GLOBALS['conn'],"SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '".$time."' AND `booking_date` = CURRENT_DATE()) order by brr.booking_id desc");
+    $data = mysqli_query($GLOBALS['conn'],"SELECT brr.booking_id,brr.*,rd.restaurant_name FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '".$time."' AND `booking_date` = CURRENT_DATE() AND brr1.restaurant_id = '".$_SESSION['restaurant_id']."') order by brr.booking_id desc");
   
   }
   else
   {
 
-    $data = mysqli_query($GLOBALS['conn'],"SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '".$time."' AND `booking_date` = CURRENT_DATE()) order by brr.booking_id desc");
+    $data = mysqli_query($GLOBALS['conn'],"SELECT brr.booking_id,brr.*,rd.restaurant_name FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '".$time."' AND `booking_date` = CURRENT_DATE()) order by brr.booking_id desc");
    
 
   }
@@ -120,11 +121,14 @@
                     <table id="booking_management_table" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                           <th width="12%">Name</th>
-                           <th width="12%">Mobile</th>
-                           <th width="12%">Email</th>
-                           <th width="12%">Date</th>
-                           <th width="12%">Time</th>
+                           <th width="10%">Name</th>
+                           <th width="10%">Mobile</th>
+                           <th width="10%">Email</th>
+                           <th width="10%">Date</th>
+                           <th width="10%">Time</th>
+                           <?php if($_SESSION['restaurant_id'] == "") { ?>
+                           <th width="10%">Restaurant Name</th>
+                           <?php }?>
                            <th width="12%">No. of Covers</th>
                            <th width="12%">Booking Status</th>
                            <th width="16%">Action</th>
@@ -136,16 +140,19 @@
                              if($data)
                              { 
                                while($record = mysqli_fetch_assoc($data)){ 
-								   
+								               
                      ?>
                          <tr>
                           <td><?php echo $record['name'];?></td>
                           <td><?php echo $record['contact_no'];?></td>
                            <td><?php echo $record['email'];?></td>
                           <td><?php $date = date_create ($record['booking_date']);
-								echo date_format($date,"d M Y");?>
+								echo date_format($date,"d-M-Y");?>
 						  </td>
                           <td><?php echo $record['booking_time'];?></td>
+                          <?php if($_SESSION['restaurant_id'] == "") { ?>
+                           <td><?php echo $record['restaurant_name'];?></td>
+                           <?php }?> 
                           <td><?php echo $record['number_of_people'];?></td>
                            <td><?php if($record['booking_status']=="0"){ 
                                       echo "Declined";
@@ -153,7 +160,7 @@
                                     else if($record['booking_status']=="1"){
                                       echo "Pending";
                                     }
-                                    else{
+                                    else {
                                       echo "Accepted";             
                                     }
                             ?></td>
@@ -168,7 +175,7 @@
                                <button type="button" id="confirm-<?php echo $record['booking_id'];?>" class="btn btn-round btn-success">Accept</button>
                             
                               <?php } ?>
-                            
+
                             <a href="edit_booking.php?id=<?php echo encrypt_var($record['booking_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
             			  </td>
                          </tr>
@@ -228,7 +235,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modal">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Modify Booking</h4>
       </div>

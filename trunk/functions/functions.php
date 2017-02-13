@@ -1,7 +1,7 @@
 <?php
 include('config.php');
 //Header Authntication
-//error_reporting(0);
+error_reporting(0);
 function basic_authentication($authname, $authpw) {
  if (!isset($_SERVER['PHP_AUTH_USER'])) {
   header('WWW-Authenticate: Basic realm="My Realm"');
@@ -21,7 +21,7 @@ function basic_authentication($authname, $authpw) {
 }
 function authenticate($user, $password) {
 
-    if (($user == 'admin')&&($password == '1234')) { return 1; }
+    if (($user == 'Android123Native')&&($password == 'native@123#')) { return 1; }
     else { return 0; };
 }
 //Function for user Authntication 
@@ -70,7 +70,7 @@ function delete_data($table,$id) {
 	}*/
 function url(){
 		
-		return "http://172.16.0.9/PROJECTS/IOSNativeAppDevelopment/trunk/";
+		return "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/";
 	}
 
 
@@ -382,7 +382,7 @@ if($_SESSION['restaurant_id']!="")
   }
 	
 }
-
+// Restaurant meal insertion
 function getQueryByDate($Date)
 {	
 if($_SESSION['restaurant_id']!="")
@@ -397,7 +397,7 @@ if($_SESSION['restaurant_id']!="")
   }
 	
 }
-
+//function to get query by date
 function getQueryByBothDate($fromdate,$todate)
 {
 if($_SESSION['restaurant_id']!="")
@@ -412,27 +412,313 @@ if($_SESSION['restaurant_id']!="")
   }
 	
 }
-//function to send encrpted id in url
-function encrypt($pure_string) {
-    $dirty = array("+", "/", "=");
-    $clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
-    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-    $_SESSION['iv'] = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-    $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, 'Native', utf8_encode($pure_string), MCRYPT_MODE_ECB, $_SESSION['iv']);
-    $encrypted_string = base64_encode($encrypted_string);
-    return str_replace($dirty, $clean, $encrypted_string);
+// Restaurant meal insertion
+function restaurant_meal_insertion($restaurant_id,$meal_id,$deliver_food)
+{
+	$count_num = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_meal_details Where restaurant_id = '".$restaurant_id."' AND meal = '".$meal_id."'");
+	if(mysqli_num_rows($count_num)>0)
+	{	
+		$restaurant_meal_id = mysqli_fetch_assoc($count_num);
+        mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `deliver_food`='".$deliver_food."' Where restaurant_id = '".$restaurant_meal_id['id']."'");
+        return $restaurant_meal_id['id'];
+	}
+	else{
+		mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_meal_details`(`restaurant_id`,`meal`,`deliver_food`) VALUES ('".$restaurant_id."','".$meal_id."','".$deliver_food."')");
+		return mysqli_insert_id($GLOBALS['conn']);
+	}
 }
-//function to send decrypted id in url
-function decrypt($encrypted_string) { 
-    $dirty = array("+", "/", "=");
-    $clean = array("_PLUS_", "_SLASH_", "_EQUALS_");
-
-    $string = base64_decode(str_replace($clean, $dirty, $encrypted_string));
-
-    $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, 'Native',$string, MCRYPT_MODE_ECB, $_SESSION['iv']);
-    return $decrypted_string;
+//function to count number of bookings
+function count_number_of_records($status)
+{
+	$time= time();
+    $time = date('H:i:s', strtotime('-1 hour'));
+	if(@$_SESSION['restaurant_id'] != "")
+        {
+            $count = mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '".$_SESSION['restaurant_id']."' AND `booking_status`= '".$status."' AND `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '".$time."' AND `booking_date` = CURRENT_DATE() AND `booking_status`='".$status."' AND brr1.restaurant_id = '".$_SESSION['restaurant_id']."') order by brr.booking_id desc"));
+        }
+    else
+        {
+            $count=mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where `booking_date` > CURRENT_DATE() AND `booking_status`= '".$status."' OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '".$time."' AND `booking_date` = CURRENT_DATE() AND `booking_status`= '".$status."') order by brr.booking_id desc"));
+        }
+  return $count;
 }
-	
-       
+//function to count number of bookings delivery section
+function count_number_of_records_delivery($status)
+{
+	$time= time();
+    $time = date('H:i:s', strtotime('-1 hour'));
+	if(@$_SESSION['restaurant_id'] != "")
+        {
+            $count = mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= '".$status."' AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE() AND brr1.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= '".$status."') order by db.delivery_id desc"));
+        }
+    else
+        {
+            $count= mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where `delivery_date` > CURRENT_DATE() AND `delivery_status`= '".$status."' OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE() AND `delivery_status`= '".$status."') order by db.delivery_id desc"));
+        }
+  return $count;
+}
+//url variable value encryption 
+function encrypt_var($string) {
+  $key = "PODD321"; //key to encrypt and decrypts.
+  $result = '';
+  $test = "";
+   for($i=0; $i<strlen($string); $i++) {
+     $char = substr($string, $i, 1);
+     $keychar = substr($key, ($i % strlen($key))-1, 1);
+     $char = chr(ord($char)+ord($keychar));
+     $test[$char]= ord($char)+ord($keychar);
+     $result.=$char;
+   }
 
+   return urlencode(base64_encode($result));
+}
+//url variable value decryption
+function decrypt_var($string) {
+    $key = "PODD321"; //key to encrypt and decrypts.
+    $result = '';
+    $string = base64_decode(urldecode($string));
+   for($i=0; $i<strlen($string); $i++) {
+     $char = substr($string, $i, 1);
+     $keychar = substr($key, ($i % strlen($key))-1, 1);
+     $char = chr(ord($char)-ord($keychar));
+     $result.=$char;
+   }
+   return $result;
+}
+//function to get options for select box in add restaurant
+
+function  get_select_option()
+{
+	$i =0;
+	$option="";
+	for($hours=0; $hours<24; $hours++) // the interval for hours is '1'
+		for($mins=0; $mins<60; $mins+=30){// the interval for mins is '30'
+			if($i == 0)
+
+				$option .= '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+			else
+				$option .= '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+				$i =$i+1;
+	   }
+    return $option;
+} 
+//function to get options for select box in edit restaurant for opening time
+function  get_select_option_open_edit($open_time)
+{
+	$i =0;
+	$option="";
+	for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
+		for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
+			{
+			   if($i == 0){
+				 $option .= '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+			    }    
+			    else{ 		
+					$selected ='';
+					if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $open_time)
+						$selected ='selected';
+					$option .= '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+							   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+							   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+				}
+				$i =$i+1;
+			}
+		}
+	return $option;						
+} 
+//function to get options for select box in edit restaurant for closing time
+function  get_select_option_close_edit($close_time)
+{
+	$i =0;
+	$option="";
+	for($hours=0; $hours<24; $hours++) {// the interval for hours is '1'
+		for($mins=0; $mins<60; $mins+=30) // the interval for mins is '30'
+			{
+			   if($i == 0){
+				 $option .= '<option value="">'.str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+			    }    
+			    else{ 		
+					$selected ='';
+					if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $close_time)
+						$selected ='selected';
+					$option .= '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+							   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+							   .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>';
+				}
+				$i =$i+1;
+			}
+		}
+	return $option;				
+} 
+function num_of_booking($restaurant_id)
+{
+	$num_count = mysqli_num_rows(mysqli_query($GLOBALS['conn'], "SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '" . $restaurant_id . "' AND `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '" . $time . "' AND `booking_date` = CURRENT_DATE() AND brr1.restaurant_id = '" . $restaurant_id . "')"));
+	return $num_count;
+}
+function get_name_asset($table,$type){
+	$data = mysqli_query($GLOBALS['conn'],"SELECT * FROM $table WHERE id = '".$type."'");
+	return $data;
+}
+function edit_booking_delivery_option($restaurant_id,$booking_date)
+{
+	           $date_interval = "";
+               $day = date('D', strtotime($booking_date));
+               $restaurant_data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details WHERE restaurant_id = '".$restaurant_id."' ");
+               if(mysqli_num_rows($restaurant_data)>0)
+                {
+                 $find_interval = mysqli_fetch_assoc($restaurant_data);
+                 if($day == 'Sun'){
+             
+                 if($find_interval['is_sun'] != 0)
+                 {
+                   $time_first = strtotime($find_interval['sun_open_time']);
+                   $time_second = strtotime($find_interval['sun_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                  }
+                  else
+                 {
+                    $date_interval="";
+                 }
+               
+
+               }
+              else if($day == 'Mon'){
+               if($find_interval['is_mon'] != 0)
+               {
+                  $time_first = strtotime($find_interval['mon_open_time']);
+                   $time_second = strtotime($find_interval['mon_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+
+               }
+               else
+               {
+                  $date_interval="";
+
+               }
+
+            }
+            else if($day == 'Tue'){
+              if($find_interval['is_tue'] != 0)
+               {
+                   $time_first = strtotime($find_interval['tue_open_time']);
+                   $time_second = strtotime($find_interval['tue_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                 
+
+               }
+               else
+               {
+                  $date_interval="";
+
+               }
+            }
+            else if($day == 'Wed'){
+              if($find_interval['is_wed'] != 0)
+               {
+                 $time_first = strtotime($find_interval['wed_open_time']);
+                   $time_second = strtotime($find_interval['wed_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                 
+               }
+               else
+               {
+                    $date_interval="";
+               }
+            }
+            else if($day == 'Thu'){
+               if($find_interval['is_thu'] != 0)
+               {
+                 $time_first = strtotime($find_interval['thu_open_time']);
+                   $time_second = strtotime($find_interval['thu_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                
+
+               }
+               else
+               {
+                   $date_interval="";
+
+               }
+            }
+            else if($day == 'Fri'){
+
+               if($find_interval['is_fri'] != 0)
+               {
+                 $time_first = strtotime($find_interval['fri_open_time']);
+                   $time_second = strtotime($find_interval['fri_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                
+
+               }
+               else
+               {
+                   $date_interval="";
+
+               }
+            }
+            else if($day == 'Sat'){
+              
+               if($find_interval['is_sat'] != 0)
+               {
+                 $time_first = strtotime($find_interval['sat_open_time']);
+                   $time_second = strtotime($find_interval['sat_close_time']);
+                   $interval = 1800; // Interval in seconds
+                   $array = array();
+                   for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                   }
+                   $date_interval = $array;
+                
+
+               }
+               else
+               {
+                  
+               }
+            }
+            else{
+                
+                   
+            }
+        }
+    return  $date_interval;
+
+}
 ?>

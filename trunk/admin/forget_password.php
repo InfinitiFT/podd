@@ -182,7 +182,8 @@ if(isset($_POST["submit"]))
                 <br />
 
                 <div>
-                   <h1><i class="fa fa-paw"></i>PODD</h1>
+                   <!-- <h1><i class="fa fa-paw"></i>PODD</h1> -->
+                   <h1 class="logo"><img src="logo.png" alt="logo" /></h1>
                   <p>©2016 All Rights Reserved.</p>
                 </div>
               </div>

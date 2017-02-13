@@ -86,7 +86,7 @@ if(mysqli_num_rows($restaurant_data)>0)
                if($find_interval['is_fri'] != '0')
                {
                   $time_first     = strtotime($find_interval['fri_open_time']);
-                  $time_second    = strtotime($find_interval['fri_open_time']);
+                  $time_second    = strtotime($find_interval['fri_close_time']);
 
                }
                else
@@ -120,7 +120,9 @@ for ($i = $time_first; $i <= $time_second;){
     $i += $interval;
 }
 
+
 ?>
+
 <div class="table-responsive">
 <table class="table table-bordered table-hover">
     <thead>
@@ -205,43 +207,3 @@ for ($i = $time_first; $i <= $time_second;){
     });
        
 </script>
-<!-- <script>
-    $(document).ready(function() {
-        $("[id ^='resid-']").hover(function () {
-            var restID = $(this).attr('id');
-            var restArr = restID.split('-');
-            //console.log(restArr[1]);
-            Lobibox.confirm({
-                closeOnClick: true,
-                msg: "Are you sure you want to show the booking details11?",
-                callback: function ($this, type) {
-                    if (type === 'yes') {
-                        $(".lobibox").modal('hide');
-                        $.ajax({
-                            url:'admin_ajax.php',
-                            type: 'post',
-                            data: {type:'bookingDetails',id:restArr[1]},
-                            success: function(data, status) {
-                                //alert('working');
-                                //console.log(data);
-                                $("#myModal").modal('show');
-                                $(".modal-body").html(data);
-                                /*location.reload();*/
-                              /*  Lobibox.notify('success', {
-                                    msg: 'Booking details Successfully.'
-                                });*/
-                            },
-                            error: function(xhr, desc, err) {
-                                console.log(xhr);
-                            }
-                        });
-                    } else if (type === 'no') {
-                        Lobibox.notify('info', {
-                            msg: 'You have clicked "No" button.'
-                        });
-                    }
-                }
-            });
-        });
-    });
-</script> -->

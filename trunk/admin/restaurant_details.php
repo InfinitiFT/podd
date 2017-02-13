@@ -11,250 +11,195 @@
  }
   
  ?> 
-     <!-- page content -->
+      <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
+          
+
             <div class="clearfix"></div>
-           <div class="row">
+
+            <div class="row">
+            
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Venue Management</h2>
-                     <ul class="nav navbar-right panel_toolbox">
-                      
-                      </li>
-                      
-                    </ul>
+                   
                     <div class="clearfix"></div>
                   </div>
+                  <div class="col-md-3 col-sm-3 col-xs-6">
+                  </div>
+                   <div class="col-md-6 col-sm-6 col-xs-12">
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" novalidate>
-                      </p>
-                  
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name 
-                        </label>
-                        <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                        <label class="control-label control-label-left col-md-12 col-sm-12 col-xs-12" for="name"> <?php echo $restaurant_data['restaurant_name']; ?>
-                        
-                        </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Images 
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                        </div>
-						          <div class="img-sel col-md-6 col-sm-offset-1 col-sm-6 col-xs-12 ">
-							          <ul>
-							            <?php $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
+                    <table class="table table-bordered">
+                        <tr>
+                          <td>Name</td>
+                          <td><?php echo $restaurant_data['restaurant_name']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td>Images</td>
+                          <td> 
+                          <?php $restaurant_images = explode(",",$restaurant_data['restaurant_images']);
                            if($restaurant_images[0])
                             {
-                              foreach($restaurant_images as $value){  ?> <li> <img src="<?php echo url().$value; ?>"  height="42" width="42"></li>
-									       <?php }} ?>
-						            </ul>
-						         </div>
-						       </div>
-                      
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Location
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php 
+                              foreach($restaurant_images as $value){  ?>  <img src="<?php echo url().$value; ?>"  height="42" width="42">
+                         <?php }} ?>
+                        </td>
+                          
+                        </tr>
+                        <tr>
+                           
+                          <td>Location</td>
+                          <td><?php 
                           if($restaurant_data['location'])
                           {
                            $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT location FROM restaurant_location WHERE id = '".$restaurant_data['location']."'"));
                            echo $location['location'];
                           }
-                         ?> 
-                        </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Deliver Food
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php  if($restaurant_data['deliver_food']==1) echo 'YES'; else echo 'NO'; ?>
-                        </div>
-                      </div>
-                       <?php if($restaurant_data['is_sun'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Sunday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['sun_open_time'].'-'.$restaurant_data['sun_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Sunday
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                       <?php if($restaurant_data['is_mon'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Monday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['mon_open_time'].'-'.$restaurant_data['mon_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Monday 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                       <?php if($restaurant_data['is_tue'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Tuesday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['tue_open_time'].'-'.$restaurant_data['tue_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Tuesday 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                       <?php if($restaurant_data['is_wed'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Wednesday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['wed_open_time'].'-'.$restaurant_data['wed_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Wednesday 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                       <?php if($restaurant_data['is_thu'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Thursday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['thu_open_time'].'-'.$restaurant_data['thu_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Thursday 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                       <?php if($restaurant_data['is_fri'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Friday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['fri_open_time'].'-'.$restaurant_data['fri_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Friday 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                      <?php if($restaurant_data['is_sat'] != 0){ ?>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">Saturday
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['sat_open_time'].'-'.$restaurant_data['sat_close_time'] ; ?>
-                        </div>
-                      </div>
-                      <?php } else{?>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Saturday 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> Closed 
-                        </div>
-                      </div>
-                      <?php } ?>
-                      <div class="item form-group">
-                        <label for="password" class="control-label col-md-3">Venue Description</label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                        <label class="control-label control-label-left col-md-12 col-sm-12 col-xs-12" for="name"> <?php echo $restaurant_data['about_text']; ?>
-                        
-                         
-                        </div>
-                      </div>
-                      <div class="item form-group">
-                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Maximum covers</label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                         <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['max_people_allowed']; ?>
-                        </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Cuisine 
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['cuisine_name']; ?>
-                        </div>
-                      </div>
-                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Dietary 
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['dietary_name']; ?>
-                        </div>
-                      </div>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Ambience 
-                        </label>
-                            <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['ambience_name']; ?>
-                        </div>
-                      </div>
-                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Price Range 
-                        </label>
-                           <div class="col-md-6 col-sm-offset-1 col-sm-6 col-xs-12">
-                          <label class="control-label control-label-left col-md-3 col-sm-3 col-xs-12" for="name"> <?php echo $restaurant_data['price_range1']; ?>
-                        </div>
-                      </div>
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-md-offset-3">
-                          <?php if($restaurant_id !=""){ ?>
+                         ?> </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>Deliver Food</td>
+                          <td><?php  if($restaurant_data['deliver_food']==1) echo 'YES'; else echo 'NO'; ?></td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>Sunday</td>
+                          <td><?php if($restaurant_data['is_sun'] != 0){ 
+                               echo $restaurant_data['sun_open_time'].'-'.$restaurant_data['sun_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?>
+                         </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>Monday</td>
+                          <td><?php if($restaurant_data['is_mon'] != 0){ 
+                               echo $restaurant_data['mon_open_time'].'-'.$restaurant_data['mon_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?></td>
+                          
+                        </tr>
+                        <tr>
+                           
+                          <td>Tuesday</td>
+                          <td><?php if($restaurant_data['is_tue'] != 0){ 
+                               echo $restaurant_data['tue_open_time'].'-'.$restaurant_data['tue_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?></td>
+                          
+                        </tr>
+                        <tr>
+                           
+                          <td>Wednesday</td>
+                          <td><?php if($restaurant_data['is_wed'] != 0){ 
+                               echo $restaurant_data['wed_open_time'].'-'.$restaurant_data['wed_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?></td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>Thursday</td>
+                          <td><?php if($restaurant_data['is_thu'] != 0){ 
+                               echo $restaurant_data['thu_open_time'].'-'.$restaurant_data['thu_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?></td>
+                          
+                        </tr>
+                        <tr>
+                           
+                          <td>Friday</td>
+                          <td><?php if($restaurant_data['is_fri'] != 0){ 
+                               echo $restaurant_data['fri_open_time'].'-'.$restaurant_data['fri_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?></td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>Saturday</td>
+                          <td><?php if($restaurant_data['is_sat'] != 0){ 
+                               echo $restaurant_data['sat_open_time'].'-'.$restaurant_data['sat_close_time'] ;
+                             }
+                               else{
+                                echo "Closed";
+                                } ?></td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>Venue Description</td>
+                          <td><?php echo $restaurant_data['about_text']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td>Maximum covers</td>
+                          <td><?php echo $restaurant_data['max_people_allowed']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td>Cuisine</td>
+                          <td><?php echo $restaurant_data['cuisine_name']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td>Dietary</td>
+                          <td><?php echo $restaurant_data['dietary_name']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td>Ambience</td>
+                          <td><?php echo $restaurant_data['ambience_name']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td>Price Range</td>
+                          <td><?php echo $restaurant_data['price_range1']; ?></td>
+                          
+                        </tr>
+                         <tr>
+                           
+                          <td></td>
+                          <td> <?php if($restaurant_id !=""){ ?>
                           <a href="edit_resturant.php" class="btn btn-success">Edit</a>
                           <?php } else {?>
                            <a href="edit_resturant.php?id=<?php echo encrypt_var($restaurant_data['user_id'])?>" class="btn btn-success">Edit</a>
-                          <?php }?>
-                        </div>
-                      </div>
-                    </form>
+                          <?php }?></td>
+                          
+                        </tr>
+                    </table>
+
+                  </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- /page content -->
 
         <?php include_once('footer.php'); ?>

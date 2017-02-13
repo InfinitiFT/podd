@@ -41,9 +41,10 @@
                           <th width="10%">Name</th>
                           <th width="10%">Email</th>
                           <th width="10%">Location</th>
-						  <th width="10%">Address</th>
+						              <th width="10%">Address</th>
                           <th width="5%">Contact No</th>
-                          <th width="55%">Action</th>
+                         
+                          <th width="45%">Action</th>
                         </tr>
                       </thead>
                       <input type="hidden" id = "delete_type" value ="restaurant">
@@ -51,25 +52,29 @@
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
                           <td><?php if(strlen($record['restaurant_name'])>20){
-                    echo $small = stripslashes(substr($record['restaurant_name'], 0, 20)).'.........';
-                    }
-                    else{
-                      echo $small = stripslashes($record['restaurant_name']);
-                      } ?></td>
+                                     echo $small = stripslashes(substr($record['restaurant_name'], 0, 20)).'.........';
+                                    }
+                                    else{
+                                     echo $small = stripslashes($record['restaurant_name']);
+                             } ?>
+                          </td>
                           <td><?php if(strlen($record['email'])>20){
-                    echo $small = stripslashes(substr($record['email'], 0, 20)).'.........';
-                    }
-                    else{
-                      echo $small = stripslashes($record['email']);
-                      } ?></td>
+                                     echo $small = stripslashes(substr($record['email'], 0, 20)).'.........';
+                                    }
+                                    else{
+                                     echo $small = stripslashes($record['email']);
+                                    } ?>
+                          </td>
                           <td><?php $location = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_location` WHERE `id` = '".$record['location']."'"));echo $location['location'];?></td>
                           <td><?php if(strlen($record['restaurant_full_address'])>20){
-                    echo $small = stripslashes(substr($record['restaurant_full_address'], 0,20)).'.........';
-                    }
-                    else{
-                      echo $small = stripslashes($record['restaurant_full_address']);
-                      } ?></td>
-						  <td><?php echo $record['mobile_no'];?></td>
+                               echo $small = stripslashes(substr($record['restaurant_full_address'], 0,20)).'.........';
+                              }
+                             else{
+                               echo $small = stripslashes($record['restaurant_full_address']);
+                             } ?>
+                         </td>
+						             <td><?php echo $record['mobile_no'];?></td>
+                         
 						  
                           <td><?php if($record['status'] == 1){?>
                              <button type="button" id="activatedeactivate1-<?php echo $record['restaurant_id'];?>" class="btn btn-round btn-warning">Deactivate Venue</button>

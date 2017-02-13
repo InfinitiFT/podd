@@ -284,7 +284,7 @@ if(isset($_REQUEST['submit'])){
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Description 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <textarea id="about"  class="form-control" name="about" data-parsley-trigger="keyup" maxlength="500" 
+                          <textarea id="about"  class="form-control" rows="5" name="about" data-parsley-trigger="keyup"  
                              ><?php if($_POST['about']){ echo $_POST['about'];}else{ echo '';} ?></textarea>
                         </div>
                       </div>

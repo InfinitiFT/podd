@@ -159,9 +159,7 @@ $.validator.methods.locationValid = function(value, element) {
 				required: true,
 				phone_no:true		
 		},
-    about: {
-        maxlength: 500 
-    },
+   
     people: {
         maxlength: 6
         
@@ -200,9 +198,7 @@ $.validator.methods.locationValid = function(value, element) {
     phone: {
 				required: "Please enter phone number"	
 		},
-    about: {
-        maxlength: "Discription should not be more than 500 characters."   
-    },
+   
     people: {
         maxlength: "Discription should not be more than 6 digits."    
     },
