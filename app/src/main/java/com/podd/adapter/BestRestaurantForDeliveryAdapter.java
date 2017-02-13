@@ -1,6 +1,5 @@
 package com.podd.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,11 +15,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
 import com.podd.activityRestaurant.MealDeliveryDetailScreenActivity;
-import com.podd.activityRestaurant.RestaurantDetailScreenActivity;
-import com.podd.activityRestaurant.ViewMenuActivity;
+
 import com.podd.model.Restaurant;
 import com.podd.utils.AppConstant;
-import com.podd.utils.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 

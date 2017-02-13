@@ -22,7 +22,6 @@ import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.eventInterface.AddValueEvent;
 import com.podd.eventInterface.MinusValueEvent;
-import com.podd.fragment.BreakfastMenuFragment;
 import com.podd.fragment.DeliveryMenuFragment;
 import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.podd.R.id.tvRestauarntName;
-import static com.podd.R.id.tvTotalPrice;
 
 
 @SuppressWarnings("ALL")

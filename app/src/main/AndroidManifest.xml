@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:fullBackupContent="true"
         android:theme="@style/AppTheme"
+        android:allowBackup="true"
         android:largeHeap="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activityRestaurant.NewHomeScreenActivity"
@@ -91,10 +92,6 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".activityRestaurant.MealDeliveryDetailScreenActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity
-            android:name=".activityTaxi.HomeScreenActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 

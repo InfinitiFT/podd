@@ -225,12 +225,6 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         else {
                             tvLocation.setText("");
                         }
-                       /* if (response.body().distance!=null) {
-                            tvDistance.setText(response.body().distance);
-                        }
-                        else {
-                            tvDistance.setText("");
-                        }*/
 
                         if(response.body().restaurant_menu!=null&&response.body().restaurant_menu.size()>0){
                             restaurantMenu.clear();

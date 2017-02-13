@@ -22,42 +22,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/llCurrentloc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvNearbyRestaurant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="end"
-                    android:text="@string/our_curated_selection_of_best_Restaurants"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14" />
-
-
-
-
-                <TextView
-                    android:id="@+id/tvCityName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="start"
-                    android:paddingStart="@dimen/dp_4"
-                    android:paddingEnd="0dp"
-                    android:text=""
-                    android:maxLength="12"
-                    android:ellipsize="end"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:textSize="@dimen/text_size_14" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/llVenues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +38,7 @@
                     android:text="@string/showing"
                     android:padding="@dimen/dp_1"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_10" />
 
                 <TextView
                     android:id="@+id/tvNoOfRestaurants"
@@ -83,7 +47,7 @@
                     android:text=""
                     android:padding="@dimen/dp_1"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textSize="@dimen/text_size_10"/>
 
                 <TextView
                     android:id="@+id/tvVenueBy"
@@ -92,7 +56,7 @@
                     android:text="@string/venues_by"
                     android:padding="@dimen/dp_1"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textSize="@dimen/text_size_10"/>
 
                 <TextView
                     android:id="@+id/tvLocationName"
@@ -108,7 +72,7 @@
                     android:freezesText="true"
                     android:focusable="true"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14"
+                    android:textSize="@dimen/text_size_10"
                     android:layout_marginLeft="@dimen/dp_0.5"
                     tools:ignore="Deprecated" />
             </LinearLayout>
@@ -144,7 +108,7 @@
                     android:padding="@dimen/dp_4"
                     android:text="@string/search_by"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_12"
+                    android:textSize="@dimen/text_size_10"
                     />
 
 

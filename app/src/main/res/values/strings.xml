@@ -110,7 +110,6 @@
     <string name="coming_soon">Coming soon</string>
     <string name="welcome_to">Welcome to</string>
     <string name="explore_and_book_curated_local_experiences">Explore and book curated local experiences</string>
-    <string name="the_armitage">THE ARMITAGE</string>
 
     <string name="showing">Showing </string>
     <string name="venues_by">venues by</string>
@@ -120,4 +119,7 @@
     <string name="verification_code">Verification code</string>
     <string name="total">Total:</string>
     <string name="address">Address</string>
+    <string name="_0">0</string>
+    <string name="the_podd">THE PODD</string>
+    <string name="book">Book</string>
 </resources>

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.podd.R;
-import com.podd.activityRestaurant.ViewMenuDeliveryActivity;
 import com.podd.eventInterface.AddValueEvent;
 import com.podd.eventInterface.MinusValueEvent;
 import com.podd.model.MealDetails;

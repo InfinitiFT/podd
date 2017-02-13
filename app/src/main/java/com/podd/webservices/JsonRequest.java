@@ -1,9 +1,7 @@
 package com.podd.webservices;
 
 
-import com.podd.model.OrderDetail;
 import com.podd.model.SavedItem;
-
 import java.io.Serializable;
 import java.util.List;
 

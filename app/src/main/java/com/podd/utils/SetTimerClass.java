@@ -6,11 +6,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
-
 import com.podd.activityRestaurant.NewHomeScreenActivity;
-import com.podd.model.MealDetails;
 import com.podd.model.SavedItem;
-import com.podd.model.SubItemMealDetails;
+
 
 
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class SetTimerClass extends Application {
             }
 
             public void onFinish() {
-                //dialog if user is inactive from 15 mins
+                //dialog if user is inactive from 15 minutes
                 isRunning = false;
                 CommonUtils.savePreferencesString(context, AppConstant.KEY_IS_INACTIVE, "true");
                 Intent intent = new Intent(context, NewHomeScreenActivity.class);

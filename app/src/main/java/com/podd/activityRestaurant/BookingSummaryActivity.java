@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.model.CountryCodeModel;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
@@ -28,9 +27,6 @@ import com.podd.utils.DialogUtils;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -348,7 +344,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
 
     private boolean isValid() {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        //String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         if (etName.getText().toString().trim().isEmpty()) {
             Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_LONG).show();
             etName.requestFocus();

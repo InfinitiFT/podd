@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.podd.R;
+import com.podd.activityRestaurant.NewHomeScreenActivity;
 
 /**
  * The type Taxi return to home screen.
@@ -49,7 +50,7 @@ public class TaxiReturnToHomeScreen extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvReturnToHome:
-                Intent intent=new Intent(context,HomeScreenActivity.class);
+                Intent intent=new Intent(context,NewHomeScreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;

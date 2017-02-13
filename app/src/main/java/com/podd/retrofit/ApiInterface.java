@@ -2,7 +2,7 @@ package com.podd.retrofit;
 
 
 import com.podd.model.CountryCodeModel;
-import com.podd.model.HomeItemsModel;
+
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 

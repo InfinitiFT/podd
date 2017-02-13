@@ -21,7 +21,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.podd.R;
-import com.podd.utils.SetTimerClass;
 
 import java.io.Serializable;
 import java.util.List;

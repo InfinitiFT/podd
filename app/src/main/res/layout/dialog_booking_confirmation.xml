@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -32,7 +33,6 @@
     <EditText
         android:id="@+id/etEnterOtp1"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxLength="1"
@@ -43,7 +43,8 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_12"
+        tools:ignore="LabelFor" />
 
     <EditText
         android:id="@+id/etEnterOtp2"
@@ -58,7 +59,8 @@
         android:imeOptions="actionNext"
         android:inputType="number"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_12"
+        tools:ignore="LabelFor" />
 
     <EditText
         android:id="@+id/etEnterOtp3"
@@ -73,7 +75,8 @@
         android:imeOptions="actionNext"
         android:inputType="number"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_12"
+        tools:ignore="LabelFor" />
 
     <EditText
         android:id="@+id/etEnterOtp4"
@@ -88,7 +91,8 @@
         android:imeOptions="actionDone"
         android:inputType="number"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_12" />
+        android:textSize="@dimen/text_size_12"
+        tools:ignore="LabelFor" />
 
     </LinearLayout>
 

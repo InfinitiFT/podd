@@ -1,10 +1,14 @@
 package com.podd.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -32,7 +36,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         if(restaurantList.get(position)!=null){
             for (int i = 0; i <restaurantList.size() ; i++) {
                 Picasso.with(context)
@@ -42,6 +46,13 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         }else {
             holder.ivRestaurantImage.setImageResource(R.mipmap.placeholder_icon);
         }
+
+        holder.ivRestaurantImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomPopupWindow(context, restaurantList.get(position));
+            }
+        });
 
 
     }
@@ -57,5 +68,44 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             ivRestaurantImage= (ImageView) itemView.findViewById(R.id.ivRestaurantImage);
             llStarRestaurants= (LinearLayout) itemView.findViewById(R.id.llStarRestaurants);
         }
+    }
+
+    private void showCustomPopupWindow(final Context mContext, String imageUrl) {
+
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        final Dialog mDialog = new Dialog(mContext,
+                android.R.style.Theme_Translucent_NoTitleBar);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.75f;
+        mDialog.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.getWindow();
+        final ViewGroup nullParent = null;
+        View dialogLayout = inflater.inflate(R.layout.image_popup, nullParent);
+        mDialog.setContentView(dialogLayout);
+
+        ImageView ivCross=(ImageView)mDialog.findViewById(R.id.ivPicsCross);
+        ImageView ivPics=(ImageView)mDialog.findViewById(R.id.ivPics);
+
+        try {
+            Picasso.with(context).load(imageUrl).error(R.mipmap.placeholder_icon).placeholder(R.mipmap.placeholder_icon).into(ivPics);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
+
+
     }
 }

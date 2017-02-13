@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.BestRestaurantForDeliveryAdapter;
 import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
@@ -127,10 +126,10 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         llCuisine = (LinearLayout) findViewById(R.id.llCuisine);
         llDietary = (LinearLayout) findViewById(R.id.llDietary);
         llLocation = (LinearLayout) findViewById(R.id.llLocation);
-        tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
+       // tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
         tvVenueBy = (TextView) findViewById(R.id.tvVenueBy);
         tvShowing = (TextView) findViewById(R.id.tvShowing);
-        tvCityName = (TextView) findViewById(R.id.tvCityName);
+      //  tvCityName = (TextView) findViewById(R.id.tvCityName);
         tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
         tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
@@ -145,7 +144,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         tvDeliveredtoYou = (TextView) findViewById(R.id.tvDeliveredToYou);
         tvLocationName= (TextView) findViewById(R.id.tvLocationName);
         tvNoOfRestaurants= (TextView) findViewById(R.id.tvNoOfRestaurants);
-        llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
+       // llCurrentloc= (LinearLayout) findViewById(R.id.llCurrentloc);
         llVenues= (LinearLayout) findViewById(R.id.llVenues);
     }
 

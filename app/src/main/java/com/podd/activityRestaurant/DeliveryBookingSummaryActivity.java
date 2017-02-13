@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.podd.R;
-import com.podd.model.OrderDetail;
 import com.podd.model.SavedItem;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
@@ -350,7 +349,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
 
 
     private boolean isValid() {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+     //   String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         if (etName.getText().toString().trim().isEmpty()) {
             Toast.makeText(context, R.string.please_enter_name, Toast.LENGTH_LONG).show();
             etName.requestFocus();
