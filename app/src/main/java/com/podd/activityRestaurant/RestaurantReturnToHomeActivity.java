@@ -87,7 +87,6 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
         tvThanks = (TextView) findViewById(R.id.tvThanks);
         llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
-
     }
 
     private void setFont() {

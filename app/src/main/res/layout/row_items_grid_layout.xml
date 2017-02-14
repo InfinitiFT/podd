@@ -103,21 +103,21 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textSize="@dimen/text_size_8"
-                            android:gravity="bottom|center"
+                            android:gravity="bottom|left"
                             android:textColor="@android:color/white"
                             />
                     </LinearLayout>
                     <TextView
                         android:id="@+id/tvPriceRange"
                         android:layout_width="0dp"
-                        android:layout_weight="0.3"
+                        android:layout_weight="0.2"
                         android:layout_height="match_parent"
                         android:text="@string/book"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textSize="@dimen/text_size_8"
                         android:gravity="center"
-                        android:background="@drawable/button_white_book_stroke"
+                        android:background="@drawable/button_background_pink"
                         android:padding="@dimen/dp_1"
                         android:textColor="@android:color/white"
                         />

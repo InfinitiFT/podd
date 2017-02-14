@@ -11,11 +11,28 @@
 
 
     <!--<include layout="@layout/toolbar" />-->
+    <TextView
+        android:id="@+id/tvBookTaxi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="@string/booking_summary"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_16"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginBottom="@dimen/dp_1"
+        android:background="@android:color/white" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <LinearLayout
@@ -24,22 +41,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvBookTaxi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp_5"
-                android:text="@string/booking_summary"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_16"
-                android:textStyle="bold" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:layout_marginBottom="@dimen/dp_1"
-                android:background="@android:color/white" />
 
             <TextView
                 android:id="@+id/tvRestaurantName"
@@ -324,22 +326,22 @@
 
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvCompleteBooking"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_4"
-                android:layout_marginTop="@dimen/dp_4"
-                android:background="@drawable/button_background_pink"
-                android:gravity="center"
-                android:padding="@dimen/dp_8"
-                android:text="@string/complete_booking"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12"
-                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/tvCompleteBooking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_4"
+        android:background="@drawable/button_background_pink"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:text="@string/complete_booking"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_12"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

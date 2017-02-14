@@ -85,7 +85,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/date"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <TextView
                         android:id="@+id/tvToday"
@@ -98,7 +98,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/today"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_8" />
 
                     <TextView
                         android:id="@+id/tvTomorrow"
@@ -111,7 +111,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/tomorrow"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_8" />
 
                     <TextView
                         android:id="@+id/tvSelectfromCalender"
@@ -123,7 +123,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/select_from_calender"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_8" />
                 </LinearLayout>
 
 
@@ -143,7 +143,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/time"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <FrameLayout
                         android:id="@+id/flSelectTime"
@@ -195,7 +195,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/number_of_people"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <Spinner
                         android:id="@+id/spSelectPeople"
@@ -203,7 +203,9 @@
                         android:layout_weight="1"
                         android:layout_height="@dimen/dp_25"
                         android:background="@drawable/button_white_stroke"
-                        android:padding="@dimen/dp_4"
+                        android:paddingLeft="@dimen/dp_4"
+                        android:paddingRight="@dimen/dp_4"
+                        android:paddingStart="@dimen/dp_10"
                         android:layout_gravity="center"
                         android:spinnerMode="dropdown"
                         android:textColor="@android:color/white" />
@@ -229,7 +231,7 @@
                         android:textStyle="bold"
                         android:text="@string/Booking_summary"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/text_size_12"/>
+                        android:textSize="@dimen/text_size_10"/>
 
                     <TextView
                         android:id="@+id/tvDateBooked"
@@ -239,10 +241,10 @@
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/dp_4"
                         android:background="@drawable/black_background"
-                        android:text="@string/date_booked"
+                        android:text="@string/date"
                         android:textColor="@android:color/white"
                         android:padding="@dimen/dp_4"
-                        android:textSize="@dimen/text_size_10"/>
+                        android:textSize="@dimen/text_size_8"/>
 
                     <TextView
                         android:id="@+id/tvTimeBooked"
@@ -252,10 +254,10 @@
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/dp_4"
                         android:background="@drawable/black_background"
-                        android:text="@string/time_booked"
+                        android:text="@string/time"
                         android:textColor="@android:color/white"
                         android:padding="@dimen/dp_4"
-                        android:textSize="@dimen/text_size_10"/>
+                        android:textSize="@dimen/text_size_8"/>
 
                     <TextView
                         android:id="@+id/tvNoOfPersons"
@@ -267,7 +269,7 @@
                         android:text="@string/number_of_persons"
                         android:textColor="@android:color/white"
                         android:padding="@dimen/dp_4"
-                        android:textSize="@dimen/text_size_10"/>
+                        android:textSize="@dimen/text_size_8"/>
                 </LinearLayout>
             </LinearLayout>
 

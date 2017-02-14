@@ -7,4 +7,4 @@
     android:padding="@dimen/dp_2"
     android:textColor="@android:color/white"
     android:text=""
-    android:textSize="@dimen/text_size_10" />
+    android:textSize="@dimen/text_size_8" />
