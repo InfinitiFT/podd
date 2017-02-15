@@ -92,7 +92,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
             public void onClick(View view) {
 
                 meal_details.get(section).subtitle_meal_details.get(relativePosition).count=  meal_details.get(section).subtitle_meal_details.get(relativePosition).count+1;
-                holder.tvNumber.setText(""+meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
+                holder.tvNumber.setText(meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
                 if (SetTimerClass.savedList!=null && SetTimerClass.savedList.get(section) != null){
                     SetTimerClass.savedList.get(section).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
                 }
@@ -125,7 +125,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
                     String price = SetTimerClass.savedList.get(section).price;
                     price = price.replace("£", "").trim();
                     meal_details.get(section).subtitle_meal_details.get(relativePosition).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count - 1;
-                    holder.tvNumber.setText("" + meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
+                    holder.tvNumber.setText(meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
 
                     SetTimerClass.savedList.get(section).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
                     if (Double.parseDouble(price) > 0.0) {

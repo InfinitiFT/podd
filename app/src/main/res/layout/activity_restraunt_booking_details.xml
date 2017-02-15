@@ -157,8 +157,7 @@
 
                         <Spinner
                             android:id="@+id/spSelectTime"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_25"
                             android:layout_gravity="center"
                             android:padding="@dimen/dp_2"

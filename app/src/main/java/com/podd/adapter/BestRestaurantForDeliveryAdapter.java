@@ -86,7 +86,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
         String location = holder.tvLocation.getText().toString().trim();
 
 
-        if (restaurant.price_range != null) {
+        /*if (restaurant.price_range != null) {
             String priceRange = restaurant.price_range;
             String[] split = priceRange.split("-");
 
@@ -95,7 +95,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
             holder.tvPriceRange.setText("£ " + split_one + " - " + "£ " + split_second);
         } else {
             holder.tvPriceRange.setText("");
-        }
+        }*/
 
         if (restaurantList.get(position).cuisine != null && restaurantList.get(position).cuisine.size() >= 2) {
             holder.tvtypeOfRestaurant.setText(restaurantList.get(position).cuisine.get(0).cuisine_name+", "+restaurantList.get(position).cuisine.get(1).cuisine_name);

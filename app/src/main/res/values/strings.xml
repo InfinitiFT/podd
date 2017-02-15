@@ -77,7 +77,7 @@
     <string name="select_time">Select Time</string>
     <string name="number_of_persons">Number of people</string>
     <string name="date_Booked">Date Booked</string>
-    <string name="time_Booked">Time Booked</string>
+    <!--<string name="time_Booked">Time Booked</string>-->
 
     <string name="restaurant_by_cuisine">Search our curated selection of best restaurants by cuisine</string>
     <string name="restaurant_by_dietary">Search our curated selection of best restaurants by dietary</string>
