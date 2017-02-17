@@ -12,13 +12,14 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/llInner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -157,7 +158,8 @@
 
                         <Spinner
                             android:id="@+id/spSelectTime"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="@dimen/dp_25"
                             android:layout_gravity="center"
                             android:padding="@dimen/dp_2"
@@ -196,7 +198,23 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_size_10" />
 
-                    <Spinner
+                    <TextView
+                        android:id="@+id/tvSelect"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_weight="1"
+                        android:hint="@string/number_of_people_"
+                        android:textColorHint="@android:color/white"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dp_4"
+                        android:paddingRight="@dimen/dp_4"
+                        android:paddingStart="@dimen/dp_10"
+                        android:background="@drawable/button_white_stroke"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_8" />
+
+                    <!--<Spinner
                         android:id="@+id/spSelectPeople"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -207,7 +225,7 @@
                         android:paddingStart="@dimen/dp_10"
                         android:layout_gravity="center"
                         android:spinnerMode="dropdown"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -272,19 +290,20 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvBookNow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_4"
-                android:background="@drawable/button_background_pink"
-                android:gravity="center"
-                android:padding="@dimen/dp_8"
-                android:textStyle="bold"
-                android:text="@string/book_now"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12" />
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/tvBookNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:background="@drawable/button_background_pink"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:textStyle="bold"
+        android:text="@string/book_now"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_12" />
 
 </LinearLayout>

@@ -433,7 +433,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
-                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.booking_request, Toast.LENGTH_LONG).show();
                         dialogConfirmBooking.dismiss();
 
                         intent = new Intent(context, RestaurantReturnToHomeActivity.class);
@@ -450,7 +450,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))
                     {
-                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.incorrect_verification, Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
@@ -484,6 +484,10 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        etEnterOtp1.setText("");
+                        etEnterOtp2.setText("");
+                        etEnterOtp3.setText("");
+                        etEnterOtp4.setText("");
 
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
 

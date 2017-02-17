@@ -41,8 +41,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <TextView
                 android:id="@+id/tvRestaurantName"
                 android:layout_width="match_parent"
@@ -53,9 +51,29 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_10"
                 android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvOrderList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/tvTotalPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_8"
+                android:layout_gravity="right|center"
+                android:gravity="right|center"
+                android:layout_marginRight="@dimen/dp_1"
+                android:textColor="@android:color/white"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -95,6 +113,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tvDateBookedLeft"
@@ -131,6 +150,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tvTimeBookedLeft"
@@ -169,6 +189,7 @@
                 android:id="@+id/llNumberPeople"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tvNoOfPeopleLeft"

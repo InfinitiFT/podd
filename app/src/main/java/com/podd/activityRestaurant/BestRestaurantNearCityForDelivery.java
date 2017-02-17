@@ -68,6 +68,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     private boolean isRestaurant = false;
     private int pageSize = 10;
     private SetTimerClass setTimerClass;
+    private String searched_item_name;
 
 
     @Override
@@ -78,6 +79,11 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         getIds();
         setListeners();
         fetchLocation();
+       /* if (CommonUtils.isNetworkConnected(BestRestaurantNearCityForDelivery.this)) {
+            getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
+        } else {
+            Toast.makeText(BestRestaurantNearCityForDelivery.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
+        }*/
         setFont();
         tvLocationName.setSelected(true);
         setTimerClass = (SetTimerClass)getApplication();
@@ -96,7 +102,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                     } else {
                         // pageNo=1;
                         if (restaurantList.size() % pageSize == 0)
-                            callsearchedTextApi(pageNo);
+                            callsearchedTextApi(pageNo,searched_item_name);
                     }
                 }
             };
@@ -123,13 +129,15 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         llDeliveredToYou = (LinearLayout) findViewById(R.id.llDeliveredToYou);
         llAmbience = (LinearLayout) findViewById(R.id.llAmbience);
         llMeal = (LinearLayout) findViewById(R.id.llMeal);
+        llAmbience.setVisibility(View.GONE);
+        llMeal.setVisibility(View.GONE);
         llCuisine = (LinearLayout) findViewById(R.id.llCuisine);
         llDietary = (LinearLayout) findViewById(R.id.llDietary);
         llLocation = (LinearLayout) findViewById(R.id.llLocation);
        // tvNearbyRestaurant = (TextView) findViewById(R.id.tvNearbyRestaurant);
         tvVenueBy = (TextView) findViewById(R.id.tvVenueBy);
         tvShowing = (TextView) findViewById(R.id.tvShowing);
-      //  tvCityName = (TextView) findViewById(R.id.tvCityName);
+       // tvCityName = (TextView) findViewById(R.id.tvCityName);
         tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
         tvDietaryType = (TextView) findViewById(R.id.tvDietaryType);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
@@ -216,33 +224,39 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llAmbience:
-                tvCityName.setVisibility(View.GONE);
-                tvNearbyRestaurant.setText(R.string.restaurant_by_ambience);
+               // tvCityName.setVisibility(View.GONE);
+              //  tvNearbyRestaurant.setText(R.string.restaurant_by_ambience);
+                llVenues.setVisibility(View.VISIBLE);
                 getAmbienceRestaurantListApi();
                 break;
             case R.id.llLocation:
-                tvCityName.setVisibility(View.GONE);
-                tvNearbyRestaurant.setText(R.string.restaurant_by_location);
+              //  tvCityName.setVisibility(View.GONE);
+               // tvNearbyRestaurant.setText(R.string.restaurant_by_location);
+                llVenues.setVisibility(View.VISIBLE);
                 getLocationRestaurantListApi();
                 break;
             case R.id.llDietary:
-                tvCityName.setVisibility(View.GONE);
-                tvNearbyRestaurant.setText(R.string.restaurant_by_dietary);
+             //   tvCityName.setVisibility(View.GONE);
+               // tvNearbyRestaurant.setText(R.string.restaurant_by_dietary);
+                llVenues.setVisibility(View.VISIBLE);
                 getDietaryRestaurantListApi();
                 break;
             case R.id.llCuisine:
-                tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
-                tvCityName.setVisibility(View.GONE);
+               // tvNearbyRestaurant.setText(R.string.restaurant_by_cuisine);
+               // tvCityName.setVisibility(View.GONE);
+                llVenues.setVisibility(View.VISIBLE);
                 getCuisineRestaurantListApi();
                 break;
             case R.id.llMeal:
-                tvNearbyRestaurant.setText(R.string.restaurant_by_meal);
-                tvCityName.setVisibility(View.GONE);
+               // tvNearbyRestaurant.setText(R.string.restaurant_by_meal);
+              //  tvCityName.setVisibility(View.GONE);
+                llVenues.setVisibility(View.VISIBLE);
                 getMealRestaurantListApi();
                 break;
             case R.id.llDeliveredToYou:
-                tvNearbyRestaurant.setText(R.string.delivered_to_you);
-                tvCityName.setVisibility(View.GONE);
+              //  tvNearbyRestaurant.setText(R.string.delivered_to_you);
+              //  tvCityName.setVisibility(View.GONE);
+                llVenues.setVisibility(View.VISIBLE);
                 break;
 
         }
@@ -363,7 +377,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "dietary";
         jsonRequest.search_content="";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getDietaryRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -372,8 +385,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -424,7 +435,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "ambience";
         jsonRequest.search_content="";
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getAmbienceRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -433,8 +443,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -542,7 +550,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.type = "meal";
         jsonRequest.search_content=tvMealType.getText().toString().trim();
-        Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getMealRestaurantList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -551,8 +558,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
                 CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
@@ -608,7 +613,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvDietaryType.setText("");
                 tvMealType.setText("");
                 tvBusiness.setText("");
-                callsearchedTextApi(pageNo);
+                searched_item_name = cuisine.name;
+                callsearchedTextApi(pageNo,searched_item_name);
                 break;
             case "location":
                 tvLocationType.setText(cuisine.name);
@@ -621,7 +627,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvMealType.setText("");
                 tvBusiness.setText("");
                 tvCuisineType.setText("");
-                callsearchedTextApi(pageNo);
+                searched_item_name = cuisine.name;
+                callsearchedTextApi(pageNo,searched_item_name);
                 break;
             case "dietary":
                 tvDietaryType.setText(cuisine.name);
@@ -634,7 +641,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvBusiness.setText("");
                 tvCuisineType.setText("");
                 tvLocationType.setText("");
-                callsearchedTextApi(pageNo);
+                searched_item_name = cuisine.name;
+                callsearchedTextApi(pageNo,searched_item_name);
 
                 break;
             case "meal":
@@ -647,7 +655,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvCuisineType.setText("");
                 tvLocationType.setText("");
                 tvDietaryType.setText("");
-                callsearchedTextApi(pageNo);
+                searched_item_name = cuisine.name;
+                callsearchedTextApi(pageNo,searched_item_name);
 
                 break;
             case "ambience":
@@ -661,7 +670,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvLocationType.setText("");
                 tvDietaryType.setText("");
                 tvMealType.setText("");
-                callsearchedTextApi(pageNo);
+                searched_item_name = cuisine.name;
+                callsearchedTextApi(pageNo,searched_item_name);
                 break;
 
         }
@@ -669,7 +679,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     }
 
-    private void callsearchedTextApi(int pageNumber) {
+    private void callsearchedTextApi(int pageNumber, final String name) {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
@@ -679,11 +689,10 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         jsonRequest.deliver_food="1";
         jsonRequest.ambience = ambienceId;
         jsonRequest.location=locationId;
-        jsonRequest.latitude="";
-        jsonRequest.longitude="";
+        jsonRequest.latitude = String.valueOf(currentLat);
+        jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.page_number=pageNumber;
         jsonRequest.page_size="10";
-       Log.e(TAG, "" + new Gson().toJsonTree(jsonRequest).toString().trim());
 
         Call<JsonResponse> call = apiServices.getSearchRestaurantApi(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -691,6 +700,31 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
 
                 CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
+                            if(pageNo==1)
+                                restaurantList.clear();
+                            restaurantList.addAll(response.body().restaurant_list);
+                            tvLocationName.setText(name);
+                            tvNoOfRestaurants.setText(String.valueOf(response.body().pagination.total_record_count));
+                            bestRestaurantAdapter.notifyDataSetChanged();
+                            rvRestaurants.setNestedScrollingEnabled(false);
+                            pageNo++;
+                        } else {
+                            Toast.makeText(context, "No restaurant available for "+name, Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+
+                }
+
+
+                /*CommonUtils.disMissProgressDialog(context);
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
@@ -712,7 +746,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 else {
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
 
-                }
+                }*/
             }
 
             @Override

@@ -6,6 +6,7 @@ public class SavedItem {
     public String subtitle_id;
     public String item_id;
     public String price;
+    public String item_name;
     public int count;
 
 }

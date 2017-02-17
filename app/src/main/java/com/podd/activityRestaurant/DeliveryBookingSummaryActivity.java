@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,12 +16,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.podd.R;
+import com.podd.adapter.OrderSummaryAdapter;
 import com.podd.model.SavedItem;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
@@ -30,6 +34,7 @@ import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,13 +49,12 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
     private Spinner spCountryCode;
     private EditText etPhoneNumber;
     private EditText etEmail,etAddress;
-    private TextView tvCompleteBooking;
+    private TextView tvCompleteBooking,tvTotalPrice;
     private TextView tvRestaurantName;
     private TextView tvLocation,tvLocationLeft;
     private TextView tvDateBooked,tvDateBookedLeft;
     private TextView tvTimeBooked,tvTimeBookedLeft;
     private TextView tvNumberofPeople,tvNoOfPeopleLeft,tvBookTaxi,tvConfirmation;
-
     private Dialog dialogConfirmBooking;
     private EditText etEnterOtp1,etEnterOtp2,etEnterOtp3,etEnterOtp4;
     private String location;
@@ -67,18 +71,23 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
     private final String[]countryCodeArray={"+44","+1","+353","+33","+49","+39","+34","+351","+31","+30","+41","+380","+48","+43","+46","+47","+356","+420","+32","+358","+385","+357","+40","+36","+359","+45","+352","+386","+381","+421","+372","+355","+7","+90","+61","+64","+81","+86","+852","+91","+92","+62","+972","+66","+84","+82","+65","+63","+98","+966","+60","+974","+971","+961","+962","+965","+673","+52","+55","+54","+51","+58","+56","+591","+593","+598","+595","+1876","+1809","+1829","+1849","+27","+234","+20","+218","+212","+213","+216","+233","+244","+251","+254"};
     private String countryCode;
     private SetTimerClass setTimerClass;
+    private LinearLayout llNumberPeople;
+    private RecyclerView rvOrderList;
+    private OrderSummaryAdapter orderSummaryAdapter;
+    List<SavedItem> savedItemList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking_summary);
+        setContentView(R.layout.activity_delivery_summary);
         context = DeliveryBookingSummaryActivity.this;
 
         getIds();
         setListeners();
         setFont();
         setSpinner();
+        savedItemList = new ArrayList<>();
         setTimerClass = (SetTimerClass)getApplication();
         etName.requestFocus();
         if(getIntent()!=null) {
@@ -94,7 +103,13 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
             tvDateBooked.setText(dateBooked);
             tvTimeBooked.setText(timeBooked);
             tvNumberofPeople.setText(noOfPersons);
+            tvTotalPrice.setText("TOTAL PRICE: "+getIntent().getStringExtra(AppConstant.TOTAL_PRICE));
         }
+        savedItemList = SetTimerClass.savedList;
+        orderSummaryAdapter = new OrderSummaryAdapter(this, savedItemList);
+        rvOrderList.setAdapter(orderSummaryAdapter);
+        rvOrderList.setLayoutManager(new LinearLayoutManager(this));
+
 
         /*if(CommonUtils.isNetworkConnected(this)){
             callCountryCode();
@@ -175,6 +190,10 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         tvDateBookedLeft = (TextView) findViewById(R.id.tvDateBookedLeft);
         tvTimeBookedLeft = (TextView) findViewById(R.id.tvTimeBookedLeft);
         tvNoOfPeopleLeft = (TextView) findViewById(R.id.tvNoOfPeopleLeft);
+        tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
+        llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
+        llNumberPeople.setVisibility(View.GONE);
+        rvOrderList = (RecyclerView) findViewById(R.id.rvOrderList);
     }
 
     private void setFont() {
@@ -441,7 +460,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
 
-                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.booking_request, Toast.LENGTH_SHORT).show();
                         dialogConfirmBooking.dismiss();
 
                         intent = new Intent(context, RestaurantReturnToHomeActivity.class);
@@ -494,15 +513,16 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                 if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
                     Log.e(TAG, "" + new Gson().toJsonTree(response.body().toString().trim()));
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
-
+                        etEnterOtp1.setText("");
+                        etEnterOtp2.setText("");
+                        etEnterOtp3.setText("");
+                        etEnterOtp4.setText("");
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
 
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))
                     {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                         sendOtpApi();
-
-
                     }
 
                 } else {

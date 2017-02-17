@@ -124,7 +124,7 @@
                                 android:text="@string/Dietary"
                                 android:paddingLeft="@dimen/dp_1"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
 
                             <TextView
@@ -155,7 +155,7 @@
                                 android:text="@string/cuisine"
                                 android:paddingLeft="@dimen/dp_1"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
                             <TextView
                                 android:id="@+id/tvCuisine"
@@ -184,7 +184,7 @@
                                 android:text="@string/ambience"
                                 android:paddingLeft="@dimen/dp_1"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
                             <TextView
                                 android:id="@+id/tvAmbience"
@@ -213,7 +213,7 @@
                                 android:paddingLeft="@dimen/dp_1"
                                 android:text="@string/price_range"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
                             <TextView
                                 android:id="@+id/tvPriceRange"
@@ -278,7 +278,7 @@
                                 android:text="@string/view_menu"
                                 android:drawablePadding="@dimen/dp_4"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
                             <!-- <TextView
                                  android:id="@+id/tvViewInMap"
@@ -309,7 +309,7 @@
                                 android:maxLength="50"
                                 android:ellipsize="end"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
                         </LinearLayout>
 

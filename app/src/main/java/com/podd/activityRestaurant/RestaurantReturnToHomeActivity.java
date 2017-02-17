@@ -39,30 +39,21 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
 
         /*this condition get the data from booking summary screen*/
         if(getIntent()!=null) {
-            /*String restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
-            String restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
-            String dateBooked = getIntent().getStringExtra(AppConstant.DATEBOOKED);
-            String timeBooked = getIntent().getStringExtra(AppConstant.TIMEBOOKED);
-            String location = getIntent().getStringExtra(AppConstant.LOCATION);
-            String noOfPersons = getIntent().getStringExtra(AppConstant.NOOFPEOPLE);*/
-
-           /* tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
-            tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
-            tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
-            tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));*/
 
             if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("1")){
-                tvNumberofPeople.setVisibility(View.GONE);
+                llNumberPeople.setVisibility(View.GONE);
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
                 tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
                 tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
                 tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));
+                tvConfirmation.setText(R.string.delivery_message);
             }else if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("0")){
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
                 tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
                 tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
                 tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));
                 tvNumberofPeople.setText(getIntent().getStringExtra(AppConstant.NOOFPEOPLE));
+                tvConfirmation.setText(R.string.confirmation_text);
             }
         }else{
             tvRestauarntName.setText("");

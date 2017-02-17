@@ -15,21 +15,24 @@
         android:layout_height="wrap_content"
         android:scrollbars="none">-->
 
+    <TextView
+        android:id="@+id/tvRestauarntName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/restaraunt_name"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_16"
+        android:textStyle="bold" />
+
         <LinearLayout
             android:id="@+id/llInner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvRestauarntName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/restaraunt_name"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_16"
-                android:textStyle="bold" />
+
 
             <View
                 android:layout_width="match_parent"
@@ -86,7 +89,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/date"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <TextView
                         android:id="@+id/tvToday"
@@ -99,7 +102,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/today"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <TextView
                         android:id="@+id/tvTomorrow"
@@ -112,7 +115,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/tomorrow"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <TextView
                         android:id="@+id/tvSelectfromCalender"
@@ -124,7 +127,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/select_from_calender"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
                 </LinearLayout>
 
 
@@ -144,7 +147,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/time"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <FrameLayout
                         android:id="@+id/flSelectTime"
@@ -158,7 +161,8 @@
 
                         <Spinner
                             android:id="@+id/spSelectTime"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="@dimen/dp_25"
                             android:layout_gravity="center"
                             android:padding="@dimen/dp_2"
@@ -185,6 +189,7 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:padding="@dimen/dp_2">
 
                     <TextView
@@ -195,7 +200,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/number_of_people"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_10" />
 
                     <Spinner
                         android:id="@+id/spSelectPeople"
@@ -203,7 +208,9 @@
                         android:layout_weight="1"
                         android:layout_height="@dimen/dp_25"
                         android:background="@drawable/button_white_stroke"
-                        android:padding="@dimen/dp_4"
+                        android:paddingLeft="@dimen/dp_4"
+                        android:paddingRight="@dimen/dp_4"
+                        android:paddingStart="@dimen/dp_10"
                         android:layout_gravity="center"
                         android:spinnerMode="dropdown"
                         android:textColor="@android:color/white" />
@@ -229,7 +236,7 @@
                         android:textStyle="bold"
                         android:text="@string/Booking_summary"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/text_size_12"/>
+                        android:textSize="@dimen/text_size_10"/>
 
                     <TextView
                         android:id="@+id/tvDateBooked"
@@ -239,7 +246,7 @@
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/dp_4"
                         android:background="@drawable/black_background"
-                        android:text="@string/date_booked"
+                        android:text="@string/date"
                         android:textColor="@android:color/white"
                         android:padding="@dimen/dp_4"
                         android:textSize="@dimen/text_size_10"/>
@@ -252,7 +259,7 @@
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/dp_4"
                         android:background="@drawable/black_background"
-                        android:text="@string/time_booked"
+                        android:text="@string/time"
                         android:textColor="@android:color/white"
                         android:padding="@dimen/dp_4"
                         android:textSize="@dimen/text_size_10"/>
@@ -263,6 +270,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".8"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:background="@drawable/black_background"
                         android:text="@string/number_of_persons"
                         android:textColor="@android:color/white"
@@ -271,19 +279,20 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvBookNow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_4"
-                android:background="@drawable/button_background_pink"
-                android:gravity="center"
-                android:padding="@dimen/dp_8"
-                android:textStyle="bold"
-                android:text="@string/order_now"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_12" />
+
         </LinearLayout>
+    <TextView
+        android:id="@+id/tvBookNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:background="@drawable/button_background_pink"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:textStyle="bold"
+        android:text="@string/order_now"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_12" />
     <!--</android.support.v4.widget.NestedScrollView>-->
 
 </LinearLayout>

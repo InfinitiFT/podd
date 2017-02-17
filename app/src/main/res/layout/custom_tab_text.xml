@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:textSize="@dimen/text_size_12"
+        android:textSize="@dimen/text_size_8"
         android:text=""
         android:paddingStart="@dimen/dp_4"
         android:paddingEnd="@dimen/dp_4"

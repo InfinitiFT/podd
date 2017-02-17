@@ -79,6 +79,11 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         setListeners();
         setRecycle();
         fetchLocation();
+       /* if (CommonUtils.isNetworkConnected(BestRestaurantNearCity.this)) {
+            getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
+        } else {
+            Toast.makeText(BestRestaurantNearCity.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
+        }*/
         setFont();
         tvLocationName.setSelected(true);
         setTimerClass = (SetTimerClass)getApplication();
@@ -229,7 +234,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
             case R.id.llLocation:
                 llVenues.setVisibility(View.VISIBLE);
                 getLocationRestaurantListApi();
-                llVenues.setVisibility(View.VISIBLE);
                 break;
             case R.id.llDietary:
                 getDietaryRestaurantListApi();
@@ -591,7 +595,6 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
 
             case "cuisine":
                 tvCuisineType.setText(cuisine.name);
-
                 pageNo=1;
                 cuisineId = cuisine.id;
                 locationId = "";
@@ -690,6 +693,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.meal = mealId;
         jsonRequest.ambience = ambienceId;
         jsonRequest.location = locationId;
+        jsonRequest.deliver_food="0";
         jsonRequest.latitude = String.valueOf(currentLat);
         jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.page_number = pageNumber;

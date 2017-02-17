@@ -3,15 +3,18 @@ package com.podd.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.podd.R;
+import com.podd.activityRestaurant.ViewMenuDeliveryActivity;
 import com.podd.eventInterface.AddValueEvent;
 import com.podd.eventInterface.MinusValueEvent;
 import com.podd.model.MealDetails;
@@ -28,7 +31,8 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
     private final Context context;
     private List<MealDetails> meal_details=new ArrayList<>();
     private List<RestaurantMenu> restaurantMenus=new ArrayList<>();
-//    int count =0;
+    private List<RestaurantMenu> selectedList=new ArrayList<>();
+    //    int count =0;
     private SavedItem savedItem;
 
 
@@ -66,11 +70,12 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
     }
 
     @Override
-    public void onBindViewHolder(final DeliveryMenuAdapter.MainVH holder, final int section, final int relativePosition, final int absolutePosition) {
+    public void onBindViewHolder(final DeliveryMenuAdapter.MainVH holder,
+                                 final int section, final int relativePosition,
+                                 final int absolutePosition) {
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.title.setTypeface(typefaceRegular);
         holder.titlePrice.setTypeface(typefaceRegular);
-
         if (meal_details.get(section).subtitle_meal_details != null && meal_details.get(section).subtitle_meal_details.size() > 0 && meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name != null) {
             holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name, section, relativePosition, absolutePosition));
         } else {
@@ -91,26 +96,36 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
             @Override
             public void onClick(View view) {
 
-                meal_details.get(section).subtitle_meal_details.get(relativePosition).count=  meal_details.get(section).subtitle_meal_details.get(relativePosition).count+1;
-                holder.tvNumber.setText(meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
-                if (SetTimerClass.savedList!=null && SetTimerClass.savedList.get(section) != null){
-                    SetTimerClass.savedList.get(section).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+                if(restaurantMenus!=null && restaurantMenus.size()>0)
+                {
+                    if(restaurantMenus.get(0).meal_details!=null && restaurantMenus.get(0).meal_details.size()>0 )
+                    {
+                        if(restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details!=null && restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.size()>0 )
+                        {
+                            int count_add=0;
+                            count_add=restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+                            count_add=count_add+1;
+                            restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).count = count_add;
+                            holder.tvNumber.setText("");
+                            holder.tvNumber.setText(""+count_add);
+
+                            String price = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                            price = price.replace("£", "").trim();
+                            if (Double.parseDouble(price) > 0.0) {
+                                EventBus.getDefault().post(new AddValueEvent(Double.valueOf(price)));
+                            }
+                            SavedItem savedItem = new SavedItem();
+                            savedItem.item_id = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_id;
+                            savedItem.count = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+                            savedItem.price = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                            savedItem.subtitle_id = restaurantMenus.get(0).meal_details.get(section).subtitle_id;
+                            savedItem.meal_id = restaurantMenus.get(0).meal_id;
+                            savedItem.item_name = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name;
+                            ((ViewMenuDeliveryActivity)context).addItem(savedItem);
+                        }
+                    }
                 }
-                SetTimerClass.savedList.get(section).price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
-                String price = SetTimerClass.savedList.get(section).price;
-                price = price.replace("£", "").trim();
-                if (Double.parseDouble(price) > 0.0) {
-                    EventBus.getDefault().post(new AddValueEvent(Double.valueOf(price)));
-                }
-                if(meal_details.get(section).subtitle_meal_details.get(relativePosition).count == 1){
-                   savedItem = new SavedItem();
-                    savedItem.meal_id = restaurantMenus.get(section).meal_id;
-                    savedItem.subtitle_id = meal_details.get(section).subtitle_id;
-                    savedItem.item_id = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_id;
-                    savedItem.count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
-                    savedItem.price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
-                    SetTimerClass.savedList.add(savedItem);
-                }
+
             }
         });
 
@@ -118,35 +133,44 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
             @Override
             public void onClick(View view) {
 
-                if (meal_details.get(section).subtitle_meal_details.get(relativePosition).count == 0) {
+                if(restaurantMenus!=null && restaurantMenus.size()>0)
+                {
+                    if(restaurantMenus.get(0).meal_details!=null && restaurantMenus.get(0).meal_details.size()>0 )
+                    {
+                        if(restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details!=null && restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.size()>0 )
+                        {
+                            int count_add=0;
+                            count_add=restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+                            if(count_add>0)
+                            {
+                                count_add=count_add-1;
+                                String price = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                                price = price.replace("£", "").trim();
+                                if (Double.parseDouble(price) > 0.0) {
+                                    EventBus.getDefault().post(new MinusValueEvent(Double.valueOf(price)));
+                                }
+                            }
+                            restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).count = count_add;
+                            holder.tvNumber.setText("");
+                            holder.tvNumber.setText(""+count_add);
 
-                } else {
-                    SetTimerClass.savedList.get(section).price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
-                    String price = SetTimerClass.savedList.get(section).price;
-                    price = price.replace("£", "").trim();
-                    meal_details.get(section).subtitle_meal_details.get(relativePosition).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count - 1;
-                    holder.tvNumber.setText(meal_details.get(section).subtitle_meal_details.get(relativePosition).count);
+                            SavedItem savedItem = new SavedItem();
+                            savedItem.item_id = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_id;
+                            savedItem.count = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
+                            savedItem.price = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
+                            savedItem.subtitle_id = restaurantMenus.get(0).meal_details.get(section).subtitle_id;
+                            savedItem.meal_id = restaurantMenus.get(0).meal_id;
+                            savedItem.item_name = restaurantMenus.get(0).meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name;
 
-                    SetTimerClass.savedList.get(section).count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
-                    if (Double.parseDouble(price) > 0.0) {
-                        EventBus.getDefault().post(new MinusValueEvent(Double.valueOf(price)));
-                    }
-                    if(meal_details.get(section).subtitle_meal_details.get(relativePosition).count == 0){
-                        SetTimerClass.savedList.remove(section);
+                            ((ViewMenuDeliveryActivity)context).removeItem(savedItem);
+                        }
                     }
                 }
+
             }
         });
 
-        if (SetTimerClass.savedList.size() <= restaurantMenus.size()){
-            savedItem = new SavedItem();
-            savedItem.meal_id = restaurantMenus.get(section).meal_id;
-            savedItem.subtitle_id = meal_details.get(section).subtitle_id;
-            savedItem.item_id = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_id;
-            savedItem.count = meal_details.get(section).subtitle_meal_details.get(relativePosition).count;
-            savedItem.price = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price;
-            SetTimerClass.savedList.add(savedItem);
-        }
+
     }
 
     @Override

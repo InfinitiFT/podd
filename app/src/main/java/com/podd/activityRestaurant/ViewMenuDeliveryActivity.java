@@ -24,6 +24,7 @@ import com.podd.eventInterface.AddValueEvent;
 import com.podd.eventInterface.MinusValueEvent;
 import com.podd.fragment.DeliveryMenuFragment;
 import com.podd.model.RestaurantMenu;
+import com.podd.model.SavedItem;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
@@ -64,7 +65,9 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         getIds();
         setListeners();
         setFont();
+
         setTimerClass = (SetTimerClass)getApplication();
+        SetTimerClass.savedList.clear();
         restaurantImages = (ArrayList<String>) getIntent().getSerializableExtra(AppConstant.RESTAURANTIMAGES);
         restaurantName = getIntent().getStringExtra(AppConstant.RESTAURANTNAME);
         restaurantId = getIntent().getStringExtra(AppConstant.RESTAURANTID);
@@ -129,6 +132,8 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         switch (view.getId()) {
             case R.id.tvBookNow:
                 if(validationPrice()){
+
+
                     Intent intent = new Intent(context, DeliveryBookingDetailsActivity.class);
                     intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
@@ -138,7 +143,6 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
-
                 break;
         }
     }
@@ -206,7 +210,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     @Subscribe
     public void onEventMainThread(AddValueEvent addValueEvent) {
         price = price + addValueEvent.value;
-        tvTotalPrice.setText("£ " + price/*SetTimerClass.getTotalPrice()*/);
+        tvTotalPrice.setText("£" + String.format("%.2f",price));
 
     }
 
@@ -214,7 +218,7 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     public void onEventMainThread(MinusValueEvent minusValueEvent) {
         price = price - minusValueEvent.value;
 
-        tvTotalPrice.setText("£ " + price/*SetTimerClass.getTotalPrice()*/);
+        tvTotalPrice.setText("£" + String.format("%.2f",price));
 
     }
 
@@ -223,8 +227,6 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
     protected void onResume() {
         super.onResume();
         setTimerClass.setTimer(this, true);
-
-
     }
 
     @Override
@@ -239,6 +241,36 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         setTimerClass.setTimer(this, false);
     }
 
+
+    public void addItem(SavedItem savedItem){
+        if(setTimerClass.savedList.size()>0) {
+            for (int i = 0; i < setTimerClass.savedList.size(); i++) {
+                if (!setTimerClass.savedList.get(i).item_id.equals(savedItem.item_id)) {
+                    setTimerClass.savedList.add(savedItem);
+                }
+            }
+        }else {
+            setTimerClass.savedList.add(savedItem);
+        }
+    }
+
+    public void removeItem(SavedItem savedItem){
+        if(setTimerClass.savedList.size()>0) {
+            for (int i = 0; i < setTimerClass.savedList.size(); i++) {
+                if (setTimerClass.savedList.get(i).item_id.equals(savedItem.item_id)) {
+                    setTimerClass.savedList.remove(savedItem);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    public ArrayList<SavedItem> getSelectedList(){
+
+       return setTimerClass.savedList;
+
+    }
 
 }
 

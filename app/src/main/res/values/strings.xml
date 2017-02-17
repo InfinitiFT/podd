@@ -91,8 +91,8 @@
     <string name="please_enter_otp_to_confirm_booking">Please enter verification code. This was sent to your mobile.</string>
     <string name="otp">Otp</string>
     <string name="submit">Submit</string>
-    <string name="please_enter_otp">Please enter otp</string>
-    <string name="please_enter_valid_otp">Please enter valid otp.</string>
+    <string name="please_enter_otp">Please enter verification code</string>
+    <string name="please_enter_valid_otp">Please enter valid verification code.</string>
     <string name="select">Select</string>
     <string name="please_select_a_valid_date">Please select a valid date.</string>
     <string name="please_select_a_valid_time">Please select a valid time.</string>
@@ -122,4 +122,8 @@
     <string name="_0">0</string>
     <string name="the_podd">THE PODD</string>
     <string name="book">BOOK</string>
+    <string name="email_optional">Email (Optional)</string>
+    <string name="incorrect_verification">Incorrect Verification Code</string>
+    <string name="delivery_message">Your order has been sent. The venue will call you shortly on your mobile to process payment</string>
+    <string name="booking_request">Booking request has been sent for confirmation</string>
 </resources>

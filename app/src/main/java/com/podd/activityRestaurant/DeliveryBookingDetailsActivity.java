@@ -105,18 +105,34 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
                 if (restaurantTimeInterval!=null&&restaurantTimeInterval.size()>0) {
                     if(i>0){
                         Calendar  current=Calendar.getInstance();
-                        if(Float.parseFloat((spSelectTime.getSelectedItem().toString().replace(":","")).trim())<=Float.parseFloat(String.valueOf(current.get(Calendar.HOUR_OF_DAY))+String.valueOf(current.get(Calendar.MINUTE))))
-                        {
-                            spSelectTime.setSelection(0);
-                            Toast.makeText(DeliveryBookingDetailsActivity.this,getString(R.string.please_select_a_valid_time),Toast.LENGTH_SHORT).show();
+                        Date date= new Date(  System.currentTimeMillis());
+                        System.out.println(date);
+                        SimpleDateFormat simpDate,simpDate1;
+                        simpDate = new SimpleDateFormat("kk:mm");
+                        simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
+                        String currentTime=simpDate.format(date);
+                        String currentDate=simpDate1.format(date);
+                        // System.out.println("time>>"+simpDate.format(date));
+                        //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
+                        if(tvDateBooked.getText().toString().trim().equals(currentDate)){
+                            if(Float.parseFloat((spSelectTime.getSelectedItem().toString().replace(":","")).trim())<=Float.parseFloat((currentTime.replace(":","")).trim()))
+                            {
+                                spSelectTime.setSelection(0);
+                                Toast.makeText(DeliveryBookingDetailsActivity.this,getString(R.string.please_select_a_valid_time),Toast.LENGTH_SHORT).show();
 
-                        }else {
+                            }else{
+                                // spSelectTime.setSelection(i);
+                                tvTimeSpinner.setText(spSelectTime.getSelectedItem().toString());
+                                tvTimeBooked.setText(spSelectTime.getSelectedItem() != null ? spSelectTime.getSelectedItem().toString() : restaurantTimeInterval.get(0));
 
+                            }
+                        }else{
                             // spSelectTime.setSelection(i);
                             tvTimeSpinner.setText(spSelectTime.getSelectedItem().toString());
                             tvTimeBooked.setText(spSelectTime.getSelectedItem() != null ? spSelectTime.getSelectedItem().toString() : restaurantTimeInterval.get(0));
 
                         }
+
                     }
                 }
             }
@@ -138,9 +154,6 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
 
             }
         });
-
-
-
     }
 
     private void getIds() {
@@ -164,8 +177,8 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
         tvTimeBooked = (TextView) findViewById(R.id.tvTimeBooked);
         tvNoOfPersons = (TextView) findViewById(R.id.tvNoOfPersons);
         llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
-        llNumberPeople.setVisibility(View.GONE);
-        tvNoOfPersons.setVisibility(View.GONE);
+        /*llNumberPeople.setVisibility(View.GONE);
+        tvNoOfPersons.setVisibility(View.GONE);*/
     }
 
     private void setFont() {
@@ -421,13 +434,33 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
                                             // String orderTime[] = timeItems.get(position).trim().split("~");
                                            /* if(orderTime.length==2)
                                             {*/
+                                            Date date= new Date(  System.currentTimeMillis());
+                                            System.out.println(date);
+                                            SimpleDateFormat simpDate,simpDate1;
+                                            simpDate = new SimpleDateFormat("kk:mm");
+                                            simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
+                                            String currentTime=simpDate.format(date);
+                                            String currentDate=simpDate1.format(date);
+                                            // System.out.println("time>>"+simpDate.format(date));
+                                            //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
+                                            if(tvDateBooked.getText().toString().trim().equals(currentDate)){
+                                                if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat((currentTime.replace(":","")).trim()))
+                                                {
+                                                    tv.setTextColor(Color.GRAY);
+                                                }else {
+                                                    tv.setTextColor(Color.BLACK);
+                                                }
+                                            }else{
+                                                tv.setTextColor(Color.BLACK);
+                                            }
 
-                                            if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat(String.valueOf(current.get(Calendar.HOUR_OF_DAY))+String.valueOf(current.get(Calendar.MINUTE))))
+
+                                            /*if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat(String.valueOf(current.get(Calendar.HOUR_OF_DAY))+String.valueOf(current.get(Calendar.MINUTE))))
                                             {
                                                 tv.setTextColor(Color.GRAY);
                                             }else {
                                                 tv.setTextColor(Color.BLACK);
-                                            }
+                                            }*/
                                             // }
 
                                         }catch (Exception e)
