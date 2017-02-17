@@ -12,7 +12,7 @@
 		}
 	  $response['responseCode'] = 200;
 	  $response['responseMessage'] = 'Your Static Page data fetched successfully.';
-	 
+	  $response['page_name'] =  $get_page_data['name'];
 	  $response['page_data'] =  $get_page_data['content'];
 	  }
 	  else {
