@@ -1,0 +1,198 @@
+<?php
+  header('Content-type: application/json');
+  include('../functions/functions.php');
+  //Receiveing Input in Json and decoding
+  basic_authentication($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+  $data = json_decode(file_get_contents('php://input'));
+  $restaurant_id = $data->{"restaurant_id"};
+  $date = $data->{"date"};
+  //Basic Validation  
+  if (empty($restaurant_id) || empty($date)) {
+	$response['responseCode'] = 0;
+	$response['responseMessage'] = 'All fields are required.';
+  }  
+  else {
+        $timestamp = strtotime($date);
+        $day = date('D', $timestamp);
+        $restaurant_data = mysqli_query($conn,"SELECT * FROM restaurant_details WHERE restaurant_id = '".mysqli_real_escape_string($conn,trim($restaurant_id))."' ");
+        
+        if(mysqli_num_rows($restaurant_data)>0)
+        {
+             $find_interval = mysqli_fetch_assoc($restaurant_data);
+            if($day == 'Sun'){
+               if($find_interval['is_sun'] != 0)
+               {
+                 $time_first = strtotime($find_interval['sun_open_time']);
+                 $time_second = strtotime($find_interval['sun_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                   $response['responseCode'] = 200;
+
+               }
+               
+
+            }
+            else if($day == 'Mon'){
+               if($find_interval['is_mon'] != 0)
+               {
+                 $time_first = strtotime($find_interval['mon_open_time']);
+                 $time_second = strtotime($find_interval['mon_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                  $response['responseCode'] = 200;
+
+               }
+
+            }
+            else if($day == 'Tue'){
+              if($find_interval['is_tue'] != 0)
+               {
+                 $time_first = strtotime($find_interval['tue_open_time']);
+                 $time_second = strtotime($find_interval['tue_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                   $response['responseCode'] = 200;
+
+               }
+            }
+            else if($day == 'Wed'){
+              if($find_interval['is_wed'] != 0)
+               {
+                 $time_first = strtotime($find_interval['wed_open_time']);
+                 $time_second = strtotime($find_interval['wed_open_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                  $response['responseCode'] = 200;
+
+               }
+            }
+            else if($day == 'Thu'){
+               if($find_interval['is_thu'] != 0)
+               {
+                 $time_first = strtotime($find_interval['thu_open_time']);
+                 $time_second = strtotime($find_interval['thu_open_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                   $response['responseCode'] = 200;
+
+               }
+            }
+            else if($day == 'Fri'){
+
+               if($find_interval['is_fri'] != 0)
+               {
+                 $time_first = strtotime($find_interval['fri_open_time']);
+                 $time_second = strtotime($find_interval['fri_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                   $response['responseCode'] = 200;
+
+               }
+            }
+            else if($day == 'Sat'){
+              
+               if($find_interval['is_sat'] != 0)
+               {
+                 $time_first = strtotime($find_interval['sat_open_time']);
+                 $time_second = strtotime($find_interval['sat_close_time']);
+                 $interval = 1800; // Interval in seconds
+                 $array = array();
+                 for ($i = $time_first; $i <= $time_second;){
+                     $array[] =  date('H:i', $i);
+                     $i += $interval;
+                  }
+                 $response['restaurant_time_interval'] = $array;
+                 $response['responseCode'] = 200;
+
+               }
+               else
+               {
+                  $response['restaurant_time_interval'] = array();
+                   $response['responseCode'] = 200;
+
+               }
+            }
+            else{
+                 $response['responseCode'] = 400;
+                 $response['responseMessage'] = 'Date is not valid.';
+                   
+            }
+        }
+        else
+        {
+           $response['responseCode'] = 400;
+           $response['responseMessage'] = 'Restaurant does not exists.';
+
+        }
+	}
+    //Sending response after json encoding
+    $responseJson = json_encode($response);
+    print $responseJson;
+  
+?>

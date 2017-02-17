@@ -45,8 +45,8 @@ function validate_items($item) {
 $item = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT name FROM `items` WHERE name = '".$item."'"));	
 return $item;
 }
-function validate_items_edit($item,$item_id) {		
-$item = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT name FROM `items` WHERE name = '".$item."' and id != '".$item_id."'"));	
+function validate_items_edit($item,$itemId) {		
+$item = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT name FROM `items` WHERE name = '".$item."' and id != '".$itemId."'"));	
 return $item;
 }
 //Function for Get All data
@@ -159,8 +159,8 @@ function url(){
 
 
 
-function bookingTimeChange($booking_date,$booking_time){
-	$timestamp = strtotime($booking_time) - 60*60;
+function bookingTimeChange($booking_date,$bookingTime){
+	$timestamp = strtotime($bookingTime) - 60*60;
 	$time = date('H:i', $timestamp);
 	$currentDate = date("Y-m-d");
 	$currentTime = date("H:i");
@@ -276,10 +276,10 @@ function findAdminEmail(){
 
 } 
 
-function get_all_data_with_condition($table,$column_name,$value)
+function get_all_data_with_condition($table,$columnName,$value)
 {
 	/*$all_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM '".$table."' WHERE '".mysqli_real_escape_string($GLOBALS['conn'],$column_name)."' LIKE '%".mysqli_real_escape_string($GLOBALS['conn'],$value)."%'"));*/
-	echo "SELECT * FROM '".$table."' WHERE '".mysqli_real_escape_string($GLOBALS['conn'],$column_name)."' LIKE '%".mysqli_real_escape_string($GLOBALS['conn'],$value)."%'";
+	echo "SELECT * FROM '".$table."' WHERE '".mysqli_real_escape_string($GLOBALS['conn'],$columnName)."' LIKE '%".mysqli_real_escape_string($GLOBALS['conn'],$value)."%'";
 	exit;
 	return $all_data;
 }
@@ -352,16 +352,16 @@ function bookingRecordStatus($status,$session){
 
 //Get all items
 function get_all_items(){
-	$all_items = mysqli_query($GLOBALS['conn'],"SELECT * FROM items WHERE status = 1");
-	return $all_items;
+	$allItems = mysqli_query($GLOBALS['conn'],"SELECT * FROM items WHERE status = 1");
+	return $allItems;
 }
 	
-function items_name($items_name){
-	$id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT id FROM items WHERE name = '".$items_name."'"));
+function items_name($itemsName){
+	$id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT id FROM items WHERE name = '".$itemsName."'"));
 	return $id['id'];
 }	
-function subtitle_name($subtitle_name){
-	$id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT subtitle_id FROM subtitle WHERE subtitle = '".$subtitle_name."'"));
+function subtitle_name($subtitleName){
+	$id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT subtitle_id FROM subtitle WHERE subtitle = '".$subtitleName."'"));
 	return $id['subtitle_id'];
 }	
 function get_booking_details($id){
@@ -413,17 +413,17 @@ if($_SESSION['restaurant_id']!="")
 	
 }
 // Restaurant meal insertion
-function restaurant_meal_insertion($restaurant_id,$meal_id,$deliver_food)
+function restaurant_meal_insertion($restaurantId,$mealId,$deliverFood)
 {
-	$count_num = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_meal_details Where restaurant_id = '".$restaurant_id."' AND meal = '".$meal_id."'");
+	$count_num = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_meal_details Where restaurant_id = '".$restaurantId."' AND meal = '".$mealId."'");
 	if(mysqli_num_rows($count_num)>0)
 	{	
-		$restaurant_meal_id = mysqli_fetch_assoc($count_num);
-        mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `deliver_food`='".$deliver_food."' Where restaurant_id = '".$restaurant_meal_id['id']."'");
-        return $restaurant_meal_id['id'];
+		$restaurantMealid = mysqli_fetch_assoc($count_num);
+        mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `deliver_food`='".$deliverFood."' Where restaurant_id = '".$restaurantMealid['id']."'");
+        return $restaurantMealid['id'];
 	}
 	else{
-		mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_meal_details`(`restaurant_id`,`meal`,`deliver_food`) VALUES ('".$restaurant_id."','".$meal_id."','".$deliver_food."')");
+		mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_meal_details`(`restaurant_id`,`meal`,`deliver_food`) VALUES ('".$restaurantId."','".$mealId."','".$deliverFood."')");
 		return mysqli_insert_id($GLOBALS['conn']);
 	}
 }
@@ -503,7 +503,7 @@ function  get_select_option()
     return $option;
 } 
 //function to get options for select box in edit restaurant for opening time
-function  get_select_option_open_edit($open_time)
+function  get_select_option_open_edit($openTime)
 {
 	$i =0;
 	$option="";
@@ -515,7 +515,7 @@ function  get_select_option_open_edit($open_time)
 			    }    
 			    else{ 		
 					$selected ='';
-					if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $open_time)
+					if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $openTime)
 						$selected ='selected';
 					$option .= '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
 							   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
@@ -527,7 +527,7 @@ function  get_select_option_open_edit($open_time)
 	return $option;						
 } 
 //function to get options for select box in edit restaurant for closing time
-function  get_select_option_close_edit($close_time)
+function  get_select_option_close_edit($closeTime)
 {
 	$i =0;
 	$option="";
@@ -539,7 +539,7 @@ function  get_select_option_close_edit($close_time)
 			    }    
 			    else{ 		
 					$selected ='';
-					if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $close_time)
+					if(str_pad($hours,2,'0',STR_PAD_LEFT).':'.str_pad($mins,2,'0',STR_PAD_LEFT) == $closeTime)
 						$selected ='selected';
 					$option .= '<option value="'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
 							   .str_pad($mins,2,'0',STR_PAD_LEFT).'" '.$selected.'>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
@@ -550,20 +550,20 @@ function  get_select_option_close_edit($close_time)
 		}
 	return $option;				
 } 
-function num_of_booking($restaurant_id)
+function num_of_booking($restaurantId)
 {
-	$num_count = mysqli_num_rows(mysqli_query($GLOBALS['conn'], "SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '" . $restaurant_id . "' AND `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '" . $time . "' AND `booking_date` = CURRENT_DATE() AND brr1.restaurant_id = '" . $restaurant_id . "')"));
+	$num_count = mysqli_num_rows(mysqli_query($GLOBALS['conn'], "SELECT brr.booking_id,brr.* FROM booked_records_restaurant brr JOIN restaurant_details rd ON brr.restaurant_id = rd.restaurant_id Where brr.restaurant_id = '" . $restaurantId . "' AND `booking_date` > CURRENT_DATE() OR brr.booking_id in(SELECT brr1.booking_id FROM booked_records_restaurant brr1  JOIN restaurant_details rd1 ON brr1.restaurant_id = rd1.restaurant_id Where booking_time > '" . $time . "' AND `booking_date` = CURRENT_DATE() AND brr1.restaurant_id = '" . $restaurantId . "')"));
 	return $num_count;
 }
 function get_name_asset($table,$type){
 	$data = mysqli_query($GLOBALS['conn'],"SELECT * FROM $table WHERE id = '".$type."'");
 	return $data;
 }
-function edit_booking_delivery_option($restaurant_id,$booking_date)
+function edit_booking_delivery_option($restaurantId,$bookingDate)
 {
 	           $date_interval = "";
-               $day = date('D', strtotime($booking_date));
-               $restaurant_data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details WHERE restaurant_id = '".$restaurant_id."' ");
+               $day = date('D', strtotime($bookingDate));
+               $restaurant_data = mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_details WHERE restaurant_id = '".$restaurantId."' ");
                if(mysqli_num_rows($restaurant_data)>0)
                 {
                  $find_interval = mysqli_fetch_assoc($restaurant_data);

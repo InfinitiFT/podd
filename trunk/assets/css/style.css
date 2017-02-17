@@ -1,0 +1,87 @@
+.invoice-header small, .invoice-header, .invoice-col address,invoice-col{color:#000;}
+.lobibox.lobibox-confirm .lobibox-header, .lobibox.lobibox-confirm .lobibox-footer{background:#111!important;}
+.lobibox.lobibox-confirm .lobibox-body .lobibox-icon {color: #111;}
+.nav.side-menu > li.active > a{background: rgba(255, 255, 255, 0.05);}
+.nav-md ul.nav.child_menu li::before{background: #ccc;}
+.nav-md ul.nav.child_menu li::after {border-left: 1px solid #ccc;}
+.blk-padding .blk-padding-s{line-height: 43px; font-size: 1.5em;  font-weight: 500;  color: #111;}
+.blk-padding {padding: 0 1em;}
+.m-r-10{margin-right:10px;}
+.nav.navbar-nav.nav-color-btn li a{padding:2px 5px!important; background:#e7e7e7; color:#555;}
+.nav.navbar-nav.nav-color-btn li a.btn-black{background:#929090; color:#fff!important;}
+.nav.navbar-nav.nav-color-btn li a.btn-green{background: #26B99A!important; color:#fff!important;}
+.nav.navbar-nav.nav-color-btn{margin:1em;}
+#text-carousel .item p{text-align:center; margin:0 auto;}
+.nav_menu a#menu_toggle{color:#111!important;}
+.daterangepicker td.active, .daterangepicker td.active:hover{background: #111!important;}
+table tr, table tr td,.x_title h2, .dataTables_info{color:#111;}
+table th{background:#111;}
+table th{color:#fff;}
+table th{color:#fff;}
+
+div.dataTables_wrapper div.dataTables_length label{color:#111;}
+.login_form {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1em;
+    box-shadow: 0px 0px 1px #ccc;
+}
+
+.login_content h1, .login_content h2, .login_content p{color: #000;}
+.login_content form div a.nomar-btn{margin-top:-6px;  font-size: 14px;}
+.forgotpass-s{position:relative; width:100%;}
+.forgotpass-s label.error{position: absolute;  left: 0; top: 36px;}
+.forgotpass-s input{width:100%;}
+.min-width-200{min-width:200px;}
+
+.paging_simple_numbers .pagination{background:#454545;}
+.dataTables_paginate.paging_simple_numbers .pagination a {
+  background: #454545 none repeat scroll 0 0 !important;
+  border-color: #2d2d2d !important;
+  padding: 6px 9px !important;
+  color:#fff;
+}
+.dataTables_paginate.paging_simple_numbers .pagination li.active a, .dataTables_paginate.paging_simple_numbers .pagination a:hover, .dataTables_paginate.paging_simple_numbers .pagination a:focus{background-color: #000!important;}
+.modal .modal-header {
+    background: #111;
+    color: #fff;
+}
+.modal .modal-header .close{opacity:1;}
+.modal .modal-footer{background:#111;}
+label{color:#111;}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th,.table-bordered{border-color:#111;}
+.daterangepicker .calendar-date .table-condensed td.off {color: #696969;}
+.calendar-date .table-condensed tbody {
+    background: #232323;
+}
+
+.calendar-date .table-condensed > thead > tr > th, .calendar-date .table-condensed > tbody > tr > th, .calendar-date .table-condensed > tfoot > tr > th, .calendar-date .table-condensed > thead > tr > td, .calendar-date .table-condensed > tbody > tr > td, .calendar-date .table-condensed > tfoot > tr > td{color:#fff;}
+
+.logo img{max-width:90px;}
+.site_title{text-align:center;}
+
+body.login {background-color: #202020;}
+.contct_in{margin:2em 0 1em; color:#000; line-height:1.8;}
+.contct_in a{color:inherit;}
+#login_form .logo img{position:relative; top:-5px;}
+footer{background-color:#101010;}
+.c-white{color:#fff;}
+.c-white.cnt a{color:#f7f7f7;}
+ 
+
+ .btn.btn-black {
+    background: #000 none repeat scroll 0 0;
+    color: #fff;
+    font-weight: 600;
+}
+.form-control{border-color:#000!important;}
+.menu-icon{width: 20px;margin-right: 10px;}
+img.menu-icon {width: 20px;margin-right: 10px;}
+
+@media(min-width:768px){
+
+body{padding:55px 0 50px;} 
+body .container.body .right_col {min-height: calc(100vh - 105px) !important;}	
+.nav-md .container.body .col-md-3.left_col{position:fixed;}
+	
+}

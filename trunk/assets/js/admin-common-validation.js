@@ -228,9 +228,10 @@ $("[id ^='yes']").on('click',function(e) {
 		// start ajax 
 		$.ajax({	
 				  url: "admin_ajax.php",
+				  type: 'post',
 				  data: {'type': 'decline','bookingID': booking_res_id,'declined':declined},
 				  success: function(data1) {
-					  
+					  return false;
 					  if(data1){						  
 						Lobibox.notify('success', {
 							
@@ -244,15 +245,16 @@ $("[id ^='yes']").on('click',function(e) {
 });	 
 ////Decline dilevery 
 
-$(document).on("click","[id ^='declines-']",function(e) {
+$(document).on("click","[id ^='declineDev-']",function(e) {
 	
 	 var requestID  = $(this).attr('id');
 	 var requestArr = requestID.split('-');
 	 $('#booking_res_idDev').val(requestArr[1]);
+	
 	 //$("[id^='yes']").attr('id','yes-'+requestArr[1]);	
 });
 
-$("[id ^='yesDev']").on('click',function(e) {	
+$("[id ^='Dev']").on('click',function(e) {	
 	var requestID  = $(this).attr('id');
 	var requestArr = requestID.split('-');
 	var declinedDev = $("#declinedDev").val();
@@ -267,7 +269,6 @@ $("[id ^='yesDev']").on('click',function(e) {
 		$.ajax({	
 				  url: "admin_ajax.php",
 				  data: {'type': 'declineDev','bookingIDDev': booking_res_idDev,'declinedDev':declinedDev},
-
 				  success: function(data1) {
 					return false;
 					  if(data1){						  

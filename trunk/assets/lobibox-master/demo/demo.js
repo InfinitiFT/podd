@@ -125,7 +125,7 @@ $(function () {
         (function () {
             $('#popupYesNoCallback').click(function () {
                 Lobibox.confirm({
-                    msg: "Are you sure you want to delete this user?",
+                    msg: "Are you sure you want to delete this userrrrrrrrrrrr?",
                     callback: function ($this, type) {
                         if (type === 'yes') {
                             Lobibox.notify('success', {

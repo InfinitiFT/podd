@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .left_col {
-  background: #2A3F54; }
+  background: transparent; }
 
 .nav-sm .container.body .col-md-3.left_col {
   min-height: 100%;
@@ -210,7 +210,7 @@ body .container.body .right_col {
 .nav_title {
   width: 230px;
   float: left;
-  background: #2A3F54;
+  background: #232323;
   border-radius: 0;
   height: 57px; }
 
@@ -329,7 +329,7 @@ body .container.body .right_col {
 
 body {
   color: #73879C;
-  background: #2A3F54;
+  background: #111;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -4129,3 +4129,7 @@ ul.notifications {
   border: 1px solid #e5e5e5; }
 
 /** /Dropzone.js **/
+
+
+
+
