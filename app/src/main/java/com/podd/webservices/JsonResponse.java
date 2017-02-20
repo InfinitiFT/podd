@@ -46,6 +46,8 @@ public class JsonResponse implements Serializable{
     public String price_range;
     public String distance;
     public String about_text;
+    public String name;
+    public String page_data;
     public String max_people_allowed;
     public List<Cuisine>cuisine;
     public List<Dietary>dietary;

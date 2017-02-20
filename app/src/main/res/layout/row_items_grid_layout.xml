@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_margin="@dimen/dp_2"
-    android:layout_width="600dp"
-    android:layout_height="300dp"
+    android:layout_width="450dp"
+    android:layout_height="180dp"
     android:background="@color/black"
     card_view:cardCornerRadius="0dp">
     <FrameLayout
@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <!--<FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent">-->
             <ImageView
                 android:id="@+id/ivRestaurant"
                 android:layout_width="match_parent"
@@ -24,11 +24,11 @@
                 android:contentDescription="@null"
                 android:layout_gravity="center"
                 />
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/black_gradient" />
-        </FrameLayout>
+                android:background="@drawable/black_gradient" />-->
+        <!--</FrameLayout>-->
 
 
 
@@ -129,10 +129,10 @@
                     android:layout_height="@dimen/dp_4"
                     android:background="@android:color/black"/>
             </LinearLayout>
-            <View
+            <!--<View
                 android:layout_width="@dimen/dp_2"
                 android:layout_height="match_parent"
-                android:background="@android:color/black"/>
+                android:background="@android:color/black"/>-->
         </LinearLayout>
     </FrameLayout>
 </android.support.v7.widget.CardView>

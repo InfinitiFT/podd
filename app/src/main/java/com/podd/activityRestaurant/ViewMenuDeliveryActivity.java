@@ -132,8 +132,6 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
         switch (view.getId()) {
             case R.id.tvBookNow:
                 if(validationPrice()){
-
-
                     Intent intent = new Intent(context, DeliveryBookingDetailsActivity.class);
                     intent.putExtra(AppConstant.RESTAURANTIMAGES, restaurantImages);
                     intent.putExtra(AppConstant.RESTAURANTID, restaurantId);
@@ -244,32 +242,59 @@ public class ViewMenuDeliveryActivity extends AppCompatActivity implements View.
 
     public void addItem(SavedItem savedItem){
         if(setTimerClass.savedList.size()>0) {
-            for (int i = 0; i < setTimerClass.savedList.size(); i++) {
-                if (!setTimerClass.savedList.get(i).item_id.equals(savedItem.item_id)) {
-                    setTimerClass.savedList.add(savedItem);
+            if(isItemExist(savedItem)){
+                for (int i = 0; i < setTimerClass.savedList.size(); i++) {
+                    if (setTimerClass.savedList.get(i).item_id.equals(savedItem.item_id)) {
+
+                    SavedItem i1 =setTimerClass.savedList.get(i);
+                    i1.count = i1.count +1;
+                    setTimerClass.savedList.set(i, i1);
+                    }
                 }
+
+            }else{
+                setTimerClass.savedList.add(savedItem);
             }
         }else {
             setTimerClass.savedList.add(savedItem);
         }
     }
 
-    public void removeItem(SavedItem savedItem){
+    public boolean isItemExist(SavedItem savedItem){
         if(setTimerClass.savedList.size()>0) {
             for (int i = 0; i < setTimerClass.savedList.size(); i++) {
                 if (setTimerClass.savedList.get(i).item_id.equals(savedItem.item_id)) {
-                    setTimerClass.savedList.remove(savedItem);
-                    break;
+                    return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public int getItemPosition(SavedItem savedItem){
+            for (int i = 0; i < setTimerClass.savedList.size(); i++) {
+                if (setTimerClass.savedList.get(i).item_id.equals(savedItem.item_id)) {
+                    return i;
+                }
+            }
+
+        return -1;
+    }
+
+    public void removeItem(SavedItem savedItem){
+        int pos =getItemPosition(savedItem);
+        if(setTimerClass.savedList.get(pos).count == 1){
+            setTimerClass.savedList.remove(pos);
+        }else{
+            SavedItem i2 = setTimerClass.savedList.get(pos);
+            i2.count = i2.count - 1;
+            setTimerClass.savedList.set(pos, i2);
         }
     }
 
 
     public ArrayList<SavedItem> getSelectedList(){
-
        return setTimerClass.savedList;
-
     }
 
 }

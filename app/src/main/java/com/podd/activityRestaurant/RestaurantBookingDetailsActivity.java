@@ -143,21 +143,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
 
             }
         });
-
-        /*spSelectPeople.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tvNoOfPersons.setText(spSelectPeople.getSelectedItem().toString().trim());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });*/
-
-
-
     }
 
     private void getIds() {
@@ -270,7 +255,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
               /*  date = DateFormat.getDateInstance().format(System.currentTimeMillis() + (24 * 3600000));*/
                 tvTomorrow.setText(date);
                 tvDateBooked.setText(date);
-                // if(!tvDateBooked.getText().toString().equalsIgnoreCase(getString(R.string.date_Booked))){
                 getRestauranttimeIntervalApi(date);
                 arrayAdapterTime = new ArrayAdapter<String>(RestaurantBookingDetailsActivity.this, R.layout.row_textview_spinner_type, timeItems) {
                     @Override
@@ -427,10 +411,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                                         Calendar  current=Calendar.getInstance();
                                         try
                                         {
-                                            // String orderTime[] = timeItems.get(position).trim().split("~");
-                                           /* if(orderTime.length==2)
-                                            {*/
-
                                             Date date= new Date(  System.currentTimeMillis());
                                             System.out.println(date);
                                             SimpleDateFormat simpDate,simpDate1;
@@ -438,8 +418,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                                             simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
                                             String currentTime=simpDate.format(date);
                                             String currentDate=simpDate1.format(date);
-                                           // System.out.println("time>>"+simpDate.format(date));
-                                         //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
                                             if(tvDateBooked.getText().toString().trim().equals(currentDate)){
                                                 if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat((currentTime.replace(":","")).trim()))
                                                 {
@@ -451,23 +429,17 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                                                 tv.setTextColor(Color.BLACK);
                                             }
 
-                                            // }
-
                                         }catch (Exception e)
                                         {
                                             e.printStackTrace();
                                         }
-                                        // tv.setTextColor(Color.BLACK);
                                     }
                                     return view;
                                 }
                             };
-
                             spSelectTime.setAdapter(arrayAdapterTime);
-
-
                         } else {
-                            CommonUtils.showAlertOk("Not available. Please select a different date",RestaurantBookingDetailsActivity.this);
+                            CommonUtils.showAlertOk(getString(R.string.not_available),RestaurantBookingDetailsActivity.this);
                         }
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
@@ -505,10 +477,10 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     }
 
     private boolean isValid() {
-        if (tvDateBooked.getText().toString().trim().matches(getString(R.string.date_booked))) {
+        if (tvDateBooked.getText().toString().trim().matches(getString(R.string.date))) {
             Toast.makeText(context, R.string.please_select_a_valid_date, Toast.LENGTH_LONG).show();
             return false;
-        } else if (tvTimeBooked.getText().toString().trim().matches(getString(R.string.time_booked)) || tvTimeBooked.getText().toString().trim().matches(getString(R.string.select_time))) {
+        } else if (tvTimeBooked.getText().toString().trim().matches(getString(R.string.time)) || tvTimeBooked.getText().toString().trim().matches(getString(R.string.select_time))) {
             Toast.makeText(context, R.string.please_select_a_valid_time, Toast.LENGTH_LONG).show();
             return false;
         } else if (tvNoOfPersons.getText().toString().trim().matches(getString(R.string.number_of_persons))) {
@@ -516,7 +488,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
             return false;
         }
         return true;
-
     }
 
     @Override

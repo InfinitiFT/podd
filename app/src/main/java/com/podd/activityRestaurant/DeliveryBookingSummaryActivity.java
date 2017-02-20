@@ -10,12 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -75,6 +83,8 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
     private RecyclerView rvOrderList;
     private OrderSummaryAdapter orderSummaryAdapter;
     List<SavedItem> savedItemList;
+    private CheckBox cbTermsConditions;
+    private TextView tvTermsCondition,tvPrivacyPolicy;
 
 
     @Override
@@ -194,6 +204,8 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
         llNumberPeople.setVisibility(View.GONE);
         rvOrderList = (RecyclerView) findViewById(R.id.rvOrderList);
+        tvTermsCondition = (TextView) findViewById(R.id.tvTermsCondition);
+        cbTermsConditions = (CheckBox) findViewById(R.id.cbTermsConditions);
     }
 
     private void setFont() {
@@ -210,6 +222,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         tvNoOfPeopleLeft.setTypeface(typefaceRegular);
         tvNumberofPeople.setTypeface(typefaceRegular);
         tvConfirmation.setTypeface(typefaceRegular);
+        tvTotalPrice.setTypeface(typefaceBold);
         etName.setTypeface(typefaceRegular);
         etPhoneNumber.setTypeface(typefaceRegular);
         etEmail.setTypeface(typefaceRegular);
@@ -218,6 +231,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
 
     private void setListeners() {
         tvCompleteBooking.setOnClickListener(this);
+        tvTermsCondition.setOnClickListener(this);
         spCountryCode.setOnItemSelectedListener(this);
     }
 
@@ -234,8 +248,79 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                     break;
                 }
                 break;
+            case R.id.tvTermsCondition:
+                getPrivacyPolicy();
+                // showTermsDialog();
+                break;
 
         }
+    }
+
+    private void getPrivacyPolicy() {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.page_id="1";
+        Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        showTermsDialog(response.body().page_data);
+                        // tvPrivacyPolicy.setText(Html.fromHtml(response.body().page_data));
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+    }
+
+    private void showTermsDialog(String policy) {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final Dialog mDialog = new Dialog(this,
+                android.R.style.Theme_Translucent_NoTitleBar);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.75f;
+        mDialog.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.getWindow();
+        final ViewGroup nullParent = null;
+        View dialogLayout = inflater.inflate(R.layout.dialog_terms_condition, nullParent);
+        mDialog.setContentView(dialogLayout);
+        ImageView ivCross=(ImageView)mDialog.findViewById(R.id.ivPicsCross);
+        tvPrivacyPolicy = (TextView) mDialog.findViewById(R.id.tvPrivacyPolicy);
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvPrivacyPolicy.setTypeface(typefaceRegular);
+        tvPrivacyPolicy.setText(Html.fromHtml(policy));
+        //  getPrivacyPolicy();
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
     }
 
     private void showOtpDialog() {
@@ -384,6 +469,9 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         }else if (etPhoneNumber.getText().toString().trim().equalsIgnoreCase("0000000000")||etPhoneNumber.getText().toString().trim().equalsIgnoreCase("00000000000")|| etPhoneNumber.getText().toString().trim().equalsIgnoreCase("000000000000")|| etPhoneNumber.getText().toString().trim().equalsIgnoreCase("0000000000000")|| etPhoneNumber.getText().toString().trim().equalsIgnoreCase("00000000000000")||etPhoneNumber.getText().toString().trim().equalsIgnoreCase("000000000000000")) {
             Toast.makeText(context, R.string.enter_valid_phone_number, Toast.LENGTH_LONG).show();
             etPhoneNumber.requestFocus();
+            return false;
+        }else if(!cbTermsConditions.isChecked()){
+            Toast.makeText(context, R.string.privacy_policy_error_msg, Toast.LENGTH_LONG).show();
             return false;
         }
         /*if (!etEmail.getText().toString().trim().matches(EMAIL_PATTERN)) {

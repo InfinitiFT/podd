@@ -71,6 +71,8 @@ public interface ApiInterface {
     @POST("search_restaurant.php")
     Call<JsonResponse>getSearchRestaurantApi(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
+    @POST("static_page.php")
+    Call<JsonResponse>getPrivacyPolicy(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
 
 

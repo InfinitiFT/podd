@@ -506,7 +506,7 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
         if (tvDateBooked.getText().toString().trim().matches(getString(R.string.date_booked))) {
             Toast.makeText(context, R.string.please_select_a_valid_date, Toast.LENGTH_LONG).show();
             return false;
-        } else if (tvTimeBooked.getText().toString().trim().matches(getString(R.string.time_booked)) || tvTimeBooked.getText().toString().trim().matches(getString(R.string.select_time))) {
+        } else if (tvTimeBooked.getText().toString().trim().matches(getString(R.string.time)) || tvTimeBooked.getText().toString().trim().matches(getString(R.string.select_time))) {
             Toast.makeText(context, R.string.please_select_a_valid_time, Toast.LENGTH_LONG).show();
             return false;
         } /*else if (tvNoOfPersons.getText().toString().trim().matches(getString(R.string.number_of_persons))) {

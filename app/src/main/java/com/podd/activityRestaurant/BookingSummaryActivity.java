@@ -8,17 +8,26 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.podd.R;
+import com.podd.model.SavedItem;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
@@ -27,6 +36,9 @@ import com.podd.utils.DialogUtils;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +57,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private TextView tvLocation,tvLocationLeft;
     private TextView tvDateBooked,tvDateBookedLeft;
     private TextView tvTimeBooked,tvTimeBookedLeft;
-    private TextView tvNumberofPeople,tvNoOfPeopleLeft,tvBookTaxi,tvConfirmation;
+    private TextView tvNumberofPeople,tvNoOfPeopleLeft,tvBookTaxi,tvConfirmation,tvTermsCondition,tvPrivacyPolicy;
 
     private Dialog dialogConfirmBooking;
     private EditText etEnterOtp1,etEnterOtp2,etEnterOtp3,etEnterOtp4;
@@ -64,6 +76,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
     private final String[]countryCodeArray={"+44","+1","+353","+33","+49","+39","+34","+351","+31","+30","+41","+380","+48","+43","+46","+47","+356","+420","+32","+358","+385","+357","+40","+36","+359","+45","+352","+386","+381","+421","+372","+355","+7","+90","+61","+64","+81","+86","+852","+91","+92","+62","+972","+66","+84","+82","+65","+63","+98","+966","+60","+974","+971","+961","+962","+965","+673","+52","+55","+54","+51","+58","+56","+591","+593","+598","+595","+1876","+1809","+1829","+1849","+27","+234","+20","+218","+212","+213","+216","+233","+244","+251","+254"};
     private String countryCode;
     private SetTimerClass setTimerClass;
+    private CheckBox cbTermsConditions;
+
 
 
     @Override
@@ -169,6 +183,8 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         tvDateBookedLeft = (TextView) findViewById(R.id.tvDateBookedLeft);
         tvTimeBookedLeft = (TextView) findViewById(R.id.tvTimeBookedLeft);
         tvNoOfPeopleLeft = (TextView) findViewById(R.id.tvNoOfPeopleLeft);
+        tvTermsCondition = (TextView) findViewById(R.id.tvTermsCondition);
+        cbTermsConditions = (CheckBox) findViewById(R.id.cbTermsConditions);
     }
 
     private void setFont() {
@@ -193,6 +209,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
     private void setListeners() {
         tvCompleteBooking.setOnClickListener(this);
+        tvTermsCondition.setOnClickListener(this);
         spCountryCode.setOnItemSelectedListener(this);
     }
 
@@ -209,8 +226,78 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
                     break;
                 }
                 break;
-
+            case R.id.tvTermsCondition:
+                getPrivacyPolicy();
+               // showTermsDialog();
+                break;
         }
+    }
+
+    private void showTermsDialog(String policy) {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final Dialog mDialog = new Dialog(this,
+                android.R.style.Theme_Translucent_NoTitleBar);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.75f;
+        mDialog.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.getWindow();
+        final ViewGroup nullParent = null;
+        View dialogLayout = inflater.inflate(R.layout.dialog_terms_condition, nullParent);
+        mDialog.setContentView(dialogLayout);
+        ImageView ivCross=(ImageView)mDialog.findViewById(R.id.ivPicsCross);
+        tvPrivacyPolicy = (TextView) mDialog.findViewById(R.id.tvPrivacyPolicy);
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvPrivacyPolicy.setTypeface(typefaceRegular);
+        tvPrivacyPolicy.setText(Html.fromHtml(policy));
+      //  getPrivacyPolicy();
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
+    }
+
+    private void getPrivacyPolicy() {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.page_id="1";
+        Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        showTermsDialog(response.body().page_data);
+                       // tvPrivacyPolicy.setText(Html.fromHtml(response.body().page_data));
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                Log.e(TAG, t.toString());
+
+            }
+        });
     }
 
     private void showOtpDialog() {
@@ -361,6 +448,9 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
             Toast.makeText(context, R.string.enter_valid_phone_number, Toast.LENGTH_LONG).show();
             etPhoneNumber.requestFocus();
             return false;
+        }else if(!cbTermsConditions.isChecked()){
+            Toast.makeText(context, R.string.privacy_policy_error_msg, Toast.LENGTH_LONG).show();
+            return false;
         }
         /*if (!etEmail.getText().toString().trim().matches(EMAIL_PATTERN)) {
             Toast.makeText(context, R.string.please_enter_valid_email, Toast.LENGTH_LONG).show();
@@ -450,6 +540,11 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
 
                     } else if(response.body().responseCode.equalsIgnoreCase("400"))
                     {
+                        etEnterOtp1.setText("");
+                        etEnterOtp2.setText("");
+                        etEnterOtp3.setText("");
+                        etEnterOtp4.setText("");
+                        etEnterOtp1.requestFocus();
                         Toast.makeText(context, R.string.incorrect_verification, Toast.LENGTH_SHORT).show();
                     }
 

@@ -51,11 +51,11 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        if (position % 2 == 0) {
+        /*if (position % 2 == 0) {
             holder.viewBottom.setVisibility(View.VISIBLE);
         } else {
             holder.viewBottom.setVisibility(View.GONE);
-        }
+        }*/
 
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
         holder.tvRestaurantName.setTypeface(typeface);

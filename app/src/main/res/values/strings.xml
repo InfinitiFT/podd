@@ -126,4 +126,8 @@
     <string name="incorrect_verification">Incorrect Verification Code</string>
     <string name="delivery_message">Your order has been sent. The venue will call you shortly on your mobile to process payment</string>
     <string name="booking_request">Booking request has been sent for confirmation</string>
+    <string name="by_ticking_this_box_you_agree_to_our_terms_amp_conditions_and_privacy_policy"><![CDATA[By ticking this box you agree to our ]]></string>
+    <string name="privacy_policy_error_msg"><![CDATA[Please agree to the Terms & Conditions and Privacy policy.]]></string>
+    <string name="terms_amp_conditions_and_privacy_policy"><u>Terms &amp; Conditions and Privacy Policy</u></string>
+    <string name="not_available">Not available. Please select a different date</string>
 </resources>

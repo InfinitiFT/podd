@@ -52,7 +52,13 @@ public class OrderSummaryAdapter extends  RecyclerView.Adapter<OrderSummaryAdapt
 
         holder.tvNoOfQuantity.setText(savedItem.count+"x");
         holder.tvItemName.setText(""+savedItem.item_name);
-        holder.tvCost.setText(""+savedItem.price);
+        String price = savedItem.price;
+        String[] split = price.split("£");
+
+        String split_one = split[0];
+        String split_second = split[1];
+        double actualPrice = Double.valueOf(split_second)*savedItem.count;
+        holder.tvCost.setText("£"+String.format("%.2f",actualPrice));
     }
 
 

@@ -29,7 +29,6 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
     private List<Restaurant> restaurantList = new ArrayList<>();
     private String location;
 
-
     /**
      * Instantiates a new Best restaurant adapter.
      *
@@ -51,12 +50,11 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        if (position % 2 == 0) {
+       /* if (position % 2 == 0) {
             holder.viewBottom.setVisibility(View.VISIBLE);
         } else {
             holder.viewBottom.setVisibility(View.GONE);
-        }
-
+        }*/
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
         holder.tvRestaurantName.setTypeface(typeface);
 
