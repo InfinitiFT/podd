@@ -108,10 +108,11 @@ switch ($_REQUEST['type']) {
         
     case 'declineDev':
         $id = $_GET['bookingIDDev'];
-        $declined = $_GET['declinedDev'];        
-        if(mysqli_query($conn, "UPDATE `delivery_bookings` SET `delivery_status`='0',`dcline_region`='" . $declined . "' WHERE `delivery_id`='" . $id . "'"))
+        $declined = $_GET['declinedDev'];  
+        $decline_re = $_GET['decline_re'];
+        if(mysqli_query($conn, "UPDATE `delivery_bookings` SET `delivery_status`='0',`decline_region`='" . $declined . "',`decline_re`='" . $decline_re . "' WHERE `delivery_id`='" . $id . "'"))
         {
-            $booking_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `delivery_bookings` db join restaurant_details rd on db.restaurant_id = rd.restaurant_id WHERE `db.delivery_id`='" . mysqli_real_escape_string($conn, trim($id)) . "'"));
+            $booking_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `delivery_bookings` db join restaurant_details rd on db.restaurant_id = rd.restaurant_id WHERE `delivery_id`='" .$id. "'"));
             $message         = "Hi ".$booking_details['name'].", unfortunately your order cannot be fulfilled at this time. Please select another option.";
             send_sms($booking_details['contact_no'], preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $message));
             if($booking_details['email']){
@@ -148,15 +149,16 @@ switch ($_REQUEST['type']) {
                  // More headers
                  $headers .= 'From: podd' . "\r\n"; 
                  mail($to,$subject,$message,$headers);
-                 print 1;
+                
 
         }
-        else
-        {
-           print 0; 
-        }
+       print 1;
       }
-        break;
+      else
+      {
+        
+      }
+      break;
     case 'alreadyadd_item_price':
         $restaurant_id = $_REQUEST['restaurant_id'];
         $meal_id = $_REQUEST['meal_id'];
@@ -219,14 +221,13 @@ switch ($_REQUEST['type']) {
      case 'booking_details_data':
         $restaurant_id = $_POST['restaurant_id'];
         $day_data = array();
-        $day_data[0] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1']))."' "));
-        $day_data[1] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +1 days"))."' "));
-        $day_data[2] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +2 days"))."' "));
-        $day_data[3] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +3 days"))."' "));
-        $day_data[4] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +4 days"))."' "));
-        $day_data[5] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +5 days"))."' "));
-        $day_data[6] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +6 days"))."' "));
-        
+        $day_data[0] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1']))."' AND booking_status = '2' "));
+        $day_data[1] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +1 days"))."' AND booking_status = '2' "));
+        $day_data[2] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +2 days"))."' AND booking_status = '2' "));
+        $day_data[3] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +3 days"))."' AND booking_status = '2' "));
+        $day_data[4] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +4 days"))."' AND booking_status = '2' "));
+        $day_data[5] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +5 days"))."' AND booking_status = '2' "));
+        $day_data[6] = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_date = '".date('Y-m-d', strtotime($_POST['date1'] . " +6 days"))."' AND booking_status = '2'"));
         print_r(json_encode($day_data));
         break;
 

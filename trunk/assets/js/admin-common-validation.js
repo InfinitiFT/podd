@@ -228,10 +228,9 @@ $("[id ^='yes']").on('click',function(e) {
 		// start ajax 
 		$.ajax({	
 				  url: "admin_ajax.php",
-				  type: 'post',
 				  data: {'type': 'decline','bookingID': booking_res_id,'declined':declined},
 				  success: function(data1) {
-					  return false;
+					  
 					  if(data1){						  
 						Lobibox.notify('success', {
 							
@@ -255,28 +254,25 @@ $(document).on("click","[id ^='declineDev-']",function(e) {
 });
 
 $("[id ^='Dev']").on('click',function(e) {	
-	var requestID  = $(this).attr('id');
-	var requestArr = requestID.split('-');
 	var declinedDev = $("#declinedDev").val();
 	var booking_res_idDev = $('#booking_res_idDev').val();
 	
-		if(declined=='Other'){
-			var declined = $("#reasonDev").val();
-			
+	var decline = "";
+		if($.trim(declinedDev) == 'Other'){
+			var decline = $("#reasonDev").val();
 		}
 		
 		// start ajax 
 		$.ajax({	
 				  url: "admin_ajax.php",
-				  data: {'type': 'declineDev','bookingIDDev': booking_res_idDev,'declinedDev':declinedDev},
+				  data: {'type': 'declineDev','bookingIDDev': booking_res_idDev,'declinedDev':declinedDev,'decline_re':decline},
 				  success: function(data1) {
-					return false;
 					  if(data1){						  
 						Lobibox.notify('success', {
 							
 							  msg: 'Entity decline Successfully.'
 							 });
-						//location.reload();
+						location.reload();
 					}
 				}
 			});//end ajax call
@@ -307,7 +303,30 @@ $(document).on("click", "[id ='declinedDev']", function(event){
 		return false;
 	}
 });
-
+$(document).on("click", "[id ^='yesDev-']", function(event){
+	var declined = $("#booking_res_idDev").val();
+	if(declined==''){
+		alert('Please select region');
+		return false;
+	}else{
+		 var requestID  = $(this).attr('id');
+		 var requestArr = requestID.split('-');
+		// start ajax 
+		$.ajax({	
+				  url: "admin_ajax.php",
+				  data: {'type': 'decline','bookingID': requestArr[1],'declined':declined},
+				  success: function(data1) {
+					  if(data1){
+						Lobibox.notify('success', {
+							  msg: 'Entity decline Successfully.'
+							 });
+						location.reload();
+					}
+				}
+			});//end ajax call
+	}
+});
+});
 //when a user select other option at the time of  decline
  $("[id='declined']").click(function(){
 	 var requestID  = $(this).attr('id');
@@ -361,7 +380,7 @@ $(document).on("click", "[id ^='yes-']", function(event){
 			});//end ajax call
 	}
 });
-});
+
 
 // booking time change
 $(document).on("click", "[id^='timeChange-']", function(event){	

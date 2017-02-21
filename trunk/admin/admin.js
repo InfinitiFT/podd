@@ -119,7 +119,6 @@ $("[id ^='activatedeactivate-']").click(function () {
     type: 'post',
     data: {pagetype:pagetype,id:serviceArr[1],status:'2'},
           success: function(data, status) {
-           
             location.reload();  
             Lobibox.notify('success', {
               msg: 'Entity Accept Successfully.'
@@ -266,8 +265,7 @@ function addItem(id){
      // alert('Please enter item name');
     }
     else
-    {
-            
+    {   
         if((jQuery.inArray($(this).val(),str)) != -1) {
           flag = 0;
           Lobibox.notify('warning', {

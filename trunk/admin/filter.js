@@ -102,6 +102,7 @@ var booking_history =  $('#booking_history').DataTable({
              stateSave: true
         });
  $('#booking_history_range').daterangepicker(null, function(start, end, label) {
+
            var todate = end.toISOString();
            var fromdate = start.toISOString();
             $.ajax
@@ -187,9 +188,10 @@ var booking_history =  $('#booking_history').DataTable({
             "ordering": false,
              stateSave: true
         });  
- $('#booking_history_delivery_cal').daterangepicker(1, function(start, end, label) {
+ $('#booking_history_delivery_cal').daterangepicker(1,function(start, end, label) {
            var todate = end.toISOString();
            var fromdate = start.toISOString();
+           
             $.ajax
                 ({
                   type: "POST",

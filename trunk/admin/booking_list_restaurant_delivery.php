@@ -87,7 +87,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Venue Delivery List</h2>
+                    <h2>Order Management</h2>
                    <ul class="nav navbar-right panel_toolbox">
           <li>
            <input type="hidden" id = "delete_type" value ="booked_restaurant_delivery">
@@ -126,10 +126,10 @@
                         <tr>
                            <th width="12%">Name</th>
                            <th width="12%">Mobile</th>
-                           <th width="12%">User Email</th>
+                           <th width="12%">Email</th>
                            <th width="12%">Date</th>
                            <th width="12%">Time</th>
-                           <th width="12%">Delivery Status</th>
+                           <th width="12%">Status</th>
                            <th width="16%">Action</th>
                         </tr>
                       </thead>
@@ -163,14 +163,8 @@
                                     }
                             ?></td>
                           <td>
-                          <?php if($record['delivery_status']=="1"){?>
-                             <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
-                             <button type="button" class="btn btn-round btn-warning"  id="declineDev-<?php echo $record['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
-                              <?php }else if($record['delivery_status']=="2"){?>
-                              <?php }else{?>
-                               <button type="button" id="confirm-<?php echo $record['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
-                              <?php } ?>
-                            <a href="edit_delivery.php?id=<?php echo encrypt_var($record['delivery_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
+                         
+                           
                             <a href="delivery_order.php?delivery_id=<?php echo encrypt_var($record['delivery_id']);?>" class="btn btn-round btn-info">View</a>
                     </td>
                          </tr>
@@ -184,66 +178,5 @@
           </div>
         </div>
         <!-- /page content -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Decline</h4>
-        </div>
-        <div class="modal-body">
-      <div class="row">
-        <div class="col-sm-6">
-         <select class="form-control" id="declinedDev" name="declinedDev" value="">
-           <option value="">Select Reason</option>
-          <option value="Venue closed">Venue closed</option>
-          <option value="No availability for selected date">No availability for selected date</option>
-          <option value="No availability for selected time">No availability for selected time</option>
-          <option value="Other">Other</option>
-          </select>
-          <input type="hidden" name="booking_res_idDev" id="booking_res_idDev">  
-        </div>
-        <div class="col-sm-6">
-        <ul class="nav  panel_toolbox">                            
-          <li><input type="text" class="form-control" placeholder="Enter custom reason"  id="reasonDev" name="reasonDev" style="display:none;" value=""/></li>
-        </ul>
-        </div>
-      </div>
-                 
-      
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-default btn-ok" id="yesDev">OK</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-       
-         <!-- Modal -->
-<!-- Modal -->
-<div id="myModal1" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-       
-        <div id="timeData"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-default" id="timeYes">Ok</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+  
  <?php include_once('footer.php'); ?>

@@ -9,5 +9,6 @@ $GLOBALS['conn'] =$conn;
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
- 
+ //date_default_timezone_set('Asia/Calcutta'); 
+ date_default_timezone_set('Europe/London');
 ?>

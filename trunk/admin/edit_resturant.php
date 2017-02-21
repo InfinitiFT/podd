@@ -132,7 +132,7 @@
 					              <div class="m_-7807612712962067148paragraph_break"><br></div>
 					              <div>Welcome to podd. Your account has been created successfully.</div>
 					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div>Please click on this link to login using the credentials below:<b> <a href = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></b>
+					              <div>Please click on this link to login using the credentials below:<b> <a href = "'.url().''.'admin/index.php">Linkforlogin</a></b>
 					              </div>
 					              <div class="m_-7807612712962067148paragraph_break"><br></div>
 					              <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
@@ -205,24 +205,24 @@
 							<ul>
 							<?php $i = 1;
 							if($allImages[0]){
-								if($_SESSION['restaurant_id'] != "")
-								{
-									foreach($allImages as $allImg){
-									echo '
-									<img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
-									$i =$i +1;
-								    }
+							    foreach($allImages as $allImg){
+							    	if($_SESSION['restaurant_id'] != "")
+							    	{
+							    		echo '<li id="removeImg-'.$i.'">
+									   <img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
 
-								}
-								else
-								{
-									foreach($allImages as $allImg){
-									echo '<li id="removeImg-'.$i.'"><i class="glyphicon glyphicon-remove"  id="removeImgs-'.$i.'" onclick ="removeImg(this)" ></i>
-									<img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
+							    	}
+							    	else
+							    	{
+							    		echo '<li id="removeImg-'.$i.'"><i class="glyphicon glyphicon-remove"  id="removeImgs-'.$i.'" onclick ="removeImg(this)" ></i>
+									   <img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
+
+							    	}
+									
 									$i =$i +1;
 								   }
 
-								}
+								
 								
 							}
 							$p = $i -1;
@@ -232,6 +232,7 @@
 						</div>
 						</div>
 						<div id="allRemoveImg"></div>
+						<?php if($_SESSION['restaurant_id'] == ""){?>
 					 <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Images <span class="required">*</span>
                         </label>
@@ -242,6 +243,7 @@
                              echo '<input type="hidden" value="'.$p.'" id="imageCount" name="imageCount">';?>
                         </div>
                       </div>
+                     <?php }?>
                       <input type="hidden" value="<?php echo $detail['user_id'];?>" id="userID">
                      <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>

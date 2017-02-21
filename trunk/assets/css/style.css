@@ -75,13 +75,19 @@ footer{background-color:#101010;}
     font-weight: 600;
 }
 .form-control{border-color:#000!important;}
-.menu-icon{width: 20px;margin-right: 10px;}
-img.menu-icon {width: 20px;margin-right: 10px;}
+img.menu-icon {width: 20px !important;margin-right: 10px !important;}
+
+.side-menu i {
+    margin-right: 10px;
+    text-align: center;
+}
+.side-menu li img{margin-right: 7px;}
 
 @media(min-width:768px){
 
 body{padding:55px 0 50px;} 
-body .container.body .right_col {min-height: calc(100vh - 105px) !important;}	
+body .container.body .right_col {min-height: calc(100vh - 105px) !important;} 
 .nav-md .container.body .col-md-3.left_col{position:fixed;}
-	
+  
 }
+

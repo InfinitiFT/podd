@@ -10,7 +10,7 @@ include_once('header.php');
 $error="";
 $sucess="";
 try {   
-    $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rip.*,rmd.meal as meal, st.subtitle as sname FROM `restaurant_item_price` rip join restaurant_meal_details rmd on rip.restaurant_meal_id = rmd.id join items i on rip.item_id = i.id join subtitle st on st.subtitle_id = rip.subtitle WHERE rip.id = '".$_GET['id']."'"));
+    $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT rip.*,rmd.meal as meal, st.subtitle as sname FROM `restaurant_item_price` rip join restaurant_meal_details rmd on rip.restaurant_meal_id = rmd.id join items i on rip.item_id = i.id join subtitle st on st.subtitle_id = rip.subtitle WHERE rip.id = '".decrypt_var($_GET['id'])."'"));
 
     $deliver_food_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `restaurant_meal_details` WHERE `id` ='".$item_data['restaurant_meal_id']."'"));
     $item_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `items` WHERE `id` ='".$item_data['item_id']."'"));
@@ -63,9 +63,9 @@ try {
         
         $update_menu = mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `meal`= '".$meal_id."',`deliver_food`= '".$deliver_food."' WHERE id = '".$item_data['restaurant_meal_id']."'");
         			
-        if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_item_price` SET `subtitle`= '".$subtitle."',`item_id`= '".$item."',`item_price`= '".$_POST['price']."' WHERE id = '".$_GET['id']."'")){
+        if(mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_item_price` SET `subtitle`= '".$subtitle."',`item_id`= '".$item."',`item_price`= '".$_POST['price']."' WHERE id = '".decrypt_var($_GET['id'])."'")){
             $_SESSION["successmsg"] = "Item updated successfully.";
-            header('Location:venue_meal.php?id='.$deliver_food_details['restaurant_id']);
+            header('Location:venue_meal.php?id='.encrypt_var($deliver_food_details['restaurant_id']));
         }
         else
         {

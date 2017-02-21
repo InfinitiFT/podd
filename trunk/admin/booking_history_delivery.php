@@ -32,7 +32,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Booking history</h2>
+                    <h2>History</h2>
                    <ul class="nav navbar-right panel_toolbox">
                     </ul>
                     <div class="clearfix"></div>
@@ -45,13 +45,15 @@
                  
                   </div>
                   <div class="col-md-3 col-sm-3 col-xs-3 form-group">
-                    <input type="text" style="width: 200px" name="booking_history_delivery_cal" id="booking_history_delivery_cal" placeholder="Search" readonly class="form-control" />
+                    <input type="text" style="width: 200px" name="booking_history_delivery_cal" id="booking_history_delivery_cal" placeholder="Filter by date" readonly class="form-control" />
                   </div>
                   
                   <div class="col-md-2 col-sm-2 col-xs-2 form-group">
                     <select name="booking_history_delivery_status" id="booking_history_delivery_status" class="form-control">
+					  <option value="1">Pending</option>
                       <option value="2">Confirmed</option>
                       <option value="0">Declined</option>
+					  <option value="3">Cancelled</option>
                     </select>
                   </div>
                 </div>
@@ -75,7 +77,8 @@
                        <?php if($booking_records){ 
 						     while($record = mysqli_fetch_assoc($booking_records)){ ?>
 								<tr>
-									<td><?php echo $record['delivery_date'];?></td>
+									<td><?php $date = date_create ($record['delivery_date']);
+                                    echo date_format($date,"d M Y");?></td>
 									<td><?php echo $record['delivery_time'];?></td>
 									
 									<td><?php if($record['delivery_status']=="1"){

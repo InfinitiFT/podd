@@ -1,8 +1,8 @@
 
         <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            IOSAndroidAppDevelopment!
+        <footer class="navbar-fixed-bottom">
+          <div class="text-center">
+           <font class="c-white cnt"> Contact us with any Questions or Comments on <a href="">hello@poddapp.com</a></font>
           </div>
           <div class="clearfix"></div>
         </footer>

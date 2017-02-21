@@ -10,6 +10,7 @@
   $dietary = $data->{"dietary"};
   $meal = $data->{"meal"};
   $ambience = $data->{"ambience"};
+  $deliver_food = $data->{"deliver_food"};
   $location = $data->{"location"};
   $pageSize   = $data->{"page_size"};
   $pageNumber = $data->{"page_number"};
@@ -18,59 +19,67 @@
   $where ='';
   $join ='';
   $result=array();
-  
     if(!empty($cuisine)){
 	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$cuisine);
-	  $column="cuisine";
+	  $column="d.cuisine";
 	}  
     if(!empty($dietary)){
 	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$dietary);
-	  $column="dietary";
+	  $column="d.dietary";
 	}  
 	if(!empty($ambience)){
 	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$ambience);
-	  $column="ambience";
+	  $column="d.ambience";
 	}  
 	 if(!empty($location)){
 	  $condition= mysqli_real_escape_string($GLOBALS['conn'],$location);
-	  $column="location";
+	  $column="d.location";
 	}  
-	if(!empty($meal)){
-	    $join = " join restaurant_meal_details as m on m.restaurant_id = d.restaurant_id";
-	    if(!empty($where))
-		$where .= ' and';
-	    $where .= " m.meal =".$meal."";
-	}
-
-	if(!empty($join)){
+	$lat_long_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM restaurant_location where id = ".$location.""));
+	$latt= $lat_long_data['latitude'];
+	$longg= $lat_long_data['longitude'];
 	
-		//$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d ".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5");
-		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d ".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where."");
+	if(!empty($meal)){
+		$data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE m.meal =".$meal." AND (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) And d.status = 1 GROUP BY d.restaurant_id");	
+	}else if(!empty($location)){
+		if($deliver_food == '1')
+	     {   
+	        $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos(cos(radians($latt) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($longg) ) + sin( radians($latt) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` as d left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) and find_in_set(".$condition.", ".$column.") > 0 And d.status = 1 GROUP BY d.restaurant_id HAVING distance <= 1");
 		
-
-	}else{
-		
-		//$data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0 HAVING distance <= 5");
-		$data = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0");
-		
+	     }
+	    else{
+		    $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos(cos(radians($latt) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($longg) ) + sin( radians($latt) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` as d left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) and find_in_set(".$condition.", ".$column.") > 0 And d.status = 1 GROUP BY d.restaurant_id HAVING distance <= 5");
+	     }
+			
 	}
+    else{
+   	  $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` as d left join  restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE  find_in_set(".$condition.", ".$column.") > 0 AND (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) And d.status = 1 GROUP BY d.restaurant_id");
+    }
    if ($data) {
 		$restaurant_rows    = mysqli_num_rows($data);
 		$maxPageNumber = ceil($restaurant_rows / $pageSize);
 		$minLimit      = ($pageNumber - 1) * $pageSize;
-	  if(!empty($join)){
+	  
+	  if(!empty($meal)){
+		  $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos(radians($lat) ) * cos(radians(latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude)))) AS distance FROM `restaurant_details` as d left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE m.meal =".$meal." AND (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) And d.status = 1 GROUP BY d.restaurant_id ORDER BY distance Limit $minLimit, $pageSize");	
+		}else if(!empty($location)){
+			if($deliver_food == '1')
+	     {   
+	        $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos(cos(radians($latt) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($longg) ) + sin( radians($latt) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` as d left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) and find_in_set(".$condition.", ".$column.") > 0 And d.status = 1 GROUP BY d.restaurant_id ORDER BY distance HAVING distance <= 1 Limit $minLimit, $pageSize");
 		
-			//$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin  (radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
-			$query = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin  (radians(latitude ) ) ) ) AS distance FROM `restaurant_details` as d".$join." WHERE  find_in_set(".$condition.", ".$column.") > 0 ".$where." ORDER BY distance Limit $minLimit, $pageSize");
-		}else{
-			
-			//$query = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos(cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0  HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
-			$query = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos(cos( radians($lat) ) * cos( radians(latitude ) ) * cos( radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance FROM `restaurant_details` WHERE  find_in_set(".$condition.", ".$column.") > 0 ORDER BY distance Limit $minLimit, $pageSize");
-
+	     }
+	    else{
+		    $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos(cos(radians($latt) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($longg) ) + sin( radians($latt) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` as d left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) and find_in_set(".$condition.", ".$column.") > 0 And d.status = 1 GROUP BY d.restaurant_id HAVING distance <= 5 ORDER BY distance Limit $minLimit, $pageSize");
+	     }
+		  	
+		}
+		else
+		{
+		 $data = mysqli_query($GLOBALS['conn'],"SELECT d.*,( 3959 * acos( cos(radians($lat) ) * cos( radians(latitude ) ) * cos(radians(longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians(latitude ) ) ) ) AS distance  FROM `restaurant_details` as d  left join restaurant_meal_details as m on d.restaurant_id = m.restaurant_id WHERE  find_in_set(".$condition.", ".$column.") > 0 AND (m.deliver_food = 0 OR m.deliver_food = ".$deliver_food." IS NULL) And d.status = 1 GROUP BY d.restaurant_id ORDER BY distance Limit $minLimit, $pageSize");
 		}
 	}
   
-  while($restaurant_data = mysqli_fetch_assoc($query)){
+  while($restaurant_data = mysqli_fetch_assoc($data)){
 	$record['restaurant_id']        = $restaurant_data['restaurant_id'];
     $record['restaurant_name']      = $restaurant_data['restaurant_name'];
     $recordImg = explode(",",$restaurant_data['restaurant_images']);

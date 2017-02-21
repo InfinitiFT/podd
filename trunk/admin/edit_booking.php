@@ -88,14 +88,14 @@ if (isset($_REQUEST['submit'])) {
                     
                      
                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Booking Date </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Date </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="booking_date" name="booking_date" readonly value="<?php if($_POST['booking_date']){ echo $_POST['booking_date'];}else{ echo $bookingData['booking_date'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12" aria-describedby="inputSuccess2Status" >
                         </div>
                       </div>
                       <input type="hidden" name = "restaurant_id" id="restaurant_id" value="<?php echo $bookingData['restaurant_id'];  ?>">
                       <div class="item form-group">
-                        <label for="booking_time" class="control-label col-md-3">Booking Time</label>
+                        <label for="booking_time" class="control-label col-md-3">Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="form-control col-md-7 col-xs-12" name="booking_time" id="booking_time">
 							<?php 
@@ -114,7 +114,7 @@ if (isset($_REQUEST['submit'])) {
                       </div>
                      
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="people">Max number of people </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="people">No. of Covers </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="people" name="people"  value="<?php if($_POST['people']){ echo $_POST['people'];}else{ echo $bookingData['number_of_people'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>

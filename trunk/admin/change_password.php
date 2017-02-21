@@ -85,6 +85,7 @@ if(isset($_POST["submit"]))
 
     <!-- Custom Theme Style -->
     <link href="../assets/build/css/custom.min.css" rel="stylesheet">
+     <link href="../assets/css/style.css" rel="stylesheet">
   </head>
 
   <body class="login">
@@ -97,7 +98,7 @@ if(isset($_POST["submit"]))
           <section class="login_content">
          
             <form action="" method="post" id="change_password">
-              <h1>Change Password</h1>
+              <h1><h1 class="logo"><img src="logo.png" alt="logo" /></h1>
               <ul class="nav navbar-right panel_toolbox">
 				
 			 </ul>
@@ -138,7 +139,7 @@ if(isset($_POST["submit"]))
                  <input type="password" class="form-control" placeholder="Confirm Password"  id="confirm_password" name="confirm_password" value=""/>
               </div>
               <div>
-              <button class="btn btn-default submit" type="submit" value="Login" name="submit">Save</button>
+              <button class="btn btn-black submit" type="submit" value="Login" name="submit">Save</button>
               </div>
 
               <div class="clearfix"></div>
@@ -149,8 +150,8 @@ if(isset($_POST["submit"]))
                 <br />
 
                 <div>
-                   <h1><i class="fa fa-paw"></i>PODD</h1>
-                  <p>©2017 All Rights Reserved.</p>
+                  <h5 class="contct_in">Contact us with any queries with comments on<a href="javascript:void()">hello@poddapp.com</a></h5>
+                  <p  style="color:black">©2017 All Rights Reserved.</p>
                 </div>
               </div>
              

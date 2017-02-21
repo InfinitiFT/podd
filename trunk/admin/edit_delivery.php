@@ -77,7 +77,7 @@ if (isset($_REQUEST['submit'])) {
                         </div>
                       </div>
                      <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Delivery Date </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="booking_date">Date </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="booking_date" name="delivery_date" readonly  value="<?php if($_POST['delivery_date']){ echo $_POST['delivery_date'];}else{ echo $bookingData['delivery_date'];} ?>" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12" aria-describedby="inputSuccess2Status" >
                         </div>
@@ -85,7 +85,7 @@ if (isset($_REQUEST['submit'])) {
                        
                       <input type="hidden" name = "restaurant_id" id="restaurant_id" value="<?php echo $bookingData['restaurant_id'];  ?>">
                       <div class="item form-group">
-                        <label for="booking_time" class="control-label col-md-3">Delivery Time</label>
+                        <label for="booking_time" class="control-label col-md-3">Time</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<select class="form-control col-md-7 col-xs-12" name="delivery_time" id="booking_time">
 							<?php 

@@ -128,7 +128,7 @@ if(isset($_POST["submit"]))
           <section class="login_content">
          
             <form action="" method="post" id="login_form"  class="form-horizontal" role="form">
-              <h1>Login Form</h1>
+              <font color="black"><h1 class="logo"><img src="logo.png" alt="logo" /></h1></font>
               <?php
                 if(isset($_SESSION["successmsg"])) {
                   $success = $_SESSION["successmsg"];
@@ -163,7 +163,7 @@ if(isset($_POST["submit"]))
                 <input type="password" class="form-control" placeholder="Password" id="password" name="password"  value="<?php if(isset($_COOKIE['password'])) echo $_COOKIE['password']; else echo '';?>"/>
               </div>
               <div>
-                <button class="btn btn-default submit" type="submit" value="Login" name="submit">Log In</button>
+                <button class="btn btn-black submit" type="submit" value="Login" name="submit">Log In</button>
                  
               </div>
 
@@ -172,10 +172,10 @@ if(isset($_POST["submit"]))
               <div class="separator">
 				 <div class="row">
 					<div class="col-xs-6" style="text-align: left;color:#111;">
-						<a href="forget_password.php" class="to_register">Forgot Password ?</a>
+						<a href="forget_password.php" class="to_register"><font color="black">Forgot Password?</font></a>
 					  </div>
 					<div class="col-xs-6" style="text-align: right;">
-						<input style="margin:0;vertical-align: middle; " type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?> class="flat"> Remember Me
+						<input style="margin:0;vertical-align: middle; " type="checkbox" name="remember" value="Remember Me"  <?php if(isset($_COOKIE['password'])) echo 'checked'; else echo '';?> class="flat"> <font color="black">Remember Me</font>
 					</div>
 			 	</div>
                 <div class="clearfix"></div>
@@ -183,8 +183,9 @@ if(isset($_POST["submit"]))
 
                 <div>
                    <!-- <h1><i class="fa fa-paw"></i>PODD</h1> -->
-                   <h1 class="logo"><img src="logo.png" alt="logo" /></h1>
-                  <p>©2017 All Rights Reserved.</p>
+                   
+                  <h5 class="contct_in">Contact us with any Questions or Comments on <a href="javascript:void()">hello@poddapp.com</a></h5>
+                  <p  style="color:black">©2017 All Rights Reserved.</p>
                 </div>
               </div>
              

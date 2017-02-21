@@ -19,7 +19,7 @@
                 $resend_message = send_sms($contact_no,$random_number);
                 if($resend_message == "1"){
                   $response['responseCode'] = 200;  
-                  $response['responseMessage'] = 'Otp sent successfully.';
+                  $response['responseMessage'] = 'Verification code sent successfully.';
 
                 }
                 else

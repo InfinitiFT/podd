@@ -26,23 +26,24 @@ if((isset($_POST['fromdate']) || isset($_POST['todate'])) && $_POST['type'] == '
     }
 
 	$res = array();  
-  $newdate = date('Y-m-d', strtotime('-1 day', time()));
-     $booking_date = date('Y-m-d', strtotime($record['booking_date']));
-     $currettime = date('H:i',time());
-     $booking_time = date('H:i',strtotime($record['booking_time']));
-     if($booking_date > $newdate)
-      {
-        $edit_button = "<a href='" . 'edit_booking.php?id= ' . encrypt_var($record['booking_id']) . "&edit_type=edit_booking' class='btn btn-round btn-primary'>Edit</a>";
-      } 
-     else if($booking_date == $newdate && $booking_time > $currettime)
-     {
-       $edit_button = "<a href='" . 'edit_booking.php?id= ' . encrypt_var($record['booking_id']). "&edit_type=edit_booking' class='btn btn-round btn-primary'>Edit</a>";
-     }
-     else
-     {
-       $edit_button = "<a href='#' class='btn btn-round btn-primary' disabled>Edit</a>";
-     }  
+     $newdate = date('Y-m-d', strtotime('-1 day', time()));
+     
      while($record = mysqli_fetch_assoc($booking_records)){ 
+	    $booking_date = date('Y-m-d', strtotime($record['booking_date']));
+        $currettime = date('H:i',time());
+        $booking_time = date('H:i',strtotime($record['booking_time']));
+        if($booking_date > $newdate)
+        {
+         $edit_button = "<a href='" . 'edit_booking.php?id= ' . encrypt_var($record['booking_id']) . "&edit_type=edit_booking' class='btn btn-round btn-primary'>Edit</a>";
+        } 
+       else if($booking_date == $newdate && $booking_time > $currettime)
+       {
+         $edit_button = "<a href='" . 'edit_booking.php?id= ' . encrypt_var($record['booking_id']). "&edit_type=edit_booking' class='btn btn-round btn-primary'>Edit</a>";
+       }
+       else
+       {
+        $edit_button = "<a href='#' class='btn btn-round btn-primary' disabled>Edit</a>";
+       }  
         if($record['booking_status']=="1"){
                          $booking_status = "Pending";
                         }else if($record['booking_status']=="2"){
@@ -57,7 +58,10 @@ if((isset($_POST['fromdate']) || isset($_POST['todate'])) && $_POST['type'] == '
                         else{
                           $booking_status = "Declined";
                         } 
-        $part[0]   = $record['booking_date'];
+		
+        $date = date_create ($record['booking_date']);
+        $booking_date= date_format($date,"d-M-Y");
+        $part[0]   = $booking_date;
         $part[1]   = $record['booking_time'];
         $part[2]   = $record['number_of_people'];
         $part[3]   = $booking_status1; 
@@ -141,13 +145,14 @@ else if((isset($_POST['fromdate']) || isset($_POST['todate'])) && $_POST['type']
     $tdate = date('Y-m-d ',strtotime($todate));
    if($_SESSION['restaurant_id'] != "")
     {
-         $booking_records = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where delivery_date BETWEEN '".mysqli_real_escape_string($GLOBALS['conn'],$fdate)."' AND '".mysqli_real_escape_string($GLOBALS['conn'],$tdate)."' AND db.restaurant_id = '".$_SESSION['restaurant_id']."'  AND `delivery_date` < CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time <'".$time."' AND `delivery_date` = CURRENT_DATE() AND brr1.restaurant_id = '".$_SESSION['restaurant_id']."' AND db1.restaurant_id = '" . $_SESSION['restaurant_id'] . "') order by db.delivery_id desc");
+         $booking_records = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where delivery_date BETWEEN '".mysqli_real_escape_string($GLOBALS['conn'],$fdate)."' AND '".mysqli_real_escape_string($GLOBALS['conn'],$tdate)."' AND db.restaurant_id = '".$_SESSION['restaurant_id']."'  AND `delivery_date` < CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_date BETWEEN '".mysqli_real_escape_string($GLOBALS['conn'],$fdate)."' AND '".mysqli_real_escape_string($GLOBALS['conn'],$tdate)."' AND delivery_time <'".$time."' AND `delivery_date` = CURRENT_DATE()  AND db1.restaurant_id = '" . $_SESSION['restaurant_id'] . "') order by db.delivery_id desc");
       
     }
     else
     {
       
-       $booking_records = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where delivery_date BETWEEN '".mysqli_real_escape_string($GLOBALS['conn'],$fdate)."' AND '".mysqli_real_escape_string($GLOBALS['conn'],$tdate)."' AND `delivery_date` < CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
+       $booking_records = mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where delivery_date BETWEEN '".mysqli_real_escape_string($GLOBALS['conn'],$fdate)."' AND '".mysqli_real_escape_string($GLOBALS['conn'],$tdate)."' AND `delivery_date` < CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_date BETWEEN '".mysqli_real_escape_string($GLOBALS['conn'],$fdate)."' AND '".mysqli_real_escape_string($GLOBALS['conn'],$tdate)."' AND delivery_time < '".$time."' AND `delivery_date` = CURRENT_DATE()) order by db.delivery_id desc");
+      
 
       
     }
@@ -155,6 +160,22 @@ else if((isset($_POST['fromdate']) || isset($_POST['todate'])) && $_POST['type']
 	$res = array();  
     
      while($record = mysqli_fetch_assoc($booking_records)){ 
+        $newdate = date('Y-m-d', strtotime('-1 day', time()));
+        $delivery_date = date('Y-m-d', strtotime($record['delivery_date']));
+        $currettime = date('H:i',time());
+        $delivery_time = date('H:i',strtotime($record['delivery_time']));
+        if($delivery_date > $newdate)
+        {
+          $edit_button = "<a href='" . 'edit_delivery.php?id= ' . encrypt_var($record['delivery_id']) . "' class='btn btn-round btn-primary'>Edit</a>";
+        } 
+        else if($delivery_date == $newdate && $delivery_time > $currettime)
+        {
+          $edit_button = "<a href='" . 'edit_delivery.php?id= ' . encrypt_var($record['delivery_id']) . "' class='btn btn-round btn-primary'>Edit</a>";
+        }
+        else
+        {
+          $edit_button = "<a href='#' class='btn btn-round btn-primary' disabled>Edit</a>";
+        }
         if($record['delivery_status']=="1"){
                          $booking_status = "Pending";
                         }else if($record['delivery_status']=="2"){
@@ -169,10 +190,12 @@ else if((isset($_POST['fromdate']) || isset($_POST['todate'])) && $_POST['type']
                         else{
                           $booking_status = "Declined";
                         } 
-        $part[0]   = $record['delivery_date'];
+        $date = date_create ($record['delivery_date']);
+        $delivery_date= date_format($date,"d M Y");
+        $part[0]   = $delivery_date;
         $part[1]   = $record['delivery_time'];
         $part[2]   = $booking_status; 
-        $part[3]   = "<a href='".'edit_delivery.php?id= '.encrypt_var($record['delivery_id'])."' class='btn btn-round btn-primary'>Edit</a>";
+        $part[3]   = $edit_button;
         
         $res[] = $part;
      }  

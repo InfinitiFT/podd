@@ -130,7 +130,7 @@
                            <th width="10%">Restaurant Name</th>
                            <?php }?>
                            <th width="12%">No. of Covers</th>
-                           <th width="12%">Booking Status</th>
+                           <th width="12%">Status</th>
                            <th width="16%">Action</th>
                         </tr>
                       </thead>

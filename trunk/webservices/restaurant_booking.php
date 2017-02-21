@@ -80,7 +80,7 @@ if (empty($otp) || empty($contact_no)) {
                           </tbody>
                         </table></div>
                         <div class="m_-7807612712962067148paragraph_break"><br></div>
-                         <div>Linkforlogin :<a href="http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></div>
+                         <div>Linkforlogin :<a href="'.url().''.'admin/booking_list_restaurant.php">Linkforlogin</a></div>
                        <div class="m_-7807612712962067148paragraph_break"><br></div>
                        <div class="m_-7807612712962067148paragraph_break"><br></div>
                       <div>Best regards,</div>
@@ -105,6 +105,7 @@ if (empty($otp) || empty($contact_no)) {
 
       // More headers
       $headers .= 'From: podd' . "\r\n"; 
+	 
       if(mail($to,$subject,$message,$headers)){ 
         $response['responseCode']    = 200;
         $response['responseMessage'] = 'Restaurant booking successfully.'; 
@@ -130,7 +131,7 @@ if (empty($otp) || empty($contact_no)) {
         
  } else {
         $response['responseCode']    = 400;
-        $response['responseMessage'] = 'Wrong otp.';
+        $response['responseMessage'] = 'Incorrect verification code.';
         
     }
 }

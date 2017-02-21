@@ -55,7 +55,7 @@
                           <td><?php echo $record['item_price'];?> </td>
                           <td>
                              <button type="button" id="deletepopup-<?php echo $record['item_price_id'];?>" class="btn btn-round btn-danger">Delete</button>
-                              <a  href="edit_item_menu.php?id=<?php echo $record['item_price_id'];?>" class="btn btn-round btn-primary">Edit</a></td>
+                              <a  href="edit_item_menu.php?id=<?php echo encrypt_var($record['item_price_id']);?>" class="btn btn-round btn-primary">Edit</a></td>
                          </tr>
                         <?php }?> 
                       </tbody>

@@ -13,7 +13,7 @@ if(isset($_POST["submit"]))
     if($admin_valid_email){
     	$password = rand(11111111,99999999);
                    $to = $email;
-                   $subject = "Forget password";
+                   $subject = "Password Recovery";
                    $message = '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                       <html xmlns="http://www.w3.org/1999/xhtml">
@@ -76,7 +76,7 @@ if(isset($_POST["submit"]))
       // More headers
       $headers .= 'From: ippodDevlopment@gmail.com' . "\r\n";
       if(mail($to,$subject,$message,$headers)){ 
-          if(mysqli_query($GLOBALS['conn'],"UPDATE `users` SET `password`='".md5($password)."' WHERE `email`='".$email."'"))
+          if(mysqli_query($GLOBALS['conn'],"UPDATE `users` SET `password`='".md5($password)."',`first_time_login`='0' WHERE `email`='".$email."'"))
           {
         	$_SESSION["successmsg"] = "password sent to your email.";
           }
@@ -136,7 +136,7 @@ if(isset($_POST["submit"]))
           <section class="login_content">
          
             <form action="" method="post" id="forgot-form"  class="form-horizontal" role="form">
-              <h1>Forgot Password</h1>
+              <h1><h1 class="logo"><img src="logo.png" alt="logo" /></h1>
               <?php
                 if(isset($_SESSION["successmsg"])) {
                   $success = $_SESSION["successmsg"];
@@ -168,8 +168,8 @@ if(isset($_POST["submit"]))
                 <input type="text" class="form-control" type="email" placeholder="Email" id="email" name="email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>"/>
               </div>
               <div>
-                <button class="btn btn-default submit" type="submit" value="submit" name="submit">Submit</button>
-               <a href="index.php" class="btn btn-default nomar-btn">Login</a>   
+                <button class="btn btn-black submit" type="submit" value="submit" name="submit">Submit</button>
+               <a href="index.php" class="btn btn-black nomar-btn">Login</a>   
               </div>
 
               <div class="clearfix"></div>
@@ -183,8 +183,8 @@ if(isset($_POST["submit"]))
 
                 <div>
                    <!-- <h1><i class="fa fa-paw"></i>PODD</h1> -->
-                   <h1 class="logo"><img src="logo.png" alt="logo" /></h1>
-                  <p>©2016 All Rights Reserved.</p>
+                    <h5 class="contct_in">Contact us with any queries with comments on<a href="javascript:void()">hello@poddapp.com</a></h5>
+                  <p  style="color:black">©2017 All Rights Reserved.</p>
                 </div>
               </div>
              

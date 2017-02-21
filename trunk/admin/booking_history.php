@@ -42,11 +42,13 @@
                  
                   </div>
                   <div class="col-md-3 col-sm-3 col-xs-3 form-group">
-                    <input type="text" style="width: 200px" name="booking_history_range" id="booking_history_range" placeholder="Search" readonly class="form-control" />
+                    <input type="text" style="width: 200px" name="booking_history_range" id="booking_history_range" placeholder="Filter by date " readonly class="form-control" />
                   </div>
                   
                   <div class="col-md-2 col-sm-2 col-xs-2 form-group">
                     <select name="booking_history_status" id="booking_history_status" class="form-control">
+					  <option value="">Status</option>
+					  <option value="1">Pending</option>
                       <option value="2">Confirmed</option>
                       <option value="0">Declined</option>
                       <option value="3">Cancelled</option>
@@ -93,18 +95,22 @@
                           echo "Declined";
                         }else{}?></td>
                   <td>
-                    <?php $newdate = date('Y-m-d', strtotime('-1 day', time()));
-                         $booking_date = date('Y-m-d', strtotime($record['booking_date']));
-                         $currettime = date('H:i',time());
-                         $booking_time = date('H:i',strtotime($record['booking_time']));
-                        if($booking_date > $newdate)
-                        {  ?>
-                        <a href="edit_booking.php?id=<?php echo encrypt_var($record['booking_id']);?>&edit_type=edit_booking" class="btn btn-round btn-primary">Edit</a>
-                       <?php } else if($booking_date == $newdate && $booking_time > $currettime){ ?>
-                        <a href="edit_booking.php?id=<?php echo encrypt_var($record['booking_id']);?>&edit_type=edit_booking" class="btn btn-round btn-primary">Edit</a>
-                       <?php }else{?>
-                        <a href="" class="btn btn-round btn-primary" disabled>Edit</a>
-                       <?php } ?>
+				   <?php 
+				    $newdate = date('Y-m-d', strtotime('-1 day', time()));
+                    $booking_date = date('Y-m-d', strtotime($record['booking_date']));
+					
+                    $currettime = date('H:i',time());
+					
+                    $booking_time = date('H:i',strtotime($record['booking_time']));
+                    if($booking_date > $newdate)
+                     { ?>
+                      <a href="edit_booking.php?id=<?php echo encrypt_var($record['booking_id']);?>&edit_type=edit_booking" class="btn btn-round btn-primary">Edit</a>
+					 <?php } else if($booking_date == $newdate && $booking_time > $currettime){ ?>
+                        <a href="edit_booking.php?id=<?php echo encrypt_var($record['booking_id']);?>&edit_type=edit_booking" class="btn btn-round btn-primary">Edit</a>    
+                     <?php  }else{ ?>
+					  <a href="" class="btn btn-round btn-primary" disabled>Edit</a>
+					 <?php } ?>
+       
                   </td>
                   </td>
 								</tr>

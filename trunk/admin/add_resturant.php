@@ -109,7 +109,7 @@ if(isset($_REQUEST['submit'])){
 			              <div class="m_-7807612712962067148paragraph_break"><br></div>
 			              <div>Welcome to podd. Your account has been created successfully.</div>
 			              <div class="m_-7807612712962067148paragraph_break"><br></div>
-			              <div>Please click on this link to login using the credentials below:<b> <a href = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></b>
+			              <div>Please click on this link to login using the credentials below:<b> <a href = "'.url().''.'admin/index.php">Linkforlogin</a></b>
 			              </div>
 			              <div class="m_-7807612712962067148paragraph_break"><br></div>
 			              <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>

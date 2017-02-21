@@ -127,8 +127,7 @@ for ($i = $time_first; $i <= $time_second;){
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
-        <th width="160">Time Interval</th>
-        <th>Bookings</th>
+	    <th colspan="2">Table View</th>
     </tr>
     </thead>
     <tbody>
@@ -137,7 +136,7 @@ for ($i = $time_first; $i <= $time_second;){
     if(!empty($time_first))
     {
         foreach ($array as $value) {
-        $find_booking = mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_time = '".$value."' AND booking_date = '".$_POST['date1']."' ");
+        $find_booking = mysqli_query($conn,"SELECT * FROM booked_records_restaurant WHERE restaurant_id = '".$restaurant_id."' AND booking_time = '".$value."' AND booking_date = '".$_POST['date1']."' AND booking_status = '2'");
         $wholeArray = array();
         while($no_of_booking = mysqli_fetch_assoc($find_booking)){
             $wholeArray[] = '<span class="booking-circle" id="resid-'.$no_of_booking['booking_id'].'">'.$no_of_booking['number_of_people'].'</span>';
@@ -145,8 +144,8 @@ for ($i = $time_first; $i <= $time_second;){
         $bookings=  implode(' ',$wholeArray);
         echo '<tr>
                                 
-                                <td>'.$value.'</td>
-                                <td>'.$bookings.'</td>
+                                <td width="10%">'.$value.'</td>
+                                <td width="90%">'.$bookings.'</td>
                             </tr>';
         $i++;
        }

@@ -41,16 +41,12 @@ if (empty($otp) || empty($contact_no) || empty($restaurant_id) || empty($deliver
 						
 						while($record = mysqli_fetch_assoc($order_data)){
 									   $order_sumray .= '<tr>
-										  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $record['meal_name'] . '</td>
-										  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $record['subtitle'] . '</td>
 										  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $record['name'] . '</td>
 										  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $record['quantity'] . '</td>
 										  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $record['price'] . '</td>
 									  </tr>';
 								   }
 						$order_sumray .= '<tr>
-										  <td style="width:50%;border:1px solid #ccc;padding:8px"></td>
-										  <td style="width:50%;border:1px solid #ccc;padding:8px"></td>
 										  <td style="width:50%;border:1px solid #ccc;padding:8px"></td>
 										  <td style="width:50%;border:1px solid #ccc;padding:8px">Total Price</td>
 										  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $total_price . '</td>
@@ -72,7 +68,7 @@ if (empty($otp) || empty($contact_no) || empty($restaurant_id) || empty($deliver
 							   <div style="line-height:1.3em">
 							   <div>Hello <b>'.$resturantEmail['restaurant_name'].'</b>,</div>
 							   <div class="m_-7807612712962067148paragraph_break"><br></div>
-							   <div>You have received a new order. Please accept this order in the web portal by clicking on the link this link : <a href="http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/admin/index.php">Linkforlogin</a></div>
+							   <div>You have received a new order. Please accept this order in the web portal by clicking on the link this link : <a href="'.url().''.'admin/booking_list_restaurant_delivery.php">Linkforlogin</a></div>
 							   <div class="m_-7807612712962067148paragraph_break"><br></div>
 							   <div>
 							   <table style="border:1px solid #000000;max-width:600px;margin:0 auto;" cellpadding="5">
@@ -92,8 +88,6 @@ if (empty($otp) || empty($contact_no) || empty($restaurant_id) || empty($deliver
                                   <td style="width:50%;border:1px solid #ccc;padding:8px"> <table style="border:1px solid #000000;max-width:600px;margin:0 auto;" cellpadding="5">
 								   <thead>
 									   <tr>
-									     <th>Meal</th>
-                                         <th>Subtitle</th>
                                          <th>Item</th>
                                          <th>Quantity</th>
                                          <th>Price</th>
@@ -145,7 +139,7 @@ if (empty($otp) || empty($contact_no) || empty($restaurant_id) || empty($deliver
 			  $headers = "MIME-Version: 1.0" . "\r\n";
 			  $headers .= 'Cc: hello@poddapp.com' . "\r\n";
 			  $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
+             
 			  // More headers
 			   $headers .= 'From: podd' . "\r\n"; 
 				  if(mail($to,$subject,$message,$headers)){ 
@@ -180,7 +174,7 @@ if (empty($otp) || empty($contact_no) || empty($restaurant_id) || empty($deliver
         
     } else {
         $response['responseCode']    = 400;
-        $response['responseMessage'] = 'Wrong otp.';
+        $response['responseMessage'] = 'Incorrect verification code.';
         
     }
 }

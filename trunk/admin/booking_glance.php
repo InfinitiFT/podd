@@ -51,13 +51,13 @@ else
                     <nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <ul class="nav navbar-nav nav-color-btn">
-                                <li class="active"><a href="#" class="btn btn-round" id="day_first">Day</a></li>
-                                <li><a href="#" class="btn btn-round" id="day_second">Day</a></li>
-                                <li ><a href="#" class="btn btn-round" id="day_third">Day</a></li>
-                                <li ><a href="#" class="btn btn-round" id="day_fourth">Day</a></li>
-                                <li ><a href="#" class="btn btn-round" id="day_fifth">Day</a></li>
-                                <li ><a href="#" class="btn btn-round" id="day_sixth">Day</a></li>
-                                <li ><a href="#" class="btn btn-round" id="day_seventh">Day</a></li>
+                                <li class="active"><a href="#" class="btn btn-round" id="Day_first">Day</a></li>
+                                <li><a href="#" class="btn btn-round" id="Day_second">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="Day_third">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="Day_fourth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="Day_fifth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="Day_sixth">Day</a></li>
+                                <li ><a href="#" class="btn btn-round" id="Day_seventh">Day</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -201,21 +201,23 @@ else
 </script>
 <script>
     var restaurant_id = "<?php echo $restaurant_id;?>";
-    $("[id ^='day_']").click(function(e) {
+    $("[id ^='Day_']").click(function(e) {
         var dayID  = $(this).html();
         var abc = dayID.split(",");
         var xyz = abc[1].split("<");
         var dayName = abc[0].split(">");
 
         $("#cur_date").val(get_day_number(getDayName(xyz[0])));
-        var qwerty = $("#cur_date1").val();
-
-        console.log(xyz[0]);
+        var setMonth = new Date(xyz[0]).getMonth();
+        var setDay = new Date(xyz[0]).getDate();
+        var setYear = new Date(xyz[0]).getFullYear();
+        var newstrdate = setYear+'-'+pad(setMonth+1,2)+'-'+pad(setDay,2);
+        $("#cur_date1").val(newstrdate);
         $("#day_name").html("<b><strong>" + abc[0] + ", </strong>"+ xyz[0] +"</b>");
         $.ajax({
             type: 'POST',
             url: 'booking_glance_details.php',
-            data: {"date1": xyz[1], "restaurant_id": restaurant_id},
+            data: {"date1": newstrdate, "restaurant_id": restaurant_id},
             success: function (response) {
                 $(".x_content").html(response);
             }
@@ -224,8 +226,9 @@ else
 
     $('document').ready(function () {
         var d = new Date();
-        var strDate =  pad(d.getDate(), 2)+ " " + monthNames[d.getMonth()] + " " + d.getFullYear();
-        $("#day_name").html("<b><strong>Today, " + strDate + "</strong></b>");
+        var strDate =  d.getFullYear()+ "-" + pad(d.getMonth()+1,2) + "-" + pad(d.getDate(), 2);
+        var newstrdate = pad(d.getDate(), 2)+ " " + monthNames[d.getMonth()] + " " + d.getFullYear();
+        $("#day_name").html("<b><strong>Today, " + newstrdate + "</strong></b>");
 
        var allDates = GetDates(d,6);
         console.log(allDates);
@@ -238,13 +241,13 @@ else
        
         var stringtoday = myArray[0].toString().split(',');
         var stringtommorow = myArray[1].toString().split(',');
-        $("#day_first").html("<b><strong>" + 'Today' + ',' + stringtoday[1]+" </strong></b>");
-        $("#day_second").html("<b><strong>" + 'Tomorrow'+ ',' + stringtommorow[1]+  " </strong></b>");
-        $("#day_third").html("<b><strong>" + myArray[2] + " </strong></b>");
-        $("#day_fourth").html("<b><strong>" + myArray[3] + " </strong></b>");
-        $("#day_fifth").html("<b><strong>" + myArray[4] + " </strong></b>");
-        $("#day_sixth").html("<b><strong>" + myArray[5] + " </strong></b>");
-        $("#day_seventh").html("<b><strong>" + myArray[6] + " </strong></b>");
+        $("#Day_first").html("<b><strong>" + 'Today' + ',' + stringtoday[1]+" </strong></b>");
+        $("#Day_second").html("<b><strong>" + 'Tomorrow'+ ',' + stringtommorow[1]+  " </strong></b>");
+        $("#Day_third").html("<b><strong>" + myArray[2] + " </strong></b>");
+        $("#Day_fourth").html("<b><strong>" + myArray[3] + " </strong></b>");
+        $("#Day_fifth").html("<b><strong>" + myArray[4] + " </strong></b>");
+        $("#Day_sixth").html("<b><strong>" + myArray[5] + " </strong></b>");
+        $("#Day_seventh").html("<b><strong>" + myArray[6] + " </strong></b>");
         $("#cur_date").val(d.getDay());
         $("#cur_date1").val(d.getFullYear()+ "-" + pad(d.getMonth()+1,2) + "-" + pad(d.getDate(), 2));
         $.ajax({
@@ -266,31 +269,31 @@ else
 
 				 if($data[0] != 0)
                  {
-                   $('#day_first').addClass('btn-green');
+                   $('#Day_first').addClass('btn-green');
                  }
                  if($data[1] != 0)
                  {
-                   $('#day_second').addClass('btn-green');
+                   $('#Day_second').addClass('btn-green');
                  }
                  if($data[2] != 0)
                  {
-                   $('#day_third').addClass('btn-green');
+                   $('#Day_third').addClass('btn-green');
                  }
                  if($data[3] != 0)
                  {
-                   $('#day_fourth').addClass('btn-green');
+                   $('#Day_fourth').addClass('btn-green');
                  }
                  if($data[4] != 0)
                  {
-                   $('#day_fifth').addClass('btn-green');
+                   $('#Day_fifth').addClass('btn-green');
                  }
                  if($data[5] != 0)
                  {
-                   $('#day_sixth').addClass('btn-green');
+                   $('#Day_sixth').addClass('btn-green');
                  }
                  if($data[6] != 0)
                  {
-                   $('#day_seventh').addClass('btn-green');
+                   $('#Day_seventh').addClass('btn-green');
                  }
             }
         });
@@ -311,6 +314,7 @@ else
                 var increase_month = pad(1, 2);
                 var increase_dayDate = pad(1, 2);
                 var strDate = increase_year + "-" + pad(increase_month, 2) + "-" + pad(increase_dayDate, 2);
+                var newstrdate = pad(increase_dayDate, 2)+ " " + monthNames[Number(increase_month-1)] + " " + increase_year;
             } else {
                 if (parseInt(splitArr[1]) + 1 < 10) {
                     var increase_month = pad(parseInt(splitArr[1]) + 1, 2);
@@ -319,6 +323,7 @@ else
                 }
                 var increase_dayDate = pad(1, 2);
                 var strDate = splitArr[0] + "-" + pad(increase_month, 2) + "-" + pad(increase_dayDate, 2);
+                var newstrdate = pad(increase_dayDate, 2)+ " " + monthNames[Number(increase_month-1)] + " " + splitArr[0];
             }
         } else {
             if (parseInt(splitArr[2]) + 1 < 10) {
@@ -327,6 +332,7 @@ else
                 var increase_dayDate = parseInt(splitArr[2]) + 1;
             }
             var strDate = splitArr[0] + "-" + pad(splitArr[1], 2) + "-" + pad(increase_dayDate, 2);
+            var newstrdate = pad(increase_dayDate, 2)+ " " + monthNames[Number(splitArr[1]-1)] + " " + splitArr[0];
         }
         /*var strDate = splitArr[0] + "-" + splitArr[1] + "-" + increase_dayDate;*/
         var increase_day = parseInt(cur_date) + 1;
@@ -339,19 +345,21 @@ else
         var checkYesterdayDate = year + "-" + pad(month, 2) + "-" + pad(previous_day, 2);
 
         console.log(checkTomorrowDate + "   " + checkYesterdayDate);
+
+
         if (count++ == 1 || checkTomorrowDate == strDate) {
-            $("#day_name").html("<b><strong>" + strDate + ":- </strong>Tomorrow</b>");
+            $("#day_name").html("<b><strong>Tomorrow, " + newstrdate + "</strong></b>");
             $("#cur_date").val(increase_day.toString());
             $("#cur_date1").val(strDate);
         } else if (checkYesterdayDate == strDate) {
-            $("#day_name").html("<b><strong>" + strDate + ":- </strong>Yesterday</b>");
+            $("#day_name").html("<b><strong>Yesterday, " + newstrdate + "</strong></b>");
             $("#cur_date").val(increase_day.toString());
             $("#cur_date1").val(strDate);
         } else {
             var d = new Date();
             var checkTodayDate = d.getFullYear() + "-" + pad((d.getMonth() + 1), 2) + "-" + pad(d.getDate(), 2);
             if (checkTodayDate == strDate) {
-                $("#day_name").html("<b><strong>" + strDate + ":- </strong>Today</b>");
+                $("#day_name").html("<b><strong>Today, " + newstrdate + "</strong></b>");
                 $("#cur_date").val(increase_day.toString());
                 $("#cur_date1").val(strDate);
             } else {
@@ -361,7 +369,7 @@ else
                 var name = get_day_name(increase_day);
                 $("#cur_date").val(increase_day.toString());
                 $("#cur_date1").val(strDate);
-                $("#day_name").html("<b><strong>" + strDate + ":- </strong>" + name + "</b>");
+                $("#day_name").html("<b><strong>" + name + ", </strong>" + newstrdate + "</b>");
             }
         }
 
@@ -386,6 +394,7 @@ else
                 var decrease_month = 12;
                 var decrease_dayDate = 31;
                 var strDate = decrease_year + "-" + pad(decrease_month, 2) + "-" + pad(decrease_dayDate, 2);
+                var newstrdate = pad(decrease_dayDate, 2)+ " " + monthNames[Number(decrease_month-1)] + " " + decrease_year;
             } else {
                 if (parseInt(splitArr[1]) - 1 < 10) {
                     var decrease_month = pad(parseInt(splitArr[1]) - 1, 2);
@@ -394,6 +403,7 @@ else
                 }
                 var decrease_dayDate = getDaysInMonth(splitArr[0], splitArr[1] - 1);
                 var strDate = splitArr[0] + "-" + pad(decrease_month, 2) + "-" + pad(decrease_dayDate, 2);
+                var newstrdate = pad(decrease_dayDate, 2)+ " " + monthNames[Number(decrease_month-1)] + " " + splitArr[0];
             }
         } else {
             if (parseInt(splitArr[2]) - 1 < 10) {
@@ -402,6 +412,7 @@ else
                 var decrease_dayDate = parseInt(splitArr[2]) - 1;
             }
             var strDate = splitArr[0] + "-" + pad(splitArr[1], 2) + "-" + pad(decrease_dayDate, 2);
+            var newstrdate = pad(decrease_dayDate, 2)+ " " + monthNames[Number(splitArr[1]-1)] + " " + splitArr[0];
         }
         console.log(strDate);
         //var increase_dayDate = parseInt(splitArr[2]) - 1;
@@ -416,18 +427,18 @@ else
         var checkTomorrowDate = year + "-" + pad(month, 2) + "-" + pad(next_day, 2);
         console.log(checkYesterdayDate + '   ' + checkTomorrowDate);
         if (count++ == 1 || checkYesterdayDate == strDate) {
-            $("#day_name").html("<b><strong>" + strDate + ":- </strong>Yesterday</b>");
+            $("#day_name").html("<b><strong>Yesterday, " + newstrdate + "</strong></b>");
             $("#cur_date").val(decrease_day.toString());
             $("#cur_date1").val(strDate);
         } else if (checkTomorrowDate == strDate) {
-            $("#day_name").html("<b><strong>" + strDate + ":- </strong>Tomorrow</b>");
+            $("#day_name").html("<b><strong>Tomorrow, " + newstrdate + "</strong></b>");
             $("#cur_date").val(decrease_day.toString());
             $("#cur_date1").val(strDate);
         } else {
             var d = new Date();
             var checkTodayDate = d.getFullYear() + "-" + pad((d.getMonth() + 1), 2) + "-" + pad(d.getDate(), 2);
             if (checkTodayDate == strDate) {
-                $("#day_name").html("<b><strong>" + strDate + ":- </strong>Today</b>");
+                $("#day_name").html("<b><strong>Today, " + newstrdate + "</strong></b>");
                 $("#cur_date").val(decrease_day.toString());
                 $("#cur_date1").val(strDate);
             } else {
@@ -437,7 +448,7 @@ else
                 var name = get_day_name(decrease_day);
                 $("#cur_date").val(decrease_day.toString());
                 $("#cur_date1").val(strDate);
-                $("#day_name").html("<b><strong>" + strDate + ":- </strong>" + name + "</b>");
+                $("#day_name").html("<b><strong>" + name + ", </strong>" + newstrdate + "</b>");
             }
         }
         $.ajax({
