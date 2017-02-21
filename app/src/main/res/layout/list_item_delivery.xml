@@ -28,11 +28,12 @@
             android:id="@+id/titlePrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_horizontal"
-            android:gravity="right"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:layout_weight="1"
             android:padding="@dimen/dp_1"
             android:textSize="@dimen/text_size_8"
+            android:text=""
             android:textColor="#d3d3d3"/>
 
         <LinearLayout

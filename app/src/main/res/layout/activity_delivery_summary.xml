@@ -344,39 +344,42 @@
                     android:scrollbars="vertical"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_10" />
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp_2" >
+
+                <CheckBox
+                    android:id="@+id/cbTermsConditions"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:layout_marginTop="@dimen/dp_2" >
-
-                    <CheckBox
-                        android:id="@+id/cbTermsConditions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:button="@null"
-                        android:background="@null"
-                        android:drawableLeft="@drawable/checkbox"
-                        android:drawablePadding="@dimen/dp_8"
-                        android:paddingLeft="@dimen/dp_5"
-
-                        android:text="@string/by_ticking_this_box_you_agree_to_our_terms_amp_conditions_and_privacy_policy"
-                        android:textSize="@dimen/text_size_8"
-                        android:textColor="@android:color/white"
-                        android:checked="false"
-                        />
-                    <TextView
-                        android:id="@+id/tvTermsCondition"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:paddingStart="@dimen/dp_2"
-                        android:text="@string/terms_amp_conditions_and_privacy_policy"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
+                    android:layout_gravity="start|center_vertical"
+                    android:button="@null"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/checkbox"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:text="@string/by_ticking_this_box_you_agree_to_our_terms_amp_conditions_and_privacy_policy"
+                    android:textSize="@dimen/text_size_6"
+                    android:textColor="@android:color/white"
+                    android:checked="false"
+                    />
+                <TextView
+                    android:id="@+id/tvTermsCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:paddingStart="@dimen/dp_2"
+                    android:textSize="@dimen/text_size_6"
+                    android:text="@string/terms_amp_conditions_and_privacy_policy"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

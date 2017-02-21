@@ -59,11 +59,12 @@ public class BestRestaurantAdapter extends RecyclerView.Adapter<BestRestaurantAd
 
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
         holder.tvRestaurantName.setTypeface(typeface);
+        holder.tvPriceRange.setTypeface(typeface);
 
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         holder.tvLocation.setTypeface(typefaceRegular);
         holder.tvDistance.setTypeface(typefaceRegular);
-        holder.tvPriceRange.setTypeface(typefaceRegular);
+       // holder.tvPriceRange.setTypeface(typefaceRegular);
         holder.tvtypeOfRestaurant.setTypeface(typefaceRegular);
 
 

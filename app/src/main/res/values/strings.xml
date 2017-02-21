@@ -43,7 +43,7 @@
     <string name="back">BACK</string>
     <string name="booking_summary">BOOKING SUMMARY</string>
     <string name="additional_information">Additional Information</string>
-    <string name="confirmation_text">We will send you booking confirmation by text or email.</string>
+    <string name="confirmation_text">We will send you a booking confirmation by text or email.</string>
     <string name="name">Name</string>
     <string name="Mobile">Mobile</string>
     <string name="email">Email</string>

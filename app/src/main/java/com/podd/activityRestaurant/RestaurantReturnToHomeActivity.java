@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.podd.R;
+import com.podd.adapter.OrderSummaryAdapter;
+import com.podd.model.SavedItem;
 import com.podd.utils.AppConstant;
 import com.podd.utils.SetTimerClass;
+
+import java.util.List;
 
 /**
  * The type Restaurant return to home activity.
@@ -24,8 +30,11 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvDateBooked,tvConfirmation,tvThanks;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
-    private LinearLayout llNumberPeople;
+    private LinearLayout llNumberPeople,llRestaurantScreen;
     private SetTimerClass setTimerClass;
+    private RecyclerView rvOrderList;
+    List<SavedItem> savedItemList;
+    private OrderSummaryAdapter orderSummaryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +48,14 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
 
         /*this condition get the data from booking summary screen*/
         if(getIntent()!=null) {
-
             if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("1")){
+                llRestaurantScreen.setVisibility(View.GONE);
                 llNumberPeople.setVisibility(View.GONE);
+                rvOrderList.setVisibility(View.VISIBLE);
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
-                tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
+               /* tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
                 tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
-                tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));
+                tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));*/
                 tvConfirmation.setText(R.string.delivery_message);
             }else if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("0")){
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
@@ -62,6 +72,11 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
             tvDateBooked.setText("");
             tvNumberofPeople.setText("");
         }
+
+        savedItemList = SetTimerClass.savedList;
+        orderSummaryAdapter = new OrderSummaryAdapter(this, savedItemList);
+        rvOrderList.setAdapter(orderSummaryAdapter);
+        rvOrderList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void getIds() {
@@ -78,6 +93,8 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
         tvThanks = (TextView) findViewById(R.id.tvThanks);
         llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
+        llRestaurantScreen = (LinearLayout) findViewById(R.id.llRestaurantScreen);
+        rvOrderList = (RecyclerView) findViewById(R.id.rvOrderList);
     }
 
     private void setFont() {
@@ -105,6 +122,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvReturnToHome:
+                SetTimerClass.savedList.clear();
                 intent = new Intent(context, NewHomeScreenActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -115,6 +133,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        SetTimerClass.savedList.clear();
         intent = new Intent(context, NewHomeScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

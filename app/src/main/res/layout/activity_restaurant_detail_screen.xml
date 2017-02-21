@@ -114,6 +114,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_6"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -191,7 +192,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:text=""
+                                android:text="Michelin Star, Fine Dining, Casual Dining"
                                 android:maxLines="2"
                                 android:ellipsize="end"
                                 android:textColor="@android:color/white"

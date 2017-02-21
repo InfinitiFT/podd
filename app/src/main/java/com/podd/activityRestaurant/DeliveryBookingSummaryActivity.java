@@ -561,7 +561,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                         intent.putExtra(AppConstant.Delivery,"1");
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                        SetTimerClass.savedList.clear();
+                        //SetTimerClass.savedList.clear();
                         CommonUtils.savePreferencesString(DeliveryBookingSummaryActivity.this,AppConstant.Address,"");
 
 

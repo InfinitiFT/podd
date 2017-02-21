@@ -4,7 +4,7 @@
     android:id="@+id/card_view"
     android:layout_margin="@dimen/dp_2"
     android:layout_width="450dp"
-    android:layout_height="180dp"
+    android:layout_height="200dp"
     android:background="@color/black"
     card_view:cardCornerRadius="0dp">
     <FrameLayout
@@ -111,11 +111,12 @@
                         android:id="@+id/tvPriceRange"
                         android:layout_width="0dp"
                         android:layout_weight="0.2"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/book"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textSize="@dimen/text_size_8"
+                        android:layout_gravity="center"
                         android:gravity="center"
                         android:background="@drawable/button_background_pink"
                         android:padding="@dimen/dp_1"

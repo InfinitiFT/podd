@@ -102,7 +102,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/today"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_10" />
+                        android:textSize="@dimen/text_size_8" />
 
                     <TextView
                         android:id="@+id/tvTomorrow"
@@ -115,7 +115,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/tomorrow"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_10" />
+                        android:textSize="@dimen/text_size_8" />
 
                     <TextView
                         android:id="@+id/tvSelectfromCalender"
@@ -127,7 +127,7 @@
                         android:padding="@dimen/dp_5"
                         android:text="@string/select_from_calender"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_10" />
+                        android:textSize="@dimen/text_size_8" />
                 </LinearLayout>
 
 
