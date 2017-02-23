@@ -37,8 +37,6 @@
             android:id="@+id/llInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/llRestaurantScreen"
@@ -164,6 +162,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tvTotalPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_8"
+                android:layout_gravity="right|center"
+                android:gravity="right|center"
+                android:layout_marginRight="@dimen/dp_4"
+                android:textColor="@android:color/white"
                 android:visibility="gone"/>
 
 

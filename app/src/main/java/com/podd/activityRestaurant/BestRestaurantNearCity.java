@@ -79,7 +79,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         setListeners();
         setRecycle();
         fetchLocation();
-       /* if (CommonUtils.isNetworkConnected(BestRestaurantNearCity.this)) {
+        /*if (CommonUtils.isNetworkConnected(BestRestaurantNearCity.this)) {
             getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
         } else {
             Toast.makeText(BestRestaurantNearCity.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
@@ -98,6 +98,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                     if (!isRestaurant) {
                         if (restaurantList.size() % pageSize == 0)
                             getRestaurantListApi(currentLat, currentLong, pageNo);
+                          //  isRestaurant=false;
                     } else {
                        // pageNo=1;
                         if (restaurantList.size() % pageSize == 0)
@@ -608,6 +609,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 isRestaurant = true;
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,cuisine.name);
+                scrollListener.resetState();
                 break;
             case "location":
                 tvLocationType.setText(cuisine.name);
@@ -625,6 +627,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 searched_item_name = cuisine.name;
                 isRestaurant = true;
                 callsearchedTextApi(pageNo,searched_item_name);
+                scrollListener.resetState();
                 break;
             case "dietary":
                 tvDietaryType.setText(cuisine.name);
@@ -641,6 +644,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 tvLocationType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
+                scrollListener.resetState();
                 isRestaurant = true;
                 break;
             case "meal":
@@ -657,6 +661,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 tvDietaryType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
+                scrollListener.resetState();
                 isRestaurant = true;
                 break;
             case "ambience":
@@ -674,6 +679,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
                 tvMealType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
+                scrollListener.resetState();
                 isRestaurant = true;
                 break;
         }

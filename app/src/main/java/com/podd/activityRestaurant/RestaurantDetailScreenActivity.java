@@ -252,70 +252,47 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
                         }
 
                         if(response.body().cuisine!=null && response.body().cuisine.size()>0) {
-                            for (int i = 0; i <response.body().cuisine.size() ; i++) {
-                                if(response.body().cuisine.get(i).cuisine_name!=null && !response.body().cuisine.get(i).cuisine_name.equalsIgnoreCase("") )
-
-                                    categories.add(response.body().cuisine.get(i).cuisine_name);
+                            StringBuilder cuisineName= new StringBuilder();
+                            String delim=", ";
+                            for (int i = 0; i < response.body().cuisine.size(); i++) {
+                                cuisineName.append(response.body().cuisine.get(i).cuisine_name);
+                                if(i!=response.body().cuisine.size()-1)
+                                    cuisineName.append(delim);
                             }
-
-                            String[] stockArr = new String[categories.size()];
-                            stockArr = categories.toArray(stockArr);
-                            if(stockArr.length > 0) {
-                                String s = stockArr[0];
-                                for (int i = 1; i < stockArr.length; i++) {
-                                    s = s + ", " + stockArr[i];
-                                }
-                                tvCuisine.setText(s);
-                            }
+                            tvCuisine.setText(cuisineName);
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
 
-                        /*if(response.body().dietary!=null&&response.body().dietary.size()>0) {
-                            for (int i = 0; i <response.body().dietary.size() ; i++) {
-                                if(response.body().dietary.get(i).dietary_name!=null && !response.body().dietary.get(i).dietary_name.equalsIgnoreCase("") )
-                                    categories.clear();
-
-                                categories.add(response.body().dietary.get(i).dietary_name);
+                        if(response.body().dietary!=null&&response.body().dietary.size()>0) {
+                            StringBuilder dietaryName= new StringBuilder();
+                            String delim=", ";
+                            for (int i = 0; i < response.body().dietary.size(); i++) {
+                                dietaryName.append(response.body().dietary.get(i).dietary_name);
+                                if(i!=response.body().dietary.size()-1)
+                                    dietaryName.append(delim);
                             }
-
-                            String[] stockArrDietary = new String[categories.size()];
-                            stockArrDietary = categories.toArray(stockArrDietary);
-                            if(stockArrDietary.length > 0) {
-                                String dietary = stockArrDietary[0];
-                                for (int i = 1; i < stockArrDietary.length; i++) {
-                                    dietary = dietary + ", " + stockArrDietary[i];
-                                }
-                                tvDietary.setText(dietary);
-                            }
+                            tvDietary.setText(dietaryName);
 
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
-                        }*/
+                        }
 
-                        /*if(response.body().ambience!=null&&response.body().ambience.size()>0) {
-                            for (int i = 0; i <response.body().ambience.size() ; i++) {
-                                if(response.body().ambience.get(i).ambience_name!=null && !response.body().ambience.get(i).ambience_name.equalsIgnoreCase("") )
-                                    categories.clear();
-                                categories.add(response.body().ambience.get(i).ambience_name);
+                        if(response.body().ambience!=null&&response.body().ambience.size()>0) {
+                           StringBuilder ambienceName= new StringBuilder();
+                           String delim=", ";
+                            for (int i = 0; i < response.body().ambience.size(); i++) {
+                                ambienceName.append(response.body().ambience.get(i).ambience_name);
+                                if(i!=response.body().ambience.size()-1)
+                                ambienceName.append(delim);
                             }
-
-                            String[] stockArrAmbience = new String[categories.size()];
-                            stockArrAmbience = categories.toArray(stockArrAmbience);
-
-                            if(stockArrAmbience.length > 0) {
-                                String ambience = stockArrAmbience[0];
-                                for (int i = 1; i < stockArrAmbience.length; i++) {
-                                    ambience = ambience + ", " + stockArrAmbience[i];
-                                }
-                                tvAmbience.setText(ambience);
-                            }
+                            tvAmbience.setText(ambienceName);
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
-                        }*/
+                        }
 
                     } else {
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();

@@ -27,7 +27,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private Intent intent;
     private TextView tvRestauarntName,tvLocationLeft,tvDateBookedLeft;
     private TextView tvLocation,tvTimeBookedLeft,tvNumberofPeopleLeft;
-    private TextView tvDateBooked,tvConfirmation,tvThanks;
+    private TextView tvDateBooked,tvConfirmation,tvThanks,tvTotalPrice;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
     private LinearLayout llNumberPeople,llRestaurantScreen;
@@ -52,7 +52,9 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
                 llRestaurantScreen.setVisibility(View.GONE);
                 llNumberPeople.setVisibility(View.GONE);
                 rvOrderList.setVisibility(View.VISIBLE);
+               tvTotalPrice.setVisibility(View.VISIBLE);
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
+                tvTotalPrice.setText(getIntent().getStringExtra(AppConstant.TOTAL_PRICE));
                /* tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
                 tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
                 tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));*/
@@ -92,6 +94,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvNumberofPeopleLeft = (TextView) findViewById(R.id.tvNumberofPeopleLeft);
         tvConfirmation = (TextView) findViewById(R.id.tvConfirmation);
         tvThanks = (TextView) findViewById(R.id.tvThanks);
+        tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
         llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
         llRestaurantScreen = (LinearLayout) findViewById(R.id.llRestaurantScreen);
         rvOrderList = (RecyclerView) findViewById(R.id.rvOrderList);
@@ -102,6 +105,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         tvRestauarntName.setTypeface(typefaceBold);
         tvReturnToHome.setTypeface(typefaceBold);
+        tvTotalPrice.setTypeface(typefaceBold);
         tvLocationLeft.setTypeface(typefaceRegular);
         tvLocation.setTypeface(typefaceRegular);
         tvDateBookedLeft.setTypeface(typefaceRegular);

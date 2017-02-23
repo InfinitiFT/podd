@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.podd.R;
+import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.BestRestaurantForDeliveryAdapter;
 import com.podd.adapter.CuisineTypeRestaurantAdapter;
 import com.podd.location.LocationResult;
@@ -78,6 +79,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         context = BestRestaurantNearCityForDelivery.this;
         getIds();
         setListeners();
+        setRecycle();
         fetchLocation();
        /* if (CommonUtils.isNetworkConnected(BestRestaurantNearCityForDelivery.this)) {
             getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLong));
@@ -175,6 +177,12 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         tvBusiness.setTypeface(typeface);
 
     }
+    private void setRecycle() {
+        gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
+        rvRestaurants.setLayoutManager(gridLayoutManager);
+        bestRestaurantAdapter = new BestRestaurantForDeliveryAdapter(context, restaurantList);
+        rvRestaurants.setAdapter(bestRestaurantAdapter);
+    }
 
     private void fetchLocation() {
         new LocationTracker(context, new LocationResult() {
@@ -271,7 +279,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.latitude = String.valueOf(currentLat);
         jsonRequest.longitude = String.valueOf(currentLong);
-        jsonRequest.page_size = "10";
+        jsonRequest.page_size = String.valueOf(pageSize);
         jsonRequest.deliver_food = "1";
         jsonRequest.page_number = pageNumber;
         Call<JsonResponse> call = apiServices.getRestaurantsList(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
@@ -606,6 +614,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvCuisineType.setText(cuisine.name);
                 cuisineId=cuisine.id;
                 locationId="";
+                pageNo=1;
                 dietaryId="";
                 mealId="";
                 ambienceId="";
@@ -615,12 +624,14 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvBusiness.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
+                scrollListener.resetState();
                 break;
             case "location":
                 tvLocationType.setText(cuisine.name);
                 locationId=cuisine.id;
                 dietaryId="";
                 mealId="";
+                pageNo=1;
                 ambienceId="";
                 cuisineId="";
                 tvDietaryType.setText("");
@@ -629,6 +640,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvCuisineType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
+                scrollListener.resetState();
                 break;
             case "dietary":
                 tvDietaryType.setText(cuisine.name);
@@ -636,6 +648,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 mealId="";
                 ambienceId="";
                 cuisineId="";
+                pageNo=1;
                 locationId="";
                 tvMealType.setText("");
                 tvBusiness.setText("");
@@ -643,13 +656,14 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvLocationType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
-
+                scrollListener.resetState();
                 break;
             case "meal":
                 tvMealType.setText(cuisine.name);
                 mealId=cuisine.id;
                 ambienceId="";
                 cuisineId="";
+                pageNo=1;
                 locationId="";
                 tvBusiness.setText("");
                 tvCuisineType.setText("");
@@ -657,7 +671,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvDietaryType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
-
+              //  scrollListener.resetState();
                 break;
             case "ambience":
                 tvBusiness.setText(cuisine.name);
@@ -665,6 +679,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 cuisineId="";
                 locationId="";
                 mealId="";
+                pageNo=1;
                 dietaryId="";
                 tvCuisineType.setText("");
                 tvLocationType.setText("");
@@ -672,6 +687,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                 tvMealType.setText("");
                 searched_item_name = cuisine.name;
                 callsearchedTextApi(pageNo,searched_item_name);
+              //  scrollListener.resetState();
                 break;
 
         }
@@ -692,7 +708,7 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         jsonRequest.latitude = String.valueOf(currentLat);
         jsonRequest.longitude = String.valueOf(currentLong);
         jsonRequest.page_number=pageNumber;
-        jsonRequest.page_size="10";
+        jsonRequest.page_size=String.valueOf(pageSize);
 
         Call<JsonResponse> call = apiServices.getSearchRestaurantApi(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
@@ -704,8 +720,9 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
-                            if(pageNo==1)
+                            if(pageNo==1) {
                                 restaurantList.clear();
+                            }
                             restaurantList.addAll(response.body().restaurant_list);
                             tvLocationName.setText(name);
                             tvNoOfRestaurants.setText(String.valueOf(response.body().pagination.total_record_count));
@@ -722,31 +739,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
 
                 }
-
-
-                /*CommonUtils.disMissProgressDialog(context);
-                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
-
-                    if (response.body().responseCode.equalsIgnoreCase("200")) {
-                        if (response.body().restaurant_list != null && response.body().restaurant_list.size() > 0) {
-                            restaurantList.clear();
-                            restaurantList.addAll(response.body().restaurant_list);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false);
-                            rvRestaurants.setLayoutManager(gridLayoutManager);
-                            bestRestaurantAdapter = new BestRestaurantForDeliveryAdapter(context, restaurantList);
-                            rvRestaurants.setAdapter(bestRestaurantAdapter);
-                            rvRestaurants.setNestedScrollingEnabled(false);
-                        } else {
-                          //  Toast.makeText(context, "There is no restaurant list.", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
-
-                }*/
             }
 
             @Override

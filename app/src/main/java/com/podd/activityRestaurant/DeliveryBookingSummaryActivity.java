@@ -554,6 +554,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                         intent = new Intent(context, RestaurantReturnToHomeActivity.class);
                         intent.putExtra(AppConstant.RESTAURANTID,restaurantId);
                         intent.putExtra(AppConstant.RESTAURANTNAME,restaurantName);
+                        intent.putExtra(AppConstant.TOTAL_PRICE,getIntent().getStringExtra(AppConstant.TOTAL_PRICE));
                         intent.putExtra(AppConstant.LOCATION,location);
                         intent.putExtra(AppConstant.DATEBOOKED,dateBooked);
                         intent.putExtra(AppConstant.TIMEBOOKED,timeBooked);

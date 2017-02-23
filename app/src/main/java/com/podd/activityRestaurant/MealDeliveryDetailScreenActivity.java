@@ -250,66 +250,29 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                             tvRestauarntName.setText("");
                         }
 
-                        if(response.body().cuisine!=null&&response.body().cuisine.size()>0) {
-                            for (int i = 0; i <response.body().cuisine.size() ; i++) {
-                                if(response.body().cuisine.get(i).cuisine_name!=null && !response.body().cuisine.get(i).cuisine_name.equalsIgnoreCase("") )
-
-                                    categories.add(response.body().cuisine.get(i).cuisine_name);
+                        if(response.body().cuisine!=null && response.body().cuisine.size()>0) {
+                            StringBuilder cuisineName= new StringBuilder();
+                            String delim=", ";
+                            for (int i = 0; i < response.body().cuisine.size(); i++) {
+                                cuisineName.append(response.body().cuisine.get(i).cuisine_name);
+                                if(i!=response.body().cuisine.size()-1)
+                                    cuisineName.append(delim);
                             }
-
-                            String[] stockArr = new String[categories.size()];
-                            stockArr = categories.toArray(stockArr);
-                            if(stockArr.length > 0) {
-                                String s = stockArr[0];
-                                for (int i = 1; i < stockArr.length; i++) {
-                                    s = s + "," + stockArr[i];
-                                }
-                                tvCuisine.setText(s);
-                            }
-                            /*String s1="";
-                            for (int i = 0; i <categories.size() ; i++) {
-
-                                if (i==categories.size()-1){
-                                    s1=categories.get(i)+s1;
-                                }
-                                else {
-
-                                    s1 = categories.get(i) + ", " + s1;
-                                }
-                            }
-                            tvCuisine.setText(s1);*/
+                            tvCuisine.setText(cuisineName);
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();
                         }
 
                         if(response.body().dietary!=null&&response.body().dietary.size()>0) {
-                            for (int i = 0; i <response.body().dietary.size() ; i++) {
-                                if(response.body().dietary.get(i).dietary_name!=null && !response.body().dietary.get(i).dietary_name.equalsIgnoreCase("") )
-                                    categories.clear();
-
-                                categories.add(response.body().dietary.get(i).dietary_name);
+                            StringBuilder dietaryName= new StringBuilder();
+                            String delim=", ";
+                            for (int i = 0; i < response.body().dietary.size(); i++) {
+                                dietaryName.append(response.body().dietary.get(i).dietary_name);
+                                if(i!=response.body().dietary.size()-1)
+                                    dietaryName.append(delim);
                             }
-                            String[] stockArr = new String[categories.size()];
-                            stockArr = categories.toArray(stockArr);
-                            if(stockArr.length > 0) {
-                                String s = stockArr[0];
-                                for (int i = 1; i < stockArr.length; i++) {
-                                    s = s + "," + stockArr[i];
-                                }
-                                tvDietary.setText(s);
-                            }
-                            /*String s1="";
-                            for (int i = 0; i <categories.size() ; i++) {
-                                if (i==categories.size()-1){
-                                    s1=categories.get(i)+s1;
-                                }
-                                else {
-
-                                    s1 = categories.get(i) + ", " + s1;
-                                }
-                            }
-                            tvDietary.setText(s1);*/
+                            tvDietary.setText(dietaryName);
 
                         }
                         else {
@@ -317,34 +280,14 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
                         }
 
                         if(response.body().ambience!=null&&response.body().ambience.size()>0) {
-                            for (int i = 0; i <response.body().ambience.size() ; i++) {
-                                if(response.body().ambience.get(i).ambience_name!=null && !response.body().ambience.get(i).ambience_name.equalsIgnoreCase("") )
-                                    categories.clear();
-                                categories.add(response.body().ambience.get(i).ambience_name);
+                            StringBuilder ambienceName= new StringBuilder();
+                            String delim=", ";
+                            for (int i = 0; i < response.body().ambience.size(); i++) {
+                                ambienceName.append(response.body().ambience.get(i).ambience_name);
+                                if(i!=response.body().ambience.size()-1)
+                                    ambienceName.append(delim);
                             }
-                            String[] stockArr = new String[categories.size()];
-                            stockArr = categories.toArray(stockArr);
-                            if(stockArr.length > 0) {
-                                String s = stockArr[0];
-                                for (int i = 1; i < stockArr.length; i++) {
-                                    s = s + "," + stockArr[i];
-                                }
-                                tvAmbience.setText(s);
-                            }
-
-                            /*String s1="";
-                            for (int i = 0; i <categories.size() ; i++) {
-
-                                if (categories.size()==1){
-                                    s1=categories.get(i)+s1;
-
-                                }
-                                else {
-
-                                    s1 = categories.get(i) + ", " + s1;
-                                }
-                            }
-                            tvAmbience.setText(s1);*/
+                            tvAmbience.setText(ambienceName);
                         }
                         else {
                             Toast.makeText(context, R.string.data_not_found, Toast.LENGTH_SHORT).show();

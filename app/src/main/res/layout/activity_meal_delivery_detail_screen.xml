@@ -171,7 +171,6 @@
                             android:id="@+id/llAmbience"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -182,7 +181,7 @@
                                 android:text="@string/ambience"
                                 android:paddingLeft="@dimen/dp_1"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_10" />
+                                android:textSize="@dimen/text_size_8" />
 
                             <TextView
                                 android:id="@+id/tvAmbience"
