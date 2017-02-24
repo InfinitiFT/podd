@@ -28,7 +28,8 @@ public class ApiClient {
      * The constant BASE_URL.
      */
     // public static final String BASE_URL = "http:172.16.0.9/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
-    private static final String BASE_URL = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
+   // private static final String BASE_URL = "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/webservices/";
+    private static final String BASE_URL = "http://ec2-52-56-174-130.eu-west-2.compute.amazonaws.com/trunk/webservices/";
 
     private static Retrofit retrofit = null;
 

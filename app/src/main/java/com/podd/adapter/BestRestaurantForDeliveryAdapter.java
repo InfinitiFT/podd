@@ -43,7 +43,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_items_grid_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_delivery_items_grid_layout, parent, false);
         return new BestRestaurantForDeliveryAdapter.MyViewHolder(view);
     }
 
@@ -83,7 +83,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
             holder.tvDistance.setText("");
         }
         String location = holder.tvLocation.getText().toString().trim();
-
+        holder.tvPriceRange.setText("Order");
 
         /*if (restaurant.price_range != null) {
             String priceRange = restaurant.price_range;

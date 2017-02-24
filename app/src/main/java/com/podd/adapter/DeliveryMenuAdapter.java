@@ -88,6 +88,8 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         }
         if (meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price.equalsIgnoreCase("")) {
             holder.llPriceEvent.setVisibility(View.GONE);
+        }else{
+            holder.llPriceEvent.setVisibility(View.VISIBLE);
         }
 
         holder.tvNumber.setText(""+meal_details.get(section).subtitle_meal_details.get(relativePosition).count);

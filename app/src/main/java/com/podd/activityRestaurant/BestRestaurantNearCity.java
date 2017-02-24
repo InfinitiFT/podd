@@ -48,8 +48,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
     private TextView tvLocationName,tvSearchBy,tvLocation,tvDietary,tvShowing,tvVenueBy;
     private TextView tvNoOfRestaurants,tvCuisine,tvMeal,tvAmbience, tvDeliveredtoYou;
     private LinearLayout llLocation,llDietary, llCuisine, llMeal,llAmbience,llDeliveredToYou,llCurrentloc,llVenues;
-    private double currentLat;
-    private double currentLong;
+    private double currentLat/*=28.5223*/;
+    private double currentLong/*=77.2849*/;
     private List<Cuisine> cuisineList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
     private List<String> location = new ArrayList<>();

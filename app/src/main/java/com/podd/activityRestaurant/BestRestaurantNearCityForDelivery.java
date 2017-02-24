@@ -50,9 +50,9 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
     private TextView tvBusiness,tvMealType, tvCuisineType,tvLocationType,tvDietaryType,tvCityName,tvNearbyRestaurant;
     private TextView tvLocationName,tvSearchBy,tvLocation,tvDietary,tvShowing,tvVenueBy;
     private TextView tvNoOfRestaurants,tvCuisine,tvMeal,tvAmbience, tvDeliveredtoYou;
-    private LinearLayout llLocation,llDietary, llCuisine, llMeal,llAmbience,llDeliveredToYou,llCurrentloc,llVenues;
-    private double currentLat;
-    private double currentLong;
+    private LinearLayout llSearch,llLocation,llDietary, llCuisine, llMeal,llAmbience,llDeliveredToYou,llCurrentloc,llVenues;
+    private double currentLat/*=28.5223*/;
+    private double currentLong/*=77.2849*/;
     private List<Cuisine> cuisineList = new ArrayList<>();
     private List<Restaurant> restaurantList = new ArrayList<>();
     private List<String> location = new ArrayList<>();
@@ -116,7 +116,6 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
 
     }
 
-
     private void setListeners() {
         llDeliveredToYou.setOnClickListener(this);
         llAmbience.setOnClickListener(this);
@@ -130,6 +129,8 @@ public class BestRestaurantNearCityForDelivery extends AppCompatActivity impleme
         rvRestaurants = (RecyclerView) findViewById(R.id.rvRestaurants);
         llDeliveredToYou = (LinearLayout) findViewById(R.id.llDeliveredToYou);
         llAmbience = (LinearLayout) findViewById(R.id.llAmbience);
+        llSearch = (LinearLayout) findViewById(R.id.llSearch);
+        llSearch.setVisibility(View.GONE);
         llMeal = (LinearLayout) findViewById(R.id.llMeal);
         llAmbience.setVisibility(View.GONE);
         llMeal.setVisibility(View.GONE);
