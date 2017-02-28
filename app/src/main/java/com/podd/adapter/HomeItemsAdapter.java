@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.podd.R;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
+import com.podd.activityTaxi.MainHomeScreenThreeActivity;
 import com.podd.model.HomeItemsModel;
 import java.util.List;
 
@@ -79,7 +80,10 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
                        context.startActivity(intent);
                         break;
                     case 3:
-                        Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, MainHomeScreenThreeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                       // Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
 

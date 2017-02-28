@@ -1660,8 +1660,34 @@ public class CommonUtils {
         final int width  = mDisplay.getHeight();
         return  width;
     }
+/*
 
+    public static Dialog CustomDialog(final Context mcontext, String message) {
 
+        final TextView tvRegistering;
+        LayoutInflater inflater = LayoutInflater.from(mcontext);
+        final Dialog mDialog = new Dialog(mcontext,
+                android.R.style.Theme_Translucent_NoTitleBar);
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setCancelable(true);
+        mDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+
+        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.75f;
+        mDialog.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.getWindow();
+        mDialog.getWindow().setAttributes(lp);
+        View dialoglayout = inflater.inflate(R.layout.custom_dialog, null);
+        tvRegistering = (TextView) dialoglayout.findViewById(R.id.tv_msg);
+        tvRegistering.setText(message);
+        mDialog.setContentView(dialoglayout);
+
+        return mDialog;
+    }*/
 
 }
 

@@ -6,7 +6,8 @@ package com.podd.utils;
  */
 public class AppConstant {
 
-
+    public static final String APPLICATION_JSON = "application/json";
+    public static final String HAILO_TAXI = "Hailo";
     public final static int PERMISSION_REQUEST_STORAGE_CODE=101;
     public static final int PERMISSION_REQUEST_CAMERA_CODE =102;
     public static final int PERMISSION_REQUEST_GPS_CODE =103;

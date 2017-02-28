@@ -16,12 +16,9 @@ import java.util.List;
 
 public class JsonResponse implements Serializable{
 
-
     public String responseCode;
     public String responseMessage;
     public String verification_status;
-
-
     /*   Restaurant List api response */
 
     public List<Restaurant> restaurant_list;
