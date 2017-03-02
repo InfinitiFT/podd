@@ -66,6 +66,7 @@ public class TaxiServiceAsync extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         try {
+            CommonUtils.disMissProgressDialog(context);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }

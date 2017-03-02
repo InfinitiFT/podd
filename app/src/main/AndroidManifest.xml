@@ -93,13 +93,18 @@
         <activity
             android:name=".activityRestaurant.MealDeliveryDetailScreenActivity"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />   <activity
+            android:name=".activityTaxi.HailoActivity"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDOiw-dwu98Atm7GA6UWzv5QGd4qG7ziFc"/>
 
     </application>
 

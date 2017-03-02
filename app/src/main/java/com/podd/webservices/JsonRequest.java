@@ -20,7 +20,6 @@ public class JsonRequest implements Serializable {
  public String email;
  public String contact_no;
  public String deliver_food;
-
  public String cusine;
  public String dietary;
  public String ambience;
@@ -32,6 +31,4 @@ public class JsonRequest implements Serializable {
  public String address;
  public String page_id;
  public List<SavedItem> order_details;
-
-
 }

@@ -133,7 +133,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
                     Intent intent=new Intent(context,TaxiBookingSummaryActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-
                 }
                 break;
             case R.id.tvSelectFromCalender:
