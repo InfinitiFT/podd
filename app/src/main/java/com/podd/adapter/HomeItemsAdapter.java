@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.podd.InfoActivity;
 import com.podd.R;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
@@ -66,32 +67,35 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
 
                 switch (position){
                     case 0:
-                       Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, BestRestaurantNearCity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
                        break;
                     case 1:
-                        intent=new Intent(context, BestRestaurantNearCity.class);
-                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                        break;
                     case 2:
-                        //Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
-                       intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                       context.startActivity(intent);
-                        break;
-                    case 3:
                         intent=new Intent(context, HailoActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
-                       // Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case 3:
+                         Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
-
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
                         Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
                         break;
+                    case 6:
+                        intent=new Intent(context, InfoActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    break;
 
                     default:
                         break;

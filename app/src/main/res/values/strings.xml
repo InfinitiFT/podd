@@ -130,4 +130,12 @@
     <string name="privacy_policy_error_msg"><![CDATA[Please agree to the Terms & Conditions and Privacy policy.]]></string>
     <string name="terms_amp_conditions_and_privacy_policy"><u>Terms &amp; Conditions and Privacy Policy</u></string>
     <string name="not_available">Not available. Please select a different date</string>
+    <string name="info_msg_one"> Instantly discover London in a whole new way at the touch of a button through your complimentary in-room tablet.</string>
+    <string name="info_msg_two"> We have partnered with some of the leading service providers in London to enable you to discover and book a range of exciting experiences.\nWe hope to make your stay in London a truly memorable one.</string>
+    <string name="info_msg_three"> In summary, your tablet gives you instant access to:</string>
+
+    <string name="info"> - The best tables at more than 50 Michelin restaurants\n - Casual dining experiences and \'hidden gems\' curated by our expert team\n - Meals delivered straight to your door anytime of the day or night\n - Gift and hampers available from carefully selected partners, available for delivery anywhere in the United Kingdom or worldwide\n - Taxi on demand or in advance from our selected partner (Hailo)\n - Secure airport luggage transfers via Airpotr to any of London\'s major airports as well as instant check-ins through British Airways\n - London\'s best attractions including theatres, museums and art galleries\n - The leading fitness classes, health clubs and spas near you</string>
+    <string name="info_link"> We would love to hear from you! Contact us with any questions or feedback at <u>hello@poddapp.com</u></string>
+    <string name="info_disclaimer"> Disclaimer: This platform is owned and operated by podd Technologies (podd). podd is in no way affiliated with the serviced apartment or hotel hosting this tablet nor is podd in anyway affiliated with the service providers listed on the tablet. While we constantly strive to maintain the highest possible standards and experiences on our platform, we do not accept responsibility should any of the services listed fail to meet your expectations.However we would welcome your feedback regarding these issues.</string>
+    <string name="going_somewhere_book_a_secure_taxi">Going somewhere, book a secure taxi</string>
 </resources>

@@ -72,13 +72,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private ArrayList<String> banner_image;
     private TextView tvTime,tvDayDate,tvWelcome;
 //    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
-    private  String[] itemName = new String[]{"Front Desk","Restaurants & Bars","Delivery","Taxi","Leisure Attractions","Health & Spa"};
+    private  String[] itemName = new String[]{"Restaurants & Bars","Delivery","Taxi","Airport Transfers","Attractions","Fitness & Wellbeing","Info"};
     private List<Integer> imgList;
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,7 +312,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
             case AppConstant.PERMISSION_REQUEST_GPS_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
 
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         enableLoc();

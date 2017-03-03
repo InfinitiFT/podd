@@ -3,16 +3,18 @@ package com.podd.activityTaxi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -27,14 +29,24 @@ import com.podd.hailoTaxi.HailoResponse;
 import com.podd.hailoTaxi.ListViewModel;
 import com.podd.hailoTaxi.TaxiServiceAsync;
 import com.podd.hailoTaxi.TaxiWebServiceStatus;
+import com.podd.location.LocationResult;
+import com.podd.location.LocationTracker;
+import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
+import com.podd.utils.Logger;
+import com.podd.utils.SetTimerClass;
+import com.podd.webservices.JsonResponse;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HailoActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private TextView tvSourceAddress, tvEndAddress, tvEta;
+    private TextView tvSourceAddress, tvEndAddress, tvEta,tvMsg,tvHeader;
     private Button btnBookNow, btnGetEta;
     private String TAG = HailoActivity.class.getSimpleName();
     private Context mContext = HailoActivity.this;
@@ -44,6 +56,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
     private String destinationLog = "";
     private String currentAddress="";
     private String destinationAddress="";
+    private SetTimerClass setTimerClass;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,27 +64,74 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_hailo);
         getID();
         setListener();
+        fetchLocation();
+        setFont();
+        setTimerClass = (SetTimerClass)getApplication();
+    }
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvSourceAddress.setTypeface(typeface);
+        tvEndAddress.setTypeface(typeface);
+        tvEta.setTypeface(typeface);
+        tvMsg.setTypeface(typeface);
+
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        btnGetEta.setTypeface(typefaceBold);
+        btnBookNow.setTypeface(typefaceBold);
+        tvHeader.setTypeface(typefaceBold);
+
+    }
+    private void fetchLocation() {
+        new LocationTracker(mContext, new LocationResult() {
+            @Override
+            public void gotLocation(Location location) {
+                currentLat = String.valueOf(location.getLatitude());
+                currentLog = String.valueOf(location.getLongitude());
+                if (CommonUtils.isNetworkConnected(HailoActivity.this)) {
+                    getAddressFromPlaceApi(String.valueOf(currentLat), String.valueOf(currentLog));
+                } else {
+                    Toast.makeText(HailoActivity.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }).onUpdateLocation();
     }
 
+    private void getAddressFromPlaceApi(String currLat, String currLong) {
+        CommonUtils.showProgressDialog(mContext);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        String latLong = currLat + "," + currLong;
+        Call<JsonResponse> call = apiServices.getPlaceApi(latLong);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(mContext);
+                /*tvCityName.setText(response.body().results.get(0).formatted_address);*/
+           if(response.body().results.get(0).formatted_address!=null&&response.body().results.get(0).formatted_address.length()>0)
+                tvSourceAddress.setText(response.body().results.get(0).formatted_address);
+
+        }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(mContext);
+                Logger.addRecordToLog("Exception :" + t.getMessage());
+                CommonUtils.disMissProgressDialog(mContext);
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
+
     private void getID() {
+        tvMsg = (TextView) findViewById(R.id.tvMsg);
         tvSourceAddress = (TextView) findViewById(R.id.tvSourceAddress);
         tvEndAddress = (TextView) findViewById(R.id.tvEndAddress);
+        tvHeader = (TextView) findViewById(R.id.tvHeader);
         tvEta = (TextView) findViewById(R.id.tvEta);
         btnGetEta = (Button) findViewById(R.id.btnGetEta);
         btnBookNow = (Button) findViewById(R.id.btnBookNow);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
     }
     private void setListener() {
         tvSourceAddress.setOnClickListener(this);
@@ -92,7 +152,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnGetEta:
                 if (isValid()) {
 
-                    if (CommonUtils.isOnline(mContext)) {
+                    if (CommonUtils.isNetworkConnected(mContext)) {
                         callHailoETAApi(currentLat, currentLog);
                     } else {
                         Toast.makeText(mContext, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
@@ -102,7 +162,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnBookNow:
                 if (isValidation()) {
-                    if (CommonUtils.isOnline(mContext)) {
+                    if (CommonUtils.isNetworkConnected(mContext)) {
                         callBookNow(currentLat, currentLog,destinationLat,destinationLog ,currentAddress,destinationAddress);
                     } else {
                         Toast.makeText(mContext, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
@@ -222,10 +282,8 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
                                     listViewModel.eta = hailoETA.eta;
                                     listViewModel.taxiType = hailoETA.service_type;
                                     listViewModel.taxiServiceName = AppConstant.HAILO_TAXI;
-                                    //   listViewModel.taxiLogo = R.mipmap.hailo;
-
                                 }
-                                tvEta.setText("Estimated Time of Arrival for cabs near to a location:-  " + serviceResponse.etas.get(0).eta + "min");
+                                tvEta.setText("Your driver will arrive in " + serviceResponse.etas.get(0).eta + " minutes");
 
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
@@ -238,7 +296,6 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
 
                 }
             }
-
             @Override
             public void onFailed(int code) {
 
@@ -298,6 +355,22 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         taxiServiceAsync.execute("");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTimerClass.setTimer(this, true);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setTimerClass.setTimer(this, true);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        setTimerClass.setTimer(this, false);
+    }
 
 }
