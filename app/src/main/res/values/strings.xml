@@ -138,4 +138,5 @@
     <string name="info_link"> We would love to hear from you! Contact us with any questions or feedback at <u>hello@poddapp.com</u></string>
     <string name="info_disclaimer"> Disclaimer: This platform is owned and operated by podd Technologies (podd). podd is in no way affiliated with the serviced apartment or hotel hosting this tablet nor is podd in anyway affiliated with the service providers listed on the tablet. While we constantly strive to maintain the highest possible standards and experiences on our platform, we do not accept responsibility should any of the services listed fail to meet your expectations.However we would welcome your feedback regarding these issues.</string>
     <string name="going_somewhere_book_a_secure_taxi">Going somewhere, book a secure taxi</string>
+    <string name="dsfs">Going somewhere? Book a secure taxi</string>
 </resources>

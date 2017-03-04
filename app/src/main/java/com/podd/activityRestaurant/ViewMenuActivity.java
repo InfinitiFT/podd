@@ -1,5 +1,4 @@
 package com.podd.activityRestaurant;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -18,18 +17,13 @@ import android.widget.TextView;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.fragment.BreakfastMenuFragment;
-
 import com.podd.model.RestaurantMenu;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.podd.R.id.tvRestauarntName;
-
-
 @SuppressWarnings("ALL")
 public class ViewMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
@@ -89,7 +83,8 @@ public class ViewMenuActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void setFont() {
+    private void setFont()
+    {
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         tvRestaurantName.setTypeface(typefaceBold);
         tvBookNow.setTypeface(typefaceBold);
