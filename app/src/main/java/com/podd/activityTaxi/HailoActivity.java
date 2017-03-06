@@ -1,6 +1,7 @@
 package com.podd.activityTaxi;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,10 +9,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +46,7 @@ import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.Logger;
 import com.podd.utils.SetTimerClass;
+import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 
 import retrofit2.Call;
@@ -57,6 +67,8 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
     private String currentAddress="";
     private String destinationAddress="";
     private SetTimerClass setTimerClass;
+    private CheckBox cbTermsConditions;
+    private TextView tvTermsCondition,tvPrivacyPolicy;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,6 +143,8 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         tvEta = (TextView) findViewById(R.id.tvEta);
         btnGetEta = (Button) findViewById(R.id.btnGetEta);
         btnBookNow = (Button) findViewById(R.id.btnBookNow);
+        tvTermsCondition = (TextView) findViewById(R.id.tvTermsCondition);
+        cbTermsConditions = (CheckBox) findViewById(R.id.cbTermsConditions);
 
     }
     private void setListener() {
@@ -138,6 +152,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         tvEndAddress.setOnClickListener(this);
         btnBookNow.setOnClickListener(this);
         btnGetEta.setOnClickListener(this);
+        tvTermsCondition.setOnClickListener(this);
     }
 
     @Override
@@ -169,8 +184,78 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
                 break;
+            case R.id.tvTermsCondition:
+                getPrivacyPolicy();
+                // showTermsDialog();
+                break;
         }
 
+    }
+
+    private void getPrivacyPolicy() {
+        CommonUtils.showProgressDialog(mContext);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.page_id="2";
+        Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(mContext);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        showTermsDialog(response.body().page_data);
+                        // tvPrivacyPolicy.setText(Html.fromHtml(response.body().page_data));
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(mContext, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(mContext, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(mContext);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+    }
+
+    private void showTermsDialog(String policy) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final Dialog mDialog = new Dialog(this,
+                android.R.style.Theme_Translucent_NoTitleBar);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.75f;
+        mDialog.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.getWindow();
+        final ViewGroup nullParent = null;
+        View dialogLayout = inflater.inflate(R.layout.dialog_terms_condition, nullParent);
+        mDialog.setContentView(dialogLayout);
+        ImageView ivCross=(ImageView)mDialog.findViewById(R.id.ivPicsCross);
+        tvPrivacyPolicy = (TextView) mDialog.findViewById(R.id.tvPrivacyPolicy);
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvPrivacyPolicy.setTypeface(typefaceRegular);
+        tvPrivacyPolicy.setText(Html.fromHtml(policy));
+
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
     }
 
     private void callBookNow(String currentLat, String currentLog,String destinationLat,String destinationLog,
@@ -198,6 +283,9 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         } else if (tvEndAddress.getText().toString().isEmpty()) {
             Toast.makeText(mContext, "Please enter destination location", Toast.LENGTH_SHORT).show();
             tvEndAddress.requestFocus();
+            return false;
+        }else if(!cbTermsConditions.isChecked()){
+            Toast.makeText(mContext, R.string.privacy_policy_error_msg, Toast.LENGTH_LONG).show();
             return false;
         }
 

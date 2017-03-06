@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
-import com.podd.model.Cuisine;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
@@ -31,6 +30,7 @@ import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +39,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,6 +69,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String location;
     private String dateBooked;
     private String timeBooked;
+
     private String noOfPersons;
     private String condition;
     private List<String>restaurantTimeInterval=new ArrayList<>();

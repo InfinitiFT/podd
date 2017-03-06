@@ -58,7 +58,7 @@ public class LunchMenuAdapter extends SectionedRecyclerViewAdapter<LunchMenuAdap
         holder.title.setTypeface(typefaceRegular);
         holder.titlePrice.setTypeface(typefaceRegular);
         if (meal_details.get(section).subtitle_meal_details!=null&&meal_details.get(section).subtitle_meal_details.size()>0&&meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name!=null) {
-            holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name, section, relativePosition, absolutePosition));
+            holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name.trim(), section, relativePosition, absolutePosition));
         }
         else {
             holder.title.setText("");

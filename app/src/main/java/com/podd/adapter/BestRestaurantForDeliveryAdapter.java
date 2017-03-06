@@ -83,7 +83,7 @@ public class BestRestaurantForDeliveryAdapter extends RecyclerView.Adapter<BestR
             holder.tvDistance.setText("");
         }
         String location = holder.tvLocation.getText().toString().trim();
-        holder.tvPriceRange.setText("Order");
+        holder.tvPriceRange.setText("ORDER");
 
         /*if (restaurant.price_range != null) {
             String priceRange = restaurant.price_range;

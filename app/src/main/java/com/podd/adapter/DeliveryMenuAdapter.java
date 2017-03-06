@@ -3,14 +3,12 @@ package com.podd.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.podd.R;
@@ -42,7 +40,6 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         this.restaurantMenus=restaurantMenus;
         SetTimerClass.savedList.clear();
     }
-
     @Override
     public int getSectionCount() {
         return meal_details.size();
@@ -77,7 +74,10 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
         holder.title.setTypeface(typefaceRegular);
         holder.titlePrice.setTypeface(typefaceRegular);
         if (meal_details.get(section).subtitle_meal_details != null && meal_details.get(section).subtitle_meal_details.size() > 0 && meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name != null) {
-            holder.title.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name, section, relativePosition, absolutePosition));
+           /* Log.e("log_title",String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name,
+                    section, relativePosition, absolutePosition));*/
+            String title= meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name;
+            holder.title.setText(String.format(String.valueOf(title), section, relativePosition, absolutePosition));
         } else {
             holder.title.setText("");
         }
