@@ -97,6 +97,7 @@
     <string name="please_select_a_valid_date">Please select a valid date.</string>
     <string name="please_select_a_valid_time">Please select a valid time.</string>
     <string name="please_select_number_of_people">Please select number of people.</string>
+    <string name="please_select_number_of_bag">Please select number of bag.</string>
     <string name="Resend">Resend</string>
     <string name="bars"><![CDATA[Restaurants & Bars]]></string>
     <string name="permission_denied_you_can_not_access_location_data">Permission denied you can not access location data</string>
@@ -138,5 +139,16 @@
     <string name="info_link"> We would love to hear from you! Contact us with any questions or feedback at <u>hello@poddapp.com</u></string>
     <string name="info_disclaimer"> Disclaimer: This platform is owned and operated by podd Technologies (podd). podd is in no way affiliated with the serviced apartment or hotel hosting this tablet nor is podd in anyway affiliated with the service providers listed on the tablet. While we constantly strive to maintain the highest possible standards and experiences on our platform, we do not accept responsibility should any of the services listed fail to meet your expectations.However we would welcome your feedback regarding these issues.</string>
     <string name="going_somewhere_book_a_secure_taxi">Going somewhere, book a secure taxi</string>
-    <string name="dsfs">Going somewhere? BOOK a secure taxi</string>
+    <string name="taxi_header">Going somewhere? BOOK a secure taxi</string>
+    <string name="travel_bag_free_to_any_london_airport">TRAVEL BAG-FREE TO ANY LONDON AIRPORT</string>
+    <string name="travel_bag_msg">Free yourself of burdensome baggage and make the most of your last day in London. AirPortr, the premium luggage delivery and storage service will collect your bags from your apartment and deliver them securely to London’s Airports at an agreed time, ready for you to collect and check-in.</string>
+    <string name="bag_check_in_with_british_airways">BAG CHECK-IN WITH BRITISH AIRWAYS</string>
+    <string name="bag_check_msg">British airways passengers can enjoy the benefits of bag check-in from their apartment. Travel bag-free to the airport and head straight through to security – the next time they see their bags will be on the carousel at their final destination.</string>
+    <string name="cost">COST</string>
+    <string name="cost_msg">Prices dependent on pick up location and departing airport (minimum booking time periods apply) e.g. collection from Central London locations to Heathrow, Gatwick and City cost just £20 for the first bag + £10 each additional bag (any size or weight) NB: AirPortr + Bag Check-In exclusive to British Airways passengers cost £30 for the first bag + £10 each additional bag (as per passenger allowance)</string>
+    <string name="number_of_bags">Number of bags</string>
+    <string name="date_of_travel">Date of Travel</string>
+    <string name="select_delivery_airport">Select delivery airport</string>
+    <string name="telephone">Telephone</string>
+    <string name="airport_luggage_transfers">AIRPORT LUGGAGE TRANSFERS</string>
 </resources>

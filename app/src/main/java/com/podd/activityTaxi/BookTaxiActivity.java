@@ -50,7 +50,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_taxi);
         context=BookTaxiActivity.this;
-
         getIds();
         selectAdditionalRequirementsAdapter();
         selectAirportAdapter();
