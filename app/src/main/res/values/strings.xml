@@ -129,6 +129,7 @@
     <string name="booking_request">Booking request has been sent for confirmation</string>
     <string name="by_ticking_this_box_you_agree_to_our_terms_amp_conditions_and_privacy_policy"><![CDATA[By ticking this box you agree to our ]]></string>
     <string name="privacy_policy_error_msg"><![CDATA[Please agree to the Terms & Conditions and Privacy policy.]]></string>
+    <string name="agree_to_call_back">please agree to receive a call back from Airportr.</string>
     <string name="terms_amp_conditions_and_privacy_policy"><u>Terms &amp; Conditions and Privacy Policy</u></string>
     <string name="not_available">Not available. Please select a different date</string>
     <string name="info_msg_one"> Instantly discover London in a whole new way at the touch of a button through your complimentary in-room tablet.</string>
@@ -141,9 +142,9 @@
     <string name="going_somewhere_book_a_secure_taxi">Going somewhere, book a secure taxi</string>
     <string name="taxi_header">Going somewhere? BOOK a secure taxi</string>
     <string name="travel_bag_free_to_any_london_airport">TRAVEL BAG-FREE TO ANY LONDON AIRPORT</string>
-    <string name="travel_bag_msg">Free yourself of burdensome baggage and make the most of your last day in London. AirPortr, the premium luggage delivery and storage service will collect your bags from your apartment and deliver them securely to London’s Airports at an agreed time, ready for you to collect and check-in.</string>
+    <string name="travel_bag_msg">Free yourself of burdensome baggage and make the most of your last day in London.\n\nAirportr, the premium luggage delivery and storage service will collect your bag from your apartment or hotel and deliver them securely to any London airport at an agreed time, ready for you to collect and check-in.\n\nIndicative price for this option is £20 for the first bag and £10 for each additional bag (any size or weight).</string>
     <string name="bag_check_in_with_british_airways">BAG CHECK-IN WITH BRITISH AIRWAYS</string>
-    <string name="bag_check_msg">British airways passengers can enjoy the benefits of bag check-in from their apartment. Travel bag-free to the airport and head straight through to security – the next time they see their bags will be on the carousel at their final destination.</string>
+    <string name="bag_check_msg">Airportr has partnered with British Airways to enable you check-in remotely from your apartment.\n\nNot only do you travel bag-free to the airport, you also get to dash straight through security without the hassle of airport check-in.\n\nIndicative price for this option is £30 for the first bag and £10 for each additional bag (British Airways baggage restrictions apply).\n\nPlease proceed below if you would like to receive a quote from Airportr</string>
     <string name="cost">COST</string>
     <string name="cost_msg">Prices dependent on pick up location and departing airport (minimum booking time periods apply) e.g. collection from Central London locations to Heathrow, Gatwick and City cost just £20 for the first bag + £10 each additional bag (any size or weight) NB: AirPortr + Bag Check-In exclusive to British Airways passengers cost £30 for the first bag + £10 each additional bag (as per passenger allowance)</string>
     <string name="number_of_bags">Number of bags</string>

@@ -27,15 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/dp_10"
+        android:padding="@dimen/dp_2"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvRestaurants"
+            android:id="@+id/rvHeaderImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_gravity="center"
             android:fadingEdge="none"
             android:orientation="horizontal"
@@ -43,6 +43,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:src="@mipmap/podd"/>
 
@@ -52,21 +54,23 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2"
         android:background="@android:color/white" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
+
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_5"
+        android:fillViewport="true"
         android:scrollbars="none">
-
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_20"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
 
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvTravelBag"
@@ -91,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_10"
-                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/bag_check_in_with_british_airways"
                 />
             <TextView
@@ -110,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_10"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dp_15"
                 android:text="@string/cost"
                 />
@@ -119,26 +124,28 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dp_5"
                 android:text="@string/cost_msg"
                 />
-
             <TextView
                 android:id="@+id/tvDiscountMsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="10% discount apples"
                 />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <TextView
-        android:id="@+id/tvBookNow"
+  <TextView
+        android:id="@+id/tvGetYourQuots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
         android:layout_marginBottom="@dimen/dp_4"
         android:background="@drawable/button_background_pink"
         android:gravity="center"

@@ -1271,8 +1271,9 @@ public class CommonUtils {
      * @param mContext the m context
      */
     public static void disMissProgressDialog(Context mContext) {
-        if (dialogProgress != null&& dialogProgress.isShowing()) {
+        if ( mContext!=null&&dialogProgress != null&& dialogProgress.isShowing()) {
             dialogProgress.dismiss();
+
             dialogProgress = null;
         }
     }

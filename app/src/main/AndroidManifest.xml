@@ -99,6 +99,7 @@
             android:name=".InfoActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!--Airport section-->
         <activity
             android:name=".activityAirPort.AirportTransferActivity"
             android:screenOrientation="landscape"
@@ -109,6 +110,11 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".activityAirPort.AirportSummeryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!--fitness section-->
+        <activity
+            android:name=".ActivityFitnessWellbeing.SelectFitnessCategoryActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 

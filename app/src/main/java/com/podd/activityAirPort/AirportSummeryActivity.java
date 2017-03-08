@@ -38,6 +38,7 @@ public class AirportSummeryActivity extends AppCompatActivity implements View.On
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
         tvHeader.setTypeface(typefaceBold);
+        tvReturnToHome.setTypeface(typefaceBold);
     }
 
     private void getID() {
@@ -60,7 +61,6 @@ public class AirportSummeryActivity extends AppCompatActivity implements View.On
                 break;
         }
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -69,23 +69,19 @@ public class AirportSummeryActivity extends AppCompatActivity implements View.On
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         setTimerClass.setTimer(this, true);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         setTimerClass.setTimer(this, true);
     }
-
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
         setTimerClass.setTimer(this, false);
     }
-
 }

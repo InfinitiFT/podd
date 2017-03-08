@@ -6,11 +6,18 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.podd.R;
+import com.podd.adapter.AirprotHeaderImageAdapter;
+import com.podd.model.HomeItemsModel;
 import com.podd.utils.SetTimerClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Raj Kumar on 3/7/2017
@@ -19,9 +26,13 @@ import com.podd.utils.SetTimerClass;
 
 public class AirportTransferActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext=AirportTransferActivity.this;
-    private TextView tvTravelBag,tvTravelBagMsg,tvBagCheck,tvBagCheckMsg,tvCost,tvCostMsg,tvDiscountMsg,tvBookNow;
+    private TextView tvTravelBag,tvTravelBagMsg,tvBagCheck,tvBagCheckMsg,tvCost,tvCostMsg,tvDiscountMsg,tvGetYourQuots;
     private SetTimerClass setTimerClass;
     private TextView tvHeader;
+    private RecyclerView rvHeaderImage;
+    private AirprotHeaderImageAdapter airprotHeaderImageAdapter;
+    private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
+    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1,R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1,R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,9 +41,22 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
         getIds();
         setFont();
         setListeners();
+        setRecycler();
         setTimerClass = (SetTimerClass)getApplication();
-       // getRestaurantDetailApi();
+        for (int i = 0; i < img.length; i++) {
+            HomeItemsModel hotelItemModel = new HomeItemsModel();
+            hotelItemModel.setImage(img[i]);
+            homeItemsModelList.add(hotelItemModel);
+
+        }
+
+    }  private void setRecycler() {
+        airprotHeaderImageAdapter = new AirprotHeaderImageAdapter(mContext,homeItemsModelList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
+        rvHeaderImage.setLayoutManager(mLayoutManager);
+        rvHeaderImage.setAdapter(airprotHeaderImageAdapter);
     }
+
     private void getIds() {
 
         tvHeader = (TextView) findViewById(R.id.tvHeader);
@@ -44,7 +68,8 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
         tvCost = (TextView) findViewById(R.id.tvCost);
         tvCostMsg = (TextView) findViewById(R.id.tvCostMsg);
         tvDiscountMsg = (TextView) findViewById(R.id.tvDiscountMsg);
-        tvBookNow = (TextView) findViewById(R.id.tvBookNow);
+        tvGetYourQuots = (TextView) findViewById(R.id.tvGetYourQuots);
+        rvHeaderImage = (RecyclerView) findViewById(R.id.rvHeaderImage);
 
 
     }
@@ -53,6 +78,7 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
 
         tvHeader.setTypeface(typefaceBold);
+        tvGetYourQuots.setTypeface(typefaceBold);
         tvTravelBag.setTypeface(typeface);
         tvTravelBagMsg.setTypeface(typeface);
         tvBagCheck.setTypeface(typeface);
@@ -81,12 +107,12 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
         setTimerClass.setTimer(this, false);
     }
     private void setListeners() {
-        tvBookNow.setOnClickListener(this);
+        tvGetYourQuots.setOnClickListener(this);
     }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tvBookNow:
+            case R.id.tvGetYourQuots:
                startActivity(new Intent(mContext,AirportDetailActivity.class));
                 break;
 

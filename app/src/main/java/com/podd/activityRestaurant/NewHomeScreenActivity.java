@@ -172,7 +172,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                         if (response.body().allServiceList != null && response.body().allServiceList.size() > 0) {
                             homeItemsModelList.addAll(response.body().allServiceList);
                             homeItemsAdapter.notifyDataSetChanged();
-
                         } else {
                             Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                         }
@@ -184,7 +183,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 CommonUtils.disMissProgressDialog(context);
@@ -199,7 +197,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         rvHomeItems.setLayoutManager(mLayoutManager);
         rvHomeItems.setAdapter(homeItemsAdapter);
     }
-
     private void getIds() {
         ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
@@ -210,7 +207,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         tvAppName = (TextView) findViewById(R.id.tvAppName);
         tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
        // tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
-
         /*Calendar calander = Calendar.getInstance();
         SimpleDateFormat simpledateformat = new SimpleDateFormat("HH:mm");
         String date = simpledateformat.format(calander.getTime());
