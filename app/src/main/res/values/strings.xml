@@ -152,4 +152,9 @@
     <string name="select_delivery_airport">Select delivery airport</string>
     <string name="telephone">Telephone</string>
     <string name="airport_luggage_transfers">AIRPORT LUGGAGE TRANSFERS</string>
+    <string name="please_eneter_name">Please enter name.</string>
+    <string name="please_enter_pickup_location">Please enter pick up location.</string>
+    <string name="please_select_delaivery_airport">Please select delivery airport.</string>
+    <string name="please_enetr_telephone_number">Please enter telephone number.</string>
+    <string name="please_select_time">Please select time.</string>
 </resources>

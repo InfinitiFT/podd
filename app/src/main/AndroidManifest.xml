@@ -114,7 +114,16 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <!--fitness section-->
         <activity
-            android:name=".ActivityFitnessWellbeing.SelectFitnessCategoryActivity"
+            android:name=".activityFitnessWellbeing.SelectFitnessCategoryActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activityFitnessWellbeing.FitnessBookNowActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!--Attraction Section-->
+        <activity
+            android:name=".activityAttraction.AttractionHomeActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 

@@ -1,4 +1,4 @@
-package com.podd.ActivityFitnessWellbeing;
+package com.podd.activityFitnessWellbeing;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.SelectFitnessCategoryAdapter;
+import com.podd.model.AttractionModel;
 import com.podd.utils.SetTimerClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Raj Kumar on 3/8/2017
@@ -31,6 +35,16 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
     private SelectFitnessCategoryAdapter selectCategoryFitnessAdapter;
     private SetTimerClass setTimerClass;
     private TextView tvSearchBy,tvDate,tvSetDate,tvSelectCategory,tvCategory;
+    private List<AttractionModel> attractionModels=new ArrayList<>();
+    private String[] fitness_name=new String[]{"Bootcamp Pilates","Triyoga","Lomax",
+            "Duo","Bootcamp Pilates","Evolve Wellness Centre","Core","Equilibrium","SW1 Fitness","Bootcamp Pilates","YMCA","Bootcamp Pilates"};
+    private String[] fitness_category=new String[]{"Pilates","Yoga","Health Club","Pilates","Pilates","Yoga",
+            "Pilates","Total Balance","Box Fit","Pilates","Health Club","Pilates"};
+    private String[] fitness_location=new String[]{"Notting Hill","Chelsea","Chelsea","Chelsea",
+            "Fulham","Kensington","Kensington","Holland Park","Belgravia","Mayfair","Fitzrovia","Richmond"};
+    private int[] fitness_image=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,
+            R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9,
+            R.drawable.img10,R.drawable.img11,R.drawable.img12};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +64,16 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
         tvSetDate = (TextView) findViewById(R.id.tvSetDate);
         tvSelectCategory = (TextView) findViewById(R.id.tvSelectCategory);
         tvCategory = (TextView) findViewById(R.id.tvCategory);
+        for (int i = 0; i < fitness_name.length; i++) {
+            AttractionModel attractionModel = new AttractionModel();
+            attractionModel.setAttraction_image(fitness_image[i]);
+            attractionModel.setAttraction_name(fitness_name[i]);
+            attractionModel.setAttraction_category(fitness_category[i]);
+            attractionModel.setAttraction_location(fitness_location[i]);
+            attractionModels.add(attractionModel);
+
+        }
+
     }
     private void setListeners()
     {
@@ -70,7 +94,7 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
     private void setRecycle() {
         gridLayoutManager = new GridLayoutManager(mContext, 2, LinearLayoutManager.HORIZONTAL, false);
         rvFitness.setLayoutManager(gridLayoutManager);
-        selectCategoryFitnessAdapter = new SelectFitnessCategoryAdapter(mContext);
+        selectCategoryFitnessAdapter = new SelectFitnessCategoryAdapter(mContext,attractionModels);
         rvFitness.setAdapter(selectCategoryFitnessAdapter);
     }
 

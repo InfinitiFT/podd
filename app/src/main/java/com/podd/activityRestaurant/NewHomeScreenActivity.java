@@ -190,7 +190,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
-
     private void setRecycler() {
         homeItemsAdapter = new HomeItemsAdapter(context,homeItemsModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);

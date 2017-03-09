@@ -7,6 +7,7 @@
     android:layout_height="280dp"
     android:background="@color/black"
     card_view:cardCornerRadius="0dp">
+
     <FrameLayout
         android:id="@+id/flMain"
         android:layout_width="match_parent"

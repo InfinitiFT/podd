@@ -1,5 +1,4 @@
 package com.podd.adapter;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,19 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.podd.ActivityFitnessWellbeing.SelectFitnessCategoryActivity;
 import com.podd.InfoActivity;
 import com.podd.R;
 import com.podd.activityAirPort.AirportTransferActivity;
+import com.podd.activityAttraction.AttractionHomeActivity;
+import com.podd.activityFitnessWellbeing.SelectFitnessCategoryActivity;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
 import com.podd.activityTaxi.HailoActivity;
 import com.podd.model.HomeItemsModel;
-
 import java.util.List;
-
 
 @SuppressWarnings("ALL")
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
@@ -90,7 +86,9 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
                         context.startActivity(intent);
                         break;
                     case 4:
-                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, AttractionHomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
                         break;
                     case 5:
                         intent=new Intent(context, SelectFitnessCategoryActivity.class);

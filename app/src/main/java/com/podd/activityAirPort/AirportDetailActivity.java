@@ -148,7 +148,7 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
     }
     private boolean isValid() {
         if (etName.getText().toString().trim().equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please enter name.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.please_eneter_name, Toast.LENGTH_LONG).show();
             return false;
         } else if (tvDate.getText().toString().trim().matches(getString(R.string.date_of_travel))) {
             Toast.makeText(mContext, R.string.please_select_a_valid_time, Toast.LENGTH_LONG).show();
@@ -157,16 +157,16 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
             Toast.makeText(mContext, R.string.please_select_number_of_bag, Toast.LENGTH_LONG).show();
             return false;
         } else if (tvPickUp.getText().toString().trim().equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please enter pick up location.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.please_enter_pickup_location, Toast.LENGTH_LONG).show();
             return false;
         } else if (tvSelectDelivery.getText().toString().trim().equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please select delivery airport.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.please_select_delaivery_airport, Toast.LENGTH_LONG).show();
             return false;
         }else if (etPhoneNumber.getText().toString().trim().equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please enter telephone number.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.please_enetr_telephone_number, Toast.LENGTH_LONG).show();
             return false;
         }else if (tvTime.getText().toString().trim().equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please select time.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.please_select_time, Toast.LENGTH_LONG).show();
             return false;
         }else if(!cbTermsConditions.isChecked()){
             Toast.makeText(mContext, R.string.agree_to_call_back, Toast.LENGTH_LONG).show();
@@ -233,8 +233,6 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
         _searchableListDialog.show(getFragmentManager(), TAG);
         _searchableListDialog.setTitle(getString(R.string.select));
     }
-
-
     private void pickDate() {
         final Calendar calendar = Calendar.getInstance();
         int cYear = calendar.get(Calendar.YEAR);
@@ -279,7 +277,6 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
             case "delivery_airport":
                 tvSelectDelivery.setText(item.toString().trim());
                 tvSelectDelivery.setText(tvSelectDelivery.getText().toString().trim());
-
                 break;
         }
     }
