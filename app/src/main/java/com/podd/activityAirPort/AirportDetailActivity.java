@@ -51,7 +51,7 @@ import retrofit2.Response;
 public class AirportDetailActivity extends AppCompatActivity implements View.OnClickListener,SearchableListDialog.SearchableItem ,SearchableLocationListDialog.SearchableItem{
     private Context mContext=AirportDetailActivity.this;
     private final String TAG = AirportDetailActivity.class.getSimpleName();
-    private TextView tvMsg,tvDate,tvBagNumber,tvTime,tvSubmit,tvTimeFormate,tvHeader,tvSelectDelivery,tvPickUp;
+    private TextView tvMsg,tvDate,tvBagNumber,tvTime,tvSubmit,tvHeader,tvSelectDelivery,tvPickUp;
     private EditText etName,etPhoneNumber;
     private CheckBox cbTermsConditions;
     private String date;
@@ -89,7 +89,6 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
         etPhoneNumber=(EditText)findViewById(R.id.etPhoneNumber);
         tvTime=(TextView)findViewById(R.id.tvTime);
         tvSubmit=(TextView)findViewById(R.id.tvSubmit);
-        tvTimeFormate=(TextView)findViewById(R.id.tvTimeFormate);
         cbTermsConditions=(CheckBox)findViewById(R.id.cbTermsConditions);
         llTime=(LinearLayout)findViewById(R.id.llTime);
 
@@ -108,7 +107,6 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
         etPhoneNumber.setTypeface(typeface);
         tvTime.setTypeface(typeface);
         cbTermsConditions.setTypeface(typeface);
-        tvTimeFormate.setTypeface(typeface);
     }
     private void setListeners() {
         tvDate.setOnClickListener(this);
@@ -272,7 +270,7 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
             case "time_formate":
                 tvTime.setText(item.toString().trim());
                 tvTime.setText(tvTime.getText().toString().trim());
-                tvTimeFormate.setVisibility(View.GONE);
+
                 break;
             case "delivery_airport":
                 tvSelectDelivery.setText(item.toString().trim());

@@ -128,14 +128,17 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnBookNow"
+    <TextView
+        android:id="@+id/tvBookNow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BOOK NOW"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_12"
-        android:background="@color/colorAccent"/>
+        android:layout_marginBottom="@dimen/dp_4"
+        android:background="@drawable/button_background_pink"
+        android:gravity="center"
+        android:padding="@dimen/dp_8"
+        android:textStyle="bold"
+        android:text="@string/book_now"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_12" />
+
 </LinearLayout>

@@ -56,8 +56,8 @@ import retrofit2.Response;
 
 public class HailoActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private TextView tvSourceAddress, tvEndAddress, tvEta,tvMsg,tvHeader;
-    private Button btnBookNow, btnGetEta;
+    private TextView tvSourceAddress, tvEndAddress, tvEta,tvMsg,tvHeader,tvBookNow;
+    private Button  btnGetEta;
     private String TAG = HailoActivity.class.getSimpleName();
     private Context mContext = HailoActivity.this;
     private String currentLat = "";
@@ -89,7 +89,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
 
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         btnGetEta.setTypeface(typefaceBold);
-        btnBookNow.setTypeface(typefaceBold);
+        tvBookNow.setTypeface(typefaceBold);
         tvHeader.setTypeface(typefaceBold);
 
     }
@@ -142,7 +142,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         tvHeader = (TextView) findViewById(R.id.tvHeader);
         tvEta = (TextView) findViewById(R.id.tvEta);
         btnGetEta = (Button) findViewById(R.id.btnGetEta);
-        btnBookNow = (Button) findViewById(R.id.btnBookNow);
+        tvBookNow = (TextView) findViewById(R.id.tvBookNow);
         tvTermsCondition = (TextView) findViewById(R.id.tvTermsCondition);
         cbTermsConditions = (CheckBox) findViewById(R.id.cbTermsConditions);
 
@@ -150,7 +150,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
     private void setListener() {
         tvSourceAddress.setOnClickListener(this);
         tvEndAddress.setOnClickListener(this);
-        btnBookNow.setOnClickListener(this);
+        tvBookNow.setOnClickListener(this);
         btnGetEta.setOnClickListener(this);
         tvTermsCondition.setOnClickListener(this);
     }
@@ -175,7 +175,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 break;
-            case R.id.btnBookNow:
+            case R.id.tvBookNow:
                 if (isValidation()) {
                     if (CommonUtils.isNetworkConnected(mContext)) {
                         callBookNow(currentLat, currentLog,destinationLat,destinationLog ,currentAddress,destinationAddress);

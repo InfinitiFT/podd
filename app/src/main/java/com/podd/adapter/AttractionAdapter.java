@@ -48,6 +48,9 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.My
     public void onBindViewHolder(final AttractionAdapter.MyViewHolder holder, final int position) {
         final AttractionModel attractionModel = attractionModels.get(position);
         Typeface typefaceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
+        holder.tvAttractionName.setTypeface(typefaceBold);
+        holder.tvComingSoon.setTypeface(typefaceBold);
         holder.tvAttractionName.setTypeface(typefaceRegular);
         holder.tvAttractionCategory.setTypeface(typefaceRegular);
         holder.tvAttractionLocation.setTypeface(typefaceRegular);
@@ -57,12 +60,12 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.My
         Glide.with(context).load(attractionModel.getAttraction_image()).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivAttraction);
 
 
-        holder.flMain.setOnClickListener(new View.OnClickListener() {
+        holder.tvComingSoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
               /*  Intent intent=new Intent(context, FitnessBookNowActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);*/
-                Toast.makeText(context,"Work in progress",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"COMING SOON",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -83,6 +86,7 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.My
         private TextView tvAttractionName;
         private TextView tvAttractionCategory;
         private TextView tvAttractionLocation;
+        private TextView tvComingSoon;
         private FrameLayout flMain;
 
 
@@ -98,6 +102,7 @@ public class AttractionAdapter extends RecyclerView.Adapter<AttractionAdapter.My
             tvAttractionName = (TextView) itemView.findViewById(R.id.tvAttractionName);
             tvAttractionCategory = (TextView) itemView.findViewById(R.id.tvAttractionCategory);
             tvAttractionLocation = (TextView) itemView.findViewById(R.id.tvAttractionLocation);
+            tvComingSoon = (TextView) itemView.findViewById(R.id.tvComingSoon);
 
 
 

@@ -1,7 +1,6 @@
 package com.podd.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
-import com.podd.activityFitnessWellbeing.FitnessBookNowActivity;
 import com.podd.model.AttractionModel;
 
 import java.util.List;
@@ -64,9 +62,9 @@ public void onBindViewHolder(final SelectFitnessCategoryAdapter.MyViewHolder hol
         holder.flMain.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View view) {
-        Intent intent=new Intent(context, FitnessBookNowActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      /*  Intent intent=new Intent(context, FitnessBookNowActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
-
+*/
         }
         });
         }

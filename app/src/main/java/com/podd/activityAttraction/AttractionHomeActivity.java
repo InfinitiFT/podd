@@ -33,6 +33,7 @@ public class AttractionHomeActivity extends AppCompatActivity implements View.On
     private SetTimerClass setTimerClass;
     private List<AttractionModel>attractionModels=new ArrayList<>();
     private TextView tvSearchBy,tvDate,tvSetDate,tvSelectCategory,tvCategory;
+    private TextView tvHeader;
     private String[] attraction_name=new String[]{"Science Museum","Victoria and Albert Museum","National Gallery",
             "British Museum","The Hippodrome Theatre","Madame Tussaud","The London Eye","Sea Life Aquarium","Tate Britain","View from the Shard"};
     private String[] attraction_category=new String[]{"Museum","Museum","Art Gallery","Museum","Theatre","Leisure","Leisure","Leisure","Art Gallery","Leisure"};
@@ -53,11 +54,12 @@ public class AttractionHomeActivity extends AppCompatActivity implements View.On
     private void getIds()
     {
 
+        tvHeader = (TextView) findViewById(R.id.tvHeader);
         rvAttraction = (RecyclerView) findViewById(R.id.rvAttraction);
 
         for (int i = 0; i < attraction_name.length; i++) {
             AttractionModel attractionModel = new AttractionModel();
-         attractionModel.setAttraction_image(attraction_image[i]);
+            attractionModel.setAttraction_image(attraction_image[i]);
             attractionModel.setAttraction_name(attraction_name[i]);
             attractionModel.setAttraction_category(attraction_category[i]);
             attractionModel.setAttraction_location(attraction_location[i]);
@@ -73,6 +75,8 @@ public class AttractionHomeActivity extends AppCompatActivity implements View.On
     private void setFont()
     {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        tvHeader.setTypeface(typefaceBold);
     }
 
     private void setRecycle() {
@@ -94,7 +98,6 @@ public class AttractionHomeActivity extends AppCompatActivity implements View.On
         super.onResume();
         setTimerClass.setTimer(this, true);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

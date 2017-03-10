@@ -34,7 +34,7 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
     private GridLayoutManager gridLayoutManager;
     private SelectFitnessCategoryAdapter selectCategoryFitnessAdapter;
     private SetTimerClass setTimerClass;
-    private TextView tvSearchBy,tvDate,tvSetDate,tvSelectCategory,tvCategory;
+    private TextView tvSearchBy,tvDate,tvSetDate,tvSelectCategory,tvCategory,tvHeader;
     private List<AttractionModel> attractionModels=new ArrayList<>();
     private String[] fitness_name=new String[]{"Bootcamp Pilates","Triyoga","Lomax",
             "Duo","Bootcamp Pilates","Evolve Wellness Centre","Core","Equilibrium","SW1 Fitness","Bootcamp Pilates","YMCA","Bootcamp Pilates"};
@@ -42,9 +42,9 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
             "Pilates","Total Balance","Box Fit","Pilates","Health Club","Pilates"};
     private String[] fitness_location=new String[]{"Notting Hill","Chelsea","Chelsea","Chelsea",
             "Fulham","Kensington","Kensington","Holland Park","Belgravia","Mayfair","Fitzrovia","Richmond"};
-    private int[] fitness_image=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,
-            R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9,
-            R.drawable.img10,R.drawable.img11,R.drawable.img12};
+    private int[] fitness_image=new int[]{R.drawable.img5,R.drawable.img3,R.drawable.img1,
+            R.drawable.img11,R.drawable.img8,R.drawable.img10,R.drawable.img7,R.drawable.img4,R.drawable.img6,
+            R.drawable.img9,R.drawable.img2,R.drawable.img12};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +59,7 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
         rvFitness = (RecyclerView) findViewById(R.id.rvFitness);
         llCategory = (LinearLayout) findViewById(R.id.llCategory);
         llDate = (LinearLayout) findViewById(R.id.llDate);
+        tvHeader = (TextView) findViewById(R.id.tvHeader);
         tvSearchBy = (TextView) findViewById(R.id.tvSearchBy);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvSetDate = (TextView) findViewById(R.id.tvSetDate);
@@ -82,6 +83,8 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
     }
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+        tvHeader.setTypeface(typefaceBold);
         tvSearchBy.setTypeface(typeface);
         tvDate.setTypeface(typeface);
         tvSetDate.setTypeface(typeface);
