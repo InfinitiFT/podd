@@ -571,10 +571,12 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                         Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                     }
 
+
                 } else {
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {

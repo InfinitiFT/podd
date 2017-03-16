@@ -14,17 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.podd.R;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
 /**
  * The type Book taxi activity.
  */
@@ -47,6 +44,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvBack;
     private String date;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +57,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         selectTimeAdapter();
         setListeners();
     }
-
     private void setListeners() {
         tvBookNow.setOnClickListener(this);
         tvSelectfromCalender.setOnClickListener(this);
@@ -127,7 +124,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         spSelectAdditionalRequirement.setAdapter(adapter);
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -183,9 +179,6 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-
-
-
     private void pickDate() {
         final Calendar calendar = Calendar.getInstance();
         int cYear = calendar.get(Calendar.YEAR);
@@ -223,4 +216,7 @@ public class BookTaxiActivity extends AppCompatActivity implements View.OnClickL
         dpd.getDatePicker().setMaxDate(System.nanoTime());
         dpd.setCancelable(true);
     }
+
+
+
 }

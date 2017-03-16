@@ -34,7 +34,7 @@
     <string name="date">Date</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-    <string name="select_from_calender">Select from calender</string>
+    <string name="select_from_calender">Select from calendar</string>
     <string name="time">Time</string>
     <string name="number_of_people">Number of people</string>
     <string name="additional_requirements">Additional Requirements</string>
@@ -97,6 +97,7 @@
     <string name="please_select_a_valid_date">Please select a valid date.</string>
     <string name="please_select_a_valid_time">Please select a valid time.</string>
     <string name="please_select_number_of_people">Please select number of people.</string>
+    <string name="please_select_number_of_bag">Please select number of bag.</string>
     <string name="Resend">Resend</string>
     <string name="bars"><![CDATA[Restaurants & Bars]]></string>
     <string name="permission_denied_you_can_not_access_location_data">Permission denied you can not access location data</string>
@@ -128,6 +129,35 @@
     <string name="booking_request">Booking request has been sent for confirmation</string>
     <string name="by_ticking_this_box_you_agree_to_our_terms_amp_conditions_and_privacy_policy"><![CDATA[By ticking this box you agree to our ]]></string>
     <string name="privacy_policy_error_msg"><![CDATA[Please agree to the Terms & Conditions and Privacy policy.]]></string>
+    <string name="agree_to_call_back">please agree to receive a call back from Airportr.</string>
     <string name="terms_amp_conditions_and_privacy_policy"><u>Terms &amp; Conditions and Privacy Policy</u></string>
     <string name="not_available">Not available. Please select a different date</string>
+    <string name="info_msg_one"> Instantly discover London in a whole new way at the touch of a button through your complimentary in-room tablet.</string>
+    <string name="info_msg_two"> We have partnered with some of the leading service providers in London to enable you to discover and book a range of exciting experiences.\nWe hope to make your stay in London a truly memorable one.</string>
+    <string name="info_msg_three"> In summary, your tablet gives you instant access to:</string>
+
+    <string name="info"> - The best tables at more than 50 Michelin restaurants\n - Casual dining experiences and \'hidden gems\' curated by our expert team\n - Meals delivered straight to your door anytime of the day or night\n - Gift and hampers available from carefully selected partners, available for delivery anywhere in the United Kingdom or worldwide\n - Taxi on demand or in advance from our selected partner (Hailo)\n - Secure airport luggage transfers via Airpotr to any of London\'s major airports as well as instant check-ins through British Airways\n - London\'s best attractions including theatres, museums and art galleries\n - The leading fitness classes, health clubs and spas near you</string>
+    <string name="info_link"> We would love to hear from you! Contact us with any questions or feedback at <u>hello@poddapp.com</u></string>
+    <string name="info_disclaimer"> Disclaimer: This platform is owned and operated by podd Technologies (podd). podd is in no way affiliated with the serviced apartment or hotel hosting this tablet nor is podd in anyway affiliated with the service providers listed on the tablet. While we constantly strive to maintain the highest possible standards and experiences on our platform, we do not accept responsibility should any of the services listed fail to meet your expectations.However we would welcome your feedback regarding these issues.</string>
+    <string name="going_somewhere_book_a_secure_taxi">Going somewhere, book a secure taxi</string>
+    <string name="taxi_header">Going somewhere? BOOK a secure taxi</string>
+    <string name="travel_bag_free_to_any_london_airport">TRAVEL BAG-FREE TO ANY LONDON AIRPORT</string>
+    <string name="travel_bag_msg">Free yourself of burdensome baggage and make the most of your last day in London.\n\nAirportr, the premium luggage delivery and storage service will collect your bag from your apartment or hotel and deliver them securely to any London airport at an agreed time, ready for you to collect and check-in.\n\nIndicative price for this option is £20 for the first bag and £10 for each additional bag (any size or weight).</string>
+    <string name="bag_check_in_with_british_airways">BAG CHECK-IN WITH BRITISH AIRWAYS</string>
+    <string name="bag_check_msg">Airportr has partnered with British Airways to enable you check-in remotely from your apartment.\n\nNot only do you travel bag-free to the airport, you also get to dash straight through security without the hassle of airport check-in.\n\nIndicative price for this option is £30 for the first bag and £10 for each additional bag (British Airways baggage restrictions apply).\n\nPlease proceed below if you would like to receive a quote from Airportr</string>
+    <string name="cost">COST</string>
+    <string name="cost_msg">Prices dependent on pick up location and departing airport (minimum booking time periods apply) e.g. collection from Central London locations to Heathrow, Gatwick and City cost just £20 for the first bag + £10 each additional bag (any size or weight) NB: AirPortr + Bag Check-In exclusive to British Airways passengers cost £30 for the first bag + £10 each additional bag (as per passenger allowance)</string>
+    <string name="number_of_bags">Number of bags</string>
+    <string name="date_of_travel">Date of Travel</string>
+    <string name="select_delivery_airport">Select delivery airport</string>
+    <string name="telephone">Telephone</string>
+    <string name="airport_luggage_transfers">AIRPORT LUGGAGE TRANSFERS</string>
+    <string name="please_eneter_name">Please enter name.</string>
+    <string name="please_enter_pickup_location">Please enter pick up location.</string>
+    <string name="please_select_delaivery_airport">Please select delivery airport.</string>
+    <string name="please_enetr_telephone_number">Please enter telephone number.</string>
+    <string name="please_select_time">Please select time.</string>
+    <string name="fitness_wellness"><![CDATA[Fitness & Wellness]]></string>
+    <string name="attractions">Attractions</string>
+    <string name="by_ticking_this_box_you_agree_to_our_terms_conditions_and_privacy_policy"><![CDATA[By ticking this box you agree to our Terms & Conditions and Privacy Policy]]></string>
 </resources>

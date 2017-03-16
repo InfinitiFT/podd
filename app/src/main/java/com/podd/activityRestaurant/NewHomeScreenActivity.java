@@ -72,13 +72,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private ArrayList<String> banner_image;
     private TextView tvTime,tvDayDate,tvWelcome;
 //    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
-    private  String[] itemName = new String[]{"Front Desk","Restaurants & Bars","Delivery","Taxi","Leisure Attractions","Health & Spa"};
+    private  String[] itemName = new String[]{"Restaurants & Bars","Delivery","Taxi","Airport Transfers","Attractions","Fitness & Wellbeing","Info"};
     private List<Integer> imgList;
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +172,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                         if (response.body().allServiceList != null && response.body().allServiceList.size() > 0) {
                             homeItemsModelList.addAll(response.body().allServiceList);
                             homeItemsAdapter.notifyDataSetChanged();
-
                         } else {
                             Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
                         }
@@ -185,7 +183,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                     Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 CommonUtils.disMissProgressDialog(context);
@@ -193,14 +190,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
-
     private void setRecycler() {
         homeItemsAdapter = new HomeItemsAdapter(context,homeItemsModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         rvHomeItems.setLayoutManager(mLayoutManager);
         rvHomeItems.setAdapter(homeItemsAdapter);
     }
-
     private void getIds() {
         ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
@@ -211,7 +206,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         tvAppName = (TextView) findViewById(R.id.tvAppName);
         tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
        // tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
-
         /*Calendar calander = Calendar.getInstance();
         SimpleDateFormat simpledateformat = new SimpleDateFormat("HH:mm");
         String date = simpledateformat.format(calander.getTime());
@@ -313,7 +307,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
             case AppConstant.PERMISSION_REQUEST_GPS_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
 
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         enableLoc();

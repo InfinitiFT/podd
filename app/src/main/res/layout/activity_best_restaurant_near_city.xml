@@ -96,208 +96,210 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:background="@android:color/white" />-->
+            <LinearLayout
+                android:id="@+id/llSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvSearchBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_2"
+                    android:text="@string/search_by"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_8"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_2">
+
+                    <LinearLayout
+                        android:id="@+id/llLocation"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/rectangle_white_background"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_2">
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/location"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvLocationType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@null"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_6" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llDietary"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_weight="1"
+                        android:background="@drawable/rectangle_white_background"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_2">
+
+                        <TextView
+                            android:id="@+id/tvDietary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/Dietary"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvDietaryType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:background="@null"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_6" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llCuisine"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_weight="1"
+                        android:background="@drawable/rectangle_white_background"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_2">
+
+                        <TextView
+                            android:id="@+id/tvCuisine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/cuisine"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvCuisineType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@null"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_6" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/llMeal"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:background="@drawable/rectangle_white_background"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_2">
+
+                        <TextView
+                            android:id="@+id/tvMeal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/meal"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvMealType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@null"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_6" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAmbience"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_weight="1"
+
+                        android:background="@drawable/rectangle_white_background"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_2">
+
+                        <TextView
+                            android:id="@+id/tvAmbience"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/ambience"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+
+                        <TextView
+                            android:id="@+id/tvBusiness"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@null"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_6" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llDeliveredToYou"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:background="@drawable/rectangle_white_background"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_4">
+
+                        <TextView
+                            android:id="@+id/tvDeliveredToYou"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/delivered"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/text_size_10" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
-    <LinearLayout
-        android:id="@+id/llSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_1"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tvSearchBy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_2"
-            android:text="@string/search_by"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_8"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp_2">
 
-            <LinearLayout
-                android:id="@+id/llLocation"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/rectangle_white_background"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_2">
-
-                <TextView
-                    android:id="@+id/tvLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/location"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_10" />
-
-                <TextView
-                    android:id="@+id/tvLocationType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_6" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llDietary"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_2"
-                android:layout_weight="1"
-                android:background="@drawable/rectangle_white_background"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_2">
-
-                <TextView
-                    android:id="@+id/tvDietary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/Dietary"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_10" />
-
-                <TextView
-                    android:id="@+id/tvDietaryType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_6" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llCuisine"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_2"
-                android:layout_weight="1"
-                android:background="@drawable/rectangle_white_background"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_2">
-
-                <TextView
-                    android:id="@+id/tvCuisine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/cuisine"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_10" />
-
-                <TextView
-                    android:id="@+id/tvCuisineType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_6" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/llMeal"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_2"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:background="@drawable/rectangle_white_background"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_2">
-
-                <TextView
-                    android:id="@+id/tvMeal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/meal"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_10" />
-
-                <TextView
-                    android:id="@+id/tvMealType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_6" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llAmbience"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_2"
-                android:layout_weight="1"
-
-                android:background="@drawable/rectangle_white_background"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_2">
-
-                <TextView
-                    android:id="@+id/tvAmbience"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/ambience"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_10" />
-
-                <TextView
-                    android:id="@+id/tvBusiness"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_6" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llDeliveredToYou"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_2"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:visibility="gone"
-                android:background="@drawable/rectangle_white_background"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_4">
-
-                <TextView
-                    android:id="@+id/tvDeliveredToYou"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/delivered"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/text_size_10" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

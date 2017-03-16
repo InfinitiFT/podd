@@ -1,5 +1,4 @@
 package com.podd.adapter;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,13 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.podd.InfoActivity;
 import com.podd.R;
+import com.podd.activityAirPort.AirportTransferActivity;
+import com.podd.activityAttraction.AttractionHomeActivity;
+import com.podd.activityFitnessWellbeing.SelectFitnessCategoryActivity;
 import com.podd.activityRestaurant.BestRestaurantNearCity;
 import com.podd.activityRestaurant.BestRestaurantNearCityForDelivery;
+import com.podd.activityTaxi.HailoActivity;
 import com.podd.model.HomeItemsModel;
 import java.util.List;
-
 
 @SuppressWarnings("ALL")
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
@@ -26,8 +28,6 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     public HomeItemsAdapter(Context context, List<HomeItemsModel>homeItemsModelList) {
         this.context=context;
         this.homeItemsModelList=homeItemsModelList;
-
-
     }
 
     @Override
@@ -65,29 +65,42 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
 
                 switch (position){
                     case 0:
-                       Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, BestRestaurantNearCity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
                        break;
                     case 1:
-                        intent=new Intent(context, BestRestaurantNearCity.class);
-                       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                        break;
                     case 2:
-                        //Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
-                       intent=new Intent(context, BestRestaurantNearCityForDelivery.class);
+                        intent=new Intent(context, HailoActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                       context.startActivity(intent);
+                        context.startActivity(intent);
+
                         break;
                     case 3:
-                        Toast.makeText(context, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, AirportTransferActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
                         break;
                     case 4:
-
-                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, AttractionHomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
                         break;
                     case 5:
-                        Toast.makeText(context,R.string.coming_soon,Toast.LENGTH_SHORT).show();
+                        intent=new Intent(context, SelectFitnessCategoryActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+
                         break;
+                    case 6:
+                        intent=new Intent(context, InfoActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    break;
 
                     default:
                         break;

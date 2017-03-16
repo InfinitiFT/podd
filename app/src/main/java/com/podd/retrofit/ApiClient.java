@@ -1,15 +1,11 @@
 package com.podd.retrofit;
 
-
 import android.content.Context;
 import android.util.Base64;
-
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -77,6 +73,4 @@ public class ApiClient {
 
 
 }
-
-
 

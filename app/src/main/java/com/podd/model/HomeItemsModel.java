@@ -6,6 +6,16 @@ public class HomeItemsModel {
     private String id;
     private String service_name;
     private String service_image;
+
+    public int getImage() {
+        return Image;
+    }
+
+    public void setImage(int image) {
+        Image = image;
+    }
+
+    private int Image;
     private boolean isSelected = false;
 
 

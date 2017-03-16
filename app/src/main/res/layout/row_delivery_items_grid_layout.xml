@@ -115,7 +115,7 @@
                         android:text="@string/book"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:textSize="@dimen/text_size_8"
+                        android:textSize="@dimen/text_size_6"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:background="@drawable/button_background_pink"
