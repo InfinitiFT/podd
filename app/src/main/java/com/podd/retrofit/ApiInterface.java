@@ -75,5 +75,4 @@ public interface ApiInterface {
     Call<JsonResponse>getPrivacyPolicy(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
 
-
 }
