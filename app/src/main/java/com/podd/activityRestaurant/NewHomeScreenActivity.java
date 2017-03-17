@@ -153,8 +153,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         tvTime.setTypeface(typefaceBold);
         tvAdminMessage.setTypeface(typefaceBold);
-        tvWelcome.setTypeface(typefaceBold);
-        tvAppName.setTypeface(typefaceBold);
+       // tvWelcome.setTypeface(typefaceBold);
+       // tvAppName.setTypeface(typefaceBold);
     }
 
     private void callHomeApi() {
@@ -201,9 +201,9 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvDayDate = (TextView) findViewById(R.id.tvDayDate);
-        tvWelcome = (TextView) findViewById(R.id.tvWelcome);
+       // tvWelcome = (TextView) findViewById(R.id.tvWelcome);
         tvAdminMessage = (TextView) findViewById(R.id.tvAdminMessage);
-        tvAppName = (TextView) findViewById(R.id.tvAppName);
+     //   tvAppName = (TextView) findViewById(R.id.tvAppName);
         tvDayDate.setText(CommonUtils.getDateAndTimeFromTimeStamp(System.currentTimeMillis()));
        // tvTime.setText(CommonUtils.getTimeFromTimeStamp(System.currentTimeMillis()));
         /*Calendar calander = Calendar.getInstance();

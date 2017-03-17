@@ -19,10 +19,6 @@ import com.podd.utils.SetTimerClass;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Raj Kumar on 3/9/2017
- * for Mobiloitte
- */
 
 public class FitnessBookNowActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext= FitnessBookNowActivity.this;
@@ -45,7 +41,6 @@ public class FitnessBookNowActivity extends AppCompatActivity implements View.On
             HomeItemsModel hotelItemModel = new HomeItemsModel();
             hotelItemModel.setImage(img[i]);
             homeItemsModelList.add(hotelItemModel);
-
         }
 
     }

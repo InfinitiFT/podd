@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Please enter the following information to request a call back from Airport"
+                android:text="Please enter the following information to request a call back from Airportr"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_12" />
 

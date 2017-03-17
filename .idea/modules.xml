@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/infiniteviewpager/infiniteviewpager.iml" filepath="$PROJECT_DIR$/infiniteviewpager/infiniteviewpager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infiniteviewpager/infiniteviewpager.iml" filepath="$PROJECT_DIR$/infiniteviewpager/infiniteviewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/iosnativeappdevelopment-16112832-android.iml" filepath="$PROJECT_DIR$/iosnativeappdevelopment-16112832-android.iml" />
     </modules>
   </component>

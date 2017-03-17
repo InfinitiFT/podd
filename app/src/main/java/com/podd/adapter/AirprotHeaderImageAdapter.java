@@ -42,17 +42,7 @@ public class AirprotHeaderImageAdapter extends RecyclerView.Adapter<AirprotHeade
 
         final HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
 
-
-
-            Glide.with(context).load(homeItemsModel.getImage()).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivHeaderImage);
-
-
-
-
-
-
-
-
+        Glide.with(context).load(homeItemsModel.getImage()).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivHeaderImage);
 
     }
 
