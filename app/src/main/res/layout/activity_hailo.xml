@@ -20,11 +20,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:layout_margin="@dimen/dp_20"
+
             android:orientation="vertical">
 
             <TextView
@@ -63,32 +64,33 @@
                 android:padding="@dimen/dp_5"
                 android:textAllCaps="false"
 
-                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_2"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12"
                 android:background="@color/colorAccent"/>
+
             <TextView
                 android:id="@+id/tvMsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_2"
                 android:textColor="@android:color/white"
                 android:text="Card and cash payments are accepted"
                 android:padding="@dimen/dp_5"
                 android:textSize="@dimen/text_size_12"/>
+
             <TextView
                 android:id="@+id/tvEta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_2"
+                android:gravity="center"
                 android:textColor="@android:color/white"
                 android:text=""
                 android:padding="@dimen/dp_5"
-                android:textSize="@dimen/text_size_12"/>
-
+                android:textSize="@dimen/text_size_10"/>
 
         </LinearLayout>
     </ScrollView>

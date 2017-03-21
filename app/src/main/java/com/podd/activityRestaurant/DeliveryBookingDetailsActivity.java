@@ -77,7 +77,7 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
     ArrayAdapter<String> arrayAdapterTime;
     private SetTimerClass setTimerClass;
     private LinearLayout llNumberPeople;
-
+    static final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,11 +106,14 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
                     if(i>0){
                         Calendar  current=Calendar.getInstance();
                         Date date= new Date(  System.currentTimeMillis());
+                        Calendar date1 = Calendar.getInstance();
+                        long t= date1.getTimeInMillis();
+                        Date afterAddingThirtyMins=new Date(t + (30 * ONE_MINUTE_IN_MILLIS));
                         System.out.println(date);
                         SimpleDateFormat simpDate,simpDate1;
                         simpDate = new SimpleDateFormat("kk:mm");
                         simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
-                        String currentTime=simpDate.format(date);
+                        String currentTime=simpDate.format(afterAddingThirtyMins);
                         String currentDate=simpDate1.format(date);
                         // System.out.println("time>>"+simpDate.format(date));
                         //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
@@ -403,7 +406,7 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
                         if (response.body().restaurant_time_interval!=null&&response.body().restaurant_time_interval.size()>0) {
                             restaurantTimeInterval.clear();
                             restaurantTimeInterval.addAll(response.body().restaurant_time_interval);
-
+                            timeItems.clear();
                             timeItems.add("Select Time");
 
                             for (int i = 0; i < restaurantTimeInterval.size(); i++) {
@@ -434,17 +437,23 @@ public class DeliveryBookingDetailsActivity extends AppCompatActivity implements
                                             // String orderTime[] = timeItems.get(position).trim().split("~");
                                            /* if(orderTime.length==2)
                                             {*/
-                                            Date date= new Date(  System.currentTimeMillis());
+                                            Date date= new Date(System.currentTimeMillis());
+
+
+                                            Calendar date1 = Calendar.getInstance();
+                                            long t= date1.getTimeInMillis();
+                                            Date afterAddingThirtyMins=new Date(t + (30 * ONE_MINUTE_IN_MILLIS));
                                             System.out.println(date);
                                             SimpleDateFormat simpDate,simpDate1;
                                             simpDate = new SimpleDateFormat("kk:mm");
                                             simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
-                                            String currentTime=simpDate.format(date);
+                                            String currentTime=simpDate.format(afterAddingThirtyMins);
                                             String currentDate=simpDate1.format(date);
                                             // System.out.println("time>>"+simpDate.format(date));
                                             //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
                                             if(tvDateBooked.getText().toString().trim().equals(currentDate)){
-                                                if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat((currentTime.replace(":","")).trim()))
+
+                                                if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<= Float.parseFloat((currentTime.replace(":","")).trim()))
                                                 {
                                                     tv.setTextColor(Color.GRAY);
                                                 }else {

@@ -78,6 +78,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private SetTimerClass setTimerClass;
     private SearchableListDialog _searchableListDialog;
     private String selectedItem = "";
+    static final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,12 +108,15 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 if (restaurantTimeInterval!=null&&restaurantTimeInterval.size()>0) {
                     if(i>0){
                         Calendar  current=Calendar.getInstance();
-                        Date date= new Date(  System.currentTimeMillis());
+                        Date date= new Date(System.currentTimeMillis());
+                        Calendar date1 = Calendar.getInstance();
+                        long t= date1.getTimeInMillis();
+                        Date afterAddingThirtyMins=new Date(t + (30 * ONE_MINUTE_IN_MILLIS));
                         System.out.println(date);
                         SimpleDateFormat simpDate,simpDate1;
                         simpDate = new SimpleDateFormat("kk:mm");
                         simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
-                        String currentTime=simpDate.format(date);
+                        String currentTime=simpDate.format(afterAddingThirtyMins);
                         String currentDate=simpDate1.format(date);
                         // System.out.println("time>>"+simpDate.format(date));
                         //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
@@ -412,11 +416,14 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                                         try
                                         {
                                             Date date= new Date(  System.currentTimeMillis());
+                                            Calendar date1 = Calendar.getInstance();
+                                            long t= date1.getTimeInMillis();
+                                            Date afterAddingThirtyMins=new Date(t + (30 * ONE_MINUTE_IN_MILLIS));
                                             System.out.println(date);
                                             SimpleDateFormat simpDate,simpDate1;
                                             simpDate = new SimpleDateFormat("kk:mm");
                                             simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
-                                            String currentTime=simpDate.format(date);
+                                            String currentTime=simpDate.format(afterAddingThirtyMins);
                                             String currentDate=simpDate1.format(date);
                                             if(tvDateBooked.getText().toString().trim().equals(currentDate)){
                                                 if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat((currentTime.replace(":","")).trim()))
