@@ -39,6 +39,7 @@ public class SearchableListDialog extends DialogFragment implements
 
     private ListView _listViewItems;
 
+
     private SearchableItem _searchableItem;
 
     private OnSearchTextChanged _onSearchTextChanged;

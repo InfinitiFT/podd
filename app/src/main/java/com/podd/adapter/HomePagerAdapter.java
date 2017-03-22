@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
+import com.podd.model.HomeImageModel;
 
 
 import java.util.List;
@@ -15,9 +18,9 @@ import java.util.List;
 public class HomePagerAdapter extends PagerAdapter {
     private final Context context;
 
-    private final List<Integer> imgList;
+    private final List<HomeImageModel> imgList;
 
-    public HomePagerAdapter(Context context, List<Integer> imgList) {
+    public HomePagerAdapter(Context context, List<HomeImageModel> imgList) {
         this.context = context;
         this.imgList = imgList;
     }
@@ -28,7 +31,8 @@ public class HomePagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.row_home_pager, collection, false);
         ImageView ivPager = (ImageView) layout.findViewById(R.id.ivPager);
-        ivPager.setImageResource(imgList.get(position));
+        Glide.with(context).load(imgList.get(position).image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivPager);
+      //  ivPager.setImageResource(imgList.get(position));
         collection.addView(layout);
         return layout;
     }

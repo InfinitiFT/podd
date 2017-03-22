@@ -63,8 +63,6 @@ public class TaxiBookingSummaryActivity extends AppCompatActivity implements Vie
                 onBackPressed();
             }
         });
-
-
     }
 
     private void setListeners() {

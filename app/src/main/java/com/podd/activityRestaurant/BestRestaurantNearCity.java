@@ -84,6 +84,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         } else {
             Toast.makeText(BestRestaurantNearCity.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
         }*/
+
         setFont();
         tvLocationName.setSelected(true);
         setTimerClass = (SetTimerClass)getApplication();

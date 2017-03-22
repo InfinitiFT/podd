@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
-
 /**
  * Created by Raj Kumar on 3/1/2017
  * for Mobiloitte
@@ -17,6 +16,7 @@ public class DeepLinking {
     public static void openHailoApp(Context context, String pickUpLat, String pickUpLng, String pickUpAddress, String destinationLat, String destinationLng,
                                     String destinationAddress, String hailoAppToken) {
         String uriString;
+
         try {
             context.getPackageManager().getPackageInfo("com.hailocab.consumer", PackageManager.GET_ACTIVITIES);
 

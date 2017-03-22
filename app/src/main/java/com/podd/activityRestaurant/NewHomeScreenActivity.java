@@ -41,6 +41,7 @@ import com.podd.adapter.HomeItemsAdapter;
 import com.podd.adapter.HomePagerAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
+import com.podd.model.HomeImageModel;
 import com.podd.model.HomeItemsModel;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
@@ -65,6 +66,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private HomeItemsAdapter homeItemsAdapter;
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
+    private List<HomeImageModel> homeImageModels = new ArrayList<>();
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
     private HomePagerAdapter pagerAdapter;
@@ -73,7 +75,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private TextView tvTime,tvDayDate,tvWelcome;
 //    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
     private  String[] itemName = new String[]{"Restaurants & Bars","Delivery","Taxi","Airport Transfers","Attractions","Fitness & Wellbeing","Info"};
-    private List<Integer> imgList;
+   // private List<Integer> imgList;
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
@@ -91,13 +93,10 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             HomeItemsModel hotelItemModel = new HomeItemsModel();
             hotelItemModel.setService_name(itemName[i]);
             homeItemsModelList.add(hotelItemModel);
-
         }
-
        // banner_image = new ArrayList<>();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        pagerAdapter = new HomePagerAdapter(context, imgList);
-        viewPager.setAdapter(pagerAdapter);
+
        // viewPager.startAutoScroll(4000);
         //setRecyclerData();
 
@@ -105,7 +104,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
-                if (currentPage == imgList.size()-1) {
+                if (currentPage == homeImageModels.size()-1) {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, true);
@@ -190,6 +189,41 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
+    private void callHomeImageAPI() {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        Call<JsonResponse> call = apiServices.getHomeImage(CommonUtils.getPreferences(this,AppConstant.AppToken));
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null) {
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        homeImageModels.clear();
+                        if (response.body().homePageData != null && response.body().homePageData.size() > 0) {
+                            homeImageModels.addAll(response.body().homePageData);
+                            pagerAdapter = new HomePagerAdapter(context, homeImageModels);
+                            viewPager.setAdapter(pagerAdapter);
+
+                        } else {
+                            Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                t.printStackTrace();
+            }
+        });
+    }
     private void setRecycler() {
         homeItemsAdapter = new HomeItemsAdapter(context,homeItemsModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
@@ -211,12 +245,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         String date = simpledateformat.format(calander.getTime());
         tvTime.setText(date);*/
 
-        imgList = new ArrayList<>();
+     /*   imgList = new ArrayList<>();
         imgList.add(R.mipmap.image1);
         imgList.add(R.mipmap.image2);
         imgList.add(R.mipmap.image3);
         imgList.add(R.mipmap.image4);
-        imgList.add(R.mipmap.image3);
+        imgList.add(R.mipmap.image3);*/
 
         CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
 

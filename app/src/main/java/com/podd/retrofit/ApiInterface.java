@@ -73,6 +73,8 @@ public interface ApiInterface {
 
     @POST("static_page.php")
     Call<JsonResponse>getPrivacyPolicy(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    @GET("get_home_page_data.php")
+    Call<JsonResponse>getHomeImage(@Header("Authorization")String token);
 
 
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.model.RestaurantMenu;
@@ -24,7 +23,6 @@ import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,13 +136,10 @@ public class MealDeliveryDetailScreenActivity extends AppCompatActivity implemen
      //   tvViewMenu.setTypeface(typeface);
         tvDistance.setTypeface(typeface);
         tvDescriptionRestaraunt.setTypeface(typeface);
-
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
             /*case R.id.tvBookNow:
                 Intent intent1 = new Intent(context, RestaurantBookingDetailsActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
