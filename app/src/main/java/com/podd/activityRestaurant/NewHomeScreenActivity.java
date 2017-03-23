@@ -37,12 +37,15 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.podd.R;
+import com.podd.adapter.AirprotHeaderImageAdapter;
 import com.podd.adapter.HomeItemsAdapter;
 import com.podd.adapter.HomePagerAdapter;
+import com.podd.adapter.RestaturantNameAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
 import com.podd.model.HomeImageModel;
 import com.podd.model.HomeItemsModel;
+import com.podd.model.RestaturantNameList;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
@@ -63,10 +66,13 @@ import retrofit2.Response;
 public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
     private TextView tvAdminMessage,tvAppName;
     private RecyclerView rvHomeItems;
+    private RecyclerView rvRestaurantsName;
     private HomeItemsAdapter homeItemsAdapter;
+    private RestaturantNameAdapter restaturantNameAdapter;
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
     private List<HomeImageModel> homeImageModels = new ArrayList<>();
+    private List<RestaturantNameList> restaturantNameLists = new ArrayList<>();
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
     private HomePagerAdapter pagerAdapter;
@@ -89,13 +95,22 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         getIds();
         setRecycler();
         setFont();
+        if(CommonUtils.isOnline(context)){
+
+            callHomeImageAPI();
+            callRestaurantNameAPI();
+        }
+        else{
+            Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
+        }
+
         for (int i = 0; i < itemName.length; i++) {
             HomeItemsModel hotelItemModel = new HomeItemsModel();
             hotelItemModel.setService_name(itemName[i]);
             homeItemsModelList.add(hotelItemModel);
         }
        // banner_image = new ArrayList<>();
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
 
        // viewPager.startAutoScroll(4000);
         //setRecyclerData();
@@ -189,6 +204,44 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
+
+    /*Restaturant name API*/
+    private void callRestaurantNameAPI() {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        Call<JsonResponse> call = apiServices.getRestaurantName(CommonUtils.getPreferences(this,AppConstant.AppToken));
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null) {
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        restaturantNameLists.clear();
+                        if (response.body().resturent_name_list != null && response.body().resturent_name_list.size() > 0) {
+                            restaturantNameLists.addAll(response.body().resturent_name_list);
+                            restaturantNameAdapter = new RestaturantNameAdapter(context, restaturantNameLists);
+                            rvRestaurantsName.setAdapter(restaturantNameAdapter);
+
+                        } else {
+                            Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                t.printStackTrace();
+            }
+        });
+    }
+    /*Home pager dynamic image*/
     private void callHomeImageAPI() {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
@@ -229,10 +282,19 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         rvHomeItems.setLayoutManager(mLayoutManager);
         rvHomeItems.setAdapter(homeItemsAdapter);
+
+        restaturantNameAdapter = new RestaturantNameAdapter(context, restaturantNameLists);
+        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rvRestaurantsName.setLayoutManager(mLayoutManager1);
+        rvRestaurantsName.setAdapter(restaturantNameAdapter);
+
+
     }
     private void getIds() {
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
+        rvRestaurantsName= (RecyclerView) findViewById(R.id.rvRestaurantsName);
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvDayDate = (TextView) findViewById(R.id.tvDayDate);
        // tvWelcome = (TextView) findViewById(R.id.tvWelcome);

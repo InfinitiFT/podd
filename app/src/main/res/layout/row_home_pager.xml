@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <ImageView
-        android:id="@+id/ivPager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+        android:layout_height="match_parent">
+
+
+
+        <ImageView
+            android:id="@+id/ivPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/image1"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvImageDetail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:textSize="@dimen/text_size_12"
+            android:text=""
+            android:textColor="@color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+
+            android:textStyle="bold"
+            android:padding="@dimen/dp_5"/>
+
+
+    </FrameLayout>
 
 </LinearLayout>

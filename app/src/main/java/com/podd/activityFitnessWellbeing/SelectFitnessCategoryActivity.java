@@ -51,6 +51,7 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_select_category);
         getIds();
         setListeners();
+
         setRecycle();
         setFont();
         setTimerClass = (SetTimerClass)getApplication();

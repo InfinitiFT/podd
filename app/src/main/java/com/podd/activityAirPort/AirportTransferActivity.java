@@ -10,14 +10,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.AirprotHeaderImageAdapter;
+import com.podd.adapter.HomePagerAdapter;
+import com.podd.model.AirportListModel;
 import com.podd.model.HomeItemsModel;
+import com.podd.retrofit.ApiClient;
+import com.podd.retrofit.ApiInterface;
+import com.podd.utils.AppConstant;
+import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
+import com.podd.webservices.JsonResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Raj Kumar on 3/7/2017
@@ -25,14 +37,14 @@ import java.util.List;
  */
 
 public class AirportTransferActivity extends AppCompatActivity implements View.OnClickListener {
-    private Context mContext=AirportTransferActivity.this;
-    private TextView tvTravelBag,tvTravelBagMsg,tvBagCheck,tvBagCheckMsg,tvCost,tvCostMsg,tvDiscountMsg,tvGetYourQuots;
+    private Context mContext = AirportTransferActivity.this;
+    private TextView tvTravelBag, tvTravelBagMsg, tvBagCheck, tvBagCheckMsg, tvCost, tvCostMsg, tvDiscountMsg, tvGetYourQuots;
     private SetTimerClass setTimerClass;
     private TextView tvHeader;
     private RecyclerView rvHeaderImage;
     private AirprotHeaderImageAdapter airprotHeaderImageAdapter;
-    private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
-    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1,R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1,R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
+    private List<AirportListModel> airportListModels = new ArrayList<>();
+    private int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1, R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1, R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,18 +53,62 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
         getIds();
         setFont();
         setListeners();
+
+        if (CommonUtils.isOnline(mContext)) {
+
+            callAirportImageApi();
+        } else {
+            Toast.makeText(mContext, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
+        }
         setRecycler();
-        setTimerClass = (SetTimerClass)getApplication();
-        for (int i = 0; i < img.length; i++) {
+        setTimerClass = (SetTimerClass) getApplication();
+       /* for (int i = 0; i < img.length; i++) {
             HomeItemsModel hotelItemModel = new HomeItemsModel();
             hotelItemModel.setImage(img[i]);
             homeItemsModelList.add(hotelItemModel);
 
-        }
+        }*/
 
-    }  private void setRecycler() {
-        airprotHeaderImageAdapter = new AirprotHeaderImageAdapter(mContext,homeItemsModelList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
+    }
+
+    private void callAirportImageApi() {
+        CommonUtils.showProgressDialog(mContext);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        Call<JsonResponse> call = apiServices.getAirportImage(CommonUtils.getPreferences(this, AppConstant.AppToken));
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(mContext);
+                if (response.body() != null) {
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        airportListModels.clear();
+                        if (response.body().airport_image != null && response.body().airport_image.size() > 0) {
+                            airportListModels.addAll(response.body().airport_image);
+                            airprotHeaderImageAdapter = new AirprotHeaderImageAdapter(mContext, airportListModels);
+                            rvHeaderImage.setAdapter(airprotHeaderImageAdapter);
+                        } else {
+                            Toast.makeText(mContext, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(mContext, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(mContext, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(mContext);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void setRecycler() {
+        airprotHeaderImageAdapter = new AirprotHeaderImageAdapter(mContext, airportListModels);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         rvHeaderImage.setLayoutManager(mLayoutManager);
         rvHeaderImage.setAdapter(airprotHeaderImageAdapter);
     }
@@ -73,6 +129,7 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
 
 
     }
+
     private void setFont() {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
@@ -89,6 +146,7 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
 
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -106,14 +164,16 @@ public class AirportTransferActivity extends AppCompatActivity implements View.O
         super.onUserInteraction();
         setTimerClass.setTimer(this, false);
     }
+
     private void setListeners() {
         tvGetYourQuots.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tvGetYourQuots:
-               startActivity(new Intent(mContext,AirportDetailActivity.class));
+                startActivity(new Intent(mContext, AirportDetailActivity.class));
                 break;
 
         }

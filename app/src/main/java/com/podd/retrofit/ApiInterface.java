@@ -22,59 +22,66 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
     @POST("get_service_list.php")
-    Call<JsonResponse>getServiceList(@Header("Authorization") String token);
+    Call<JsonResponse> getServiceList(@Header("Authorization") String token);
 
     @GET("https://maps.googleapis.com/maps/api/geocode/json?")
-    Call<JsonResponse>getPlaceApi(@Query("address") String request);
+    Call<JsonResponse> getPlaceApi(@Query("address") String request);
 
     @GET("https://restcountries.eu/rest/v1/all")
-    Call<List<CountryCodeModel>>getCountryCodeApi();
+    Call<List<CountryCodeModel>> getCountryCodeApi();
 
     @POST("restaurant_list.php")
-    Call<JsonResponse>getRestaurantsList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getRestaurantsList(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
-    Call<JsonResponse>getCuisineRestaurantList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getCuisineRestaurantList(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
-    Call<JsonResponse>getDietaryRestaurantList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getDietaryRestaurantList(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
-    Call<JsonResponse>getMealRestaurantList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getMealRestaurantList(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
-    Call<JsonResponse>getLocationRestaurantList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getLocationRestaurantList(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("restaurant_assest_list.php")
-    Call<JsonResponse>getAmbienceRestaurantList(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getAmbienceRestaurantList(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("restaurant_details.php")
-    Call<JsonResponse>getRestaurantDetails(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getRestaurantDetails(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("time_interval.php")
-    Call<JsonResponse>getRestaurantTimeInterval(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getRestaurantTimeInterval(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("otp_verification.php")
-    Call<JsonResponse>sendOtp(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> sendOtp(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
 
     @POST("restaurant_booking.php")
-    Call<JsonResponse>otpVerification(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> otpVerification(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("delivery_booking.php")
-    Call<JsonResponse>deliveryBooking(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> deliveryBooking(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("resend_otp.php")
-    Call<JsonResponse>resendOtp(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> resendOtp(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
 
     @POST("search_restaurant.php")
-    Call<JsonResponse>getSearchRestaurantApi(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
+    Call<JsonResponse> getSearchRestaurantApi(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
 
     @POST("static_page.php")
-    Call<JsonResponse>getPrivacyPolicy(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
-    @GET("get_home_page_data.php")
-    Call<JsonResponse>getHomeImage(@Header("Authorization")String token);
+    Call<JsonResponse> getPrivacyPolicy(@Header("Authorization") String token, @Body JsonRequest jsonRequest);
+
+    @POST("get_home_page_data.php")
+    Call<JsonResponse> getHomeImage(@Header("Authorization") String token);
+
+    @POST("get_airport_image.php")
+    Call<JsonResponse> getAirportImage(@Header("Authorization") String token);
+
+    @POST("get_resturent_name.php")
+    Call<JsonResponse> getRestaurantName(@Header("Authorization") String token);
 
 
 }

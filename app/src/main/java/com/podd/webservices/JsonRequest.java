@@ -29,6 +29,7 @@ public class JsonRequest implements Serializable {
  public String date;
  public String total_price;
  public String address;
+ public String user_msg;
  public String page_id;
  public List<SavedItem> order_details;
 }

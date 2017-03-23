@@ -7,39 +7,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
-import com.podd.model.AirportListModel;
 import com.podd.model.HomeItemsModel;
+
 import java.util.List;
+
 /**
- * Created by Raj Kumar on 3/8/2017
- * for Mobiloitte
+ * Created by vinay.tripathi on 23/3/17.
  */
-public class AirprotHeaderImageAdapter extends RecyclerView.Adapter<AirprotHeaderImageAdapter.MyViewHolder> {
+
+public class FitnessHeaderImageAdapter extends RecyclerView.Adapter<FitnessHeaderImageAdapter.MyViewHolder> {
     private final Context context;
-    private List<AirportListModel> airportListModels;
+    private List<HomeItemsModel> homeItemsModelList;
     private Intent intent;
     private boolean isSelected=false;
 
-    public AirprotHeaderImageAdapter(Context context, List<AirportListModel>airportListModels) {
+    public FitnessHeaderImageAdapter(Context context, List<HomeItemsModel>homeItemsModelList) {
         this.context=context;
-        this.airportListModels=airportListModels;
+        this.homeItemsModelList=homeItemsModelList;
     }
     @Override
-    public AirprotHeaderImageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FitnessHeaderImageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_airport_header_image, parent, false);
-        return new AirprotHeaderImageAdapter.MyViewHolder(view);
+        return new FitnessHeaderImageAdapter.MyViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(final AirprotHeaderImageAdapter.MyViewHolder holder, final int position) {
-        final AirportListModel airportListModel = airportListModels.get(position);
-        Glide.with(context).load(airportListModel.image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivHeaderImage);
+    public void onBindViewHolder(final FitnessHeaderImageAdapter.MyViewHolder holder, final int position) {
+
+        final HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
+        Glide.with(context).load(homeItemsModel.getImage()).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivHeaderImage);
     }
     @Override
     public int getItemCount() {
-        return airportListModels.size();
+        return homeItemsModelList.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final ImageView ivHeaderImage;
@@ -49,3 +52,4 @@ public class AirprotHeaderImageAdapter extends RecyclerView.Adapter<AirprotHeade
         }
     }
 }
+/**/

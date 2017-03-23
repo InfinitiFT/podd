@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
 import com.podd.model.RestaurantMenu;
@@ -185,6 +186,7 @@ public class RestaurantDetailScreenActivity extends AppCompatActivity implements
         jsonRequest.latitude = latitude;
         jsonRequest.longitude = longitude;
         jsonRequest.restaurant_id = restaurantId;
+
         Call<JsonResponse> call = apiServices.getRestaurantDetails(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override

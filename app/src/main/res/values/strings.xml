@@ -160,4 +160,5 @@
     <string name="fitness_wellness"><![CDATA[Fitness & Wellness]]></string>
     <string name="attractions">Attractions</string>
     <string name="by_ticking_this_box_you_agree_to_our_terms_conditions_and_privacy_policy"><![CDATA[By ticking this box you agree to our Terms & Conditions and Privacy Policy]]></string>
+    <string name="short_note">Short Note</string>
 </resources>

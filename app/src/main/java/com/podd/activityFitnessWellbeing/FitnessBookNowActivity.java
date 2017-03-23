@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.podd.R;
 import com.podd.adapter.AirprotHeaderImageAdapter;
+import com.podd.adapter.FitnessHeaderImageAdapter;
 import com.podd.model.HomeItemsModel;
 import com.podd.utils.SetTimerClass;
 
@@ -24,7 +25,7 @@ public class FitnessBookNowActivity extends AppCompatActivity implements View.On
     private Context mContext= FitnessBookNowActivity.this;
     private SetTimerClass setTimerClass;
     private RecyclerView rvHeaderImage;
-    private AirprotHeaderImageAdapter airprotHeaderImageAdapter;
+    private FitnessHeaderImageAdapter fitnessHeaderImageAdapter;
     private TextView tvBookNow;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
     private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1,R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1,R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
@@ -45,10 +46,10 @@ public class FitnessBookNowActivity extends AppCompatActivity implements View.On
 
     }
     private void setRecycler() {
-        airprotHeaderImageAdapter = new AirprotHeaderImageAdapter(mContext,homeItemsModelList);
+        fitnessHeaderImageAdapter = new FitnessHeaderImageAdapter(mContext,homeItemsModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
         rvHeaderImage.setLayoutManager(mLayoutManager);
-        rvHeaderImage.setAdapter(airprotHeaderImageAdapter);
+        rvHeaderImage.setAdapter(fitnessHeaderImageAdapter);
     }
     private void getIds() {
         rvHeaderImage = (RecyclerView) findViewById(R.id.rvHeaderImage);

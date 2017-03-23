@@ -1,5 +1,6 @@
 package com.podd.webservices;
 
+import com.podd.model.AirportListModel;
 import com.podd.model.Ambience;
 import com.podd.model.Cuisine;
 import com.podd.model.Dietary;
@@ -7,6 +8,7 @@ import com.podd.model.HomeImageModel;
 import com.podd.model.HomeItemsModel;
 import com.podd.model.Pagination;
 import com.podd.model.PlaceApiAddress;
+import com.podd.model.RestaturantNameList;
 import com.podd.model.Restaurant;
 import com.podd.model.RestaurantMenu;
 
@@ -60,6 +62,8 @@ public class JsonResponse implements Serializable{
     public List<HomeItemsModel> allServiceList;
     public List<HomeImageModel> homePageData;
     public List<PlaceApiAddress> results;
+    public List<AirportListModel> airport_image;
+    public List<RestaturantNameList> resturent_name_list;
 
 
 }
