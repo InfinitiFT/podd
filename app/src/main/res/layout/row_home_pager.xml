@@ -24,7 +24,7 @@
             android:textSize="@dimen/text_size_12"
             android:text=""
             android:textColor="@color/white"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:gravity="center"
 
             android:textStyle="bold"

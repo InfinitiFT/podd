@@ -63,7 +63,7 @@ public class JsonResponse implements Serializable{
     public List<HomeImageModel> homePageData;
     public List<PlaceApiAddress> results;
     public List<AirportListModel> airport_image;
-    public List<RestaturantNameList> resturent_name_list;
+    public List<RestaturantNameList> restaurantlogo;
 
 
 }

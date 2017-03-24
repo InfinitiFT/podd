@@ -98,7 +98,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         if(CommonUtils.isOnline(context)){
 
             callHomeImageAPI();
-            callRestaurantNameAPI();
+            //callRestaurantNameAPI();
         }
         else{
             Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
@@ -110,11 +110,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             homeItemsModelList.add(hotelItemModel);
         }
        // banner_image = new ArrayList<>();
-
-
        // viewPager.startAutoScroll(4000);
         //setRecyclerData();
-
         /*After setting the adapter use the timer */
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
@@ -218,8 +215,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
                         restaturantNameLists.clear();
-                        if (response.body().resturent_name_list != null && response.body().resturent_name_list.size() > 0) {
-                            restaturantNameLists.addAll(response.body().resturent_name_list);
+                        if (response.body().restaurantlogo != null && response.body().restaurantlogo.size() > 0) {
+                            restaturantNameLists.addAll(response.body().restaurantlogo);
                             restaturantNameAdapter = new RestaturantNameAdapter(context, restaturantNameLists);
                             rvRestaurantsName.setAdapter(restaturantNameAdapter);
 
@@ -258,6 +255,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                             homeImageModels.addAll(response.body().homePageData);
                             pagerAdapter = new HomePagerAdapter(context, homeImageModels);
                             viewPager.setAdapter(pagerAdapter);
+                            /*show restaurant name */
+                            callRestaurantNameAPI();
 
                         } else {
                             Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();

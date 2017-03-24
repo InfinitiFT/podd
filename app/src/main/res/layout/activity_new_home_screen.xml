@@ -36,7 +36,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/tvDayDate"
@@ -68,8 +68,10 @@
                         android:background="@android:color/white"/>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-android:visibility="gone"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+android:visibility="visible"
                         android:layout_marginRight="@dimen/dp_5"
                         android:orientation="horizontal">
                         <TextView
@@ -80,6 +82,7 @@ android:visibility="gone"
                             android:text="LOVELY DAYS"
                             android:textSize="@dimen/text_size_14"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             android:drawableRight="@mipmap/logo_crown"
                             android:textColor="#524E48"/>
                         <!--<ImageView
@@ -95,17 +98,20 @@ android:visibility="gone"
                             android:visibility="gone"
                             android:layout_marginLeft="@dimen/dp_2"
                             android:src="@mipmap/logo_crown"/>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvRestaurantsName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_margin="@dimen/dp_2"
+                            android:scrollbars="none">
+                        </android.support.v7.widget.RecyclerView>
                     </LinearLayout>
 
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rvRestaurantsName"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_2"
-    android:scrollbars="none">
 
 
-</android.support.v7.widget.RecyclerView>
+
+
                     <!-- <TextView
                         android:id="@+id/tvAppName"
                         android:layout_width="match_parent"

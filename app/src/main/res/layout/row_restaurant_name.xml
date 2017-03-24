@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/llRoot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center"
         tools:ignore="UselessParent">
-
-        <TextView
-            android:id="@+id/tvRestaurantName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="jhwsdfjuhwsfjhdjhfjdhfjds"
-            android:padding="@dimen/dp_2"
-
-            />
-
-        <ImageView
-            android:id="@+id/ivImage"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:scaleType="fitXY"
-            android:contentDescription="@null"
-            android:src="@mipmap/placeholder_icon" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
 
+            <TextView
+                android:id="@+id/tvRestaurantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="fgrftgrtfhrt"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_16"
+                android:padding="@dimen/dp_1"
+                android:textColor="@color/white"
 
-    </LinearLayout>
+                />
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_2"
+                android:scaleType="fitXY"
+                android:contentDescription="@null"
+                android:src="@mipmap/placeholder_icon" />
+        </LinearLayout>
+
+
+
+
+    </FrameLayout>
 
 </LinearLayout>
