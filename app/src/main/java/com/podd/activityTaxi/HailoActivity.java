@@ -197,6 +197,7 @@ public class HailoActivity extends AppCompatActivity implements View.OnClickList
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.page_id="2";
+        jsonRequest.term_policy="taxi";
         Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override

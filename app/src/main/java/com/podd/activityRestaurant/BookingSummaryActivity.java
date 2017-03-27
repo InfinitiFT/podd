@@ -272,6 +272,7 @@ public class BookingSummaryActivity extends AppCompatActivity implements View.On
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.page_id="1";
+        jsonRequest.term_policy="restaurant";
         Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override

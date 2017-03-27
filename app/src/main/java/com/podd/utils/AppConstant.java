@@ -24,6 +24,7 @@ public class AppConstant {
     public static final String DATEBOOKED="date_booked";
     public static final String TIMEBOOKED="time_booked";
     public static final String NOOFPEOPLE="no_of_people";
+    public static final String SHORT_MSG="short_msg";
     public static final String AppToken="app_token";
 
     public static final String RESTAURANTMENU = "restaurant_menu";

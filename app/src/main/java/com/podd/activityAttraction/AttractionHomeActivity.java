@@ -10,12 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-
 import com.podd.R;
 import com.podd.adapter.AttractionAdapter;
 import com.podd.model.AttractionModel;
 import com.podd.utils.SetTimerClass;
-
 import java.util.ArrayList;
 import java.util.List;
 

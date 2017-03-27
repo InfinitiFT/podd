@@ -22,7 +22,7 @@ import java.util.List;
  * The type Restaurant return to home activity.
  */
 public class RestaurantReturnToHomeActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvReturnToHome;
+    private TextView tvReturnToHome,tvNote;
     private Context context;
     private Intent intent;
     private TextView tvRestauarntName,tvLocationLeft,tvDateBookedLeft;
@@ -30,7 +30,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
     private TextView tvDateBooked,tvConfirmation,tvThanks,tvTotalPrice;
     private TextView tvTimeBooked;
     private TextView tvNumberofPeople;
-    private LinearLayout llNumberPeople,llRestaurantScreen;
+    private LinearLayout llNumberPeople,llRestaurantScreen,llShortNote;
     private SetTimerClass setTimerClass;
     private RecyclerView rvOrderList;
     List<SavedItem> savedItemList;
@@ -52,14 +52,24 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
                 llRestaurantScreen.setVisibility(View.GONE);
                 llNumberPeople.setVisibility(View.GONE);
                 rvOrderList.setVisibility(View.VISIBLE);
-               tvTotalPrice.setVisibility(View.VISIBLE);
+                tvTotalPrice.setVisibility(View.VISIBLE);
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
                 tvTotalPrice.setText(getIntent().getStringExtra(AppConstant.TOTAL_PRICE));
+
+                if(getIntent().getStringArrayExtra(AppConstant.SHORT_MSG)!=null && !getIntent().getStringArrayExtra(AppConstant.SHORT_MSG).equals("")){
+                    llShortNote.setVisibility(View.VISIBLE);
+                    tvNote.setText(getIntent().getStringExtra(AppConstant.SHORT_MSG));
+
+                }
+                else {
+                    llShortNote.setVisibility(View.GONE);
+                }
                /* tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
                 tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
                 tvDateBooked.setText(getIntent().getStringExtra(AppConstant.DATEBOOKED));*/
                 tvConfirmation.setText(R.string.delivery_message);
             }else if(getIntent().getStringExtra(AppConstant.Delivery).equalsIgnoreCase("0")){
+                llShortNote.setVisibility(View.GONE);
                 tvRestauarntName.setText(getIntent().getStringExtra(AppConstant.RESTAURANTNAME));
                 tvLocation.setText(getIntent().getStringExtra(AppConstant.LOCATION));
                 tvTimeBooked.setText(getIntent().getStringExtra(AppConstant.TIMEBOOKED));
@@ -83,6 +93,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
 
     private void getIds() {
         tvReturnToHome = (TextView) findViewById(R.id.tvReturnToHome);
+        tvNote = (TextView) findViewById(R.id.tvNote);
         tvRestauarntName = (TextView) findViewById(R.id.tvRestauarntName);
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         tvDateBooked = (TextView) findViewById(R.id.tvDateBooked);
@@ -96,6 +107,7 @@ public class RestaurantReturnToHomeActivity extends AppCompatActivity implements
         tvThanks = (TextView) findViewById(R.id.tvThanks);
         tvTotalPrice = (TextView) findViewById(R.id.tvTotalPrice);
         llNumberPeople = (LinearLayout) findViewById(R.id.llNumberPeople);
+        llShortNote = (LinearLayout) findViewById(R.id.llShortNote);
         llRestaurantScreen = (LinearLayout) findViewById(R.id.llRestaurantScreen);
         rvOrderList = (RecyclerView) findViewById(R.id.rvOrderList);
     }
