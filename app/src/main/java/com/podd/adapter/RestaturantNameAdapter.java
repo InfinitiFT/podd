@@ -2,6 +2,7 @@ package com.podd.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class RestaturantNameAdapter extends RecyclerView.Adapter<RestaturantName
 
         if(restaturantNameList.image_url!=null&&restaturantNameList.image_url.length()>0){
 
-            Glide.with(context).load(restaturantNameList.image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivImage);
+            Glide.with(context).load(restaturantNameList.image_url).error(Color.parseColor("#000000")).placeholder(Color.parseColor("#000000")).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivImage);
         }
         if(restaturantNameList.restaurant_name!=null&&restaturantNameList.restaurant_name.length()>0){
             holder.tvRestaurantName.setText(restaturantNameList.restaurant_name);

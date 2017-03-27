@@ -48,6 +48,7 @@ public class JsonResponse implements Serializable{
     public String about_text;
     public String name;
     public String page_data;
+    public String image_url;
     public String max_people_allowed;
     public List<Cuisine>cuisine;
     public List<Dietary>dietary;

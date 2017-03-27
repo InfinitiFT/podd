@@ -18,14 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -51,6 +49,8 @@ import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonResponse;
+import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +66,7 @@ import retrofit2.Response;
 public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
     private TextView tvAdminMessage,tvAppName;
     private RecyclerView rvHomeItems;
-    private RecyclerView rvRestaurantsName;
+   private RecyclerView rvRestaurantsName;
     private HomeItemsAdapter homeItemsAdapter;
     private RestaturantNameAdapter restaturantNameAdapter;
     private Context context;
@@ -86,6 +86,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+    private ImageView ivImageLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,12 +128,13 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         timer .schedule(new TimerTask() { // task to be scheduled
 
             @Override
-            public void run() {
+            public void run()
+            {
                 handler.post(Update);
             }
         },500, 3000);
       //  ImageView ivLogo=(ImageView)findViewById(R.id.ivLogo);
-        try {
+        /*try {
             Animation  animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
             animation.setDuration(3000); // duration - half a second
             animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
@@ -143,7 +145,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         }catch (Exception e2)
         {
             e2.printStackTrace();
-        }
+        }*/
 
         /*if(CommonUtils.isNetworkConnected(this)){
             callHomeApi();
@@ -156,7 +158,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         checkPermission();
 
     }
-
     private void setFont() {
        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         tvDayDate.setTypeface(typeface);
@@ -167,8 +168,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
        // tvWelcome.setTypeface(typefaceBold);
        // tvAppName.setTypeface(typefaceBold);
     }
-
-    private void callHomeApi() {
+    private void callHomeApi()
+    {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         Call<JsonResponse> call = apiServices.getServiceList(CommonUtils.getPreferences(this,AppConstant.AppToken));
@@ -201,7 +202,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
-
     /*Restaturant name API*/
     private void callRestaurantNameAPI() {
         CommonUtils.showProgressDialog(context);
@@ -214,6 +214,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
                 if (response.body() != null) {
 
                     if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        //Glide.with(context).load(response.body().image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivImageLogo);
+                       // tvWelcome.setText(response.body().restaurant_name);
                         restaturantNameLists.clear();
                         if (response.body().restaurantlogo != null && response.body().restaurantlogo.size() > 0) {
                             restaturantNameLists.addAll(response.body().restaurantlogo);
@@ -294,6 +296,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
         rvRestaurantsName= (RecyclerView) findViewById(R.id.rvRestaurantsName);
+        ivImageLogo = (ImageView) findViewById(R.id.ivImageLogo);
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvDayDate = (TextView) findViewById(R.id.tvDayDate);
        // tvWelcome = (TextView) findViewById(R.id.tvWelcome);

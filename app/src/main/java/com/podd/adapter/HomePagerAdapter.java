@@ -1,6 +1,7 @@
 package com.podd.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class HomePagerAdapter extends PagerAdapter {
         TextView tvImageDetail = (TextView) layout.findViewById(R.id.tvImageDetail);
         if (imgList.get(position).image_url != null && imgList.get(position).image_url.length() > 0) {
 
-            Glide.with(context).load(imgList.get(position).image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivPager);
+            Glide.with(context).load(imgList.get(position).image_url).error(Color.parseColor("#000000")).placeholder(Color.parseColor("#000000")).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivPager);
         }
         if (imgList.get(position).image_message != null && imgList.get(position).image_message.length() > 0) {
             tvImageDetail.setText(imgList.get(position).image_message);
