@@ -40,6 +40,7 @@
                           <th>Menu Name</th>   
                           <th>Subtitle Name</th>                       
                           <th>Item Name</th>
+						  <th>Item Image</th>
                           <th>Price</th>
                           <th>Action</th>
                         </tr>
@@ -52,10 +53,11 @@
                           <td><?php echo $record['meal_name'];?></td>
                           <td><?php echo $record['subtitle'];?></td>
                           <td><?php echo $record['name'];?></td>
+						   <td><?php url1().$record['name'];?></td>
                           <td><?php echo $record['item_price'];?> </td>
                           <td>
                              <button type="button" id="deletepopup-<?php echo $record['item_price_id'];?>" class="btn btn-round btn-danger">Delete</button>
-                              <a  href="edit_item_menu.php?id=<?php echo encrypt_var($record['item_price_id']);?>" class="btn btn-round btn-primary">Edit</a></td>
+                              <a  href="edit_item_menu.php?id=<?php echo encrypt_var($record['meal']);?>&restaurant_id=<?php if($_SESSION['restaurant_id'] != ""){echo encrypt_var($_SESSION['restaurant_id']);} else {echo $_GET['id'];}?>" class="btn btn-round btn-primary">Edit</a></td>
                          </tr>
                         <?php }?> 
                       </tbody>

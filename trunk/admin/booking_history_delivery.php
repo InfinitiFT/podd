@@ -50,6 +50,7 @@
                   
                   <div class="col-md-2 col-sm-2 col-xs-2 form-group">
                     <select name="booking_history_delivery_status" id="booking_history_delivery_status" class="form-control">
+					  <option value="5">All</option>
 					  <option value="1">Pending</option>
                       <option value="2">Confirmed</option>
                       <option value="0">Declined</option>

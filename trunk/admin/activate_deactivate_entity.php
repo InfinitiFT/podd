@@ -85,7 +85,18 @@ else if($type == "items")
   {
     echo "error";
   }
-} 
+}
+else if($type == "home_page")
+{
+  if(mysqli_query($GLOBALS['conn'],"UPDATE `home_page_image` SET `status`= '".mysqli_real_escape_string($GLOBALS['conn'],$status)."' WHERE `image_id` = '".mysqli_real_escape_string($GLOBALS['conn'],$id)."'"))
+  {
+    echo "success";
+  }
+  else
+  {
+    echo "error";
+  }
+}   
  
 ?>
 

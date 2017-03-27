@@ -2,6 +2,20 @@
 <?php 
   include_once('header.php');
   $result = array();
+  if($_SESSION['restaurant_id'] != "")
+{
+	if(!empty($_GET['restaurant_id']))
+	{
+		if($_SESSION['restaurant_id'] != decrypt_var($_GET['restaurant_id']))
+	{
+        session_destroy();
+		header("Location:index.php");
+	}
+		
+	}
+	
+	
+}
   if(@$_SESSION['updateBooking'] == 1){
 		$msg = '<div class="alert alert-success">Booking updated successfully</div>';
 	    $_SESSION['updateBooking'] ='';
@@ -106,6 +120,7 @@
                   
                   <div class="col-md-2 col-sm-2 col-xs-2 form-group">
                     <select name="booking_management_status" id="booking_management_status" class="form-control">
+					  <option value="4">All</option>
                       <option value="1">Pending</option>
                       <option value="2">Accepted</option>
                       <option value="0">Declined</option>

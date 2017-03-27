@@ -2,6 +2,7 @@
 include('../functions/functions.php');
 ob_start();
 session_start();
+
 if(!empty($_SESSION['password']) && !empty($_SESSION['email']))
 {
   if($_SESSION['role'] == "2")
@@ -46,7 +47,6 @@ if(isset($_POST["submit"]))
                } 
               $restaurant_id = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT restaurant_id FROM `restaurant_details` WHERE user_id = '".$admin['user_id']."'"));
               $_SESSION['restaurant_id'] = $restaurant_id['restaurant_id'];
-
               header("Location:booking_list_restaurant.php");
             }
             else{
@@ -99,23 +99,23 @@ if(isset($_POST["submit"]))
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>IOSAndroidAppDevelopment! | </title>
+    <title>podd</title>
 
     <!-- Bootstrap -->
-    <link href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="../assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="../assets/vendors/animate.css/animate.min.css" rel="stylesheet">
-     <link href="../assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="../assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="../assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
-	 <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="assets/vendors/animate.css/animate.min.css" rel="stylesheet">
+     <link href="assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+	 <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="../assets/build/css/custom.min.css" rel="stylesheet">
+    <link href="assets/build/css/custom.min.css" rel="stylesheet">
   </head>
 
   <body class="login">
@@ -195,10 +195,10 @@ if(isset($_POST["submit"]))
       </div>
     </div>
   </body>
-  <!-- <script src="../assets/vendors/pnotify/dist/pnotify.js"></script>
-    <script src="../assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
-    <script src="../assets/vendors/pnotify/dist/pnotify.nonblock.js"></script> -->
-    <script src="../assets/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/js/jquery.validate.min.js"></script>
+  <!-- <script src="assets/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="assets/vendors/pnotify/dist/pnotify.nonblock.js"></script> -->
+    <script src="assets/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
     <script src="validation.js"></script>
 </html>

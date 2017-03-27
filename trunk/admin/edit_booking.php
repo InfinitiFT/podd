@@ -28,13 +28,13 @@ if (isset($_REQUEST['submit'])) {
     if($_POST['booking_status'])
     {
       $booking_status = mysqli_real_escape_string($conn, trim($_POST['booking_status']));
+	  $update       = mysqli_query($GLOBALS['conn'], "UPDATE `booked_records_restaurant` SET booking_time ='" . $booking_time . "',number_of_people ='" . $people . "',name='" . $name . "',booking_date='" . $booking_date . "',booking_status='" . $booking_status . "' WHERE `booking_id` ='" . mysqli_real_escape_string($conn, $booking_id) . "'");
     }
     else
     {
-      $booking_status ="";
+     $update       = mysqli_query($GLOBALS['conn'], "UPDATE `booked_records_restaurant` SET booking_time ='" . $booking_time . "',number_of_people ='" . $people . "',name='" . $name . "',booking_date='" . $booking_date . "' WHERE `booking_id` ='" . mysqli_real_escape_string($conn, $booking_id) . "'");
     }
-    $booking_status = mysqli_real_escape_string($conn, trim($_POST['booking_status']));
-    $update       = mysqli_query($GLOBALS['conn'], "UPDATE `booked_records_restaurant` SET booking_time ='" . $booking_time . "',number_of_people ='" . $people . "',name='" . $name . "',email='" . $email . "',booking_date='" . $booking_date . "',booking_status='" . $booking_status . "',contact_no='" . $phone . "' WHERE `booking_id` ='" . mysqli_real_escape_string($conn, $booking_id) . "'");
+    
     if ($update) {
         $_SESSION['updateBooking'] = 1;
         if ($_GET['list'] == 'list')

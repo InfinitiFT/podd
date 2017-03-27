@@ -43,7 +43,6 @@ if(isset($_REQUEST['submit'])){
 	
 	if(empty($_SESSION['msg']))
 	{
-		
 		$allImages = implode(',',$img);
 		$dietary = implode(',',$_POST['dietary']);
 		$cuisine = implode(',',$_POST['cuisine']);
@@ -90,10 +89,9 @@ if(isset($_REQUEST['submit'])){
 
 			$resturant = mysqli_query($conn,"INSERT INTO `restaurant_details`(`restaurant_name`, `restaurant_images`, `location`,`latitude`,`longitude`,`restaurant_full_address`,`deliver_food`, `about_text`, `max_people_allowed`, `cuisine`, `ambience`, `dietary`, `price_range`,`sun_open_time`, `sun_close_time`, `is_sun`, `mon_open_time`, `mon_close_time`, `is_mon`, `tue_open_time`, `tue_close_time`, `is_tue`, `wed_open_time`, `wed_close_time`, `is_wed`, `thu_open_time`, `thu_close_time`,`is_thu`, `fri_open_time`, `fri_close_time`, `is_fri`, `sat_open_time`, `sat_close_time`, `is_sat`, `user_id`) VALUES('".$name."','".$allImages."','".$loction."','".$latitude."','".$longitude."','".$location_data."','".$deliver."','".$about."','".$people."','".$cuisine."','".$ambience."','".$dietary."','".$price."','".$opentimeSun."','".$closetimeSun."','".$is_Sun."','".$opentimeMon."','".$closetimeMon."','".$is_Mon."','".$opentimeTue."','".$closetimeTue."','".$is_Tue."','".$opentimeWed."','".$closetimeWed."','".$is_Wed."','".$opentimeThu."','".$closetimeThu."','".$is_Thu."','".$opentimeFri."','".$closetimeFri."','".$is_Fri."','".$opentimeSat."','".$closetimeSat."','".$is_Sat."','".$id."')");	
 		}
-
-		   $to = $email;
-		   $subject = "Welcome to podd";
-		   $message = '
+           $mail_data['to']= $email;
+		   $mail_data['subject']= "Welcome to podd";
+		   $mail_data['html']= '
 			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			  <html xmlns="http://www.w3.org/1999/xhtml">
 			 <head>
@@ -109,7 +107,7 @@ if(isset($_REQUEST['submit'])){
 			              <div class="m_-7807612712962067148paragraph_break"><br></div>
 			              <div>Welcome to podd. Your account has been created successfully.</div>
 			              <div class="m_-7807612712962067148paragraph_break"><br></div>
-			              <div>Please click on this link to login using the credentials below:<b> <a href = "'.url().''.'admin/index.php">Linkforlogin</a></b>
+			              <div>Please click on this link to login using the credentials below:<b> <a href = "'.url().''.'/index.php">Go to dashboard</a></b>
 			              </div>
 			              <div class="m_-7807612712962067148paragraph_break"><br></div>
 			              <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
@@ -126,17 +124,14 @@ if(isset($_REQUEST['submit'])){
 			  </tbody>				
 		    </body>
 		 </html>';
-         // Always set content-type when sending HTML email
-         $headers = "MIME-Version: 1.0" . "\r\n";
-         $headers .= 'Cc: hello@poddapp.com' . "\r\n";
-         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-         // More headers
-         $headers .= 'From: podd' . "\r\n"; 
-         if(mail($to,$subject,$message,$headers)){  
+		   // Always set content-type when sending HTML email
+		 $mail_data['from']= "podd";
+		 $email_issue = send_email($mail_data);
+		 if(json_decode($email_issue)->message == 'success'){  
 			$_SESSION["successmsg"] = "Venue add successfully.";
 		 } else{ 
 			$_SESSION["errormsg"] = "Error in sending email.";
-		 } 
+		 }
 		 $_SESSION['msg']= 'success';
 		 header('Location: restaurant_list.php');
 	    }

@@ -57,16 +57,30 @@ try {
                 $item_id = items_name($value);
                 $price = mysqli_real_escape_string($conn,$_POST['price'][$i]);
                 $user_id = mysqli_real_escape_string($conn,$_SESSION['user_id']);
+			   
+				if($_FILES['item_logo']['name'][$i])
+					{
+						  $ext = pathinfo($_FILES["item_logo"]['name'][$i],PATHINFO_EXTENSION);
+						  $item_logo = time().rand(100,999).'.'.$ext;
+						  $target_dir = "../uploads/item_image/";
+						  $target_path    = $target_dir . $item_logo;
+						  move_uploaded_file($_FILES['item_logo']['tmp_name'][$i], $target_path);
+					}
+					else{
+                          $item_logo = "";
+					}
                 if(empty($item_id))
                 {
                 	$name = mysqli_real_escape_string($conn,trim($value));
-                    mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`created_by`) VALUES ('".$name."','".$user_id."')");
+                    mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`item_logo`,`created_by`) VALUES ('".$name."','".$item_logo."','".$user_id."')");
                     $item_id = mysqli_insert_id($GLOBALS['conn']);
+					
                 	$add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`subtitle`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$subtitle_id."','".$item_id."','".$price."','".$user_id."')");
                     
                 }
                 else
                 {
+					
                 	$add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`subtitle`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$subtitle_id."','".$item_id."','".$price."','".$user_id."')");
                   
                 }
@@ -104,7 +118,7 @@ catch(Exception $e) {
                         </div>
                         <div class="x_content">
 
-                            <form class="form-horizontal form-label-left" id="add_item_price" method="post">
+                            <form class="form-horizontal form-label-left" id="add_item_price" method="post" enctype="multipart/form-data">
                                 <?php
                                 if(isset($_SESSION["successmsg"])) {
                                     $success = $_SESSION["successmsg"];
@@ -164,7 +178,9 @@ catch(Exception $e) {
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
                                         <input type="text" name="price[]" class="form-control"  placeholder="Price">
                                     </div>
-
+                                     <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
+                                        <input type="file" name="item_logo[]" class="form-control"  placeholder="File">
+                                    </div>
                                 </div>
                                 <div id="dataAdd-1" class="add_subtitle-1"></div>
                                 <input type="hidden" name="selected_item[]" id="selected_item" value= "">

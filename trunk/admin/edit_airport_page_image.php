@@ -9,13 +9,13 @@ try {
             if ((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg") || ($_FILES["image"]["type"] == "image/pjpeg") || ($_FILES["image"]["type"] == "image/png") || ($_FILES["image"]["type"] == "image/jpg"))) {
                 $home_page_image  = $_FILES["image"]['name'];
                 $home_page_image1 = time() . $_FILES['image']['name'];
-                $target_path    = $_SERVER['DOCUMENT_ROOT'] . "/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/airport_image/";
+                $target_dir = "../uploads/airport_image/";
                 $target_path    = $target_path . $home_page_image1;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-                    if (mysqli_query($GLOBALS['conn'], "UPDATE `airport_section_data` SET `image_message`= '". $image_message . "',`image_url`= '". 'uploads/home_page_image/'.$home_page_image1 . "' WHERE `id` = '" . decrypt_var($_GET['id']) . "'")) {
+                    if (mysqli_query($GLOBALS['conn'], "UPDATE `airport_section_data` SET `airport_image`= '". 'uploads/airport_image/'.$home_page_image1 . "' WHERE `id` = '" . decrypt_var($_GET['id']) . "'")) {
 						
-                        $_SESSION["successmsg"] = "Home page edited successfully.";
-                        header('Location:home_page_listing.php');
+                        $_SESSION["successmsg"] = "Airport page edited successfully.";
+                        header('Location:airport_page_listing.php');
                     } else {
                         $_SESSION["errormsg"] = "insertion error.";
                     }
@@ -30,7 +30,7 @@ try {
         }
 		 
 		else {
-            header('Location:home_page_listing.php');
+            header('Location:airport_page_listing.php');
         }
         
         
@@ -54,7 +54,7 @@ catch (Exception $e) {
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Edit Home Page Data</h2>
+                    <h2>Edit Image</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -88,26 +88,18 @@ catch (Exception $e) {
                   <?php }else{}?>
                       
                       <?php                      
-                       $data = mysqli_query($GLOBALS['conn'],"select * from `home_page_image` where image_id = '".decrypt_var($_GET['id'])."'");
+                       $data = mysqli_query($GLOBALS['conn'],"select * from `airport_section_data` where id = '".decrypt_var($_GET['id'])."'");
 					   //echo "select * from `home_page_image` where image_id = '".decrypt_var($_GET['id'])."'";exit;
 					            	$row = mysqli_fetch_assoc($data);
                        //print_r($row);exit;									
                       ?>
-                      <div class="item form-group">
-                       
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Message <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="message" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" value="<?php if(isset($_POST['submit'])){
-                             print $_POST['message'];} else { echo $row['image_message']; } ?>" name="message" placeholder="Name"  type="text">
-                        </div>
-                      </div>
+                     
                       <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Image<span class="required">*</span>
                         </label>
                         <div class="col-md-3 col-sm-3 col-xs-6">
 						  <div class="col-md-6 col-sm-6 col-xs-12">
-							<img src="<?php echo url1().$row['image_url'] ?>"  height="80" width="80" ><input type="hidden" value="<?php $row['service_image'] ?>" >
+							<img src="<?php echo url1().$row['airport_image'] ?>"  height="80" width="80" >
                         </label>                          
                         </div>
                           <input id="image" class="form-control col-md-3 col-xs-5" data-validate-length-range="6" data-validate-words="2" name="image"   type="file">

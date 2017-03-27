@@ -10,12 +10,12 @@ if ($type == "booked_restaurant") {
             $booking_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `booked_records_restaurant` brr join restaurant_details rd on brr.restaurant_id = rd.restaurant_id  WHERE `booking_id`='" . mysqli_real_escape_string($conn, trim($id)) . "'"));
             $booking_date    = date('l', strtotime($booking_details['booking_date'])); // note: first arg to date() is lower-case L
             $date            = date_create($booking_details['booking_date']);
-            $message         = "Your booking has been confirmed at " . $booking_details['restaurant_name'] . "," . $booking_details['restaurant_full_address'] . "on" . $booking_date . "," . date_format($date, "d-M-Y") . "at" . $booking_details['booking_time'] . "";
-            send_sms($booking_details['contact_no'], preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $message));
+            $message         = "Your booking has been confirmed at".' '.$booking_details['restaurant_name'] . ",".' '. $booking_details['restaurant_full_address'] . "".' '."on" .' '. $booking_date . "," . date_format($date, "d-M-Y") .' ' ."at" .' '. $booking_details['booking_time'] . "";
+            send_sms($booking_details['contact_no'],$message);
             if($booking_details['email']){
-                $to = $booking_details['email'];
-             $subject = "Booking confirmation on podd";
-                   $message = '
+				$mail_data['to']= $booking_details['email'];
+		        $mail_data['subject']= "Booking confirmation on podd";
+		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                       <html xmlns="http://www.w3.org/1999/xhtml">
                      <head>
@@ -29,9 +29,7 @@ if ($type == "booked_restaurant") {
                               <div style="line-height:1.3em">
                                 <div>Hello <b>'.$booking_details['name'].'</b>,</div>
                                   <div class="m_-7807612712962067148paragraph_break"><br></div>
-                                  <div>Your booking has been confirmed at '. $booking_details['restaurant_name'] . ',' . $booking_details['restaurant_full_address'] . 'on 
-                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
-                                  '. $booking_date . ',' . date_format($date, "d-M-Y") . 'at' . $booking_details['booking_time'] . '</div>
+                                  <div>Your booking has been confirmed at '. $booking_details['restaurant_name'] . ',' . $booking_details['restaurant_full_address'] . ''.' '.'on'.' '.''. $booking_date . ',' . date_format($date, "d-M-Y") . ''.' '.'at '.' '.'' . $booking_details['booking_time'] . '</div>
                                   <div class="m_-7807612712962067148paragraph_break"><br></div>
                                   <div>Best regards,</div>
                                   <div>The podd Team</div>
@@ -41,13 +39,9 @@ if ($type == "booked_restaurant") {
                       </tbody>              
                     </body>
                  </html>';
-                 // Always set content-type when sending HTML email
-                 $headers = "MIME-Version: 1.0" . "\r\n";
-                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                 // More headers
-                 $headers .= 'From: podd' . "\r\n"; 
-                 mail($to,$subject,$message,$headers);
-
+		   // Always set content-type when sending HTML email
+		    $mail_data['from']= "podd";
+		    send_email($mail_data);
             }
              
             
@@ -63,13 +57,13 @@ if ($type == "booked_restaurant_delivery") {
     if (mysqli_query($GLOBALS['conn'], "UPDATE `delivery_bookings` SET `delivery_status`= '" . $status . "' WHERE `delivery_id` = '" . $id . "'")) {
         if (trim($status) == '2') {
            $booking_details = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'], "SELECT * FROM `delivery_bookings` db join restaurant_details rd on db.restaurant_id = rd.restaurant_id WHERE `delivery_id`='" . mysqli_real_escape_string($conn, trim($id)) . "'"));
-            $message         = "Your Order has been confirmed by ".$booking_details['restaurant_name'].". A member of their team will call you shortly to complete the booking.";
-            send_sms($booking_details['contact_no'], preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $message));
+            $message         = "Your Order has been confirmed by ".' '.$booking_details['restaurant_name'].".".' '."A member of their team will call you shortly to complete the booking.";
+            send_sms($booking_details['contact_no'],$message);
 			
             if($booking_details['email']){
-              $to = 'rahul.choudhary@mobiloittegroup.com';
-              $subject = "Booking confirmation on podd";
-                   $message = '
+			  $mail_data['to']= $booking_details['email'];
+		        $mail_data['subject']= "Booking confirmation on podd";
+		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                       <html xmlns="http://www.w3.org/1999/xhtml">
                      <head>
@@ -82,9 +76,7 @@ if ($type == "booked_restaurant_delivery") {
                               <div style="line-height:1.3em">
                                 <div>Hello <b>'.$booking_details['name'].'</b>,</div>
                                   <div class="m_-7807612712962067148paragraph_break"><br></div>
-                                  <div>Your Order has been confirmed by '.$booking_details['restaurant_name'].' restaurant. A member of their team will call you shortly to complete the booking. 
-                                  <div class="m_-7807612712962067148paragraph_break"><br></div>
-                                  </div>
+                                  <div>Your Order has been confirmed by '.$booking_details['restaurant_name'].'. A member of their team will call you shortly to complete the booking. 
                                   <div class="m_-7807612712962067148paragraph_break"><br></div>
                                   <div>Best regards,</div>
                                   <div>The podd Team</div>
@@ -94,14 +86,9 @@ if ($type == "booked_restaurant_delivery") {
                       </tbody>              
                     </body>
                  </html>';
-                 // Always set content-type when sending HTML email
-                 $headers = "MIME-Version: 1.0" . "\r\n";
-                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                 // More headers
-                 $headers .= 'From: podd' . "\r\n"; 
-                 mail($to,$subject,$message,$headers);
-                
-            
+		   // Always set content-type when sending HTML email
+		    $mail_data['from']= "podd";
+		    send_email($mail_data);  
         } 
 		 echo "success";
         

@@ -65,9 +65,9 @@ switch ($_REQUEST['type']) {
       
         $message1 = "We are unable to confirm your booking with this venue, please try a different time or select another venue";
          if($booking_details['email']){
-                $to = $booking_details['email'];
-                $subject = "Booking declined on podd";
-                $email_message = '
+				$mail_data['to']= $booking_details['email'];
+		        $mail_data['subject']= "Booking declined on podd";
+		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                       <html xmlns="http://www.w3.org/1999/xhtml">
                      <head>
@@ -91,12 +91,9 @@ switch ($_REQUEST['type']) {
                       </tbody>              
                     </body>
                  </html>';
-                 // Always set content-type when sending HTML email
-                 $headers = "MIME-Version: 1.0" . "\r\n";
-                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                 // More headers
-                 $headers .= 'From: podd' . "\r\n"; 
-                 mail($to,$subject,$email_message,$headers);
+		   // Always set content-type when sending HTML email
+		    $mail_data['from']= "podd";
+		    send_email($mail_data);
 
             }
        send_sms($booking_details['contact_no'],$message1);
@@ -116,9 +113,9 @@ switch ($_REQUEST['type']) {
             $message         = "Hi ".$booking_details['name'].", unfortunately your order cannot be fulfilled at this time. Please select another option.";
             send_sms($booking_details['contact_no'], preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $message));
             if($booking_details['email']){
-              $to = $booking_details['email'];
-              $subject = "Order declined on podd";
-                   $message = '
+			  $mail_data['to']= $booking_details['email'];
+		        $mail_data['subject']= "Order declined on podd";
+		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                       <html xmlns="http://www.w3.org/1999/xhtml">
                      <head>
@@ -143,14 +140,9 @@ switch ($_REQUEST['type']) {
                       </tbody>              
                     </body>
                  </html>';
-                 // Always set content-type when sending HTML email
-                 $headers = "MIME-Version: 1.0" . "\r\n";
-                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                 // More headers
-                 $headers .= 'From: podd' . "\r\n"; 
-                 mail($to,$subject,$message,$headers);
-                
-
+		   // Always set content-type when sending HTML email
+		    $mail_data['from']= "podd";
+		    send_email($mail_data);
         }
        print 1;
       }

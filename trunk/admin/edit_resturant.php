@@ -26,149 +26,165 @@
 	
 	if(isset($_REQUEST['submit']))
 	{
-		if($_POST['remImg'])
+		if($_SESSION['restaurant_id'] == "")
+		{
+			if($_POST['remImg'])
 			$remainImg =array_diff($images,$_POST['remImg']);
-		else 	
-			$remainImg = $images;
-		
-		if($_FILES['resturant_images']['name'][0])
-			$countFile = count($_FILES['resturant_images']['name']);
-		else 
-			$countFile = 0;
-		$countImg = (int)$countFile + (int)$_POST['countImg'];
-		if($countImg > 6){
-			$_SESSION['msg']= 'maxLimit';
-		}
-		
-		$j =0;
-		if(!empty($_FILES['resturant_images']['name'][0])){
-			for($i=0; $i < $countFile; $i++){
-			    $ext = pathinfo($_FILES["resturant_images"]['name'][$i],PATHINFO_EXTENSION);
-			    $image_name = time().rand(100,999).'.'.$ext;
-				$target_dir = "../uploads/resturant/";
-				$imageUpload = imageUpload($target_dir,trim($image_name),$_FILES["resturant_images"]['tmp_name'][$i]);
-				if($imageUpload){
-					$img[] = "uploads/resturant/".trim($image_name);
-				}else{
-					$_SESSION['msg']= 'image';
-					
-				}	
+			else 	
+				$remainImg = $images;
+			
+			if($_FILES['resturant_images']['name'][0])
+				$countFile = count($_FILES['resturant_images']['name']);
+			else 
+				$countFile = 0;
+			$countImg = (int)$countFile + (int)$_POST['countImg'];
+			if($countImg > 6){
+				$_SESSION['msg']= 'maxLimit';
 			}
-		}
-		if(!empty($remainImg) &&(!empty($img)))
+			
+			$j =0;
+			if(!empty($_FILES['resturant_images']['name'][0])){
+				for($i=0; $i < $countFile; $i++){
+					$ext = pathinfo($_FILES["resturant_images"]['name'][$i],PATHINFO_EXTENSION);
+					$image_name = time().rand(100,999).'.'.$ext;
+					$target_dir = "../uploads/resturant/";
+					$imageUpload = imageUpload($target_dir,trim($image_name),$_FILES["resturant_images"]['tmp_name'][$i]);
+					if($imageUpload){
+						$img[] = "uploads/resturant/".trim($image_name);
+					}else{
+						$_SESSION['msg']= 'image';
+						
+					}	
+				}
+			}
+			if(!empty($remainImg) &&(!empty($img)))
 			$allResturantImg = implode(',',array_merge($remainImg,$img));
-		if(empty($remainImg) &&(!empty($img)))
+            if(empty($remainImg) &&(!empty($img)))
 			$allResturantImg = implode(',',$img);
-		if(!empty($remainImg) && (empty($img)))
+            if(!empty($remainImg) && (empty($img)))
 			$allResturantImg = implode(',',$remainImg);
+			
+		}
+		
+		
+		
 
 		$dietary = implode(',',$_POST['dietary']);
 		$cuisine = implode(',',$_POST['cuisine']);
 		$ambience = implode(',',$_POST['ambience']);
 		$location = getLatLong($_POST['location']);
 		$passwordRandom = randomPassword();
-	
+	    $locationData = getLatLong($_POST['locationTest']);
+		$location_data = mysqli_real_escape_string($conn,trim($_POST['locationTest']));
+		$latitude = mysqli_real_escape_string($conn,trim($locationData['latitude']));
+		$longitude = mysqli_real_escape_string($conn,trim($locationData['longitude']));
+		$loction = mysqli_real_escape_string($conn,$_POST['location']);
+		$email = mysqli_real_escape_string($conn,$_POST["email"]);
+		$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
+		$about = mysqli_real_escape_string($conn,$_POST['about']);
+		$people = mysqli_real_escape_string($conn,$_POST['people']);
+		$price = mysqli_real_escape_string($conn,$_POST['price']);
+		$resturantID = mysqli_real_escape_string($conn,$_POST['resturantID']);
+		$user_id = mysqli_real_escape_string($conn,$_SESSION['user_id']);
+		$is_Sun = mysqli_real_escape_string($conn,$_POST['is_Sun']);
+		$opentimeSun = mysqli_real_escape_string($conn,$_POST['opentimeSun']);
+		$closetimeSun = mysqli_real_escape_string($conn,$_POST['closetimeSun']);
+		$is_Mon = mysqli_real_escape_string($conn,$_POST['is_Mon']);
+		$opentimeMon = mysqli_real_escape_string($conn,$_POST['opentimeMon']);
+		$closetimeMon = mysqli_real_escape_string($conn,$_POST['closetimeMon']);
+		$is_Tue = mysqli_real_escape_string($conn,$_POST['is_Tue']);
+		$opentimeTue = mysqli_real_escape_string($conn,$_POST['opentimeTue']);
+		$closetimeTue = mysqli_real_escape_string($conn,$_POST['closetimeTue']);
+        $is_Wed = mysqli_real_escape_string($conn,$_POST['is_Wed']);
+		$opentimeWed = mysqli_real_escape_string($conn,$_POST['opentimeWed']);
+		$closetimeWed = mysqli_real_escape_string($conn,$_POST['closetimeWed']);
+		$is_Thu = mysqli_real_escape_string($conn,$_POST['is_Thu']);
+		$opentimeThu = mysqli_real_escape_string($conn,$_POST['opentimeThu']);
+		$closetimeThu = mysqli_real_escape_string($conn,$_POST['closetimeThu']);
+		$is_Fri = mysqli_real_escape_string($conn,$_POST['is_Fri']);
+		$opentimeFri = mysqli_real_escape_string($conn,$_POST['opentimeFri']);
+		$closetimeFri = mysqli_real_escape_string($conn,$_POST['closetimeFri']);
+		$is_Sat = mysqli_real_escape_string($conn,$_POST['is_Sat']);
+		$opentimeSat = mysqli_real_escape_string($conn,$_POST['opentimeSat']);
+		$closetimeSat = mysqli_real_escape_string($conn,$_POST['closetimeSat']);
 		if(empty($_SESSION['msg']))
 		{			
-			$locationData = getLatLong($_POST['locationTest']);
-			$location_data = mysqli_real_escape_string($conn,trim($_POST['locationTest']));
-			$latitude = mysqli_real_escape_string($conn,trim($locationData['latitude']));
-			$longitude = mysqli_real_escape_string($conn,trim($locationData['longitude']));
-			$loction = mysqli_real_escape_string($conn,$_POST['location']);
-			$email = mysqli_real_escape_string($conn,$_POST["email"]);
-			$phone = mysqli_real_escape_string($conn,trim($_POST['phone']));
-			$about = mysqli_real_escape_string($conn,$_POST['about']);
-			$people = mysqli_real_escape_string($conn,$_POST['people']);
-			$price = mysqli_real_escape_string($conn,$_POST['price']);
-			$resturantID = mysqli_real_escape_string($conn,$_POST['resturantID']);
-			$user_id = mysqli_real_escape_string($conn,$_SESSION['user_id']);
-			$is_Sun = mysqli_real_escape_string($conn,$_POST['is_Sun']);
-			$opentimeSun = mysqli_real_escape_string($conn,$_POST['opentimeSun']);
-			$closetimeSun = mysqli_real_escape_string($conn,$_POST['closetimeSun']);
-			$is_Mon = mysqli_real_escape_string($conn,$_POST['is_Mon']);
-			$opentimeMon = mysqli_real_escape_string($conn,$_POST['opentimeMon']);
-			$closetimeMon = mysqli_real_escape_string($conn,$_POST['closetimeMon']);
-			$is_Tue = mysqli_real_escape_string($conn,$_POST['is_Tue']);
-			$opentimeTue = mysqli_real_escape_string($conn,$_POST['opentimeTue']);
-			$closetimeTue = mysqli_real_escape_string($conn,$_POST['closetimeTue']);
-			$is_Wed = mysqli_real_escape_string($conn,$_POST['is_Wed']);
-			$opentimeWed = mysqli_real_escape_string($conn,$_POST['opentimeWed']);
-			$closetimeWed = mysqli_real_escape_string($conn,$_POST['closetimeWed']);
-			$is_Thu = mysqli_real_escape_string($conn,$_POST['is_Thu']);
-			$opentimeThu = mysqli_real_escape_string($conn,$_POST['opentimeThu']);
-			$closetimeThu = mysqli_real_escape_string($conn,$_POST['closetimeThu']);
-			$is_Fri = mysqli_real_escape_string($conn,$_POST['is_Fri']);
-			$opentimeFri = mysqli_real_escape_string($conn,$_POST['opentimeFri']);
-			$closetimeFri = mysqli_real_escape_string($conn,$_POST['closetimeFri']);
-			$is_Sat = mysqli_real_escape_string($conn,$_POST['is_Sat']);
-			$opentimeSat = mysqli_real_escape_string($conn,$_POST['opentimeSat']);
-			$closetimeSat = mysqli_real_escape_string($conn,$_POST['closetimeSat']);
-
-			$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',password ='".md5($passwordRandom)."',first_time_login = '0' ,mobile_no ='".$phone."' where user_id ='".$user_id."'");
-			if($updateUser){
-				$name = mysqli_real_escape_string($conn,trim($_POST['name']));
-				mysqli_query($conn," UPDATE `restaurant_details` SET restaurant_name = '".$name."',location='".$loction."',latitude='".$latitude."',longitude='".$longitude."',restaurant_full_address='".$location_data."',about_text='".$about."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',`sun_open_time`='".$opentimeSun."',`sun_close_time`='".$closetimeSun."',`is_sun`='".$is_Sun."',`mon_open_time`='".$opentimeMon."',`mon_close_time`='".$closetimeMon."',`is_mon`='".$is_Mon."',`tue_open_time`='".$opentimeTue."',`tue_close_time`='".$closetimeTue."',`is_tue`='".$is_Tue."',`wed_open_time`='".$opentimeWed."',`wed_close_time`='".$closetimeWed."',`is_wed`='".$is_Wed."',`thu_open_time`='".$opentimeThu."',`thu_close_time`='".$closetimeThu."',`is_thu`='".$is_Thu."',`fri_open_time`='".$opentimeFri."',`fri_close_time`='".$closetimeFri."',`is_fri`='".$is_Fri."',`sat_open_time`='".$opentimeSat."',`sat_close_time`='".$closetimeSat."',`is_sat`='".$is_Sat."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$resturantID."'");	
-				
+            if($detail['email'] != $email)
+			{
+				$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',password ='".md5($passwordRandom)."',first_time_login = '0' ,mobile_no ='".$phone."' where user_id ='".$user_id."'");
+				$_SESSION['email'] = $email;
 			}
+			else
+			{
+				$updateUser = mysqli_query($conn,"UPDATE `users` SET email ='".$email."',mobile_no ='".$phone."' where user_id ='".$user_id."'");
+			}
+			
+				$name = mysqli_real_escape_string($conn,trim($_POST['name']));
+				if($_SESSION['restaurant_id'] == "")
+				{
+					mysqli_query($conn," UPDATE `restaurant_details` SET restaurant_name = '".$name."',location='".$loction."',latitude='".$latitude."',longitude='".$longitude."',restaurant_full_address='".$location_data."',about_text='".$about."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',`sun_open_time`='".$opentimeSun."',`sun_close_time`='".$closetimeSun."',`is_sun`='".$is_Sun."',`mon_open_time`='".$opentimeMon."',`mon_close_time`='".$closetimeMon."',`is_mon`='".$is_Mon."',`tue_open_time`='".$opentimeTue."',`tue_close_time`='".$closetimeTue."',`is_tue`='".$is_Tue."',`wed_open_time`='".$opentimeWed."',`wed_close_time`='".$closetimeWed."',`is_wed`='".$is_Wed."',`thu_open_time`='".$opentimeThu."',`thu_close_time`='".$closetimeThu."',`is_thu`='".$is_Thu."',`fri_open_time`='".$opentimeFri."',`fri_close_time`='".$closetimeFri."',`is_fri`='".$is_Fri."',`sat_open_time`='".$opentimeSat."',`sat_close_time`='".$closetimeSat."',`is_sat`='".$is_Sat."',restaurant_images ='".$allResturantImg."' where restaurant_id ='".$resturantID."'");
+				}
+				else{
+					mysqli_query($conn," UPDATE `restaurant_details` SET restaurant_name = '".$name."',location='".$loction."',latitude='".$latitude."',longitude='".$longitude."',restaurant_full_address='".$location_data."',max_people_allowed='".$people."',cuisine='".$cuisine."',ambience='".$ambience."',dietary='".$dietary."',price_range='".$price."',`sun_open_time`='".$opentimeSun."',`sun_close_time`='".$closetimeSun."',`is_sun`='".$is_Sun."',`mon_open_time`='".$opentimeMon."',`mon_close_time`='".$closetimeMon."',`is_mon`='".$is_Mon."',`tue_open_time`='".$opentimeTue."',`tue_close_time`='".$closetimeTue."',`is_tue`='".$is_Tue."',`wed_open_time`='".$opentimeWed."',`wed_close_time`='".$closetimeWed."',`is_wed`='".$is_Wed."',`thu_open_time`='".$opentimeThu."',`thu_close_time`='".$closetimeThu."',`is_thu`='".$is_Thu."',`fri_open_time`='".$opentimeFri."',`fri_close_time`='".$closetimeFri."',`is_fri`='".$is_Fri."',`sat_open_time`='".$opentimeSat."',`sat_close_time`='".$closetimeSat."',`is_sat`='".$is_Sat."' where restaurant_id ='".$resturantID."'");	
+				}
+				
 
 		   $_SESSION['msg']= 'successEdit';
 		   if($detail['email'] != $email)
 		   {
-		   	  $to = $email;
-			  $subject = "Welcome to podd";
-				   $message = '
+		           $mail_data['to']= $email;
+				   $mail_data['subject']= "Welcome to podd";
+				   $mail_data['html']= '
 					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 					  <html xmlns="http://www.w3.org/1999/xhtml">
 					 <head>
 					 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 					
-				     </head>
-				      <body>
-				        <tbody>
-					      <tr>
-					        <td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
-					          <div style="line-height:1.3em">
-					            <div>Hello <b>'.$_POST['name'].'</b>,</div>
-					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div>Welcome to podd. Your account has been created successfully.</div>
-					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div>Please click on this link to login using the credentials below:<b> <a href = "'.url().''.'admin/index.php">Linkforlogin</a></b>
-					              </div>
-					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
-					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div><strong>Password:</strong>               <b><strong>'.$passwordRandom.'</strong></b></div>
-					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div>When you login for the first time, you may be required to change your password</div>
-					              <div class="m_-7807612712962067148paragraph_break"><br></div>
-					              <div>Best regards,</div>
-					              <div>The podd Team</div>
-					         </div>
-					      </td>
-					    </tr>
+					 </head>
+					  <body>
+						<tbody>
+						  <tr>
+							<td style="padding-left:0px;font-size:14px;font-family:Helvetica,Arial,sans-serif" valign="top">
+							  <div style="line-height:1.3em">
+								<div>Hello <b>'.$_POST['name'].'</b>,</div>
+								  <div class="m_-7807612712962067148paragraph_break"><br></div>
+								  <div>Welcome to podd. Your account has been created successfully.</div>
+								  <div class="m_-7807612712962067148paragraph_break"><br></div>
+								  <div>Please click on this link to login using the credentials below:<b> <a href = "'.url().''.'/index.php">Go to dashboard</a></b>
+								  </div>
+								  <div class="m_-7807612712962067148paragraph_break"><br></div>
+								  <div><strong>Email:</strong><b>               <strong>'.$_POST['email'].'</strong></b></div>
+								  <div class="m_-7807612712962067148paragraph_break"><br></div>
+								  <div><strong>Password:</strong>               <b><strong>'.$passwordRandom.'</strong></b></div>
+								  <div class="m_-7807612712962067148paragraph_break"><br></div>
+								  <div>When you login for the first time, you may be required to change your password</div>
+								  <div class="m_-7807612712962067148paragraph_break"><br></div>
+								  <div>Best regards,</div>
+								  <div>The podd Team</div>
+							 </div>
+						  </td>
+						</tr>
 					  </tbody>				
-				    </body>
+					</body>
 				 </html>';
-		         // Always set content-type when sending HTML email
-		         $headers = "MIME-Version: 1.0" . "\r\n";
-		         $headers .= 'Cc: hello@poddapp.com' . "\r\n";
-		         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-		         // More headers
-		         $headers .= 'From: podd' . "\r\n"; 
-		         mail($to,$subject,$message,$headers);
+				   // Always set content-type when sending HTML email
+				 $mail_data['from']= "podd";
+				 send_email($mail_data);
 
 		   }
 		   
          
-			if($_GET['id'])
+			if($_SESSION['restaurant_id']== ""){
 				header('Location: restaurant_list.php');
-			else
-				header('Location: restaurant_details.php');
+			}
+			else{
+			  header('Location: restaurant_details.php');
+			}
+				
 		}else{
-			if($_GET['id'])
+			
 				header('Location: edit_resturant.php?id='.$_GET['id']);
-			else
-				header('Location: edit_resturant.php');
+			
 		}
 	}	
 	
@@ -209,13 +225,13 @@
 							    	if($_SESSION['restaurant_id'] != "")
 							    	{
 							    		echo '<li id="removeImg-'.$i.'">
-									   <img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
+									   <img src="'.url1().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
 
 							    	}
 							    	else
 							    	{
 							    		echo '<li id="removeImg-'.$i.'"><i class="glyphicon glyphicon-remove"  id="removeImgs-'.$i.'" onclick ="removeImg(this)" ></i>
-									   <img src="'.url().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
+									   <img src="'.url1().$allImg.'"  height="80" width="80" ><input type="hidden" value="'.$allImg.'" id="imgName-'.$i.'"></li>';
 
 							    	}
 									

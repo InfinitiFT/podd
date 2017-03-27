@@ -6,14 +6,15 @@ $(document).ready(function() {
    }, "Please enter a valid email address.");
   $.validator.addMethod("phone_no", function(value, element) 
   { 
-    return this.optional(element) || /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/i.test(value); 
+    //return this.optional(element) || /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/i.test(value); 
+    return this.optional(element) || /^\(?(?:(?:0(?:0|11)\)?[\s-]?\(?|\+)44\)?[\s-]?\(?(?:0\)?[\s-]?\(?)?|0)(?:\d{2}\)?[\s-]?\d{4}[\s-]?\d{4}|\d{3}\)?[\s-]?\d{3}[\s-]?\d{3,4}|\d{4}\)?[\s-]?(?:\d{5}|\d{3}[\s-]?\d{3})|\d{5}\)?[\s-]?\d{4,5}|8(?:00[\s-]?11[\s-]?11|45[\s-]?46[\s-]?4\d))(?:(?:[\s-]?(?:x|ext\.?\s?|\#)\d+)?)$/i.test(value);
+    
    }, "Please enter a valid phone number.");
   $("#login_form").validate({
     rules: {
      email: {
         required: true,
-        email: true,
-        email1 : true
+        email: true
             },
       password: "required"
      
@@ -43,8 +44,7 @@ $(document).ready(function() {
     rules: {
       email: {
         required: true,
-        email: true,
-        email1 : true
+        email: true
             },
           },
           messages: {
@@ -152,7 +152,6 @@ $.validator.methods.locationValid = function(value, element) {
 		email: {
 				required: true,
 				email: true,
-        email1 : true,
 				alreadyEmail:true
 			},
 		phone: {
@@ -235,7 +234,6 @@ $.validator.methods.locationValid = function(value, element) {
 		email: {
 				required: true,
 				email: true,
-        email1 : true,
 				alreadyEmail:true
 			},
 		phone: {
@@ -347,7 +345,6 @@ $("#edit_booking").validate({
         email: {
 			required:true,
 			email: true,
-      email1 : true,
 			maxlength: 256
 			},
      
@@ -608,4 +605,14 @@ $.validator.methods.alreadyadd_exists_or_not = function(value, element) {
      
     }
   });
- 
+ /* $("#add_home_page_data").validate({
+    rules: {
+      image: "required"
+    },
+    messages: {
+      image: "Please select your image."
+    }
+    
+  });*/
+
+

@@ -3,9 +3,22 @@ ob_start();
 include_once('header.php'); 
 $error="";
 $sucess="";
+if($_SESSION['restaurant_id'] != "")
+{
+	if(!empty($_GET['restaurant_id']))
+	{
+      if($_SESSION['restaurant_id'] != decrypt_var($_GET['restaurant_id']))
+	   {
+         session_destroy();
+         header("Location:index.php");
+	   }
+	}
+	
+	
+}
 try {
-      $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` db join restaurant_details rd on db.restaurant_id = rd.restaurant_id WHERE `delivery_id` ='".decrypt_var($_GET['delivery_id'])."'"));  
-      
+      $item_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `delivery_bookings` db join restaurant_details rd on db.restaurant_id = rd.restaurant_id WHERE `delivery_id` ='".decrypt_var($_GET['delivery_id'])."'"));
+	 
       $user_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `users`  WHERE `user_id` ='".$item_data['user_id']."'"));  
       }
 //catch exception
@@ -49,7 +62,7 @@ catch(Exception $e) {
                           <h1>
                                           <i class="fa fa-home"></i> <?php echo $item_data['restaurant_name'];?>
                                           
-                                          <small class="pull-right">Date:<?php $date = date_create ($record['delivery_date']);
+                                          <small class="pull-right">Date:<?php $date = date_create ($item_data['delivery_date']);
                                                                                echo date_format($date,"d-M-Y");?></small>
                                       </h1>
                         </div>
@@ -110,9 +123,10 @@ catch(Exception $e) {
                           <table  class="table table-striped">
                             <thead>
                               <tr>
-                                <th width="20%">Item Name</th>
+                                <th width="20%">Item</th>
+								<th width="20%">Unit Price</th>
                                 <th width="15%">Quantity</th>
-                                <th width="15%">Price</th>
+                                <th width="15%">Total Price</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -123,13 +137,16 @@ catch(Exception $e) {
                             ?>
                               <tr>
                                 <td><?php echo $record['name'];?></td>
+								<td><?php echo $record['price'];?></td>
                                 <td><?php echo $record['quantity'];?></td>
+								 
                                 <td><?php $price = str_replace("£","",$record['price']); echo "£".$record['quantity']*$price; ?> </td>
                                
                               </tr>
                               <?php } ?>
                               <tr>
                                 <td></td>
+								<td></td>
                                 <td><b>Total Price:</b></td>
                                 <td><b><?php echo $item_data['total_price'];?></b> </td>
                                
@@ -148,7 +165,13 @@ catch(Exception $e) {
                       <div class="row no-print">
                   
                          <div class="col-sm-12 text-center">
-                         <?php if($item_data['delivery_status']=="1"){?>
+						 <?php $newdate = date('Y-m-d', strtotime('-1 day', time()));
+                         $booking_date = date('Y-m-d', strtotime($item_data['delivery_date']));
+                         $currettime = date('H:i',time());
+                         $booking_time = date('H:i',strtotime($item_data['delivery_time']));
+                        if($booking_date > $newdate)
+                        {  ?>
+                          <?php if($item_data['delivery_status']=="1"){?>
                               <button type="button" id="confirm-<?php echo $item_data['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
                               <button type="button" class="btn btn-round btn-warning"  id="declineDev-<?php echo $item_data['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
                               <?php }else if($item_data['delivery_status']=="2"){?>
@@ -160,6 +183,23 @@ catch(Exception $e) {
                                <button type="button" id="confirm-<?php echo $item_data['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
                                <a href="edit_delivery.php?id=<?php echo encrypt_var($item_data['delivery_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
                              <?php } ?>
+                       <?php } else if($booking_date == $newdate && $booking_time > $currettime){ ?>
+                          <?php if($item_data['delivery_status']=="1"){?>
+                              <button type="button" id="confirm-<?php echo $item_data['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
+                              <button type="button" class="btn btn-round btn-warning"  id="declineDev-<?php echo $item_data['delivery_id'];?>"data-toggle="modal" data-target="#myModal">Decline</button>
+                              <?php }else if($item_data['delivery_status']=="2"){?>
+                              <a href="edit_delivery.php?id=<?php echo encrypt_var($item_data['delivery_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
+                              <?php }else if($item_data['delivery_status']=="3"){?>
+                              <button type="button" id="confirm-<?php echo $item_data['delivery_id'];?>" class="btn btn-round btn-success ">Accept</button>
+                              <a href="edit_delivery.php?id=<?php echo encrypt_var($item_data['delivery_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
+                               <?php }else{?>
+                               <button type="button" id="confirm-<?php echo $item_data['delivery_id'];?>" class="btn btn-round btn-success">Accept</button>
+                               <a href="edit_delivery.php?id=<?php echo encrypt_var($item_data['delivery_id']);?>&list=list" class="btn btn-round btn-info">Edit</a>
+                             <?php } ?>
+                       <?php }else{?>
+                        <a href="booking_history_delivery.php" class="btn btn-round btn-primary">Back</a>
+                       <?php } ?>
+                        
                          
                        </div>
                        

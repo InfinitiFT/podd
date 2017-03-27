@@ -105,12 +105,13 @@ var booking_history =  $('#booking_history').DataTable({
 
            var todate = end.toISOString();
            var fromdate = start.toISOString();
+           var status = $("#booking_history_status").val();
             $.ajax
                 ({
                   type: "POST",
                   url: "filter_list.php",
                   dataType: "json",
-                  data: {todate:todate,fromdate:fromdate,type:'booking_history'},
+                  data: {todate:todate,fromdate:fromdate,type:'booking_history',status:status},
                   cache: false,
                   success: function (data) {
                     var rows = booking_history
@@ -145,14 +146,13 @@ var booking_history =  $('#booking_history').DataTable({
          // console.log(start.toISOString(), end.toISOString(), label);
         });
  $('#booking_history_status').change(function() {
-                var status = $("#booking_history_status").val();
-               
-                $.ajax
+      var status = $("#booking_history_status").val();
+      $.ajax
                 ({
                   type: "POST",
                   url: "status_search.php",
                   dataType: "json",
-                  data: {st:status,type:'booking_history_status'},
+                  data: {st:status,type:'booking_history_status',date_range:$("#booking_history_range").val()},
                   cache: false,
                   success: function (data) {
                      var rows = booking_history
@@ -191,13 +191,13 @@ var booking_history =  $('#booking_history').DataTable({
  $('#booking_history_delivery_cal').daterangepicker(1,function(start, end, label) {
            var todate = end.toISOString();
            var fromdate = start.toISOString();
-           
+           var status = $("#booking_history_delivery_status").val();
             $.ajax
                 ({
                   type: "POST",
                   url: "filter_list.php",
                   dataType: "json",
-                  data: {todate:todate,fromdate:fromdate,type:'booking_history_delivery_cal'},
+                  data: {todate:todate,fromdate:fromdate,type:'booking_history_delivery_cal',status:status},
                   cache: false,
                   success: function (data) {
                     var rows = booking_history_delivery
@@ -239,7 +239,7 @@ var booking_history =  $('#booking_history').DataTable({
                   type: "POST",
                   url: "status_search.php",
                   dataType: "json",
-                  data: {st:status,type:'booking_history_delivery_status'},
+                  data: {st:status,type:'booking_history_delivery_status',date_range:$("#booking_history_delivery_cal").val()},
                   cache: false,
                   success: function (data) {
                      var rows = booking_history_delivery

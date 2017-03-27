@@ -8,16 +8,17 @@ try {
       if(isset($_POST["submit"]))
       { 
         if((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg")|| ($_FILES["image"]["type"] == "image/pjpeg")|| ($_FILES["image"]["type"] == "image/png")|| ($_FILES["image"]["type"] == "image/jpg"))){ 
+		
 		  $ext = pathinfo($_FILES["image"]['name'],PATHINFO_EXTENSION);
 	      $home_page_image1 = time().rand(100,999).'.'.$ext;
-	      $target_dir = $_SERVER['DOCUMENT_ROOT']."/PROJECTS/IOSNativeAppDevelopment/trunk/uploads/airport_image/";
+	      $target_dir = $target_dir = "../uploads/airport_image/";
           $target_path    = $target_dir . $home_page_image1;
           if(move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) 
           {
-             $message = mysqli_real_escape_string($conn,trim($_POST['message']));
-            if(mysqli_query($GLOBALS['conn'],"INSERT INTO `airport_section_data`(`airport_image`) VALUES (". 'uploads/airport_image/'.$home_page_image1 . "')")){
+			  //echo "INSERT INTO `airport_section_data`(`airport_image`) VALUES ("'uploads/airport_image/'.$home_page_image1 . "')";exit;
+            if(mysqli_query($GLOBALS['conn'],"INSERT INTO `airport_section_data`(`airport_image`) VALUES ('".'uploads/airport_image/'.$home_page_image1 . "')")){
               $_SESSION["successmsg"] = "Airport image added successfully.";
-              header('Location:home_page_listing.php');
+              header('Location:airport_page_listing.php');
              }
             else
             {
@@ -54,7 +55,7 @@ catch(Exception $e) {
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add Home Page Data</h2>
+                    <h2>Add Image</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">

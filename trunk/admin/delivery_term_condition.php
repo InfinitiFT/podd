@@ -9,7 +9,7 @@ try {
       { 
       	$name = mysqli_real_escape_string($conn,trim($_POST['name_p']));
         $content = mysqli_real_escape_string($conn,trim($_POST['content']));
-        if(mysqli_query($GLOBALS['conn'],"UPDATE `static_page` SET `name`='".$name."',`content`= '".$content."' WHERE id = '".decrypt_var($_GET['page_id'])."'")){
+        if(mysqli_query($GLOBALS['conn'],"UPDATE `static_page` SET `name`='".$name."',`content`= '".$content."' WHERE id = 2")){
               $_SESSION["successmsg"] = "Message edited successfully.";
         }
         else{
@@ -17,7 +17,7 @@ try {
         }
           
         }
-        $static_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `static_page` WHERE id = '".decrypt_var($_GET['page_id'])."'"));
+        $static_data = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT * FROM `static_page` WHERE id = 2"));
        // print_r($static_data);exit;
     }
 
@@ -38,7 +38,7 @@ catch(Exception $e) {
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Edit Privacy Policy</h2>
+                    <h2>Delivery Terms & Conditions</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">

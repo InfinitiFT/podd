@@ -110,10 +110,13 @@ $("[id ^='activatedeactivate-']").click(function () {
 });
 // Popup for Confirm functionality
 
-  $(document).on("click", "[id ^='confirm-']", function(event){
+$(document).on("click", "[id ^='confirm-']", function(event){
+
+
   var pagetype =  $("#delete_type").val();
   var serviceID  = $(this).attr('id');
   var serviceArr = serviceID.split('-');
+  
   $.ajax({
     url:'confirm_decline.php',
     type: 'post',
@@ -121,7 +124,8 @@ $("[id ^='activatedeactivate-']").click(function () {
           success: function(data, status) {
             location.reload();  
             Lobibox.notify('success', {
-              msg: 'Entity Accept Successfully.'
+              delay: 5000,
+              msg: 'Accepted.'
              });
           },
           error: function(xhr, desc, err) {
@@ -147,7 +151,7 @@ $("[id ^='decline-']").click(function () {
               
              location.reload();  
              Lobibox.notify('success', {
-              msg: 'Entity decline Successfully.'
+              msg: 'Declined.'
              });
             },
             error: function(xhr, desc, err) {
@@ -218,6 +222,9 @@ $("[id ^='decline-']").click(function () {
                                    
                                            '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
                                            '<input type="text" name="price[]" class="form-control"  placeholder="Price">'+
+                                            '</div>'+
+                                            '<div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">'+
+                                               '<input type="file" name="item_logo[]" class="form-control">'+
                                             '</div>'+
                                            '</div>'+
                                            '<div id="dataAdd-'+count_subtitle+'"></div>'+
@@ -301,6 +308,9 @@ function addItem(id){
                                    '<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">'+
                                       '<input type="text" class="form-control" name="price[]" placeholder="Price" id="inputprice-'+count+'">'+
                                   '</div>'+
+                                   '<div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">'+
+                                               '<input type="file" name="item_logo[]" class="form-control">'+
+                                            '</div>'+
                                '<button type="button" id ="remove_field-'+count+'" class="btn btn-danger remove_field">✖</button></div>'); //add input box
         
            

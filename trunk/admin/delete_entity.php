@@ -64,7 +64,29 @@ if ($type == "service_management") {
     } else {
         echo "error";
     }
-} else {
+}else if ($type == "home_page") {
+    if (mysqli_query($GLOBALS['conn'], "DELETE FROM `home_page_image` WHERE `image_id` = '" . mysqli_real_escape_string($GLOBALS['conn'], $id) . "'")) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+}
+else if ($type == "airport_history") {
+    if (mysqli_query($GLOBALS['conn'], "DELETE FROM `airport_data` WHERE `airport_id` = '" . mysqli_real_escape_string($GLOBALS['conn'], $id) . "'")) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+}
+else if ($type == "airport_i") {
+	
+    if (mysqli_query($GLOBALS['conn'], "DELETE FROM `airport_section_data` WHERE `id` = '" . mysqli_real_escape_string($GLOBALS['conn'], $id) . "'")) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+}
+ else {
     
 }
 ?>
