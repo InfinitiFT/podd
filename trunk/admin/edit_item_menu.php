@@ -11,9 +11,6 @@ $error="";
 $sucess="";
 try {   
    $item_data = mysqli_query($GLOBALS['conn'],"SELECT rip.*,rip.id as edit_id,rmd.meal as meal,rmd.deliver_food as deliver_food,i.*,st.subtitle as sname FROM `restaurant_item_price` rip join restaurant_meal_details rmd on rip.restaurant_meal_id = rmd.id join items i on rip.item_id = i.id join subtitle st on st.subtitle_id = rip.subtitle WHERE rmd.meal = '".decrypt_var($_GET['id'])."' And rmd.restaurant_id = '".decrypt_var($_GET['restaurant_id'])."'");
-   $deliver_food = mysqli_fetch_assoc($item_data);
-  
-
     if(isset($_POST["submit"]))
     {
 		// check meal name is exist or not 
@@ -38,81 +35,131 @@ try {
 			{
 				    $restaurant_menu_id1 = restaurant_meal_insertion($restaurant_idd,$meal_id,$deliver_food);
 					$i = 0;
-					foreach($_POST['subtitle'] as $subtitle)
+					foreach($_POST['item'] as $item)
 					{
-					  $subtitle_data = mysqli_query($GLOBALS['conn'],"SELECT `subtitle_id` FROM `subtitle` WHERE `subtitle` = '".trim($subtitle)."'");
-					if(mysqli_num_rows($subtitle_data))
-						{
+					 
+					 if($_POST['subtitle'][$i])
+					 {
+						  $subtitle_data = mysqli_query($GLOBALS['conn'],"SELECT `subtitle_id` FROM `subtitle` WHERE `subtitle` = '".trim($_POST['subtitle'][$i])."'");
+					     if(mysqli_num_rows($subtitle_data))
+						   {
 							$subtitle_dataa = mysqli_fetch_assoc($subtitle_data);
 							$subtitle = $subtitle_dataa['subtitle_id'];
-						}
-					else
-					   {
-							mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle` (`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$subtitle)."')");
+						   }
+					     else
+					     {
+							mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle` (`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$_POST['subtitle'][$i])."')");
 							$subtitle = mysqli_insert_id($GLOBALS['conn']);
-					   }
+					     }
+						 
+					 }
+					 
+					 $subtitle_id = $subtitle;
+					 
 					
 					
 
 					// check item name is exist or not 
-					$chk_item = items_name($_POST['item'][$i]);
+					$chk_item = items_name($item);
 					
 					if($chk_item != '')
 					{
+						
+						if($_FILES['item_logo'.$i.'']['name'])
+					    {
+						  $ext = pathinfo($_FILES['item_logo'.$i.'']['name'],PATHINFO_EXTENSION);
+						  $item_logo = time().rand(100,999).'.'.$ext;
+						  $target_dir = "../uploads/item_image/";
+						  $target_path    = $target_dir . $item_logo;
+						  move_uploaded_file($_FILES['item_logo'.$i.'']['tmp_name'], $target_path);
+						  $query  = mysqli_query($GLOBALS['conn'],"UPDATE `items` SET `item_logo`= '".'uploads/item_image/'.$item_logo."' WHERE `id` = '".$chk_item."'");
+                        }
 						$item = $chk_item;
 					}
 					else
 					{
-						$name = mysqli_real_escape_string($conn,trim($_POST['item'][$i]));			
-						$query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`created_by`) VALUES ('".$name."','".$_SESSION['user_id']."')");
+						if($_FILES['item_logo'.$i.'']['name'])
+					    {
+						  $ext = pathinfo($_FILES['item_logo'.$i.'']['name'],PATHINFO_EXTENSION);
+						  $item_logo = time().rand(100,999).'.'.$ext;
+						  $target_dir = "../uploads/item_image/";
+						  $target_path    = $target_dir . $item_logo;
+						  move_uploaded_file($_FILES['item_logo'.$i.'']['tmp_name'], $target_path);
+                        }
+					    else{
+                          $item_logo = "";
+					    }
+						$name = mysqli_real_escape_string($conn,trim($item));			
+						$query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`item_logo`,`created_by`) VALUES ('".$name."','".'uploads/item_image/'.$item_logo."','".$_SESSION['user_id']."')");
 						$item = mysqli_insert_id($GLOBALS['conn']);
 					}
 					$add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`subtitle`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id1."','".$subtitle."','".$item."','".$_POST['price'][$i]."','".$_SESSION['user_id']."')");
-					
-					
-					
 					$i++;
 					
 				 }
 				
-			}
-			
-			
-			
-			
-			
+			}	
 		}
 		$i = 0;
 		// check subtitle name is exist or not 
 		$restaurant_menu_id = restaurant_meal_insertion(decrypt_var($_GET['restaurant_id']),$meal_id,$deliver_food);
 		
-		foreach($_POST['subtitle'] as $subtitle)
+		foreach($_POST['item'] as $item)
 		{
-			  $subtitle_data = mysqli_query($GLOBALS['conn'],"SELECT `subtitle_id` FROM `subtitle` WHERE `subtitle` = '".trim($subtitle)."'");
-			if(mysqli_num_rows($subtitle_data))
-				{
-					$subtitle_dataa = mysqli_fetch_assoc($subtitle_data);
-					$subtitle = $subtitle_dataa['subtitle_id'];
-				}
-			else
-			   {
-					mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle` (`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$subtitle)."')");
-					$subtitle = mysqli_insert_id($GLOBALS['conn']);
-			   }
-			
+			  if($_POST['subtitle'][$i])
+					 {
+						  $subtitle_data = mysqli_query($GLOBALS['conn'],"SELECT `subtitle_id` FROM `subtitle` WHERE `subtitle` = '".trim($_POST['subtitle'][$i])."'");
+					     if(mysqli_num_rows($subtitle_data))
+						   {
+							$subtitle_dataa = mysqli_fetch_assoc($subtitle_data);
+							$subtitle = $subtitle_dataa['subtitle_id'];
+						   }
+					     else
+					     {
+							mysqli_query($GLOBALS['conn'],"INSERT INTO `subtitle` (`subtitle`) VALUES ('".mysqli_real_escape_string($conn,$_POST['subtitle'][$i])."')");
+							$subtitle = mysqli_insert_id($GLOBALS['conn']);
+					     }
+						 
+					 }
+					 
+					 $subtitle_id = $subtitle;
+					 
 			
 
 			// check item name is exist or not 
-			$chk_item = items_name($_POST['item'][$i]);
+			$chk_item = items_name($item);
 			
 			if($chk_item != '')
 			{
+				
+				if($_FILES['item_logo'.$i.'']['name'])
+					    {
+						  $ext = pathinfo($_FILES['item_logo'.$i.'']['name'],PATHINFO_EXTENSION);
+						  $item_logo = time().rand(100,999).'.'.$ext;
+						  $target_dir = "../uploads/item_image/";
+						  $target_path    = $target_dir . $item_logo;
+						  move_uploaded_file($_FILES['item_logo'.$i.'']['tmp_name'], $target_path);
+						  $query  = mysqli_query($GLOBALS['conn'],"UPDATE `items` SET `item_logo`= '".'uploads/item_image/'.$item_logo."' WHERE `id` = '".$chk_item."'");
+                        }
+						$item = $chk_item;
 				$item = $chk_item;
 			}
 			else
 			{
-				$name = mysqli_real_escape_string($conn,trim($_POST['item'][$i]));			
-				$query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`created_by`) VALUES ('".$name."','".$_SESSION['user_id']."')");
+				if($_FILES['item_logo'.$i.'']['name'])
+					    {
+						  $ext = pathinfo($_FILES['item_logo'.$i.'']['name'],PATHINFO_EXTENSION);
+						  $item_logo = time().rand(100,999).'.'.$ext;
+						  $target_dir = "../uploads/item_image/";
+						  $target_path    = $target_dir . $item_logo;
+						  move_uploaded_file($_FILES['item_logo'.$i.'']['tmp_name'], $target_path);
+                        }
+					    else{
+                          $item_logo = "";
+					    }
+				$name = mysqli_real_escape_string($conn,trim($item));			
+				$query  = mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`item_logo`,`created_by`) VALUES ('".$name."','".'uploads/item_image/'.$item_logo."','".$_SESSION['user_id']."')");
+				
 				$item = mysqli_insert_id($GLOBALS['conn']);
 			}
 			
@@ -158,7 +205,7 @@ catch(Exception $e) {
                         </div>
                         <div class="x_content">
 
-                            <form class="form-horizontal form-label-left" id="edit_item_price" method="post">
+                            <form class="form-horizontal form-label-left" id="edit_item_price" method="post" enctype="multipart/form-data">
                                 <?php
                                 if(isset($_SESSION["successmsg"])) {
                                     $success = $_SESSION["successmsg"];
@@ -190,7 +237,8 @@ catch(Exception $e) {
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
                                     <?php $meal_name = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT `meal_name` FROM `meals` WHERE `id` = '".decrypt_var($_GET['id'])."'"));
-                                    
+                                    $deliver_food = mysqli_fetch_assoc(mysqli_query($GLOBALS['conn'],"SELECT `deliver_food` FROM `restaurant_meal_details` WHERE meal = '".decrypt_var($_GET['id'])."' And restaurant_id = '".decrypt_var($_GET['restaurant_id'])."'"));
+									
                                     ?>
                                     <input type="text" class="form-control" name="meal_name" id="meal_name" placeholder="Meal Name" value = "<?php echo $meal_name['meal_name']; ?>">
                                     </div>
@@ -214,11 +262,11 @@ catch(Exception $e) {
                                      <?php }?>
 
                                 </div>
-								<?php $edit_id = array();while($record = mysqli_fetch_assoc($item_data)){
-									//$edit_id[] = $record['id'];
-									
-									
+								<?php $previous_subtitle = "";$i=0;$edit_id = array(); while($record = mysqli_fetch_assoc($item_data)){
+									$restaurant_meal_id = $record['restaurant_meal_id'];
 									?>
+								<?php if($record['sname'] != $previous_subtitle){ ?> 
+									
                                  <div class="row">
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
@@ -227,7 +275,8 @@ catch(Exception $e) {
                                     </div>
                                  
                                 </div>
-                                <div class="add_item row" id="itemID-1">
+								<?php } ?>
+                                <div class="row">
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-xs-8 form-group has-feedback">
@@ -238,10 +287,19 @@ catch(Exception $e) {
                                     <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
                                         <input type="text" name="price[]" class="form-control"  value="<?php echo isset($record['item_price']) ? $record['item_price'] : '';?>" placeholder="Price">
                                     </div>
-
+                                    <div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
+									    
+                                        <input type="file" name="item_logo<?php echo $i; ?>" class="form-control" >
+                                    </div>
+									<div class="col-md-2 col-sm-2 col-xs-4 form-group has-feedback">
+									<?php if($record['item_logo']){ ?>
+									    <img src="<?php echo url1().$record['item_logo']; ?>"  height="30" width="30" >
+										<?php } ?>
+									</div>
+									 
                                 </div>
-							    <?php } ?>
-								<input type="hidden" name="restaurant_meal_id" value="<?php echo $deliver_food['restaurant_meal_id']; ?>">
+							    <?php $i++;$previous_subtitle = $record['sname'];} ?>
+								<input type="hidden" name="restaurant_meal_id" value="<?php echo $restaurant_meal_id; ?>">
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">

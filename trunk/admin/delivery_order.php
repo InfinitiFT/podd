@@ -163,7 +163,7 @@ catch(Exception $e) {
 
                       <!-- this row will not appear when printing -->
                       <div class="row no-print">
-                  
+                  <font color="black"><p><b>User Note:  </b><?php echo $item_data['user_msg'];?></p></font>
                          <div class="col-sm-12 text-center">
 						 <?php $newdate = date('Y-m-d', strtotime('-1 day', time()));
                          $booking_date = date('Y-m-d', strtotime($item_data['delivery_date']));
@@ -208,7 +208,7 @@ catch(Exception $e) {
 					  <font color="black"><p><b>Note:  </b>Please note that we have not charged the customer for this order. Contact the customer directly to arrange delivery and payment.</p></font>
 					  
                     </section>
-				
+				     
                   </div>
                 </div>
               </div>

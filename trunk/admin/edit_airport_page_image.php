@@ -7,10 +7,10 @@ try {
     if (isset($_POST["submit"])) {
         if (!empty($_FILES["image"]['tmp_name'])) {
             if ((($_FILES["image"]["type"] == "image/gif") || ($_FILES["image"]["type"] == "image/jpeg") || ($_FILES["image"]["type"] == "image/pjpeg") || ($_FILES["image"]["type"] == "image/png") || ($_FILES["image"]["type"] == "image/jpg"))) {
-                $home_page_image  = $_FILES["image"]['name'];
-                $home_page_image1 = time() . $_FILES['image']['name'];
-                $target_dir = "../uploads/airport_image/";
-                $target_path    = $target_path . $home_page_image1;
+                 $ext = pathinfo($_FILES["image"]['name'],PATHINFO_EXTENSION);
+                 $home_page_image1 = time().rand(100,999).'.'.$ext;
+                 $target_dir = $target_dir = "../uploads/airport_image/";
+                 $target_path    = $target_dir . $home_page_image1;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
                     if (mysqli_query($GLOBALS['conn'], "UPDATE `airport_section_data` SET `airport_image`= '". 'uploads/airport_image/'.$home_page_image1 . "' WHERE `id` = '" . decrypt_var($_GET['id']) . "'")) {
 						
