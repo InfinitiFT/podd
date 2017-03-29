@@ -18,14 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -37,16 +35,22 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.podd.R;
+import com.podd.adapter.AirprotHeaderImageAdapter;
 import com.podd.adapter.HomeItemsAdapter;
 import com.podd.adapter.HomePagerAdapter;
+import com.podd.adapter.RestaturantNameAdapter;
 import com.podd.location.LocationResult;
 import com.podd.location.LocationTracker;
+import com.podd.model.HomeImageModel;
 import com.podd.model.HomeItemsModel;
+import com.podd.model.RestaturantNameList;
 import com.podd.retrofit.ApiClient;
 import com.podd.retrofit.ApiInterface;
 import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.webservices.JsonResponse;
+import com.squareup.picasso.Picasso;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,9 +66,13 @@ import retrofit2.Response;
 public class NewHomeScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, LocationResult {
     private TextView tvAdminMessage,tvAppName;
     private RecyclerView rvHomeItems;
+   private RecyclerView rvRestaurantsName;
     private HomeItemsAdapter homeItemsAdapter;
+    private RestaturantNameAdapter restaturantNameAdapter;
     private Context context;
     private List<HomeItemsModel> homeItemsModelList = new ArrayList<>();
+    private List<HomeImageModel> homeImageModels = new ArrayList<>();
+    private List<RestaturantNameList> restaturantNameLists = new ArrayList<>();
     private int REQUEST_LOCATION=123;
     private LocationManager locationManager;
     private HomePagerAdapter pagerAdapter;
@@ -73,11 +81,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
     private TextView tvTime,tvDayDate,tvWelcome;
 //    private  int[] img = new int[]{R.mipmap.image2, R.mipmap.image3, R.mipmap.image4, R.mipmap.image1};
     private  String[] itemName = new String[]{"Restaurants & Bars","Delivery","Taxi","Airport Transfers","Attractions","Fitness & Wellbeing","Info"};
-    private List<Integer> imgList;
+   // private List<Integer> imgList;
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+    private ImageView ivImageLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,25 +96,28 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         getIds();
         setRecycler();
         setFont();
+        if(CommonUtils.isOnline(context)){
+
+            callHomeImageAPI();
+            //callRestaurantNameAPI();
+        }
+        else{
+            Toast.makeText(context, R.string.Please_connect_to_internet_first, Toast.LENGTH_SHORT).show();
+        }
+
         for (int i = 0; i < itemName.length; i++) {
             HomeItemsModel hotelItemModel = new HomeItemsModel();
             hotelItemModel.setService_name(itemName[i]);
             homeItemsModelList.add(hotelItemModel);
-
         }
-
        // banner_image = new ArrayList<>();
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        pagerAdapter = new HomePagerAdapter(context, imgList);
-        viewPager.setAdapter(pagerAdapter);
        // viewPager.startAutoScroll(4000);
         //setRecyclerData();
-
         /*After setting the adapter use the timer */
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
-                if (currentPage == imgList.size()-1) {
+                if (currentPage == homeImageModels.size()-1) {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, true);
@@ -116,12 +128,13 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         timer .schedule(new TimerTask() { // task to be scheduled
 
             @Override
-            public void run() {
+            public void run()
+            {
                 handler.post(Update);
             }
         },500, 3000);
       //  ImageView ivLogo=(ImageView)findViewById(R.id.ivLogo);
-        try {
+        /*try {
             Animation  animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
             animation.setDuration(3000); // duration - half a second
             animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
@@ -132,7 +145,7 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         }catch (Exception e2)
         {
             e2.printStackTrace();
-        }
+        }*/
 
         /*if(CommonUtils.isNetworkConnected(this)){
             callHomeApi();
@@ -145,7 +158,6 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         checkPermission();
 
     }
-
     private void setFont() {
        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         tvDayDate.setTypeface(typeface);
@@ -156,8 +168,8 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
        // tvWelcome.setTypeface(typefaceBold);
        // tvAppName.setTypeface(typefaceBold);
     }
-
-    private void callHomeApi() {
+    private void callHomeApi()
+    {
         CommonUtils.showProgressDialog(context);
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         Call<JsonResponse> call = apiServices.getServiceList(CommonUtils.getPreferences(this,AppConstant.AppToken));
@@ -190,15 +202,101 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
+    /*Restaturant name API*/
+    private void callRestaurantNameAPI() {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        Call<JsonResponse> call = apiServices.getRestaurantName(CommonUtils.getPreferences(this,AppConstant.AppToken));
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null) {
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        //Glide.with(context).load(response.body().image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivImageLogo);
+                       // tvWelcome.setText(response.body().restaurant_name);
+                        restaturantNameLists.clear();
+                        if (response.body().restaurantlogo != null && response.body().restaurantlogo.size() > 0) {
+                            restaturantNameLists.addAll(response.body().restaurantlogo);
+                            restaturantNameAdapter = new RestaturantNameAdapter(context, restaturantNameLists);
+                            rvRestaurantsName.setAdapter(restaturantNameAdapter);
+
+                        } else {
+                            Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                t.printStackTrace();
+            }
+        });
+    }
+    /*Home pager dynamic image*/
+    private void callHomeImageAPI() {
+        CommonUtils.showProgressDialog(context);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        Call<JsonResponse> call = apiServices.getHomeImage(CommonUtils.getPreferences(this,AppConstant.AppToken));
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(context);
+                if (response.body() != null) {
+
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        homeImageModels.clear();
+                        if (response.body().homePageData != null && response.body().homePageData.size() > 0) {
+                            homeImageModels.addAll(response.body().homePageData);
+                            pagerAdapter = new HomePagerAdapter(context, homeImageModels);
+                            viewPager.setAdapter(pagerAdapter);
+                            /*show restaurant name */
+                            callRestaurantNameAPI();
+
+                        } else {
+                            Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(context, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(context);
+                t.printStackTrace();
+            }
+        });
+    }
     private void setRecycler() {
         homeItemsAdapter = new HomeItemsAdapter(context,homeItemsModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         rvHomeItems.setLayoutManager(mLayoutManager);
         rvHomeItems.setAdapter(homeItemsAdapter);
+
+        restaturantNameAdapter = new RestaturantNameAdapter(context, restaturantNameLists);
+        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        rvRestaurantsName.setLayoutManager(mLayoutManager1);
+        rvRestaurantsName.setAdapter(restaturantNameAdapter);
+
+
     }
     private void getIds() {
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         ImageView ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         rvHomeItems= (RecyclerView) findViewById(R.id.rvHomeItems);
+        rvRestaurantsName= (RecyclerView) findViewById(R.id.rvRestaurantsName);
+        ivImageLogo = (ImageView) findViewById(R.id.ivImageLogo);
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvDayDate = (TextView) findViewById(R.id.tvDayDate);
        // tvWelcome = (TextView) findViewById(R.id.tvWelcome);
@@ -211,12 +309,12 @@ public class NewHomeScreenActivity extends AppCompatActivity implements GoogleAp
         String date = simpledateformat.format(calander.getTime());
         tvTime.setText(date);*/
 
-        imgList = new ArrayList<>();
+     /*   imgList = new ArrayList<>();
         imgList.add(R.mipmap.image1);
         imgList.add(R.mipmap.image2);
         imgList.add(R.mipmap.image3);
         imgList.add(R.mipmap.image4);
-        imgList.add(R.mipmap.image3);
+        imgList.add(R.mipmap.image3);*/
 
         CountDownTimer newtimer = new CountDownTimer(1000000000, 1000) {
 

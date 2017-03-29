@@ -111,6 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_10"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -142,6 +143,7 @@
                             android:id="@+id/llCuisine"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -171,6 +173,7 @@
                             android:id="@+id/llAmbience"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView

@@ -85,6 +85,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
     List<SavedItem> savedItemList;
     private CheckBox cbTermsConditions;
     private TextView tvTermsCondition,tvPrivacyPolicy;
+    private EditText etMsg;
 
 
     @Override
@@ -185,7 +186,9 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         tvBookTaxi = (TextView) findViewById(R.id.tvBookTaxi);
         etName = (EditText) findViewById(R.id.etName);
         etAddress = (EditText) findViewById(R.id.etAddress);
+        etMsg = (EditText) findViewById(R.id.etMsg);
         etAddress .setVisibility(View.VISIBLE);
+        etMsg .setVisibility(View.VISIBLE);
         etAddress.setText(CommonUtils.getPreferences(this,AppConstant.Address));
         spCountryCode = (Spinner) findViewById(R.id.spCountryCode);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
@@ -538,6 +541,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         jsonRequest.name=etName.getText().toString().trim();
         jsonRequest.email=etEmail.getText().toString().trim();
         jsonRequest.address=etAddress.getText().toString().trim();
+        jsonRequest.user_msg=etMsg.getText().toString().trim();
         jsonRequest.contact_no=countryCode+""+etPhoneNumber.getText().toString().trim();
         jsonRequest.otp=etEnterOtp1.getText().toString().trim()+etEnterOtp2.getText().toString().trim()+etEnterOtp3.getText().toString().trim()+etEnterOtp4.getText().toString().trim();
         Call<JsonResponse> call = apiServices.deliveryBooking(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);

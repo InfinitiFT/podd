@@ -15,6 +15,7 @@
         android:textSize="@dimen/text_size_10"
         android:gravity="left"
         android:text=""
+        android:visibility="visible"
         android:padding="@dimen/dp_1"
         android:textStyle="bold"
         tools:ignore="UnusedAttribute" />

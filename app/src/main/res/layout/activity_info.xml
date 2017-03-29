@@ -18,14 +18,13 @@
         android:text="Info"
         android:padding="@dimen/dp_5"
         android:textSize="@dimen/text_size_12"/>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+     android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
         android:orientation="vertical">
 
         <TextView
@@ -52,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
             android:textColor="@android:color/white"
+            android:visibility="gone"
             android:text="@string/info_msg_three"
             android:padding="@dimen/dp_5"
             android:textSize="@dimen/text_size_10"/>
@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
+            android:visibility="gone"
             android:textColor="@android:color/white"
             android:text="@string/info"
             android:lineSpacingExtra="@dimen/dp_2"
@@ -70,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_5"
+            android:visibility="gone"
             android:textColor="@android:color/white"
             android:text="@string/info_link"
             android:lineSpacingExtra="@dimen/dp_2"
@@ -78,16 +80,14 @@
         <TextView
             android:id="@+id/tvInfoDisclaimer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp_5"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
             android:textColor="@android:color/white"
             android:text="@string/info_disclaimer"
             android:padding="@dimen/dp_5"
             android:textSize="@dimen/text_size_8"/>
     </LinearLayout>
-
-
-</ScrollView>
-
 
 </LinearLayout>

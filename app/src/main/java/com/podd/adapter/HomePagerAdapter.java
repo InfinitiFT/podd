@@ -1,13 +1,18 @@
 package com.podd.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
+import com.podd.model.HomeImageModel;
 
 
 import java.util.List;
@@ -15,20 +20,28 @@ import java.util.List;
 public class HomePagerAdapter extends PagerAdapter {
     private final Context context;
 
-    private final List<Integer> imgList;
+    private final List<HomeImageModel> imgList;
 
-    public HomePagerAdapter(Context context, List<Integer> imgList) {
+    public HomePagerAdapter(Context context, List<HomeImageModel> imgList) {
         this.context = context;
         this.imgList = imgList;
     }
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
-      //  ModelObject modelObject = ModelObject.values()[position];
+        //  ModelObject modelObject = ModelObject.values()[position];
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.row_home_pager, collection, false);
         ImageView ivPager = (ImageView) layout.findViewById(R.id.ivPager);
-        ivPager.setImageResource(imgList.get(position));
+        TextView tvImageDetail = (TextView) layout.findViewById(R.id.tvImageDetail);
+        if (imgList.get(position).image_url != null && imgList.get(position).image_url.length() > 0) {
+
+            Glide.with(context).load(imgList.get(position).image_url).error(Color.parseColor("#000000")).placeholder(Color.parseColor("#000000")).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivPager);
+        }
+        if (imgList.get(position).image_message != null && imgList.get(position).image_message.length() > 0) {
+            tvImageDetail.setText(imgList.get(position).image_message);
+        }
+        //  ivPager.setImageResource(imgList.get(position));
         collection.addView(layout);
         return layout;
     }
@@ -50,7 +63,7 @@ public class HomePagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-       // ModelObject customPagerEnum = ModelObject.values()[position];
+        // ModelObject customPagerEnum = ModelObject.values()[position];
         return "";
     }
 

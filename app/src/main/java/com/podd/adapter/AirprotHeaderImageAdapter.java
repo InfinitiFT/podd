@@ -7,51 +7,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.podd.R;
+import com.podd.model.AirportListModel;
 import com.podd.model.HomeItemsModel;
-
 import java.util.List;
-
 /**
  * Created by Raj Kumar on 3/8/2017
  * for Mobiloitte
  */
-
 public class AirprotHeaderImageAdapter extends RecyclerView.Adapter<AirprotHeaderImageAdapter.MyViewHolder> {
     private final Context context;
-    private List<HomeItemsModel> homeItemsModelList;
+    private List<AirportListModel> airportListModels;
     private Intent intent;
     private boolean isSelected=false;
 
-    public AirprotHeaderImageAdapter(Context context, List<HomeItemsModel>homeItemsModelList) {
+    public AirprotHeaderImageAdapter(Context context, List<AirportListModel>airportListModels) {
         this.context=context;
-        this.homeItemsModelList=homeItemsModelList;
+        this.airportListModels=airportListModels;
     }
-
     @Override
     public AirprotHeaderImageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_airport_header_image, parent, false);
         return new AirprotHeaderImageAdapter.MyViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(final AirprotHeaderImageAdapter.MyViewHolder holder, final int position) {
-
-        final HomeItemsModel homeItemsModel = homeItemsModelList.get(position);
-
-        Glide.with(context).load(homeItemsModel.getImage()).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivHeaderImage);
-
+        final AirportListModel airportListModel = airportListModels.get(position);
+        Glide.with(context).load(airportListModel.image_url).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivHeaderImage);
     }
-
-
     @Override
     public int getItemCount() {
-        return homeItemsModelList.size();
+        return airportListModels.size();
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final ImageView ivHeaderImage;
         public MyViewHolder(View itemView) {

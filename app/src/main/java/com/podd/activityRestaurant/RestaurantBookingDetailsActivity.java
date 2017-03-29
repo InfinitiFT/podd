@@ -1,5 +1,4 @@
 package com.podd.activityRestaurant;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.RestaurantsAdapter;
@@ -30,7 +28,6 @@ import com.podd.utils.CommonUtils;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +39,6 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 /**
  * The type Restraunt booking details activity.
  */
@@ -69,7 +65,6 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private String location;
     private String dateBooked;
     private String timeBooked;
-
     private String noOfPersons;
     private String condition;
     private List<String>restaurantTimeInterval=new ArrayList<>();
@@ -78,7 +73,7 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
     private SetTimerClass setTimerClass;
     private SearchableListDialog _searchableListDialog;
     private String selectedItem = "";
-
+    static final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,12 +102,15 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                 if (restaurantTimeInterval!=null&&restaurantTimeInterval.size()>0) {
                     if(i>0){
                         Calendar  current=Calendar.getInstance();
-                        Date date= new Date(  System.currentTimeMillis());
+                        Date date= new Date(System.currentTimeMillis());
+                        Calendar date1 = Calendar.getInstance();
+                        long t= date1.getTimeInMillis();
+                        Date afterAddingThirtyMins=new Date(t + (30 * ONE_MINUTE_IN_MILLIS));
                         System.out.println(date);
                         SimpleDateFormat simpDate,simpDate1;
                         simpDate = new SimpleDateFormat("kk:mm");
                         simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
-                        String currentTime=simpDate.format(date);
+                        String currentTime=simpDate.format(afterAddingThirtyMins);
                         String currentDate=simpDate1.format(date);
                         // System.out.println("time>>"+simpDate.format(date));
                         //   Date todayDate = new Date(tvDateBooked.getText().toString().trim());
@@ -412,11 +410,14 @@ public class RestaurantBookingDetailsActivity extends AppCompatActivity implemen
                                         try
                                         {
                                             Date date= new Date(  System.currentTimeMillis());
+                                            Calendar date1 = Calendar.getInstance();
+                                            long t= date1.getTimeInMillis();
+                                            Date afterAddingThirtyMins=new Date(t + (30 * ONE_MINUTE_IN_MILLIS));
                                             System.out.println(date);
                                             SimpleDateFormat simpDate,simpDate1;
                                             simpDate = new SimpleDateFormat("kk:mm");
                                             simpDate1 = new SimpleDateFormat("dd-MMM-yyyy");
-                                            String currentTime=simpDate.format(date);
+                                            String currentTime=simpDate.format(afterAddingThirtyMins);
                                             String currentDate=simpDate1.format(date);
                                             if(tvDateBooked.getText().toString().trim().equals(currentDate)){
                                                 if(Float.parseFloat((timeItems.get(position).replace(":","")).trim())<=Float.parseFloat((currentTime.replace(":","")).trim()))

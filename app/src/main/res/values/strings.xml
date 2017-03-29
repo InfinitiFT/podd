@@ -132,13 +132,13 @@
     <string name="agree_to_call_back">please agree to receive a call back from Airportr.</string>
     <string name="terms_amp_conditions_and_privacy_policy"><u>Terms &amp; Conditions and Privacy Policy</u></string>
     <string name="not_available">Not available. Please select a different date</string>
-    <string name="info_msg_one"> Instantly discover London in a whole new way at the touch of a button through your complimentary in-room tablet.</string>
-    <string name="info_msg_two"> We have partnered with some of the leading service providers in London to enable you to discover and book a range of exciting experiences.\nWe hope to make your stay in London a truly memorable one.</string>
+    <string name="info_msg_one"> Instantly discover London in a whole new way at the touch of a button through your complimentary in-room guest tablet.</string>
+    <string name="info_msg_two"> We have partnered with some of the leading service providers in London to enable you discover and book a range of exciting experoences.\n\nWe hope to make your stay in London a truly memorable one.\n\nPlease contact us with any comments or feedback at hello@poddapp.com</string>
     <string name="info_msg_three"> In summary, your tablet gives you instant access to:</string>
 
     <string name="info"> - The best tables at more than 50 Michelin restaurants\n - Casual dining experiences and \'hidden gems\' curated by our expert team\n - Meals delivered straight to your door anytime of the day or night\n - Gift and hampers available from carefully selected partners, available for delivery anywhere in the United Kingdom or worldwide\n - Taxi on demand or in advance from our selected partner (Hailo)\n - Secure airport luggage transfers via Airpotr to any of London\'s major airports as well as instant check-ins through British Airways\n - London\'s best attractions including theatres, museums and art galleries\n - The leading fitness classes, health clubs and spas near you</string>
     <string name="info_link"> We would love to hear from you! Contact us with any questions or feedback at <u>hello@poddapp.com</u></string>
-    <string name="info_disclaimer"> Disclaimer: This platform is owned and operated by podd Technologies (podd). podd is in no way affiliated with the serviced apartment or hotel hosting this tablet nor is podd in anyway affiliated with the service providers listed on the tablet. While we constantly strive to maintain the highest possible standards and experiences on our platform, we do not accept responsibility should any of the services listed fail to meet your expectations.However we would welcome your feedback regarding these issues.</string>
+    <string name="info_disclaimer"> Disclaimer: This platform is owned and operated by podd Technologies Limited (podd). We are in no way affiliated with the serviced apartment or hotel where this tablet is installed nor are we in any way affiliated with the service providers listed on this Platform. While we constantly strive to maintain the highest possible standards of service, we do not accept liability or responsibility should any of the services fail to meet your expectations. However, we would welcome your feedback.</string>
     <string name="going_somewhere_book_a_secure_taxi">Going somewhere, book a secure taxi</string>
     <string name="taxi_header">Going somewhere? BOOK a secure taxi</string>
     <string name="travel_bag_free_to_any_london_airport">TRAVEL BAG-FREE TO ANY LONDON AIRPORT</string>
@@ -160,4 +160,5 @@
     <string name="fitness_wellness"><![CDATA[Fitness & Wellness]]></string>
     <string name="attractions">Attractions</string>
     <string name="by_ticking_this_box_you_agree_to_our_terms_conditions_and_privacy_policy"><![CDATA[By ticking this box you agree to our Terms & Conditions and Privacy Policy]]></string>
+    <string name="short_note">Short Note</string>
 </resources>

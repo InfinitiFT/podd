@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 import com.podd.R;
 import com.podd.adapter.BestRestaurantAdapter;
 import com.podd.adapter.CuisineTypeRestaurantAdapter;
@@ -29,10 +31,8 @@ import com.podd.utils.Logger;
 import com.podd.utils.SetTimerClass;
 import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,6 +84,7 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         } else {
             Toast.makeText(BestRestaurantNearCity.this, getString(R.string.server_not_responding), Toast.LENGTH_SHORT).show();
         }*/
+
         setFont();
         tvLocationName.setSelected(true);
         setTimerClass = (SetTimerClass)getApplication();
@@ -269,6 +270,8 @@ public class BestRestaurantNearCity extends AppCompatActivity implements View.On
         jsonRequest.page_size = String.valueOf(pageSize);
         jsonRequest.deliver_food = "";
         jsonRequest.page_number = pageNumber;
+
+
 
         Call<JsonResponse> call = apiServices.getRestaurantsList(CommonUtils.getPreferences(this, AppConstant.AppToken), jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
