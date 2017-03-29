@@ -155,6 +155,34 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_size_12"
                         android:textStyle="bold" />
+                </LinearLayout>   <LinearLayout
+                    android:id="@+id/llShortNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                android:visibility="gone"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvShortNote"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="Short Note"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_12"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvNote"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start"
+                        android:padding="@dimen/dp_2"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_12"
+                        android:text=""
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
             <android.support.v7.widget.RecyclerView

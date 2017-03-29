@@ -264,6 +264,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
         ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
         final JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.page_id="1";
+        jsonRequest.term_policy="delivery";
         Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
@@ -563,6 +564,7 @@ public class DeliveryBookingSummaryActivity extends AppCompatActivity implements
                         intent.putExtra(AppConstant.DATEBOOKED,dateBooked);
                         intent.putExtra(AppConstant.TIMEBOOKED,timeBooked);
                         intent.putExtra(AppConstant.NOOFPEOPLE,noOfPersons);
+                        intent.putExtra(AppConstant.SHORT_MSG,etMsg.getText().toString().trim());
                         intent.putExtra(AppConstant.Delivery,"1");
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

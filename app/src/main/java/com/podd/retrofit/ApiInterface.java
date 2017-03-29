@@ -82,6 +82,8 @@ public interface ApiInterface {
 
     @POST("get_resturent_name.php")
     Call<JsonResponse> getRestaurantName(@Header("Authorization") String token);
+    @POST("airport_detail.php")
+    Call<JsonResponse> getAirportDetail(@Header("Authorization") String token,@Body JsonRequest jsonRequest);
 
 
 }

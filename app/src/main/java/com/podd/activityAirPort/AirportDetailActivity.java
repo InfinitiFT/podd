@@ -2,6 +2,7 @@ package com.podd.activityAirPort;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -9,11 +10,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +43,7 @@ import com.podd.utils.AppConstant;
 import com.podd.utils.CommonUtils;
 import com.podd.utils.Logger;
 import com.podd.utils.SetTimerClass;
+import com.podd.webservices.JsonRequest;
 import com.podd.webservices.JsonResponse;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -66,18 +75,21 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
     private String currentLog = "";
     private String currentAddress="";
     private SetTimerClass setTimerClass;
+    private TextView tvPrivacyPolicy;
+    private TextView tvTermsCondition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_airport_detail);
-       mContext=AirportDetailActivity.this;
+        mContext=AirportDetailActivity.this;
         getID();
         setFont();
         setListeners();
-        fetchLocation();
+
         setTimerClass = (SetTimerClass)getApplication();
     }
+
     private void getID() {
         tvHeader=(TextView)findViewById(R.id.tvHeader);
         tvMsg=(TextView)findViewById(R.id.tvMsg);
@@ -89,8 +101,10 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
         etPhoneNumber=(EditText)findViewById(R.id.etPhoneNumber);
         tvTime=(TextView)findViewById(R.id.tvTime);
         tvSubmit=(TextView)findViewById(R.id.tvSubmit);
+
         cbTermsConditions=(CheckBox)findViewById(R.id.cbTermsConditions);
         llTime=(LinearLayout)findViewById(R.id.llTime);
+        tvTermsCondition = (TextView) findViewById(R.id.tvTermsCondition);
 
     }
     private void setFont() {
@@ -114,8 +128,10 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
         tvSubmit.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         llTime.setOnClickListener(this);
+        tvTime.setOnClickListener(this);
         tvSelectDelivery.setOnClickListener(this);
         tvPickUp.setOnClickListener(this);
+        tvTermsCondition.setOnClickListener(this);
     }
 
     @Override
@@ -130,20 +146,146 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
             case R.id.llTime:
                 timeFormate();
                 break;
+            case R.id.tvTime:
+                timeFormate();
+                break;
             case R.id.tvSelectDelivery:
                 deliveryAirprot();
                 break;
             case R.id.tvSubmit:
                if(isValid()){
-                   startActivity(new Intent(mContext,AirportSummeryActivity.class));
+                   if(CommonUtils.isOnline(mContext)){
+
+                       callAirportDetailAPI();
+                   }
+                   else {
+
+                   }
+
                }
                 break;
             case R.id.tvPickUp:
                 openAutocompleteActivity(100);
                 break;
+            case R.id.tvTermsCondition:
+                getPrivacyPolicy();
+                // showTermsDialog();
+                break;
         }
 
     }
+
+    private void callAirportDetailAPI() {
+        CommonUtils.showProgressDialog(mContext);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        final JsonRequest jsonRequest = new JsonRequest();
+
+
+        jsonRequest.user_name=etName.getText().toString().trim();
+        jsonRequest.date_travel=tvDate.getText().toString().trim();
+        jsonRequest.number_bags=tvBagNumber.getText().toString().trim();
+        jsonRequest.pickup_location=tvPickUp.getText().toString().trim();
+        jsonRequest.delevery_airport=tvSelectDelivery.getText().toString().trim();
+        jsonRequest.contact_number=etPhoneNumber.getText().toString().trim();
+        jsonRequest.select_time=tvTime.getText().toString().trim();
+
+        Call<JsonResponse> call = apiServices.getAirportDetail(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(mContext);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+
+                        startActivity(new Intent(mContext,AirportSummeryActivity.class));
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(mContext, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(mContext, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(mContext);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+
+    }
+
+
+    private void getPrivacyPolicy() {
+        CommonUtils.showProgressDialog(mContext);
+        ApiInterface apiServices = ApiClient.getClient(this).create(ApiInterface.class);
+        final JsonRequest jsonRequest = new JsonRequest();
+        jsonRequest.page_id="";
+        jsonRequest.term_policy="airport";
+        Call<JsonResponse> call = apiServices.getPrivacyPolicy(CommonUtils.getPreferences(this,AppConstant.AppToken),jsonRequest);
+        call.enqueue(new Callback<JsonResponse>() {
+            @Override
+            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
+                CommonUtils.disMissProgressDialog(mContext);
+                if (response.body() != null && !response.body().toString().equalsIgnoreCase("")) {
+                    if (response.body().responseCode.equalsIgnoreCase("200")) {
+                        showTermsDialog(response.body().page_data);
+                        // tvPrivacyPolicy.setText(Html.fromHtml(response.body().page_data));
+                    } else if(response.body().responseCode.equalsIgnoreCase("400"))
+                    {
+                        Toast.makeText(mContext, response.body().responseMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(mContext, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonResponse> call, Throwable t) {
+                CommonUtils.disMissProgressDialog(mContext);
+                Log.e(TAG, t.toString());
+
+            }
+        });
+    }
+
+    private void showTermsDialog(String policy) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final Dialog mDialog = new Dialog(this,
+                android.R.style.Theme_Translucent_NoTitleBar);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        mDialog.getWindow().setGravity(Gravity.CENTER);
+        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.75f;
+        mDialog.getWindow()
+                .addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.getWindow();
+        final ViewGroup nullParent = null;
+        View dialogLayout = inflater.inflate(R.layout.dialog_terms_condition, nullParent);
+        mDialog.setContentView(dialogLayout);
+        ImageView ivCross=(ImageView)mDialog.findViewById(R.id.ivPicsCross);
+        tvPrivacyPolicy = (TextView) mDialog.findViewById(R.id.tvPrivacyPolicy);
+        Typeface typefaceRegular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        tvPrivacyPolicy.setTypeface(typefaceRegular);
+        tvPrivacyPolicy.setText(Html.fromHtml(policy));
+
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
+    }
+
     private boolean isValid() {
         if (etName.getText().toString().trim().equalsIgnoreCase("")) {
             Toast.makeText(mContext, R.string.please_eneter_name, Toast.LENGTH_LONG).show();
@@ -321,6 +463,7 @@ public class AirportDetailActivity extends AppCompatActivity implements View.OnC
     protected void onResume() {
         super.onResume();
         setTimerClass.setTimer(this, true);
+        fetchLocation();
     }
 
     @Override

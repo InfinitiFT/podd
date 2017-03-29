@@ -21,7 +21,15 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/white"
+    android:text="Thank you for your interest in Airportr. A member of the team will contact you at your preferred time"
+    android:textSize="@dimen/text_size_10"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dp_4"/>
 
 
 

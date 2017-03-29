@@ -31,5 +31,18 @@ public class JsonRequest implements Serializable {
  public String address;
  public String user_msg;
  public String page_id;
+ public String term_policy;
  public List<SavedItem> order_details;
+
+ /*airport detail*/
+ public String user_name;
+ public String date_travel;
+ public String number_bags;
+ public String pickup_location;
+ public String delevery_airport;
+ public String contact_number;
+ public String select_time;
+
+
+
 }
