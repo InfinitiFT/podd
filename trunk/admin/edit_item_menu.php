@@ -13,6 +13,8 @@ try {
    $item_data = mysqli_query($GLOBALS['conn'],"SELECT rip.*,rip.id as edit_id,rmd.meal as meal,rmd.deliver_food as deliver_food,i.*,st.subtitle as sname FROM `restaurant_item_price` rip join restaurant_meal_details rmd on rip.restaurant_meal_id = rmd.id join items i on rip.item_id = i.id join subtitle st on st.subtitle_id = rip.subtitle WHERE rmd.meal = '".decrypt_var($_GET['id'])."' And rmd.restaurant_id = '".decrypt_var($_GET['restaurant_id'])."'");
     if(isset($_POST["submit"]))
     {
+		mysqli_query($GLOBALS['conn'],"UPDATE `restaurant_meal_details` SET `deliver_food`= '".$_POST['deliver_food']."' WHERE id= '".$_POST['restaurant_meal_id']."'");
+		
 		// check meal name is exist or not 
         $meal = mysqli_real_escape_string($conn,$_POST['meal_name']);
         $deliver_food = $_POST['deliver_food'];
@@ -54,7 +56,7 @@ try {
 						 
 					 }
 					 
-					 $subtitle_id = $subtitle;
+					 $subtitle = $subtitle;
 					 
 					
 					
@@ -122,7 +124,7 @@ try {
 						 
 					 }
 					 
-					 $subtitle_id = $subtitle;
+					 $subtitle = $subtitle;
 					 
 			
 
@@ -275,7 +277,9 @@ catch(Exception $e) {
                                     </div>
                                  
                                 </div>
-								<?php } ?>
+								<?php }else{ ?>
+                                   <input type="hidden" class="form-control" value="" name="subtitle[]" id="inputSuccess-1" placeholder="Subtitle">
+								<?php }?>
                                 <div class="row">
                                     <div class="col-md-1 col-sm-1 col-xs-2 form-group has-feedback">
                                     </div>
@@ -316,3 +320,4 @@ catch(Exception $e) {
     <!-- /page content -->
 
 <?php include_once('footer.php'); ?>
+
