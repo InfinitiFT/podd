@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:text="Please allow 24 hours between submitting your request and collection of luggage from the apartment"
                     android:textSize="@dimen/text_size_8"/>
             </LinearLayout>
@@ -190,7 +190,8 @@
         android:paddingRight="2dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="@dimen/dp_2" >
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginBottom="@dimen/dp_4">
 
         <CheckBox
             android:id="@+id/cbTermsConditions"

@@ -37,8 +37,8 @@ public class AttractionHomeActivity extends AppCompatActivity implements View.On
     private String[] attraction_category=new String[]{"Museum","Museum","Art Gallery","Museum","Theatre","Leisure","Leisure","Leisure","Art Gallery","Leisure"};
     private String[] attraction_location=new String[]{"Kensington","Knightsbridge","Trafalgar Square","Bloomsbury",
             "Leicester Square","Marylebone","Waterloo","Waterloo","Westminster","London Bridge"};
-    private int[] attraction_image=new int[]{R.drawable.science_museum,R.drawable.victoria_albert,R.drawable.national_gallery,
-    R.drawable.british_museum,R.drawable.hippodrome,R.drawable.madame_tussards,R.drawable.london_eye,R.drawable.sea,R.drawable.tate_britain,R.drawable.shard};
+    private int[] attraction_image=new int[]{R.mipmap.science_museum,R.mipmap.victoria_albert,R.mipmap.national_gallery,
+    R.mipmap.british_museum,R.mipmap.hippodrome,R.mipmap.madame_tussards,R.mipmap.london_eye,R.mipmap.sea,R.mipmap.tate_britain,R.mipmap.shard};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

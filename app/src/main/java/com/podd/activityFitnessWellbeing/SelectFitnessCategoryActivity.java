@@ -42,9 +42,9 @@ public class SelectFitnessCategoryActivity extends AppCompatActivity implements 
             "Pilates","Total Balance","Box Fit","Pilates","Health Club","Pilates"};
     private String[] fitness_location=new String[]{"Notting Hill","Chelsea","Chelsea","Chelsea",
             "Fulham","Kensington","Kensington","Holland Park","Belgravia","Mayfair","Fitzrovia","Richmond"};
-    private int[] fitness_image=new int[]{R.drawable.img5,R.drawable.img3,R.drawable.img1,
-            R.drawable.img11,R.drawable.img8,R.drawable.img10,R.drawable.img7,R.drawable.img4,R.drawable.img6,
-            R.drawable.img9,R.drawable.img2,R.drawable.img12};
+    private int[] fitness_image=new int[]{R.mipmap.img5,R.mipmap.img3,R.mipmap.img1,
+            R.mipmap.img11,R.mipmap.img8,R.mipmap.img10,R.mipmap.img7,R.mipmap.img4,R.mipmap.img6,
+            R.mipmap.img9,R.mipmap.img2,R.mipmap.img12};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

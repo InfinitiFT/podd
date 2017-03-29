@@ -93,7 +93,7 @@ public class DeliveryMenuAdapter extends SectionedRecyclerViewAdapter<DeliveryMe
            /* Log.e("log_title",String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_name,
                     section, relativePosition, absolutePosition));*/
             String image = meal_details.get(section).subtitle_meal_details.get(relativePosition).item_image;
-            Glide.with(context).load(image).error(R.mipmap.podd).placeholder(R.mipmap.podd).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivItemImage);
+            Glide.with(context).load(image).error(R.color.black).placeholder(R.color.black).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.ivItemImage);
         }
         if (meal_details.get(section).subtitle_meal_details != null && meal_details.get(section).subtitle_meal_details.size() > 0 && meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price != null) {
             holder.titlePrice.setText(String.format(meal_details.get(section).subtitle_meal_details.get(relativePosition).item_price, section, relativePosition, absolutePosition));

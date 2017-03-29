@@ -99,7 +99,7 @@
                     android:layout_marginLeft="@dimen/dp_2"
                     android:visibility="gone"
                     android:layout_gravity="center"
-                    android:src="@mipmap/logo_crown"/>
+                    />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvRestaurantsName"
                     android:layout_width="match_parent"
