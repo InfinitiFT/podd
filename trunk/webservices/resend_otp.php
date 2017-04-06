@@ -16,7 +16,7 @@
        if(mysqli_query($GLOBALS['conn'],"DELETE FROM `number_verification` WHERE `contact_no`='" .mysqli_real_escape_string($conn,trim($contact_no)) . "'")){
             if(mysqli_query($GLOBALS['conn'],"INSERT INTO `number_verification`(`contact_no`, `otp`) VALUES ('".mysqli_real_escape_string($conn,trim($contact_no))."','".mysqli_real_escape_string($conn,trim($random_number))."')"))
              {
-                $resend_message = send_sms($contact_no,$random_number);
+                $resend_message = send_sms($contact_no,"Your verification code is ".' '.$random_number.'.');
                 if($resend_message == "1"){
                   $response['responseCode'] = 200;  
                   $response['responseMessage'] = 'Verification code sent successfully.';

@@ -10,7 +10,7 @@
 	while($record = mysqli_fetch_assoc($data)){
 		$allData['id'] = $record['service_id'];
 		$allData['service_name'] = $record['service_name'];
-		$allData['service_image'] = url().$record['service_image'];
+		$allData['service_image'] = url1().$record['service_image'];
 		$allData['status'] = $record['status'];
 		$message = $record['message'];
 		$result[] = $allData;

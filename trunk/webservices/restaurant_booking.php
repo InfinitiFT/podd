@@ -10,6 +10,7 @@ $name             = $data->{"name"};
 $email            = $data->{"email"};
 $contact_no       = $data->{"contact_no"};
 $otp = $data->{"otp"};
+
 if (empty($otp) || empty($contact_no)) {
     
     $response['responseCode']    = 200;
@@ -26,9 +27,10 @@ if (empty($otp) || empty($contact_no)) {
                 $date = date_create ($booking_date);
                 $resturantEmail = findResturantEmail($restaurant_id);
                 $adminEmail     = findAdminEmail();
-                $to = $resturantEmail['email'];
-                $subject = "podd - new customer booking request";
-                $message = '
+				   $mail_data['to']= $resturantEmail['email'];
+				   $mail_data['cc']= "hello@poddapp.com";
+				   $mail_data['subject']= "podd - new customer booking request";
+				   $mail_data['html']= '
                   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                   <html xmlns="http://www.w3.org/1999/xhtml">
                   <head>
@@ -43,45 +45,70 @@ if (empty($otp) || empty($contact_no)) {
                        <div>Hello <b>'.$resturantEmail['restaurant_name'].'</b>,</div>
                        <div class="m_-7807612712962067148paragraph_break"><br></div>
                        <div>You have received a new booking request. Please click on the link below and log into your Admin panel to proceed</div>
+					   <div>your portal to proceed  <a href="'.url().''.'/booking_list_restaurant.php?restaurant_id='.encrypt_var($restaurant_id).'">Go to Portal</a></div>
                        <div class="m_-7807612712962067148paragraph_break"><br></div>
                        <div>
-                       <table style="border:1px solid #000000;max-width:600px;margin:0 auto;" cellpadding="5">
-                           <thead>
-                               <tr>
-                                <th colspan="2">Booking details</th>
-                               
-                               </tr>
-                            </thead>
-                           <tbody>
-                               <tr>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Name:</td>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $name . '</td>
-                              </tr>
-                              <tr>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Date</td>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' .date_format($date,"d-M-Y").'</td>
-                             </tr>
-                              <tr>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Time</td>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $booking_time . '</td>
-                             </tr>
-                             <tr>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Number of covers</td>
-                                  <td style="width:50%;border:1px solid #ccc;padding:8px">' . $number_of_people . '</td>
-                             </tr>
-                              <tr>
-                                   <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Telephone</td>
-                                    <td style="width:50%;border:1px solid #ccc;padding:8px">' . $contact_no . '</td>
-                              </tr>
-                               <tr>
-                                   <td style="width:50%;border:1px solid #ccc;padding:8px;font-weight:bold">Email</td>
-                                    <td style="width:50%;border:1px solid #ccc;padding:8px">' . $email . '</td>
-                              </tr>
-                          </tbody>
-                        </table></div>
+                       <table align="center" width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+			<table style="background:#f6f6f6;border:1px solid #000;" valign="top" align="center" width="600px" cellpadding="5" cellspacing="0" border="0">
+				<tr>
+					<td valign="top" colspan="2" style="text-align:center;background:#000;color:#fff;border-top:1px solid #000;">
+						NEW BOOKING REQUEST
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="30%" style="text-align:leftr;background:#000;color:#fff; border-top:1px solid #000;">
+						Name
+					</td>
+					<td style="border-top:1px solid #000;">
+						' . $name . '
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="30%" style="text-align:leftr;background:#000;color:#fff; border-top:1px solid #000;">
+						Telephone
+					</td>
+					<td style="border-top:1px solid #000;">
+						' . $contact_no . '
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="30%" style="text-align:leftr;background:#000;color:#fff; border-top:1px solid #000;">
+						Email
+					</td>
+					<td style="border-top:1px solid #000;">
+						' . $email . '
+					</td>
+				</tr><tr>
+					<td valign="top" width="30%" style="text-align:leftr;background:#000;color:#fff; border-top:1px solid #000;">
+						Date
+					</td>
+					<td style="border-top:1px solid #000;">
+					' .date_format($date,"d-M-Y").'	
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="30%" style="text-align:leftr;background:#000;color:#fff; border-top:1px solid #000;">
+						Time
+					</td>
+					<td style="border-top:1px solid #000;">
+					' . $booking_time . '	
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="30%" style="text-align:leftr;background:#000;color:#fff; border-top:1px solid #000;">
+						Number of covers
+					</td>
+					<td style="border-top:1px solid #000;">
+						' . $number_of_people . '
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table></div>
                         <div class="m_-7807612712962067148paragraph_break"><br></div>
-                         <div>Linkforlogin :<a href="'.url().''.'admin/booking_list_restaurant.php">Linkforlogin</a></div>
-                       <div class="m_-7807612712962067148paragraph_break"><br></div>
                        <div class="m_-7807612712962067148paragraph_break"><br></div>
                       <div>Best regards,</div>
                       <div>The podd Team</div>
@@ -89,31 +116,23 @@ if (empty($otp) || empty($contact_no)) {
                    </td>
                  </tr>
              </tbody>
-      
+             
         
               
-      </body>
-    </html>';
-
-    
-    
-      // Always set content-type when sending HTML email
-      
-      $headers = "MIME-Version: 1.0" . "\r\n";
-      $headers .= 'Cc: hello@poddapp.com' . "\r\n";
-      $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-      // More headers
-      $headers .= 'From: podd' . "\r\n"; 
-	 
-      if(mail($to,$subject,$message,$headers)){ 
-        $response['responseCode']    = 200;
-        $response['responseMessage'] = 'Restaurant booking successfully.'; 
-      } else {
-        $response['responseCode']    = 400;
-       $response['responseMessage'] = 'Email Sending Errors.';
-                    
-      }
+             </body>
+            </html>';
+				   // Always set content-type when sending HTML email
+				 $mail_data['from']= "podd";
+				 
+                 $email_issue = send_email($mail_data);
+				  if(json_decode($email_issue)->message == 'success'){ 
+					$response['responseCode']    = 200;
+					$response['responseMessage'] = 'Restaurant booking successfully.'; 
+				  } else {
+					$response['responseCode']    = 400;
+					$response['responseMessage'] = 'Email Sending Errors.';
+								
+				   }	
     }
             
     else {

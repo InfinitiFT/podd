@@ -8,7 +8,7 @@
   $data = get_all_data('airport_section_data');
 
 	while($record = mysqli_fetch_assoc($data)){
-		$allData['image_url'] = url1().'uploads/airport_image/'.$record['airport_image'];
+		$allData['image_url'] = url1().$record['airport_image'];
 		$result[] = $allData;
 	}
 		$response['airport_image'] = $result;

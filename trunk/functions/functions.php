@@ -70,10 +70,12 @@ function delete_data($table,$id) {
 	}*/
 function url(){
 		
-		return "http://ec2-52-1-133-240.compute-1.amazonaws.com/PROJECTS/IOSNativeAppDevelopment/trunk/";
+		return "http://admin.poddapp.com";
 	}
 
-
+function url1(){
+		return "http://ec2-52-56-174-130.eu-west-2.compute.amazonaws.com/trunk/";
+	}
  // function to get table data with condition
 
    function get_table_data_with_condition($table,$condition)
@@ -144,7 +146,8 @@ function url(){
 	try {
     $client->account->messages->create(array( 
 	'To' => $to, 	
-	'From' => "+447481342650", 
+	//'From' => "+447481342650", 
+	'From' => "podd",
 	'Body' => "".$message, 	
 	)); 
 
@@ -424,6 +427,7 @@ function restaurant_meal_insertion($restaurantId,$mealId,$deliverFood)
 	}
 	else{
 		mysqli_query($GLOBALS['conn'],"INSERT INTO `restaurant_meal_details`(`restaurant_id`,`meal`,`deliver_food`) VALUES ('".$restaurantId."','".$mealId."','".$deliverFood."')");
+		
 		return mysqli_insert_id($GLOBALS['conn']);
 	}
 }
@@ -449,7 +453,8 @@ function count_number_of_records_delivery($status)
     $time = date('H:i:s', strtotime('-1 hour'));
 	if(@$_SESSION['restaurant_id'] != "")
         {
-            $count = mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= '".$status."' AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE() AND brr1.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= '".$status."') order by db.delivery_id desc"));
+            $count = mysqli_num_rows(mysqli_query($GLOBALS['conn'],"SELECT db.delivery_id,db.* FROM delivery_bookings db JOIN restaurant_details rd ON db.restaurant_id = rd.restaurant_id Where db.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= '".$status."' AND `delivery_date` > CURRENT_DATE() OR db.delivery_id in(SELECT db1.delivery_id FROM delivery_bookings db1  JOIN restaurant_details rd1 ON db1.restaurant_id = rd1.restaurant_id Where delivery_time > '".$time."' AND `delivery_date` = CURRENT_DATE() AND db1.restaurant_id = '".$_SESSION['restaurant_id']."' AND `delivery_status`= '".$status."') order by db.delivery_id desc"));
+			
         }
     else
         {
@@ -471,6 +476,33 @@ function encrypt_var($string) {
    }
 
    return urlencode(base64_encode($result));
+}
+function send_email($params)
+{
+	$url = 'https://api.sendgrid.com/';
+    $params['api_user'] = "podd";
+	$params['api_key'] = "playa007";
+	$params['from'] = "bookings@poddapp.com";
+
+    $request = $url.'api/mail.send.json';
+
+    // Generate curl request
+    $session = curl_init($request);
+
+    // Tell curl to use HTTP POST
+      curl_setopt ($session, CURLOPT_POST, true);
+
+     // Tell curl that this is the body of the POST
+     curl_setopt ($session, CURLOPT_POSTFIELDS, $params);
+
+    // Tell curl not to return headers, but do return the response
+    curl_setopt($session, CURLOPT_HEADER, false);
+    curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+
+     // obtain response
+    $response = curl_exec($session);
+    curl_close($session);
+	return $response;
 }
 //url variable value decryption
 function decrypt_var($string) {

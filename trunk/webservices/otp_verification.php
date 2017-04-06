@@ -12,7 +12,7 @@ if($number->num_rows > 0)
     $random_number = rand(1000,9999);
      if(mysqli_query($GLOBALS['conn'],"UPDATE `number_verification` SET `otp`='".mysqli_real_escape_string($conn,trim($random_number))."' WHERE `contact_no`='".mysqli_real_escape_string($conn,trim($contact_no))."'"))
       {
-         $resend_message = send_sms($contact_no, $random_number);
+         $resend_message = send_sms($contact_no,"Your verification code is".' '.$random_number.'.');
           if ($resend_message == "1") {
             $response['responseCode']        = 200;
             $response['responseMessage']     = 'Please verify your number.';
@@ -29,7 +29,7 @@ else
 {
   $random_number = rand(1000,9999);
   if (mysqli_query($GLOBALS['conn'], "INSERT INTO `number_verification`(`contact_no`, `otp`) VALUES ('" . mysqli_real_escape_string($GLOBALS['conn'],$contact_no) . "','" . mysqli_real_escape_string($GLOBALS['conn'],$random_number). "')")) {
-  $resend_message = send_sms($contact_no, $random_number);
+  $resend_message = send_sms($contact_no,"Your verification code is".' '.$random_number.'.');
   if ($resend_message == "1") {
     $response['responseCode']        = 200;
     $response['responseMessage']     = 'Please verify your number.';

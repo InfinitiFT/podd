@@ -39,7 +39,7 @@
                        <?php while($record = mysqli_fetch_assoc($data)){ ?>
                          <tr>
                           <td><?php echo $record['image_message'];?></td>
-						   <td><img src="<?php echo url1().$record['image_url'];?>" alt="Smiley face" height="42" width="42"></td>
+						   <td><?php if($record['image_url']){?><img src="<?php echo url1().$record['image_url'];?>" alt="Smiley face" height="42" width="42"><?php } ?></td>
                           <td><?php if($record['status']=="1"){?>
                              <button type="button" id="activatedeactivate-<?php echo $record['image_id'];?>" class="btn btn-round btn-warning">Deactivate</button>
                               <?php }else{?>

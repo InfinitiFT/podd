@@ -10,14 +10,15 @@
  $deliver_food = $data->{"deliver_food"};
  $pageSize   = $data->{"page_size"};
  $pageNumber = $data->{"page_number"};
+
  if($deliver_food)
  {
-    $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food = 1  group by rd.restaurant_id");
+    $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food = 1  group by rd.restaurant_id");
  }
  else
  {
-     $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food != 1 group by rd.restaurant_id");
-    
+     $restaurant_data   = mysqli_query($GLOBALS['conn'],"SELECT *,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 and (rmd.deliver_food = 0 OR rmd.deliver_food IS NULL) group by rd.restaurant_id");
+     	 
  }
  
  
@@ -28,13 +29,13 @@
     $minLimit      = ($pageNumber - 1) * $pageSize;
     if($deliver_food)
     {
-        $restaurant_list   = mysqli_query($GLOBALS['conn'],"SELECT *,rd.restaurant_id as restaurant_id,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food = 1  group by rd.restaurant_id ORDER BY distance  Limit $minLimit, $pageSize");
+        $restaurant_list   = mysqli_query($GLOBALS['conn'],"SELECT *,rd.restaurant_id as restaurant_id,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food = 1  group by rd.restaurant_id ORDER BY distance  Limit $minLimit, $pageSize");
 
           
     }
     else
     {
-         $restaurant_list   = mysqli_query($GLOBALS['conn'],"SELECT *,rd.restaurant_id as restaurant_id,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 AND rmd.deliver_food != 1 group by rd.restaurant_id ORDER BY distance  Limit $minLimit, $pageSize");
+         $restaurant_list   = mysqli_query($GLOBALS['conn'],"SELECT *,rd.restaurant_id as restaurant_id,( 3959 * acos( cos( radians($lat) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($long) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) ) AS distance FROM restaurant_details rd left join restaurant_meal_details rmd on rd.restaurant_id = rmd.restaurant_id WHERE rd.status = 1 and (rmd.deliver_food = 0 OR rmd.deliver_food IS NULL) group by rd.restaurant_id ORDER BY distance  Limit $minLimit, $pageSize");
          
     }
     
@@ -65,7 +66,7 @@
         $res_image_array = array();
         foreach($restaurant_images as $value)
          {
-          $res_image_array[] = url().$value;
+          $res_image_array[] = url1().$value;
          }
         $row['restaurant_images']    = $res_image_array;
         $row['deliver_food']         = $restaurant_data['deliver_food'];

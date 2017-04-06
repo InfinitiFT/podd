@@ -237,6 +237,24 @@ $("[id ^='decline-']").click(function () {
        }
            
 });
+function removeImg1()
+
+  {
+   
+   $("#removeImg").remove();
+    $.ajax({
+            url:'delete_entity.php',
+            type: 'post',
+            data: {pagetype:"delete_logo_img"},
+            success: function(data, status) { 
+            
+            },
+            error: function(xhr, desc, err) {
+                 console.log(xhr);
+             }
+          });   
+
+  }
 $(document).on("click", "[id ^='remove_field_subtitle-']", function(event){
         var serviceID  = $(this).attr('id');
         var serviceArr =serviceID.split('-');

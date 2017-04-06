@@ -116,7 +116,7 @@ catch(Exception $e) {
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Image<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Image
                         </label>
                         <div class="col-md-3 col-sm-3 col-xs-6">
 

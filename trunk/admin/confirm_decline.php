@@ -14,6 +14,7 @@ if ($type == "booked_restaurant") {
             send_sms($booking_details['contact_no'],$message);
             if($booking_details['email']){
 				$mail_data['to']= $booking_details['email'];
+				$mail_data['cc']= "hello@poddapp.com";
 		        $mail_data['subject']= "Booking confirmation on podd";
 		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -62,6 +63,7 @@ if ($type == "booked_restaurant_delivery") {
 			
             if($booking_details['email']){
 			  $mail_data['to']= $booking_details['email'];
+			  $mail_data['cc']= "hello@poddapp.com";
 		        $mail_data['subject']= "Booking confirmation on podd";
 		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

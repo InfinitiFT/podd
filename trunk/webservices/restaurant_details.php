@@ -17,7 +17,7 @@
     $res_image_array = array();
     foreach($restaurant_images as $value)
 	{
-	  $res_image_array[] = url().$value;
+	  $res_image_array[] = url1().$value;
 	}
     $response['restaurant_images']    = $res_image_array;   
     $response['location']             = $restaurant_data['restaurant_full_address'];
@@ -77,6 +77,7 @@
          
          $meal_d['rmd_id'] = $meal_record['rmd_id'];
          $meal_d['meal_id'] = $meal_record['id'];
+		
          $meal_d['meal_name'] = ucwords($meal_record['meal_name']);
          $meal_d['deliver_food'] = $meal_record['deliver_food'];
          $meal_subtitles = mysqli_query($GLOBALS['conn'],"SELECT rip.*,s.* FROM restaurant_item_price rip join subtitle s on rip.subtitle = s.subtitle_id WHERE rip.restaurant_meal_id = '".$meal_record['rmd_id']."' GROUP BY s.subtitle_id order by rip.id");
@@ -97,6 +98,13 @@
                    {
                       $subtitle_meal['item_id'] = $meal_detail['item_id'];
                       $subtitle_meal['item_name'] = ucfirst($meal_detail['name']);
+					  if($meal_detail['item_logo']){
+						   $subtitle_meal['item_image'] = url1().$meal_detail['item_logo'];
+					  }
+					  else{
+						  $subtitle_meal['item_image'] = "";
+					  }
+					 
                       $subtitle_meal['item_price'] = $meal_detail['item_price'];
                       $subtitle_meals[] = $subtitle_meal;
                       

@@ -5,8 +5,8 @@
   basic_authentication($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
   $data = json_decode(file_get_contents('php://input'));
   $type = $data->{"type"};
-  $lat = $data->{"latitude"};
-  $long = $data->{"longitude"};
+  $type = $data->{"latitude"};
+  $type = $data->{"longitude"};
   $search_content = $data->{"search_content"};
   $result = array();
   //Basic Validation  
@@ -71,31 +71,18 @@
     	while($record = mysqli_fetch_assoc($data)){
 		$allData['id'] = $record['id'];
 		if($type == 'cuisine')
-		{
 			$allData['name'] = $record['cuisine_name'];
-		}
 		else if($type == 'dietary')
-		{
 			$allData['name'] = $record['dietary_name'];
-		}
 		else if($type == 'ambience')
-		{
 			$allData['name'] = $record['ambience_name'];
-		}
 		else if($type == 'meal')
-		{
 			$allData['name'] = $record['meal_name'];
-		}
 		else if($type == 'location')
-		{
 			$allData['name'] = $record['location'];
-		    $allData['distance'] = round($record['distance'], 2).' '.Miles;
-
-		}	
+		    $allData['distance'] = $record['distance'];
 		else
-		{
 			$allData['name'] = $record['price_range'];	
-		}
 		$result[] = $allData;
 	   }
    

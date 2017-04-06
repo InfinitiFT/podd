@@ -39,11 +39,20 @@ try {
                         $_SESSION["errormsg"] = "insertion error.";
                     }
 		}
-		
 		else {
+			 if (mysqli_query($GLOBALS['conn'], "UPDATE `restaurant_logo` SET `restaurant_name`= '".$restaurant_name."' WHERE `logo_id` = 1")) {
+						
+                        $_SESSION["successmsg"] = "Home page edited successfully.";
+                        header('Location:restaurant_logo_with_name.php');
+                    } else {
+                        $_SESSION["errormsg"] = "insertion error.";
+                    }
+			
+		}
+		
+		
             header('Location:restaurant_logo_with_name.php');
-        }
-        
+
         
     }
 }
@@ -117,9 +126,13 @@ catch (Exception $e) {
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Image
                         </label>
                         <div class="col-md-3 col-sm-3 col-xs-6">
-						  <div class="col-md-6 col-sm-6 col-xs-12">
-							<img src="<?php echo url1().$row['logo'] ?>"  height="80" width="80" ><input type="hidden" value="<?php $row['logo'] ?>" >
-                        </label>                          
+						  <div class="col-md-6 col-sm-6 col-xs-12 img-sel">
+						  <?php if($row['logo']){?>
+							
+						  <div id="removeImg" ><figure class="resto_logo" style="position: relative; display: inline-block;"><i class="glyphicon glyphicon-remove" style="position: absolute; top:-2px; right:-16px; z-index: 22;" id="removeImgs" onclick ="removeImg1()"></i>
+							<img src="<?php echo url1().$row['logo'] ?>"  height="80" width="80" id="imgName-1"></figure></div>
+						  <?php } ?>
+                                                  
                         </div>
                           <input id="image" class="form-control col-md-3 col-xs-5" data-validate-length-range="6" data-validate-words="2" name="image"   type="file">
                         </div>

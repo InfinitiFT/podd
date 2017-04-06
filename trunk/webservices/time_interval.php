@@ -18,7 +18,7 @@
         
         if(mysqli_num_rows($restaurant_data)>0)
         {
-             $find_interval = mysqli_fetch_assoc($restaurant_data);
+            $find_interval = mysqli_fetch_assoc($restaurant_data);
             if($day == 'Sun'){
                if($find_interval['is_sun'] != 0)
                {
@@ -92,7 +92,7 @@
               if($find_interval['is_wed'] != 0)
                {
                  $time_first = strtotime($find_interval['wed_open_time']);
-                 $time_second = strtotime($find_interval['wed_open_time']);
+                 $time_second = strtotime($find_interval['wed_close_time']);
                  $interval = 1800; // Interval in seconds
                  $array = array();
                  for ($i = $time_first; $i <= $time_second;){
@@ -114,7 +114,7 @@
                if($find_interval['is_thu'] != 0)
                {
                  $time_first = strtotime($find_interval['thu_open_time']);
-                 $time_second = strtotime($find_interval['thu_open_time']);
+                 $time_second = strtotime($find_interval['thu_close_time']);
                  $interval = 1800; // Interval in seconds
                  $array = array();
                  for ($i = $time_first; $i <= $time_second;){

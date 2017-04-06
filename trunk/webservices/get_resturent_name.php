@@ -8,8 +8,8 @@
   $data = get_all_data('restaurant_logo');
 
 	while($record = mysqli_fetch_assoc($data)){
-		$allData['restaurant_name'] = $record['message'];
-		$allData['image_url'] = url1().'uploads/restaurant_logo/'.$record['logo'];
+		$allData['restaurant_name'] = $record['restaurant_name'];
+		$allData['image_url'] = url1().$record['logo'];
 		$result[] = $allData;
 	}
 		$response['restaurantlogo'] = $result;

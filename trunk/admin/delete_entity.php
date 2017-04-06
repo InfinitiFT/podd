@@ -86,6 +86,14 @@ else if ($type == "airport_i") {
         echo "error";
     }
 }
+else if ($type == "delete_logo_img") {
+	
+    if (mysqli_query($GLOBALS['conn'], "UPDATE `restaurant_logo` SET `logo`= '' WHERE logo_id = '1'")) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+}
  else {
     
 }

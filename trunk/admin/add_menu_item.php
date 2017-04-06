@@ -72,7 +72,7 @@ try {
                 if(empty($item_id))
                 {
                 	$name = mysqli_real_escape_string($conn,trim($value));
-                    mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`item_logo`,`created_by`) VALUES ('".$name."','".$item_logo."','".$user_id."')");
+                    mysqli_query($GLOBALS['conn'],"INSERT INTO `items`(`name`,`item_logo`,`created_by`) VALUES ('".$name."','".'uploads/item_image/'.$item_logo."','".$user_id."')");
                     $item_id = mysqli_insert_id($GLOBALS['conn']);
 					
                 	$add_item = mysqli_query($GLOBALS['conn'], "INSERT INTO `restaurant_item_price` (`restaurant_meal_id`,`subtitle`,`item_id`,`item_price`,`created_by`) VALUES ('".$restaurant_menu_id."','".$subtitle_id."','".$item_id."','".$price."','".$user_id."')");

@@ -66,6 +66,7 @@ switch ($_REQUEST['type']) {
         $message1 = "We are unable to confirm your booking with this venue, please try a different time or select another venue";
          if($booking_details['email']){
 				$mail_data['to']= $booking_details['email'];
+				$mail_data['cc']= "hello@poddapp.com";
 		        $mail_data['subject']= "Booking declined on podd";
 		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -114,6 +115,7 @@ switch ($_REQUEST['type']) {
             send_sms($booking_details['contact_no'], preg_replace('/^\s+|\s+$|\s+(?=\s)/', '', $message));
             if($booking_details['email']){
 			  $mail_data['to']= $booking_details['email'];
+			  $mail_data['cc']= "hello@poddapp.com";
 		        $mail_data['subject']= "Order declined on podd";
 		        $mail_data['html']= '
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
